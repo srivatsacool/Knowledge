@@ -1,0 +1,68 @@
+<div class="subject-page-hero">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{{basePath}}/">Library</a>
+    <span>/</span>
+    <span aria-current="page">{{subjectName}}</span>
+  </nav>
+
+  <h1 class="subject-page-title">{{subjectName}}</h1>
+  <p class="subject-page-desc">{{subjectDescription}}</p>
+</div>
+
+{{#hasNotebooks}}
+<section>
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Published Notebooks</h2>
+      <p class="section-subtitle">{{notebookCount}} study notebook{{plural}} available in this division</p>
+    </div>
+  </div>
+
+  <div class="notebooks-list">
+    {{#notebooks}}
+    <article class="notebook-card">
+      <div class="notebook-card-content">
+        <div class="featured-meta">
+          <span class="badge badge-category">{{category}}</span>
+          {{#featured}}<span class="badge badge-featured">Featured</span>{{/featured}}
+          <span class="badge badge-subject">{{updatedAt}}</span>
+        </div>
+
+        <h3 class="notebook-card-title">
+          <a href="{{url}}">{{title}}</a>
+        </h3>
+
+        <p class="notebook-card-desc">{{description}}</p>
+
+        <div class="featured-tags">
+          {{#tags}}
+          <span class="tag-pill">#{{.}}</span>
+          {{/tags}}
+        </div>
+      </div>
+
+      <div class="featured-action">
+        <a href="{{url}}" class="btn-primary">
+          <span>Open Notebook</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <div class="notebook-stats-pill">
+          {{#readTime}}<span>⏱ {{readTime}} min read</span>{{/readTime}}
+        </div>
+      </div>
+    </article>
+    {{/notebooks}}
+  </div>
+</section>
+{{/hasNotebooks}}
+
+{{^hasNotebooks}}
+<div class="empty-state">
+  <div class="empty-state-icon">🏛️</div>
+  <h2 class="empty-state-title">{{subjectName}} Repository Incubating</h2>
+  <p class="empty-state-desc">
+    No standalone study notebooks are currently published in this division. Core reference materials, research outlines, and curriculum topics are currently under active curation.
+  </p>
+  <a href="{{basePath}}/" class="btn-primary" style="display: inline-flex;">&larr; Return to Library Catalog</a>
+</div>
+{{/hasNotebooks}}

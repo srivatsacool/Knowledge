@@ -1,0 +1,24 @@
+{
+  "title": "Digital Transformation & Cloud Strategy · Enterprise Architecture & Cyber",
+  "slug": "digital-transformation-and-cloud-strategy",
+  "subject": "Technology",
+  "category": "Information Systems",
+  "description": "Foundational MBA guide to digital transformation and technology strategy: enterprise architecture (TOGAF), Cloud models (IaaS/PaaS/SaaS), API economy, microservices vs. monoliths, and Zero Trust cybersecurity.",
+  "file": "Digital_Transformation_and_Cloud_Strategy_Notebook.html",
+  "tags": [
+    "Technology",
+    "Digital Transformation",
+    "Cloud Computing",
+    "Enterprise Architecture",
+    "Cybersecurity",
+    "API Economy"
+  ],
+  "status": "draft",
+  "source": "curriculum/mba-foundation",
+  "version": "1.0.0",
+  "updated": "2026-10-04",
+  "updatedAt": "2026-10-04",
+  "featured": false,
+  "readTimeMinutes": 26,
+  "questionsCount": 10
+}

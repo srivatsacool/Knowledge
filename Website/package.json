@@ -1,0 +1,30 @@
+{
+  "name": "brain-knowledge-hub",
+  "version": "1.0.0",
+  "description": "Personal knowledge hub & academic study notebook publishing portal",
+  "main": "scripts/build.js",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
+    "test:pipeline": "node scripts/test-pipeline.js",
+    "test:agent": "node scripts/test-agent-integration.js",
+    "test:orca": "node scripts/test-orca-orchestration.js",
+    "test:all": "node scripts/test.js && node scripts/test-pipeline.js && node scripts/test-agent-integration.js && node scripts/test-orca-orchestration.js",
+    "orca": "node scripts/pipeline/orca-agent.js",
+    "dev": "node scripts/dev.js",
+    "pipeline": "node scripts/pipeline/index.js",
+    "notebook:create": "node scripts/pipeline/index.js create",
+    "notebook:validate": "node scripts/pipeline/index.js validate",
+    "notebook:publish": "node scripts/pipeline/index.js publish",
+    "clean": "node -e \"const fs = require('fs'); fs.rmSync('dist', { recursive: true, force: true });\""
+  },
+  "keywords": [
+    "knowledge-hub",
+    "academic-notes",
+    "study-notebooks",
+    "cloudflare-pages",
+    "static-site"
+  ],
+  "author": "Srivatsa",
+  "license": "MIT"
+}

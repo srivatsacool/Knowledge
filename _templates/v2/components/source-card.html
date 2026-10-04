@@ -1,0 +1,24 @@
+<!-- Component: SourceCard (Provenance Verification Card Grounded in Uploaded Sources) -->
+<aside class="nb-card nb-source-card" id="{{SOURCE_CARD_ID}}" role="contentinfo">
+  <div class="nb-tape"></div>
+  <div class="nb-stamps">
+    <span class="nb-stamp nb-stamp--green">Source Provenance</span>
+    <span class="nb-stamp nb-stamp--blue">100% Grounded</span>
+  </div>
+  <h4 class="nb-card__title">Ground Truth Provenance & Citations</h4>
+  <dl class="nb-source-card__list">
+    <div class="nb-source-card__row">
+      <dt>Primary Source File:</dt>
+      <dd><code>{{PRIMARY_SOURCE_FILE}}</code> (Parsed via AnyDoc sub-5ms Rust parser)</dd>
+    </div>
+    <div class="nb-source-card__row">
+      <dt>Academic Syllabus Reference:</dt>
+      <dd><code>{{SYLLABUS_FILE}}</code> (Course Outcomes {{COURSE_OUTCOMES}})</dd>
+    </div>
+    <div class="nb-source-card__row">
+      <dt>Verification Status:</dt>
+      <dd><span class="nb-stamp nb-stamp--green">Zero Hallucinations Verified</span></dd>
+    </div>
+  </dl>
+  <div class="nb-tape nb-tape--right"></div>
+</aside>

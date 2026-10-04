@@ -1,0 +1,25 @@
+{
+  "title": "Managerial Economics · Market Structures, Pricing & Game Theory",
+  "slug": "managerial-economics",
+  "subject": "Finance",
+  "category": "Economics",
+  "description": "Foundational MBA guide to managerial economics: microeconomic price theory, marginal revenue and marginal cost optimization, market structures (monopoly, oligopoly, perfect competition), and strategic game theory.",
+  "file": "Managerial_Economics_Notebook.html",
+  "tags": [
+    "Economics",
+    "Microeconomics",
+    "Pricing",
+    "Game Theory",
+    "Market Structures",
+    "Elasticity",
+    "Nash Equilibrium"
+  ],
+  "status": "draft",
+  "source": "curriculum/mba-foundation",
+  "version": "1.0.0",
+  "updated": "2026-10-04",
+  "updatedAt": "2026-10-04",
+  "featured": false,
+  "readTimeMinutes": 26,
+  "questionsCount": 10
+}

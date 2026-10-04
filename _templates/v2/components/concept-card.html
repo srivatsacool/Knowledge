@@ -1,0 +1,21 @@
+<!-- Component: Editorial Concept Card -->
+<article class="nb-concept" id="{{CONCEPT_ID}}">
+  <div class="nb-concept__header">
+    <span class="nb-concept__eyebrow">{{CATEGORY_LABEL}}</span>
+    <h3 class="nb-concept__title">{{CONCEPT_TITLE}}</h3>
+  </div>
+  <div class="nb-concept__body">
+    <p class="nb-concept__lead">{{CONCEPT_LEAD}}</p>
+    {{CONCEPT_BODY}}
+    <div class="nb-concept__callout">
+      <strong>Core Insight:</strong> {{CORE_INSIGHT}}
+    </div>
+  </div>
+  <div class="nb-concept__footer">
+    <span class="nb-concept__source">Authority: {{SOURCE_AUTHORITY}}</span>
+    <button class="nb-btn-subtle" onclick="toggleSimpleExplainer('{{CONCEPT_ID}}')">💡 Explain Simply</button>
+  </div>
+  <div class="nb-concept__simple-explainer" id="{{CONCEPT_ID}}-simple" hidden>
+    <p><strong>Intuitive Analogy:</strong> {{SIMPLE_EXPLAINER_TEXT}}</p>
+  </div>
+</article>

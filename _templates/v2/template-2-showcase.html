@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ERP Business Applications · Brain Hub Notebook OS (Paper Edition)</title>
+  <meta name="description" content="Reference showcase for Brain Hub Notebook OS — Paper Edition: Physical ruled paper, spiral binder coils, punched holes, washi tape, sticky notes, rubber stamps, handwritten headings, and hand-drawn SVG diagrams.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%92%3C/text%3E%3C/svg%3E">
+
+  <!-- Handwritten & Academic Typography: Caveat (Display), Patrick Hand (Notes), Source Sans 3 (Body), STIX Two Text (Math) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       BRAIN HUB NOTEBOOK OS — PAPER EDITION DESIGN TOKENS
+       ========================================================================== */
+    :root {
+      --paper: #fcf8ee;
+      --desk: #e9e1cf;
+      --rule: #d6e3ef;
+      --margin: #e28b8b;
+      --card: #fffdf7;
+      --line: #c9bfa8;
+      
+      --ink: #1d3c8c;
+      --ink2: #2f5fc4;
+      --text: #25262b;
+      --pencil: #5a5d66;
+      
+      --shadow-sheet: 0 1px 2px rgba(60, 45, 20, 0.12), 0 8px 24px rgba(60, 45, 20, 0.14);
+      --shadow-card: 0 1px 3px rgba(60, 45, 20, 0.10), 0 4px 12px rgba(60, 45, 20, 0.08);
+      --shadow-sticky: 0 2px 4px rgba(0, 0, 0, 0.12), 0 10px 18px -6px rgba(0, 0, 0, 0.22);
+      
+      --hl-yellow: rgba(255, 224, 61, 0.68);
+      --hl-green: rgba(120, 228, 156, 0.62);
+      --hl-blue: rgba(110, 196, 255, 0.55);
+      --hl-pink: rgba(255, 138, 188, 0.52);
+
+      --sticky-y: #fff2a1;
+      --sticky-r: #ffd6d3;
+      --sticky-b: #d9ecff;
+      --sticky-g: #d8f5dc;
+      --sticky-text: #22252a;
+      
+      --red: #c2362f;
+      --green: #1d7a45;
+      --amber: #b86e00;
+      
+      --font-hand: "Caveat", "Segoe Print", cursive;
+      --font-hand2: "Patrick Hand", "Segoe Print", cursive;
+      --font-body: "Source Sans 3", "Inter", -apple-system, sans-serif;
+      --font-math: "STIX Two Text", "Cambria Math", Georgia, serif;
+      
+      --lh: 30px;
+      --topbar-height: 56px;
+      --sidebar-width: 290px;
+    }
+
+    html[data-theme="dark"] {
+      --paper: #18202e;
+      --desk: #0f141d;
+      --rule: #243049;
+      --margin: #7c3d48;
+      --card: #1d2636;
+      --line: #344058;
+      
+      --ink: #9cc0ff;
+      --ink2: #7fb0ff;
+      --text: #e7e9ef;
+      --pencil: #aab3c5;
+      
+      --shadow-sheet: 0 2px 4px rgba(0, 0, 0, 0.45), 0 10px 28px rgba(0, 0, 0, 0.40);
+      --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.35), 0 6px 16px rgba(0, 0, 0, 0.30);
+      --shadow-sticky: 0 2px 6px rgba(0, 0, 0, 0.45), 0 12px 24px -6px rgba(0, 0, 0, 0.50);
+      
+      --hl-yellow: rgba(255, 214, 0, 0.32);
+      --hl-green: rgba(70, 220, 130, 0.30);
+      --hl-blue: rgba(80, 170, 255, 0.32);
+      --hl-pink: rgba(255, 105, 170, 0.32);
+
+      --sticky-y: #2d2a1b;
+      --sticky-r: #331f20;
+      --sticky-b: #1c2738;
+      --sticky-g: #1c2e22;
+      --sticky-text: #f0f3f8;
+      
+      --red: #ff8a80;
+      --green: #7be0a4;
+      --amber: #ffc266;
+    }
+
+    /* Base Reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--topbar-height) + 18px); scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--desk); color: var(--text);
+      font-family: var(--font-body); font-size: 17px; line-height: 1.65; overflow-x: hidden;
+    }
+    a { color: var(--ink2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    :focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; border-radius: 4px; }
+    img, svg { max-width: 100%; height: auto; }
+
+    /* ==========================================================================
+       TOPBAR CONTROLS
+       ========================================================================== */
+    .nb-topbar {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--topbar-height);
+      background: var(--paper); border-bottom: 2px solid var(--line);
+      z-index: 50; box-shadow: 0 2px 0 var(--rule);
+    }
+    .nb-topbar__inner { display: flex; align-items: center; justify-content: space-between; height: 100%; padding: 0 1rem; gap: 0.75rem; }
+    .nb-topbar__brand { font-family: var(--font-hand); font-weight: 700; font-size: 1.65rem; color: var(--ink); white-space: nowrap; line-height: 1; }
+    .nb-topbar__brand:hover { text-decoration: none; }
+    .nb-topbar__crumb {
+      flex: 1; min-width: 0; font-family: var(--font-hand2); font-size: 1.08rem; color: var(--pencil);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-left: 0.75rem; border-left: 2px dotted var(--line);
+    }
+    .nb-topbar__actions { display: flex; align-items: center; gap: 0.4rem; }
+    
+    .nb-btn-top {
+      min-width: 40px; height: 40px; border: 0; background: transparent;
+      color: var(--text); border-radius: 8px; font-size: 1.15rem; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .nb-btn-top:hover { background: var(--hl-yellow); }
+    .nb-btn-search {
+      display: inline-flex; align-items: center; gap: 0.4rem; height: 38px; padding: 0 0.75rem;
+      background: var(--card); border: 1.5px solid var(--line); border-radius: 6px;
+      font-family: var(--font-hand2); font-size: 1.05rem; color: var(--text); cursor: pointer;
+    }
+    .nb-btn-search:hover { background: var(--hl-yellow); }
+    .nb-btn-search kbd { font-family: var(--font-body); font-size: 0.75rem; padding: 0.1rem 0.35rem; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); }
+    .nb-topbar__pct { font-family: var(--font-hand); font-weight: 700; font-size: 1.35rem; color: var(--ink); min-width: 3.2em; text-align: right; }
+    .nb-topbar__bar { height: 4px; background: var(--rule); }
+    .nb-topbar__bar i { display: block; height: 100%; width: 25%; background: linear-gradient(90deg, var(--green), var(--ink2)); transition: width 0.3s; }
+
+    /* ==========================================================================
+       SIDEBAR INDEX (PAPER NOTEBOOK INDEX)
+       ========================================================================== */
+    .nb-layout { display: flex; padding-top: var(--topbar-height); }
+    .nb-sidebar {
+      position: fixed; top: var(--topbar-height); bottom: 0; left: 0; width: var(--sidebar-width);
+      background: var(--paper); border-right: 2px solid var(--line); overflow-y: auto;
+      padding: 1.25rem 1rem 2rem; z-index: 40; transform: translateX(-102%); transition: transform 0.25s ease;
+      background-image: repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh));
+    }
+    .nb-sidebar.is-open { transform: none; box-shadow: 4px 0 16px rgba(0, 0, 0, 0.25); }
+    .nb-sidebar-shade { position: fixed; inset: 0; background: rgba(10, 12, 18, 0.45); z-index: 35; display: none; }
+    .nb-sidebar-shade.is-on { display: block; }
+
+    .nb-sidebar h2 { font-family: var(--font-hand); font-size: 2rem; color: var(--ink); margin: 0 0 4px; }
+    .nb-sidebar__grp { font-family: var(--font-hand2); color: var(--pencil); font-size: 1.02rem; margin: 14px 0 4px; }
+    .nb-sidebar nav a {
+      display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 4px 8px;
+      border-radius: 6px; color: var(--text); text-decoration: none; line-height: 1.25; margin-bottom: 2px;
+    }
+    .nb-sidebar nav a:hover { background: var(--hl-yellow); }
+    .nb-sidebar nav a.is-active { background: var(--card); box-shadow: var(--shadow-card); font-weight: 600; color: var(--ink); }
+    .nb-sidebar__chip { width: 8px; border-radius: 3px; background: var(--ink); min-height: 24px; flex-shrink: 0; }
+    .nb-sidebar__label { flex: 1; font-size: 0.95rem; }
+    .nb-sidebar__ck {
+      width: 20px; height: 20px; border: 2px solid var(--pencil); border-radius: 4px;
+      display: grid; place-items: center; font-size: 0.85rem; color: var(--green); font-weight: 700; flex-shrink: 0;
+    }
+    .nb-sidebar nav a.is-done .nb-sidebar__ck::after { content: "✓"; }
+
+    .nb-main { flex: 1; min-width: 0; padding: 22px 10px 50px; }
+
+    @media (min-width: 1100px) {
+      .nb-sidebar { transform: none; width: var(--sidebar-width); }
+      #menuBtn { display: none; }
+      .nb-main { margin-left: var(--sidebar-width); }
+      body.is-focus .nb-sidebar { display: none; }
+      body.is-focus .nb-main { margin-left: 0; }
+    }
+
+    /* ==========================================================================
+       PAPER CANVAS ENGINE (RULED LINES, RED MARGIN, PUNCH HOLES, SPIRAL WIRE)
+       ========================================================================== */
+    .nb-sheet {
+      position: relative; max-width: 940px; margin: 0 auto;
+      background: var(--paper); border-radius: 6px 14px 14px 6px; box-shadow: var(--shadow-sheet);
+      padding: 24px 20px 40px 36px;
+      background-image: 
+        linear-gradient(90deg, transparent 22px, var(--margin) 22px, var(--margin) 24px, transparent 24px),
+        repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh));
+      background-position: 0 0, 0 54px;
+    }
+
+    @media (min-width: 760px) {
+      .nb-sheet {
+        padding: 34px 54px 44px 92px;
+        background-image: 
+          linear-gradient(90deg, transparent 66px, var(--margin) 66px, var(--margin) 68px, transparent 68px),
+          repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh));
+      }
+      /* Punch Holes */
+      .nb-sheet::before {
+        content: ""; position: absolute; left: -15px; top: 18px; bottom: 18px; width: 34px;
+        background: radial-gradient(circle at 17px 15px, var(--desk) 0 6.5px, transparent 7.5px) 0 0/34px 34px repeat-y;
+        pointer-events: none; z-index: 2;
+      }
+      /* Spiral Wire Binding Coils */
+      .nb-sheet::after {
+        content: ""; position: absolute; left: -22px; top: 18px; bottom: 18px; width: 22px;
+        background: repeating-linear-gradient(transparent 0 8px, #8d8f96 8px 11px, #c8cad0 11px 13px, transparent 13px 34px);
+        opacity: 0.85; border-radius: 4px; pointer-events: none; z-index: 3;
+      }
+      html[data-theme="dark"] .nb-sheet::after {
+        background: repeating-linear-gradient(transparent 0 8px, #59606e 8px 11px, #8a93a6 11px 13px, transparent 13px 34px);
+      }
+    }
+
+    /* Protruding Page Tab Flag */
+    .nb-tabflag {
+      position: absolute; right: -12px; top: 34px; background: var(--ink); color: #fff;
+      font-family: var(--font-hand); font-weight: 700; font-size: 1.25rem;
+      padding: 6px 14px 6px 12px; border-radius: 0 10px 10px 0;
+      box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.15);
+      writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.04em;
+      cursor: pointer; user-select: none; z-index: 10;
+    }
+
+    /* ==========================================================================
+       TYPOGRAPHY HIERARCHY
+       ========================================================================== */
+    h1, h2, h3, h4 { font-family: var(--font-hand); color: var(--ink); line-height: 1.15; font-weight: 700; }
+    h1 { font-size: clamp(2.3rem, 6vw, 3.1rem); margin: 0.2em 0 0.25em; }
+    h2.nb-sec-title { font-size: clamp(1.85rem, 4.6vw, 2.3rem); margin: 1.8em 0 0.5em; display: flex; align-items: center; gap: 0.4em; flex-wrap: wrap; }
+    h3 { font-size: clamp(1.5rem, 3.8vw, 1.8rem); margin: 1.3em 0 0.35em; }
+    h4 { font-size: 1.35rem; margin: 1em 0 0.2em; }
+    p { margin: 0.55em 0; }
+    strong { font-weight: 700; color: var(--ink); }
+    html[data-theme="dark"] strong { color: #b4d2ff; }
+
+    /* Wavy Hand-Drawn Underline */
+    .nb-hand-underline {
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M1 5 Q 15 1 30 5 T 60 5 T 90 5 T 119 4' fill='none' stroke='%23e0a32a' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") left bottom/100% 7px no-repeat;
+      padding-bottom: 4px;
+    }
+
+    /* ==========================================================================
+       RUBBER STAMPS
+       ========================================================================== */
+    .nb-stamps { display: flex; flex-wrap: wrap; gap: 8px 12px; margin: 0.5em 0 0.8em; }
+    .nb-stamp {
+      display: inline-block; font-family: var(--font-body); font-weight: 800; font-size: 0.76rem;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--red);
+      border: 2.5px solid currentColor; border-radius: 6px; padding: 3px 9px;
+      transform: rotate(-2.5deg); box-shadow: inset 0 0 0 1.5px var(--paper), inset 0 0 0 3px currentColor;
+      opacity: 0.92; background: transparent; line-height: 1.3;
+    }
+    .nb-stamp--blue  { color: var(--ink2); transform: rotate(1.5deg); }
+    .nb-stamp--green { color: var(--green); transform: rotate(-1.2deg); }
+    .nb-stamp--amber { color: var(--amber); transform: rotate(2deg); }
+
+    /* ==========================================================================
+       WASHI TAPE & PHYSICAL STUDY CARDS
+       ========================================================================== */
+    .nb-card {
+      background: var(--card); border: 1.5px solid var(--line); border-radius: 8px;
+      box-shadow: var(--shadow-card); padding: 18px 20px; margin: 20px 0; position: relative;
+    }
+    .nb-tape {
+      position: absolute; width: 86px; height: 22px; top: -10px; left: 22px;
+      transform: rotate(-3.5deg);
+      background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.45) 0 5px, rgba(255, 255, 255, 0) 5px 10px), rgba(255, 185, 200, 0.75);
+      opacity: 0.92; pointer-events: none; z-index: 5;
+    }
+    .nb-tape--right { left: auto; right: 22px; transform: rotate(4deg); }
+    .nb-tape--center { left: 50%; transform: translateX(-50%) rotate(-1deg); }
+
+    /* ==========================================================================
+       PHYSICAL STICKY NOTES
+       ========================================================================== */
+    .nb-sticky {
+      position: relative; background: var(--sticky-y); color: var(--sticky-text);
+      font-family: var(--font-hand2); font-size: 1.15rem; line-height: 1.55;
+      padding: 20px 20px 16px; margin: 22px 4px; border-radius: 2px 2px 14px 2px;
+      box-shadow: var(--shadow-sticky); transform: rotate(-0.8deg);
+    }
+    .nb-sticky::before {
+      content: ""; position: absolute; top: -11px; left: 50%; width: 90px; height: 22px;
+      transform: translateX(-50%) rotate(-2deg);
+      background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.55) 0 6px, rgba(255, 255, 255, 0.25) 6px 12px), rgba(160, 200, 230, 0.65);
+    }
+    .nb-sticky--pink  { background: var(--sticky-r); transform: rotate(0.6deg); }
+    .nb-sticky--blue  { background: var(--sticky-b); transform: rotate(-0.5deg); }
+    .nb-sticky--green { background: var(--sticky-g); transform: rotate(0.8deg); }
+    .nb-sticky--pin::before {
+      background: radial-gradient(circle at 35% 35%, #ff8d86, #b4241c);
+      width: 16px; height: 16px; border-radius: 50%; top: -7px;
+      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.35); transform: translateX(-50%);
+    }
+    .nb-sticky__title { font-family: var(--font-hand); font-weight: 700; font-size: 1.55rem; margin: 0 0 6px; color: var(--ink); line-height: 1.15; }
+    .nb-sticky--pink .nb-sticky__title { color: #9b1c14; }
+
+    /* ==========================================================================
+       CHISEL HIGHLIGHTERS
+       ========================================================================== */
+    .nb-hl {
+      color: inherit; padding: 0.1em 0.35em;
+      border-radius: 0.35em 0.55em 0.35em 0.65em;
+      box-decoration-break: clone; -webkit-box-decoration-break: clone;
+    }
+    .nb-hl--yellow { background: var(--hl-yellow); }
+    .nb-hl--green  { background: var(--hl-green); }
+    .nb-hl--blue   { background: var(--hl-blue); }
+    .nb-hl--pink   { background: var(--hl-pink); }
+
+    /* ==========================================================================
+       FORMULA & MATH BOXES
+       ========================================================================== */
+    .nb-fbox {
+      position: relative; border: 2px solid var(--ink); border-radius: 4px;
+      padding: 16px 20px; margin: 18px 0 24px; background: var(--card);
+      box-shadow: 6px 6px 0 var(--hl-blue);
+    }
+    .nb-fbox__label { font-family: var(--font-hand2); color: var(--pencil); font-size: 1.08rem; display: block; margin-bottom: 6px; }
+    .nb-fbox__math { font-family: var(--font-math); font-size: 1.35rem; line-height: 2; color: var(--text); overflow-x: auto; }
+    .nb-fbox__dict { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; margin: 10px 0 0; font-size: 0.96rem; }
+    .nb-fbox__dict dt { font-family: var(--font-math); font-weight: 700; color: var(--ink); }
+    .nb-fbox__dict dd { margin: 0; color: var(--pencil); }
+
+    /* ==========================================================================
+       HAND-DRAWN SVG BLUEPRINTS & 2x2 MATRICES
+       ========================================================================== */
+    .nb-svg-wrap { text-align: center; padding: 20px 14px; margin: 22px 0; }
+    .nb-svg-wrap figcaption { font-family: var(--font-hand2); font-size: 1.05rem; color: var(--pencil); margin-top: 10px; }
+
+    .nb-matrix-2x2 { margin: 22px 0; }
+    .nb-matrix-2x2__y { font-family: var(--font-hand); font-size: 1.25rem; font-weight: 700; color: var(--ink); text-align: center; margin-bottom: 6px; }
+    .nb-matrix-2x2__x { font-family: var(--font-hand); font-size: 1.25rem; font-weight: 700; color: var(--ink); text-align: center; margin-top: 8px; }
+    .nb-matrix-2x2__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .nb-matrix-quadrant {
+      background: var(--card); border: 2px solid var(--ink); border-radius: 6px;
+      padding: 14px; position: relative;
+    }
+    .nb-matrix-quadrant.is-star { background: var(--sticky-g); border-color: var(--green); }
+    .nb-matrix-quadrant.is-pit  { background: var(--sticky-r); border-color: var(--red); }
+    .nb-matrix-quadrant h4 { font-family: var(--font-hand); font-size: 1.45rem; margin: 0 0 4px; }
+    .nb-matrix-quadrant p { font-size: 0.95rem; margin: 0; line-height: 1.45; }
+
+    /* ==========================================================================
+       ACADEMIC TABLES & CHECKLISTS
+       ========================================================================== */
+    .nb-table-wrap { overflow-x: auto; margin: 20px 0; border: 2px solid var(--line); border-radius: 8px; background: var(--card); }
+    .nb-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem; }
+    .nb-table th, .nb-table td { padding: 10px 14px; border: 1px solid var(--line); }
+    .nb-table thead th { background: var(--desk); font-family: var(--font-hand); font-size: 1.35rem; color: var(--ink); font-weight: 700; }
+    .nb-table tbody tr:hover { background: var(--hl-yellow); }
+
+    .nb-checklist { list-style: none; margin: 12px 0; padding: 0; }
+    .nb-checklist li { padding: 6px 0; display: flex; align-items: flex-start; gap: 10px; font-size: 1.05rem; }
+    .nb-checklist input[type="checkbox"] { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--green); }
+
+    /* Library Card Search Modal */
+    .nb-search-modal {
+      position: fixed; inset: 0; background: rgba(10, 12, 18, 0.55);
+      z-index: 100; display: none; align-items: flex-start; justify-content: center;
+      padding-top: 10vh; backdrop-filter: blur(2px);
+    }
+    .nb-search-modal.is-active { display: flex; }
+    .nb-search-card {
+      background: var(--paper); border: 2px solid var(--ink); border-radius: 12px;
+      width: min(92vw, 580px); box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35); padding: 18px;
+    }
+    .nb-search-input {
+      width: 100%; padding: 12px; font-family: var(--font-hand2); font-size: 1.3rem;
+      border: 2px solid var(--line); border-radius: 6px; background: var(--card); color: var(--text); outline: none;
+    }
+    .nb-search-results { margin-top: 12px; max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+    .nb-search-item { padding: 8px 12px; border-radius: 6px; background: var(--card); border: 1px solid var(--line); color: var(--text); }
+    .nb-search-item:hover { background: var(--hl-yellow); text-decoration: none; }
+    .nb-search-item b { font-family: var(--font-hand); font-size: 1.25rem; color: var(--ink); display: block; }
+    mark { background: var(--hl-yellow); color: inherit; padding: 0 2px; }
+
+    /* Print Formatting */
+    @media print {
+      .nb-topbar, .nb-sidebar, .nb-search-modal, #menuBtn, .nb-tabflag { display: none !important; }
+      body { background: #fff !important; color: #000 !important; }
+      .nb-main { margin: 0 !important; padding: 0 !important; }
+      .nb-sheet { box-shadow: none !important; max-width: 100% !important; padding: 0 !important; background: none !important; }
+      .nb-sheet::before, .nb-sheet::after { display: none !important; }
+      .nb-card, .nb-sticky, .nb-fbox { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Navigation Bar -->
+  <header class="nb-topbar">
+    <div class="nb-topbar__inner">
+      <button class="nb-btn-top" id="menuBtn" aria-label="Open Notebook Index">☰</button>
+      <a href="../index.html" class="nb-topbar__brand">📖 Brain Hub</a>
+      <div class="nb-topbar__crumb">Operations / <strong>ERP Business Applications · Master Notebook OS</strong></div>
+      <div class="nb-topbar__actions">
+        <button class="nb-btn-search" id="searchTrigger" aria-label="Open Search">
+          <span>Search Index</span> <kbd>/</kbd>
+        </button>
+        <button class="nb-btn-top" id="themeToggle" aria-label="Toggle Night/Day Mode">🌙</button>
+        <div class="nb-topbar__pct" id="pct">33%</div>
+      </div>
+    </div>
+    <div class="nb-topbar__bar"><i id="barfill" style="width: 33%;"></i></div>
+  </header>
+
+  <div class="nb-layout">
+    <div class="nb-sidebar-shade" id="shade"></div>
+    
+    <!-- Notebook Index Sidebar -->
+    <aside class="nb-sidebar" id="sidebar">
+      <h2>INDEX</h2>
+      <div class="nb-sidebar__grp">MODULE 1 · ARCHITECTURE</div>
+      <nav>
+        <a href="#sec-cover" class="is-done">
+          <span class="nb-sidebar__chip"></span>
+          <span class="nb-sidebar__label">Front Cover & Badges</span>
+          <span class="nb-sidebar__ck"></span>
+        </a>
+        <a href="#sec-arch" class="is-active">
+          <span class="nb-sidebar__chip"></span>
+          <span class="nb-sidebar__label">Three-Tier Architecture</span>
+          <span class="nb-sidebar__ck"></span>
+        </a>
+        <a href="#sec-matrix">
+          <span class="nb-sidebar__chip"></span>
+          <span class="nb-sidebar__label">Value Realization Matrix</span>
+          <span class="nb-sidebar__ck"></span>
+        </a>
+        <a href="#sec-quant">
+          <span class="nb-sidebar__chip"></span>
+          <span class="nb-sidebar__label">EOQ Inventory Formulation</span>
+          <span class="nb-sidebar__ck"></span>
+        </a>
+        <a href="#sec-exam">
+          <span class="nb-sidebar__chip"></span>
+          <span class="nb-sidebar__label">10-Mark Model Exam Answer</span>
+          <span class="nb-sidebar__ck"></span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Reading Content Canvas -->
+    <main class="nb-main">
+      <div class="nb-sheet" id="notebookSheet">
+        
+        <!-- Protruding Physical Tab Flag -->
+        <div class="nb-tabflag">ERP-01</div>
+
+        <!-- Cover Section -->
+        <section id="sec-cover">
+          <div class="nb-stamps">
+            <span class="nb-stamp nb-stamp--blue">Master Notebook</span>
+            <span class="nb-stamp nb-stamp--green">Exam Ready</span>
+            <span class="nb-stamp nb-stamp--amber">Harvard / Wharton Benchmarks</span>
+          </div>
+
+          <h1 class="nb-hand-underline">ERP Business Applications & Strategy</h1>
+          <p style="font-family: var(--font-hand2); font-size: 1.25rem; color: var(--pencil); margin-top: 0;">
+            <em>"Everything I need to master before the final examination."</em>
+          </p>
+
+          <!-- Canary Yellow Sticky Note with Washi Tape -->
+          <aside class="nb-sticky nb-sticky--yellow">
+            <h4 class="nb-sticky__title">💡 MBA Core Thesis</h4>
+            <p>An ERP system is not merely enterprise IT software; it is a <strong>corporate transformation strategy</strong>. If you automate an inefficient, fragmented process, you merely produce chaos at the speed of light.</p>
+          </aside>
+        </section>
+
+        <!-- Section 2: Architecture with Hand-Drawn Blueprint -->
+        <section id="sec-arch">
+          <h2 class="nb-sec-title">
+            <span style="font-family: var(--font-hand); color: var(--ink);">02. Three-Tier Client-Server Architecture</span>
+          </h2>
+          
+          <p>Three-Tier Architecture physically and logically decouples computing into three discrete operational layers: <span class="nb-hl nb-hl--blue">Presentation Tier</span> (Desktop/Mobile GUI), <span class="nb-hl nb-hl--yellow">Application Logic Tier</span> (Business Rules & Dispatcher), and <span class="nb-hl nb-hl--green">Database Tier</span> (Central Relational DB).</p>
+
+          <!-- Hand-Drawn Inline SVG Diagram -->
+          <figure class="nb-card nb-svg-wrap" role="img" aria-label="Hand-Drawn 3-Tier Architecture Blueprint">
+            <div class="nb-tape"></div>
+            <svg viewBox="0 0 800 320" width="100%" height="auto">
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 8 5 L 0 9 z" fill="var(--ink)" />
+                </marker>
+              </defs>
+              
+              <!-- Tier 1: Client GUI (Hand-Drawn Wobbly Stroke) -->
+              <path d="M 30 40 Q 130 38 230 40 Q 232 160 230 280 Q 130 282 30 280 Q 28 160 30 40 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/>
+              <text x="130" y="74" text-anchor="middle" font-family="var(--font-hand)" font-size="24" font-weight="700" fill="var(--ink)">Tier 1: Client GUI</text>
+              
+              <rect x="50" y="95" width="160" height="42" rx="6" fill="var(--hl-blue)" stroke="var(--ink)" stroke-width="1.6"/>
+              <text x="130" y="122" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">Desktop SAP GUI</text>
+              <rect x="50" y="150" width="160" height="42" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.5"/>
+              <text x="130" y="177" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">Web / Fiori Browser</text>
+              <rect x="50" y="205" width="160" height="42" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.5"/>
+              <text x="130" y="232" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">Warehouse Handheld RF</text>
+
+              <!-- Connector 1 -> 2 -->
+              <path d="M 230 160 Q 265 155 298 160" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-dasharray="4" marker-end="url(#arrow)"/>
+              <text x="265" y="145" text-anchor="middle" font-family="var(--font-hand2)" font-size="14" fill="var(--red)">TCP/IP</text>
+
+              <!-- Tier 2: Application Server -->
+              <path d="M 300 40 Q 400 38 500 40 Q 502 160 500 280 Q 400 282 300 280 Q 298 160 300 40 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/>
+              <text x="400" y="74" text-anchor="middle" font-family="var(--font-hand)" font-size="24" font-weight="700" fill="var(--ink)">Tier 2: App Logic</text>
+              
+              <rect x="320" y="95" width="160" height="42" rx="6" fill="var(--hl-yellow)" stroke="var(--ink)" stroke-width="1.6"/>
+              <text x="400" y="122" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">Business Rules Engine</text>
+              <rect x="320" y="150" width="160" height="42" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.5"/>
+              <text x="400" y="177" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">Workflow Coordinator</text>
+              <rect x="320" y="205" width="160" height="42" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.5"/>
+              <text x="400" y="232" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">Transaction Dispatcher</text>
+
+              <!-- Connector 2 -> 3 -->
+              <path d="M 500 160 Q 535 162 568 160" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-dasharray="4" marker-end="url(#arrow)"/>
+              <text x="535" y="145" text-anchor="middle" font-family="var(--font-hand2)" font-size="14" fill="var(--red)">SQL</text>
+
+              <!-- Tier 3: Central Database -->
+              <path d="M 570 40 Q 670 38 770 40 Q 772 160 770 280 Q 670 282 570 280 Q 568 160 570 40 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/>
+              <text x="670" y="74" text-anchor="middle" font-family="var(--font-hand)" font-size="24" font-weight="700" fill="var(--ink)">Tier 3: Database</text>
+              
+              <rect x="590" y="110" width="160" height="90" rx="8" fill="var(--hl-green)" stroke="var(--ink)" stroke-width="1.8"/>
+              <text x="670" y="150" text-anchor="middle" font-family="var(--font-hand)" font-size="19" font-weight="700" fill="var(--ink)">Single Golden Record</text>
+              <text x="670" y="175" text-anchor="middle" font-family="var(--font-body)" font-size="13" font-weight="600" fill="var(--pencil)">HANA / Oracle / SQL Server</text>
+              <text x="670" y="245" text-anchor="middle" font-family="var(--font-hand2)" font-size="15" fill="var(--green)">✓ ACID Guaranteed</text>
+            </svg>
+            <figcaption>✏️ <strong>Figure 2.1:</strong> Hand-drawn Three-Tier Client-Server Architecture sketch.</figcaption>
+            <div class="nb-tape nb-tape--right"></div>
+          </figure>
+
+          <!-- Coral Pink Warning Note with Pushpin -->
+          <aside class="nb-sticky nb-sticky--pink nb-sticky--pin">
+            <h4 class="nb-sticky__title">🚨 Exam Trap: Network Latency!</h4>
+            <p>Students frequently confuse 3-Tier with 2-Tier. In 3-Tier, client PCs never execute SQL directly against the database; all database queries pass strictly through Tier-2 application servers to prevent client-side security breaches and connection pool saturation.</p>
+          </aside>
+        </section>
+
+        <!-- Section 3: 2x2 Strategic Matrix -->
+        <section id="sec-matrix">
+          <h2 class="nb-sec-title">
+            <span style="font-family: var(--font-hand); color: var(--ink);">03. Value Realization Matrix</span>
+          </h2>
+
+          <div class="nb-matrix-2x2">
+            <div class="nb-matrix-2x2__y">Strategic Differentiation & Value ↑</div>
+            <div class="nb-matrix-2x2__grid">
+              <div class="nb-matrix-quadrant">
+                <h4>Quadrant I: Under-Leveraged</h4>
+                <p>High strategic capability that suffers from user resistance and poor adoption.</p>
+              </div>
+              <div class="nb-matrix-quadrant is-star">
+                <h4>Quadrant II: Transformation Core ⭐</h4>
+                <p>High strategic value with high user adoption driving real-time operational agility.</p>
+              </div>
+              <div class="nb-matrix-quadrant is-pit">
+                <h4>Quadrant III: Value Sink ⚠️</h4>
+                <p>Customized legacy routines consuming IT budget with zero strategic payoff.</p>
+              </div>
+              <div class="nb-matrix-quadrant">
+                <h4>Quadrant IV: Operational Hygiene</h4>
+                <p>Commodity admin tasks (payroll, expenses) functioning reliably without differentiation.</p>
+              </div>
+            </div>
+            <div class="nb-matrix-2x2__x">User Adoption & System Usability →</div>
+          </div>
+        </section>
+
+        <!-- Section 4: Quantitative EOQ Formula -->
+        <section id="sec-quant">
+          <h2 class="nb-sec-title">
+            <span style="font-family: var(--font-hand); color: var(--ink);">04. Mathematical Inventory Formulation</span>
+          </h2>
+
+          <div class="nb-fbox">
+            <span class="nb-fbox__label">Economic Order Quantity (EOQ) Model</span>
+            <div class="nb-fbox__math">EOQ = √ [ (2 · D · S) / H ]</div>
+            <dl class="nb-fbox__dict">
+              <dt>D</dt><dd>Annual Demand (units/year)</dd>
+              <dt>S</dt><dd>Fixed Order Setup Cost ($/order)</dd>
+              <dt>H</dt><dd>Holding Cost per Unit per Year ($/unit/year)</dd>
+            </dl>
+          </div>
+        </section>
+
+        <!-- Section 5: Model Exam Answer Card -->
+        <section id="sec-exam">
+          <h2 class="nb-sec-title">
+            <span style="font-family: var(--font-hand); color: var(--ink);">05. Model Exam Answer (10 Marks)</span>
+          </h2>
+
+          <article class="nb-card">
+            <div class="nb-tape"></div>
+            <div class="nb-stamps">
+              <span class="nb-stamp nb-stamp--red">FAQ #01</span>
+              <span class="nb-stamp nb-stamp--amber">10 Marks Standard</span>
+              <span class="nb-stamp nb-stamp--blue">⏱ 12 Minutes</span>
+            </div>
+            <h3 style="margin-top: 8px;">"Explain ERP as both a technology strategy and business strategy."</h3>
+            
+            <div style="background: var(--hl-yellow); padding: 8px 12px; border-radius: 4px; font-size: 0.95rem; margin: 12px 0;">
+              <strong>Marking Rubric:</strong> Technology Strategy (3 Marks) + Business Strategy (3 Marks) + Interlocking Mechanism (4 Marks).
+            </div>
+            
+            <p><strong>1. Technology Strategy (3 Marks):</strong> As an IT strategy, ERP eliminates siloed departmental databases by establishing a single centralized relational database schema. It standardizes communication across all operating entities and provides a 3-tier client-server foundation.</p>
+            
+            <p><strong>2. Business Strategy (3 Marks):</strong> As a corporate strategy, ERP mandates Business Process Re-engineering (BPR). It eliminates departmental friction, aligns operational execution with strategic KPIs, and provides executive leadership with real-time auditability.</p>
+            
+            <p><strong>3. Interlocking Mechanism (4 Marks):</strong> The technology infrastructure provides transaction horsepower, while the business strategy directs what data must flow and how decisions are made. A failure to align both results in automated inefficiency.</p>
+            
+            <div class="nb-tape nb-tape--right"></div>
+          </article>
+        </section>
+
+        <!-- Exam Readiness Audit Checklist -->
+        <section id="sec-audit" style="margin-top: 30px;">
+          <h3 class="nb-hand-underline">High-Yield Exam Readiness Audit</h3>
+          <ul class="nb-checklist">
+            <li><label><input type="checkbox" checked> <span>Can draw and label all 3 tiers of Client-Server architecture from memory.</span></label></li>
+            <li><label><input type="checkbox"> <span>Can explain Plossl's First Law of Flow and lead time control.</span></label></li>
+            <li><label><input type="checkbox"> <span>Can define all 4 SAP Item Types (ROH, HALB, FERT, HAWA).</span></label></li>
+          </ul>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Library Card Search Modal -->
+  <div class="nb-search-modal" id="searchModal" role="dialog" aria-modal="true" aria-label="Search Notebook">
+    <div class="nb-search-card">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+        <span style="font-family: var(--font-hand); font-weight: 700; font-size: 1.5rem; color: var(--ink);">📚 Library Index Card Search</span>
+        <button id="closeSearch" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">✕</button>
+      </div>
+      <input type="search" class="nb-search-input" id="searchInput" placeholder="Type keyword (e.g. '3-Tier', 'Plossl', 'BOM', 'ROH')..." autocomplete="off">
+      <div class="nb-search-results" id="searchResults">
+        <p style="color: var(--pencil); font-family: var(--font-hand2); font-size: 1.1rem;">Type at least 2 letters to search across sections, formulas, and FAQs...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      'use strict';
+      
+      // Theme Toggle
+      const root = document.documentElement;
+      const themeBtn = document.getElementById('themeToggle');
+      function applyTheme(t) {
+        root.setAttribute('data-theme', t);
+        if (themeBtn) themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+      }
+      if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          applyTheme(next);
+        });
+      }
+
+      // Sidebar Drawer
+      const side = document.getElementById('sidebar');
+      const shade = document.getElementById('shade');
+      const menuBtn = document.getElementById('menuBtn');
+      function toggleSide(open) {
+        side.classList.toggle('is-open', open);
+        shade.classList.toggle('is-on', open);
+      }
+      if (menuBtn) menuBtn.addEventListener('click', () => toggleSide(true));
+      if (shade) shade.addEventListener('click', () => toggleSide(false));
+
+      // Search Modal
+      const modal = document.getElementById('searchModal');
+      const openBtn = document.getElementById('searchTrigger');
+      const closeBtn = document.getElementById('closeSearch');
+      const sInput = document.getElementById('searchInput');
+      const sRes = document.getElementById('searchResults');
+
+      function openSearch() {
+        modal.classList.add('is-active');
+        setTimeout(() => sInput.focus(), 50);
+      }
+      function closeSearch() {
+        modal.classList.remove('is-active');
+        sInput.value = '';
+      }
+
+      if (openBtn) openBtn.addEventListener('click', openSearch);
+      if (closeBtn) closeBtn.addEventListener('click', closeSearch);
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeSearch(); });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+          e.preventDefault(); openSearch();
+        }
+        if (e.key === 'Escape') { closeSearch(); toggleSide(false); }
+      });
+
+      sInput.addEventListener('input', () => {
+        const q = sInput.value.trim().toLowerCase();
+        if (q.length < 2) {
+          sRes.innerHTML = '<p style="color: var(--pencil); font-family: var(--font-hand2); font-size: 1.1rem;">Type at least 2 letters...</p>';
+          return;
+        }
+        const sections = [
+          { id: 'sec-cover', title: 'Front Cover & Badges', text: 'ERP business applications MBA core thesis transformation strategy' },
+          { id: 'sec-arch', title: 'Three-Tier Architecture Blueprint', text: 'three-tier client-server architecture presentation tier application logic database tier' },
+          { id: 'sec-matrix', title: 'Value Realization Matrix', text: 'strategic differentiation user adoption quadrant quick wins big bets' },
+          { id: 'sec-quant', title: 'EOQ Inventory Formulation', text: 'economic order quantity formula demand holding cost setup cost' },
+          { id: 'sec-exam', title: '10-Mark Model Exam Answer', text: 'faq 01 technology strategy business strategy interlocking mechanism' }
+        ];
+        const matches = sections.filter(s => s.text.includes(q) || s.title.toLowerCase().includes(q));
+        if (!matches.length) {
+          sRes.innerHTML = '<p style="color: var(--pencil); font-family: var(--font-hand2); font-size: 1.1rem;">No matching notebook section found.</p>';
+          return;
+        }
+        sRes.innerHTML = matches.map(m => `
+          <a href="#${m.id}" class="nb-search-item" onclick="document.getElementById('searchModal').classList.remove('is-active')">
+            <b>${m.title}</b>
+            <span style="font-size:0.9rem; color:var(--pencil);">${m.text}</span>
+          </a>
+        `).join('');
+      });
+    })();
+  </script>
+</body>
+</html>

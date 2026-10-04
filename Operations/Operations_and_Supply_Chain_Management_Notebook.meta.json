@@ -1,0 +1,26 @@
+{
+  "title": "Operations & Supply Chain Management · Processes, Capacity & S&OP",
+  "slug": "operations-and-supply-chain-management",
+  "subject": "Operations",
+  "category": "Operations Management",
+  "description": "Foundational MBA guide to operations and supply chain management: process flow analysis, Little's Law, Theory of Constraints, Lean production systems, the bullwhip effect, and Sales & Operations Planning (S&OP).",
+  "file": "Operations_and_Supply_Chain_Management_Notebook.html",
+  "tags": [
+    "Operations",
+    "Supply Chain",
+    "Little's Law",
+    "Capacity",
+    "Lean",
+    "S&OP",
+    "Theory of Constraints",
+    "Inventory"
+  ],
+  "status": "draft",
+  "source": "curriculum/mba-foundation",
+  "version": "1.0.0",
+  "updated": "2026-10-04",
+  "updatedAt": "2026-10-04",
+  "featured": false,
+  "readTimeMinutes": 29,
+  "questionsCount": 10
+}

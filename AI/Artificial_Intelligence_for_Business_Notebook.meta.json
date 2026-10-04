@@ -1,0 +1,25 @@
+{
+  "title": "Artificial Intelligence for Business · Strategy, LLMs & Agents",
+  "slug": "artificial-intelligence-for-business",
+  "subject": "AI",
+  "category": "Artificial Intelligence",
+  "description": "Executive MBA foundation guide to artificial intelligence: Machine Learning paradigms, Generative AI & Transformer architectures, Autonomous AI Agents (ReAct), ROAI frameworks, and responsible AI governance.",
+  "file": "Artificial_Intelligence_for_Business_Notebook.html",
+  "tags": [
+    "AI",
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Generative AI",
+    "LLM",
+    "AI Agents",
+    "AI Strategy"
+  ],
+  "status": "draft",
+  "source": "curriculum/mba-foundation",
+  "version": "1.0.0",
+  "updated": "2026-10-04",
+  "updatedAt": "2026-10-04",
+  "featured": false,
+  "readTimeMinutes": 29,
+  "questionsCount": 10
+}

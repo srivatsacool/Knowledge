@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- NOTEBOOK METADATA: AI Agents & Authors should customize these tags -->
+<title>Economic Order Quantity (EOQ) · Classical Model &amp; Inventory Blueprints</title>
+<meta name="description" content="Comprehensive academic study notebook on the Classical Economic Order Quantity (EOQ) model: calculus derivation, total cost curves, worked numerical cases, sensitivity analysis, and exam defense frameworks.">
+<meta name="keywords" content="Operations, Inventory Management, EOQ, Supply Chain, Optimization, Cost Accounting">
+<meta name="author" content="Brain Knowledge Hub / AI Agent">
+
+<!-- Academic & Script Typography -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%92%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* Academic Notebook Binder Design Tokens */
+:root {
+  --paper: #fcf8ee; --desk: #e9e1cf; --rule: #d6e3ef; --margin: #e28b8b; --ink: #1d3c8c; --ink2: #2f5fc4;
+  --text: #25262b; --pencil: #5a5d66; --line: #c9bfa8; --card: #fffdf7; --shadow: 0 1px 2px rgba(60,45,20,.12),0 6px 18px rgba(60,45,20,.10);
+  --hy: rgba(255,224,61,.7); --hg: rgba(120,228,156,.62); --hp: rgba(255,138,188,.5); --hb: rgba(110,196,255,.5);
+  --st-y: #fff2a1; --st-r: #ffd6d3; --st-b: #d9ecff; --st-g: #d8f5dc; --st-text: #2a2a2a;
+  --red: #c2362f; --green: #1d7a45; --amber: #b86e00;
+  --hand: "Caveat","Segoe Print","Bradley Hand",cursive;
+  --hand2: "Patrick Hand","Segoe Print",cursive;
+  --body: "Source Sans 3","Segoe UI",Roboto,sans-serif;
+  --math: "STIX Two Text","Cambria Math",Georgia,serif;
+  --lh: 30px; --tab: #1d3c8c; --side: 300px;
+}
+html[data-theme="dark"] {
+  --paper: #18202e; --desk: #0f141d; --rule: #243049; --margin: #7c3d48; --ink: #9cc0ff; --ink2: #7fb0ff;
+  --text: #e7e9ef; --pencil: #aab3c5; --line: #344058; --card: #1d2636; --shadow: 0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);
+  --hy: rgba(255,214,0,.30); --hg: rgba(70,220,130,.28); --hp: rgba(255,105,170,.30); --hb: rgba(80,170,255,.30);
+  --st-y: #efe2a0; --st-r: #f1c9c6; --st-b: #cfe0f5; --st-g: #cdebd2; --st-text: #1d1d1d;
+  --red: #ff8a80; --green: #7be0a4; --amber: #ffc266;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 76px; }
+body { margin: 0; background: var(--desk); color: var(--text); font-family: var(--body); font-size: 17px; line-height: 1.65; overflow-x: hidden; }
+a { color: var(--ink2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 3px solid #f0a020; outline-offset: 2px; border-radius: 4px; }
+
+/* Top Navigation Bar */
+.top { position: fixed; top: 0; left: 0; right: 0; z-index: 40; background: var(--paper); border-bottom: 2px solid var(--line); box-shadow: 0 2px 0 var(--rule); }
+.top-in { display: flex; align-items: center; gap: 8px; height: 58px; padding: 0 12px; }
+.ib { min-width: 42px; height: 42px; border: 0; background: transparent; color: var(--text); border-radius: 8px; font-size: 1.2rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.ib:hover { background: var(--hy); }
+.brand { font-family: var(--hand); font-weight: 700; font-size: 1.55rem; color: var(--ink); white-space: nowrap; line-height: 1; }
+.cur { flex: 1; min-width: 0; font-family: var(--hand2); font-size: 1.05rem; color: var(--pencil); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-left: 8px; border-left: 2px dotted var(--line); }
+.pct { font-family: var(--hand); font-weight: 700; font-size: 1.3rem; color: var(--ink); min-width: 3.2em; text-align: right; }
+.bar { height: 4px; background: var(--rule); }
+.bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--hg), var(--hy)); transition: width .3s; }
+
+/* Sidebar Drawer */
+.side { position: fixed; z-index: 50; top: 0; bottom: 0; left: 0; width: min(86vw, var(--side)); background: var(--paper); border-right: 2px solid var(--line); transform: translateX(-102%); transition: transform .25s; overflow-y: auto; padding: 16px 14px; background-image: repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh)); }
+.side.open { transform: none; }
+.shade { position: fixed; inset: 0; background: rgba(10,12,18,.45); z-index: 45; display: none; }
+.shade.on { display: block; }
+.side h2 { font-family: var(--hand); font-size: 1.85rem; color: var(--ink); margin: 0 0 6px; }
+.side .grp { font-family: var(--hand2); color: var(--pencil); font-size: 0.95rem; margin: 14px 0 4px; }
+.side nav a { display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 4px 8px; border-radius: 6px; color: var(--text); text-decoration: none; line-height: 1.25; }
+.side nav a:hover { background: var(--hy); }
+.side nav a.on { background: var(--card); box-shadow: var(--shadow); }
+.side nav a .chip { width: 8px; border-radius: 3px; background: var(--tab); min-height: 24px; }
+.side nav a .t { flex: 1; font-size: 0.95rem; }
+.side nav a .ck { width: 20px; height: 20px; border: 2px solid var(--pencil); border-radius: 4px; display: grid; place-items: center; font-size: 0.85rem; color: var(--green); font-weight: 700; }
+.side nav a.done .ck::after { content: "✓"; }
+
+@media (min-width: 1100px) {
+  .side { transform: none; top: 58px; z-index: 30; box-shadow: none; width: var(--side); }
+  .side .close, #menuBtn { display: none; }
+  .wrap { margin-left: var(--side); }
+}
+
+/* Notebook Binder Page Layout */
+.wrap { padding: 74px 12px 40px; }
+.sheet {
+  position: relative; max-width: 920px; margin: 0 auto; background: var(--paper); border-radius: 6px 14px 14px 6px; box-shadow: var(--shadow);
+  padding: 24px 20px 36px 36px;
+  background-image: linear-gradient(90deg, transparent 22px, var(--margin) 22px, var(--margin) 24px, transparent 24px), repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh));
+  background-position: 0 0, 0 58px;
+}
+@media (min-width: 760px) {
+  .sheet {
+    padding: 34px 54px 44px 92px;
+    background-image: linear-gradient(90deg, transparent 66px, var(--margin) 66px, var(--margin) 68px, transparent 68px), repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh));
+  }
+  .sheet::before {
+    content: ""; position: absolute; left: -15px; top: 18px; bottom: 18px; width: 34px;
+    background: radial-gradient(circle at 17px 15px, var(--desk) 0 6.5px, transparent 7.5px) 0 0/34px 34px repeat-y;
+  }
+  .sheet::after {
+    content: ""; position: absolute; left: -22px; top: 18px; bottom: 18px; width: 22px;
+    background: repeating-linear-gradient(transparent 0 8px, #8d8f96 8px 11px, #c8cad0 11px 13px, transparent 13px 34px); opacity: .85; border-radius: 4px;
+  }
+}
+
+.page { display: none; }
+.page.on { display: block; }
+
+/* Typography & Visual Blocks inside Notebook */
+h1.title { font-family: var(--hand); font-size: 2.6rem; color: var(--ink); margin: 0 0 8px; line-height: 1.15; }
+h2.sec { font-family: var(--hand); font-size: 2.1rem; color: var(--ink); margin: 24px 0 12px; }
+p { margin: 0 0 14px; }
+.sticky { background: var(--st-y); color: var(--st-text); padding: 14px 18px; border-radius: 2px 2px 12px 2px; box-shadow: var(--shadow); margin: 16px 0; font-family: var(--hand2); font-size: 1.15rem; transform: rotate(-0.5deg); }
+.sticky.blue { background: var(--st-b); transform: rotate(0.5deg); }
+.sticky.green { background: var(--st-g); }
+.sticky.pink { background: var(--st-r); transform: rotate(-0.8deg); }
+
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 16px; margin: 16px 0; box-shadow: var(--shadow); }
+.blueprint { background: var(--card); border: 2px solid var(--ink); border-radius: 8px; padding: 18px; margin: 18px 0; font-family: var(--body); }
+.blueprint h3 { font-family: var(--hand); font-size: 1.55rem; color: var(--ink); margin-top: 0; }
+
+/* Study Timer Component */
+.timer-box { background: var(--card); border: 2px dashed var(--line); border-radius: 8px; padding: 12px 16px; display: inline-flex; align-items: center; gap: 12px; margin: 12px 0; }
+.clock { font-family: var(--hand); font-size: 1.6rem; font-weight: 700; color: var(--red); }
+.tbtn { font-family: var(--hand2); font-size: 1.05rem; padding: 4px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); cursor: pointer; }
+.tbtn:hover { background: var(--hy); }
+
+/* Search Overlay */
+#search { position: fixed; inset: 0; background: rgba(10,12,18,.6); z-index: 60; display: none; padding: 15vh 14px; }
+#search.on { display: flex; justify-content: center; }
+.sbox { background: var(--paper); border: 2px solid var(--line); border-radius: 12px; width: 100%; max-width: 600px; padding: 16px; box-shadow: var(--shadow); max-height: 70vh; display: flex; flex-direction: column; }
+.sin { font-size: 1.15rem; font-family: var(--body); padding: 10px; border: 2px solid var(--line); border-radius: 6px; outline: none; background: var(--card); color: var(--text); }
+.sres { overflow-y: auto; margin-top: 12px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.sres a { padding: 8px 12px; border-radius: 6px; background: var(--card); color: var(--text); text-decoration: none; border: 1px solid var(--line); font-size: 0.95rem; }
+.sres a:hover { background: var(--hy); }
+.sres a mark { background: #ffe03d; }
+
+/* Print Styles */
+@media print {
+  .top, .side, .timer-box, .ib, #search { display: none !important; }
+  .wrap { margin: 0 !important; padding: 0 !important; }
+  .sheet { box-shadow: none !important; border: none !important; max-width: 100% !important; padding: 0 !important; }
+  .page { display: block !important; page-break-after: always; }
+}
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<header class="top">
+  <div class="top-in">
+    <button class="ib" id="menuBtn" aria-label="Open contents">☰</button>
+    <a href="#" class="brand">Study Notebook</a>
+    <div class="cur" id="currentSection">Loading...</div>
+    <div class="pct" id="readPercent">0%</div>
+    <button class="ib" id="searchBtn" title="Search (/)">🔍</button>
+    <button class="ib" id="themeBtn" title="Toggle Theme">🌓</button>
+    <button class="ib" id="printBtn" title="Print Notebook">🖨️</button>
+  </div>
+  <div class="bar"><i id="progressBar"></i></div>
+</header>
+
+<div class="shade" id="shade"></div>
+
+<!-- Sidebar Index Navigation -->
+<aside class="side" id="sidebar">
+  <button class="ib close" id="closeSidebar" aria-label="Close menu">&times;</button>
+  <h2>Index</h2>
+  <div class="grp">Core Modules</div>
+  <nav id="navLinks">
+
+    <a href="#sec1" data-id="sec1" class="on">
+      <span class="chip"></span>
+      <span class="t">01. Conceptual Foundations &amp; Trade-Off Mechanics</span>
+      <span class="ck"></span>
+    </a>
+  
+
+    <a href="#sec2" data-id="sec2" class="">
+      <span class="chip"></span>
+      <span class="t">02. Calculus Derivation &amp; Cost Curve Architecture</span>
+      <span class="ck"></span>
+    </a>
+  
+
+    <a href="#sec3" data-id="sec3" class="">
+      <span class="chip"></span>
+      <span class="t">03. Applied Numerical Master Case &amp; Reorder Point</span>
+      <span class="ck"></span>
+    </a>
+  
+
+    <a href="#sec4" data-id="sec4" class="">
+      <span class="chip"></span>
+      <span class="t">04. Exam Defense &amp; Model Question Bank</span>
+      <span class="ck"></span>
+    </a>
+  
+  </nav>
+</aside>
+
+<!-- Main Notebook Sheet -->
+<div class="wrap">
+  <main class="sheet">
+
+    <section class="page on" id="sec1" data-title="01. Conceptual Foundations &amp; Trade-Off Mechanics">
+      <h1 class="title">Conceptual Foundations &amp; Trade-Off Mechanics</h1>
+      
+      
+      <div class="sticky blue">
+        <strong>💡 Key Learning Objective:</strong> Master the fundamental trade-off between inventory holding costs and ordering costs, and understand the governing assumptions of the Ford W. Harris (1913) classical model.
+      </div>
+
+      
+      <div class="timer-box timer" data-dur="600">
+        <span>⏱ Section Target: 10 min</span>
+        <span class="clock">10:00</span>
+        <button class="tbtn go">▶ Start</button>
+        <button class="tbtn rs">↺ Reset</button>
+      </div>
+
+      <p>The <strong>Economic Order Quantity (EOQ)</strong> is the foundational model of deterministic inventory management, originally derived by Ford Whitman Harris in 1913 and later popularized by R. H. Wilson. It calculates the optimal order size $Q^*$ that minimizes total annual inventory management costs.</p><div class="sticky yellow"><strong>💡 The Core Trade-Off:</strong> Ordering costs per year decrease as order size increases (fewer orders placed), whereas holding costs per year increase linearly with order size (more average inventory sitting in warehouses). The optimal point $Q^*$ occurs at their exact intersection.</div><div class="card"><h3>Governing Axiomatic Assumptions</h3><ul><li><strong>Deterministic Demand ($D$):</strong> Annual demand is constant, known, and evenly distributed over time.</li><li><strong>Instantaneous Replenishment:</strong> The entire batch $Q$ arrives instantaneously in a single delivery (lead time $L$ is constant and known).</li><li><strong>Fixed Unit Cost ($C$):</strong> Purchase price per unit is constant; no quantity discounts are offered in the basic model.</li><li><strong>Fixed Setup/Ordering Cost ($S$):</strong> Every order incurs a fixed administrative and freight cost, regardless of the quantity ordered.</li><li><strong>Constant Carrying Cost ($H$):</strong> Cost to hold one unit for one year ($H = C \times i$) is constant, including capital costs, insurance, taxes, obsolescence, and storage.</li><li><strong>Zero Stockouts Allowed:</strong> Demand is always fulfilled immediately; shortages and backorders are forbidden.</li></ul></div>
+    </section>
+  
+
+    <section class="page " id="sec2" data-title="02. Calculus Derivation &amp; Cost Curve Architecture">
+      <h2 class="sec">Calculus Derivation &amp; Cost Curve Architecture</h2>
+      
+      
+      <div class="sticky blue">
+        <strong>💡 Key Learning Objective:</strong> Derive the EOQ formula from first principles using single-variable differential calculus and prove global convexity via second-order conditions.
+      </div>
+
+      
+      <div class="timer-box timer" data-dur="900">
+        <span>⏱ Section Target: 15 min</span>
+        <span class="clock">15:00</span>
+        <button class="tbtn go">▶ Start</button>
+        <button class="tbtn rs">↺ Reset</button>
+      </div>
+
+      <p>Total Annual Inventory Cost ($TC$) is expressed as the sum of annual purchase cost, annual ordering cost, and annual holding cost:</p><div class="blueprint"><h3>Total Annual Cost Equation</h3><p style="font-size: 1.15rem; font-family: var(--math); text-align: center; margin: 16px 0;">$TC(Q) = D \cdot C + \left(\frac{D}{Q}\right)S + \left(\frac{Q}{2}\right)H$</p><ul><li><strong>Annual Purchase Cost:</strong> $D \cdot C$ (independent of $Q$)</li><li><strong>Annual Ordering Cost:</strong> $\frac{D}{Q} \cdot S$ (number of orders per year multiplied by fixed cost per order $S$)</li><li><strong>Annual Carrying Cost:</strong> $\frac{Q}{2} \cdot H$ (average inventory level $\bar{I} = Q/2$ multiplied by unit holding cost $H$)</li></ul></div><div class="card"><h3>First-Order Condition (Minimization Proof)</h3><p>Differentiating total variable cost $TVC(Q) = \frac{DS}{Q} + \frac{QH}{2}$ with respect to $Q$ and setting the derivative equal to zero:</p><p style="font-family: var(--math); font-size: 1.1rem; text-align: center;">$\frac{d(TVC)}{dQ} = -\frac{D \cdot S}{Q^2} + \frac{H}{2} = 0$</p><p>Equating the marginal ordering cost to marginal carrying cost:</p><p style="font-family: var(--math); font-size: 1.25rem; text-align: center; color: var(--ink); font-weight: 700;">$\frac{D \cdot S}{Q^2} = \frac{H}{2} \implies Q^2 = \frac{2DS}{H} \implies Q^* = \sqrt{\frac{2DS}{H}}$</p></div><div class="sticky blue"><strong>Proof of Global Minimum:</strong> Taking the second derivative:$\frac{d^2(TVC)}{dQ^2} = \frac{2DS}{Q^3} > 0 \quad \forall \, Q, D, S > 0$Since the second derivative is strictly positive for all physical parameter values, the curve is strictly convex and $Q^*$ is the unique global minimum.</div>
+    </section>
+  
+
+    <section class="page " id="sec3" data-title="03. Applied Numerical Master Case &amp; Reorder Point">
+      <h2 class="sec">Applied Numerical Master Case &amp; Reorder Point</h2>
+      
+      
+      <div class="sticky blue">
+        <strong>💡 Key Learning Objective:</strong> Solve an end-to-end industrial scenario, compute the Reorder Point (ROP), and evaluate square-root sensitivity to demand and cost shocks.
+      </div>
+
+      
+      <div class="timer-box timer" data-dur="1200">
+        <span>⏱ Section Target: 20 min</span>
+        <span class="clock">20:00</span>
+        <button class="tbtn go">▶ Start</button>
+        <button class="tbtn rs">↺ Reset</button>
+      </div>
+
+      <p>A high-tech industrial assembly plant consumes specialized precision micro-valves with the following parameters:</p><div class="card"><h3>Scenario Input Parameters</h3><ul><li>Annual Demand ($D$): <strong>12,000 units/year</strong></li><li>Order / Setup Cost ($S$): <strong>$60.00 per order</strong></li><li>Unit Holding Cost ($H$): <strong>$4.00 per unit/year</strong> (Inventory carrying rate $i = 20\%$ on unit cost $C = \$20.00$)</li><li>Operating Schedule: <strong>300 working days/year</strong></li><li>Supplier Lead Time ($L$): <strong>5 working days</strong></li></ul></div><div class="blueprint"><h3>Step-by-Step Numerical Solution</h3><ol><li><strong>Optimal Batch Size ($Q^*$):</strong>$Q^* = \sqrt{\frac{2 \times 12,000 \times 60}{4}} = \sqrt{360,000} = 600 \text{ units}$</li><li><strong>Annual Order Frequency ($N$):</strong>$N = \frac{D}{Q^*} = \frac{12,000}{600} = 20 \text{ orders per year}$</li><li><strong>Order Cycle Time ($T$):</strong>$T = \frac{300 \text{ days}}{20} = 15 \text{ working days between orders}$</li><li><strong>Total Annual Variable Cost ($TVC^*$):</strong>$TVC^* = \left(\frac{12,000}{600} \times 60\right) + \left(\frac{600}{2} \times 4\right) = \$1,200 + \$1,200 = \$2,400.00$<em>Notice: At optimality, annual ordering cost exactly equals annual holding cost ($1,200 = $1,200).</em></li><li><strong>Reorder Point ($ROP$):</strong>$\text{Daily Demand } d = \frac{12,000}{300} = 40 \text{ units/day}$$ROP = d \times L = 40 \times 5 = 200 \text{ units}$<em>Order trigger: Place a replenishment order of 600 units the instant warehouse stock drops to 200 units.</em></li></ol></div><div class="sticky green"><strong>Robustness & Sensitivity Analysis:</strong> The square-root property creates an exceptionally forgiving cost curve. If the plant orders $Q = 750$ units (a $+25\%$ deviation above optimal), the total variable cost increases from $\$2,400$ to only $\$2,460$ (a mere $+2.5\%$ cost penalty).</div>
+    </section>
+  
+
+    <section class="page " id="sec4" data-title="04. Exam Defense &amp; Model Question Bank">
+      <h2 class="sec">Exam Defense &amp; Model Question Bank</h2>
+      
+      
+      <div class="sticky blue">
+        <strong>💡 Key Learning Objective:</strong> Prepare for high-level technical exams and interview defense regarding model limitations, POQ extensions, and quantity discount pricing.
+      </div>
+
+      
+      <div class="timer-box timer" data-dur="900">
+        <span>⏱ Section Target: 15 min</span>
+        <span class="clock">15:00</span>
+        <button class="tbtn go">▶ Start</button>
+        <button class="tbtn rs">↺ Reset</button>
+      </div>
+
+      <div class="card"><h3>Question 1: What happens to EOQ when demand quadruples ($4D$)?</h3><p><strong>Model Answer:</strong> Because demand enters under the square root sign, $Q^*_{\text{new}} = \sqrt{\frac{2(4D)S}{H}} = \sqrt{4} \times \sqrt{\frac{2DS}{H}} = 2 \times Q^*$. Order quantity only doubles, while order frequency ($N = D/Q$) also doubles. Inventory does not scale linearly with business volume—a classic demonstration of economies of scale in supply chain operations.</p></div><div class="card"><h3>Question 2: How does the Economic Production Quantity (EPQ / POQ) modify Classical EOQ?</h3><p><strong>Model Answer:</strong> Classical EOQ assumes infinite replenishment rate ($p = \infty$). When units are manufactured in-house at a daily rate $p$ while being depleted at rate $d$ ($p > d$), inventory accumulates at rate $(p - d)$. The maximum inventory is $Q(1 - d/p)$, reducing holding costs and expanding optimal batch size to:$Q^*_{\text{EPQ}} = \sqrt{\frac{2DS}{H(1 - d/p)}}$</p></div><div class="card"><h3>Question 3: How should quantity discounts be analyzed?</h3><p><strong>Model Answer:</strong> Quantity discount analysis requires evaluating total cost including purchase price ($TC = DC + \frac{DS}{Q} + \frac{QH}{2}$). The procedure: (1) Compute EOQ for the lowest price bracket; (2) If feasible, that is the optimal size; (3) If not feasible, compute total cost at each price breakpoint price drop and select the quantity with minimum total cost.</p></div>
+    </section>
+  
+  </main>
+</div>
+
+<!-- Search Modal -->
+<div id="search">
+  <div class="sbox">
+    <input type="text" class="sin" id="sinput" placeholder="Search keywords across all sections...">
+    <div class="sres" id="sres"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var pages = [].slice.call(document.querySelectorAll("section.page"));
+  var nav = document.getElementById("navLinks");
+  var cur = document.getElementById("currentSection");
+  var pct = document.getElementById("readPercent");
+  var bar = document.getElementById("progressBar");
+  var side = document.getElementById("sidebar");
+  var shade = document.getElementById("shade");
+
+  function openMenu() { side.classList.add("open"); shade.classList.add("on"); }
+  function closeMenu() { side.classList.remove("open"); shade.classList.remove("on"); }
+  document.getElementById("menuBtn").addEventListener("click", openMenu);
+  var closeBtn = document.getElementById("closeSidebar");
+  if(closeBtn) closeBtn.addEventListener("click", closeMenu);
+  shade.addEventListener("click", closeMenu);
+
+  // Theme Toggle
+  var themeBtn = document.getElementById("themeBtn");
+  themeBtn.addEventListener("click", function(){
+    var isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    var next = isDark ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("nb-theme", next); } catch(e){}
+  });
+  try {
+    var saved = localStorage.getItem("nb-theme");
+    if(saved) document.documentElement.setAttribute("data-theme", saved);
+  } catch(e){}
+
+  // Page Routing via Hash
+  function showPage() {
+    var hash = location.hash.replace("#", "") || (pages[0] && pages[0].id);
+    var target = document.getElementById(hash);
+    if (!target || !target.classList.contains("page")) target = pages[0];
+    pages.forEach(function(p){ p.classList.toggle("on", p === target); });
+    
+    if (target) {
+      cur.textContent = target.dataset.title || target.id;
+      document.title = (target.dataset.title || "Study Note") + " · Master Notebook";
+      var onLink = nav.querySelector('a[data-id="' + target.id + '"]');
+      [].forEach.call(nav.querySelectorAll("a"), function(a){ a.classList.toggle("on", a === onLink); });
+      window.scrollTo(0, 0);
+    }
+    updateProgress();
+  }
+  window.addEventListener("hashchange", showPage);
+  showPage();
+
+  function updateProgress() {
+    var activeIdx = 0;
+    pages.forEach(function(p, i){ if(p.classList.contains("on")) activeIdx = i; });
+    var val = Math.round(((activeIdx + 1) / pages.length) * 100);
+    pct.textContent = val + "%";
+    bar.style.width = val + "%";
+  }
+
+  // Interactive Checklist
+  [].forEach.call(nav.querySelectorAll("a .ck"), function(ck){
+    ck.addEventListener("click", function(e){
+      e.preventDefault(); e.stopPropagation();
+      var parent = ck.closest("a");
+      parent.classList.toggle("done");
+    });
+  });
+
+  // Timers
+  [].forEach.call(document.querySelectorAll(".timer"), function(t){
+    var dur = +t.dataset.dur || 600, left = dur, timerId = null;
+    var clock = t.querySelector(".clock"), go = t.querySelector(".go"), rs = t.querySelector(".rs");
+    function fmt(s){ var m = Math.floor(s/60), sec = s%60; return (m<10?"0":"")+m+":"+(sec<10?"0":"")+sec; }
+    function render(){ if(clock) clock.textContent = fmt(left); }
+    render();
+    if(go){
+      go.addEventListener("click", function(){
+        if(timerId){ clearInterval(timerId); timerId = null; go.textContent = "▶ Resume"; }
+        else {
+          go.textContent = "⏸ Pause";
+          timerId = setInterval(function(){
+            left--; render();
+            if(left <= 0){ clearInterval(timerId); timerId = null; go.textContent = "✔ Done"; }
+          }, 1000);
+        }
+      });
+    }
+    if(rs){
+      rs.addEventListener("click", function(){
+        if(timerId) clearInterval(timerId);
+        timerId = null; left = dur; render();
+        if(go) go.textContent = "▶ Start";
+      });
+    }
+  });
+
+  // Search
+  var sModal = document.getElementById("search"), sIn = document.getElementById("sinput"), sRes = document.getElementById("sres");
+  function openSearch() { sModal.classList.add("on"); sIn.focus(); }
+  function closeSearch() { sModal.classList.remove("on"); }
+  document.getElementById("searchBtn").addEventListener("click", openSearch);
+  sModal.addEventListener("click", function(e){ if(e.target === sModal) closeSearch(); });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape") closeSearch();
+    if (e.key === "/" && !["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) {
+      e.preventDefault(); openSearch();
+    }
+  });
+
+  sIn.addEventListener("input", function(){
+    var q = sIn.value.trim().toLowerCase();
+    sRes.innerHTML = "";
+    if (q.length < 2) return;
+    pages.forEach(function(p){
+      var text = p.textContent.toLowerCase();
+      if (text.indexOf(q) >= 0) {
+        var a = document.createElement("a");
+        a.href = "#" + p.id;
+        a.textContent = p.dataset.title;
+        a.addEventListener("click", function(){ closeSearch(); });
+        sRes.appendChild(a);
+      }
+    });
+  });
+
+  // Print Handler
+  document.getElementById("printBtn").addEventListener("click", function(){ window.print(); });
+})();
+</script>
+</body>
+</html>

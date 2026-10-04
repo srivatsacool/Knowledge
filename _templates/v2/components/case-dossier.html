@@ -1,0 +1,34 @@
+<!-- Component: Case Study Dossier -->
+<article class="nb-case-dossier" id="{{CASE_ID}}">
+  <div class="nb-case-dossier__header">
+    <div class="nb-case-dossier__meta">
+      <span class="nb-badge nb-badge--archetype">{{CASE_SOURCE_BADGE}}</span>
+      <span class="nb-case-dossier__company">{{COMPANY_NAME}}</span>
+    </div>
+    <h3 class="nb-case-dossier__title">{{CASE_TITLE}}</h3>
+  </div>
+  <div class="nb-case-dossier__body">
+    <div class="nb-case-dossier__section">
+      <h4 class="nb-case-dossier__sec-title">1. Context & Business Situation</h4>
+      <p>{{SITUATION_TEXT}}</p>
+    </div>
+    <div class="nb-case-dossier__section">
+      <h4 class="nb-case-dossier__sec-title">2. Core Problem & Strategic Dilemma</h4>
+      <p>{{PROBLEM_TEXT}}</p>
+    </div>
+    <div class="nb-case-dossier__section">
+      <h4 class="nb-case-dossier__sec-title">3. Decision Alternatives & Actions</h4>
+      {{DECISION_ALTERNATIVES}}
+    </div>
+    <div class="nb-case-dossier__section">
+      <h4 class="nb-case-dossier__sec-title">4. Business Outcome & Performance Impact</h4>
+      <p>{{OUTCOME_TEXT}}</p>
+    </div>
+  </div>
+  <div class="nb-case-dossier__lessons">
+    <h4 class="nb-case-dossier__lessons-title">Key Managerial Lessons:</h4>
+    <ol>
+      {{MANAGERIAL_LESSONS}}
+    </ol>
+  </div>
+</article>

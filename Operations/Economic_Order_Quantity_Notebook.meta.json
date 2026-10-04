@@ -1,0 +1,24 @@
+{
+  "title": "Economic Order Quantity (EOQ) · Classical Model & Inventory Blueprints",
+  "slug": "economic-order-quantity",
+  "subject": "Operations",
+  "category": "Inventory Management",
+  "description": "Comprehensive academic study notebook on the Classical Economic Order Quantity (EOQ) model: calculus derivation, total cost curves, worked numerical cases, sensitivity analysis, and exam defense frameworks.",
+  "file": "Economic_Order_Quantity_Notebook.html",
+  "tags": [
+    "Operations",
+    "Inventory Management",
+    "EOQ",
+    "Supply Chain",
+    "Optimization",
+    "Cost Accounting"
+  ],
+  "status": "draft",
+  "source": "curriculum/operations",
+  "version": "1.0.0",
+  "updated": "2026-10-02",
+  "updatedAt": "2026-10-02",
+  "featured": false,
+  "readTimeMinutes": 35,
+  "questionsCount": 4
+}

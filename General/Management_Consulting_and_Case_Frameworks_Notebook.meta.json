@@ -1,0 +1,25 @@
+{
+  "title": "Management Consulting & Case Frameworks · Structured Problem Solving",
+  "slug": "management-consulting-and-case-frameworks",
+  "subject": "General",
+  "category": "Management Consulting",
+  "description": "Foundational MBA guide to management consulting methodologies and structured problem solving: MECE principle, issue trees, hypothesis-driven inquiry, the Minto Pyramid Principle, and market sizing Fermi estimations.",
+  "file": "Management_Consulting_and_Case_Frameworks_Notebook.html",
+  "tags": [
+    "Consulting",
+    "MECE",
+    "Problem Solving",
+    "Issue Trees",
+    "Pyramid Principle",
+    "Case Method",
+    "Market Sizing"
+  ],
+  "status": "draft",
+  "source": "curriculum/mba-foundation",
+  "version": "1.0.0",
+  "updated": "2026-10-04",
+  "updatedAt": "2026-10-04",
+  "featured": false,
+  "readTimeMinutes": 27,
+  "questionsCount": 10
+}

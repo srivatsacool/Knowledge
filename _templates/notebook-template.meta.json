@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Brain Knowledge Hub Notebook Metadata Standard",
+  "description": "Companion metadata configuration for standalone study notebooks in Brain Knowledge Hub",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Human-readable title of the study notebook"
+    },
+    "description": {
+      "type": "string",
+      "description": "Comprehensive 1-2 sentence executive summary of scope and learning objectives"
+    },
+    "subject": {
+      "type": "string",
+      "enum": [
+        "AI",
+        "Analytics",
+        "Business",
+        "Finance",
+        "General",
+        "Management",
+        "Operations",
+        "Placement_Interview",
+        "Technology"
+      ],
+      "description": "Canonical parent subject division"
+    },
+    "category": {
+      "type": "string",
+      "description": "Sub-domain or course category (e.g. 'Enterprise Systems', 'Deep Learning', 'Supply Chain')"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Strictly lowercase, URL-safe slug without spaces (e.g. 'erp', 'transformers-deep-dive')"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Key topical tags for discovery and search indexing"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "published", "archived"],
+      "default": "published",
+      "description": "Publication status. Set to 'draft' to exclude from public builds."
+    },
+    "source": {
+      "type": "string",
+      "description": "Origin of knowledge synthesis (e.g., 'academic-curriculum', 'literature-review', 'industry-case')"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "default": "1.0.0",
+      "description": "Semantic versioning of the study notebook"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO date string of last revision (YYYY-MM-DD)"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date",
+      "description": "Alternative date field for backwards compatibility (YYYY-MM-DD)"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Spotlight on portal homepage if true"
+    },
+    "file": {
+      "type": "string",
+      "description": "Exact filename of the companion HTML notebook"
+    },
+    "readTimeMinutes": {
+      "type": "integer",
+      "description": "Estimated reading and study time in minutes"
+    },
+    "questionsCount": {
+      "type": "integer",
+      "description": "Number of core questions or modules covered"
+    }
+  },
+  "required": ["title", "slug", "subject", "file"]
+}

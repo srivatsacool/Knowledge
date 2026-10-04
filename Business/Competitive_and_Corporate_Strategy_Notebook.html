@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Competitive and Corporate Strategy · Foundations & Frameworks · MBA Curriculum Foundation</title>
+<meta name="description" content="Executive MBA foundation guide to business and corporate strategy: competitive advantage, industry structure analysis, resource-based view (VRIO), corporate portfolio allocation, and strategic execution.">
+<meta name="keywords" content="Strategy, Competitive Advantage, Five Forces, VRIO, Corporate Strategy, Business Models">
+<meta name="author" content="Brain Knowledge Hub · MBA Foundation Series">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%92%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --paper: #fcf8ee; --desk: #e9e1cf; --rule: #d6e3ef; --margin: #e28b8b; --ink: #1d3c8c; --ink2: #2f5fc4;
+  --text: #25262b; --pencil: #5a5d66; --line: #c9bfa8; --card: #fffdf7; --shadow: 0 1px 2px rgba(60,45,20,.12),0 6px 18px rgba(60,45,20,.10);
+  --hy: rgba(255,224,61,.7); --hg: rgba(120,228,156,.62); --hp: rgba(255,138,188,.5); --hb: rgba(110,196,255,.5);
+  --st-y: #fff2a1; --st-r: #ffd6d3; --st-b: #d9ecff; --st-g: #d8f5dc; --st-text: #2a2a2a;
+  --red: #c2362f; --green: #1d7a45; --amber: #b86e00;
+  --hand: "Caveat","Segoe Print","Bradley Hand",cursive;
+  --hand2: "Patrick Hand","Segoe Print",cursive;
+  --body: "Source Sans 3","Segoe UI",Roboto,sans-serif;
+  --math: "STIX Two Text","Cambria Math",Georgia,serif;
+  --lh: 30px; --tab: #1d3c8c; --side: 320px;
+}
+html[data-theme="dark"] {
+  --paper: #18202e; --desk: #0f141d; --rule: #243049; --margin: #7c3d48; --ink: #9cc0ff; --ink2: #7fb0ff;
+  --text: #e7e9ef; --pencil: #aab3c5; --line: #344058; --card: #1d2636; --shadow: 0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);
+  --hy: rgba(255,214,0,.30); --hg: rgba(70,220,130,.28); --hp: rgba(255,105,170,.30); --hb: rgba(80,170,255,.30);
+  --st-y: #efe2a0; --st-r: #f1c9c6; --st-b: #cfe0f5; --st-g: #cdebd2; --st-text: #1d1d1d;
+  --red: #ff8a80; --green: #7be0a4; --amber: #ffc266;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 76px; }
+body { margin: 0; background: var(--desk); color: var(--text); font-family: var(--body); font-size: 17px; line-height: 1.65; overflow-x: hidden; }
+a { color: var(--ink2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 3px solid #f0a020; outline-offset: 2px; border-radius: 4px; }
+
+/* Top Navigation Bar */
+.top { position: fixed; top: 0; left: 0; right: 0; z-index: 40; background: var(--paper); border-bottom: 2px solid var(--line); box-shadow: 0 2px 0 var(--rule); }
+.top-in { display: flex; align-items: center; gap: 8px; height: 58px; padding: 0 14px; }
+.ib { min-width: 42px; height: 42px; border: 0; background: transparent; color: var(--text); border-radius: 8px; font-size: 1.2rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.ib:hover { background: var(--hy); }
+.brand { font-family: var(--hand); font-weight: 700; font-size: 1.55rem; color: var(--ink); white-space: nowrap; line-height: 1; }
+.cur { flex: 1; min-width: 0; font-family: var(--hand2); font-size: 1.05rem; color: var(--pencil); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-left: 10px; border-left: 2px dotted var(--line); }
+.cur a { color: inherit; }
+.pct { font-family: var(--hand); font-weight: 700; font-size: 1.3rem; color: var(--ink); min-width: 3.2em; text-align: right; }
+.bar { height: 4px; background: var(--rule); }
+.bar i { display: block; height: 100%; width: 10%; background: linear-gradient(90deg, var(--hg), var(--hy)); transition: width .3s; }
+
+/* Sidebar Drawer */
+.side { position: fixed; z-index: 50; top: 0; bottom: 0; left: 0; width: min(86vw, var(--side)); background: var(--paper); border-right: 2px solid var(--line); transform: translateX(-102%); transition: transform .25s; overflow-y: auto; padding: 18px 14px; background-image: repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh)); }
+.side.open { transform: none; }
+.shade { position: fixed; inset: 0; background: rgba(10,12,18,.45); z-index: 45; display: none; }
+.shade.on { display: block; }
+.side h2 { font-family: var(--hand); font-size: 1.7rem; color: var(--ink); margin: 0 0 4px; }
+.side .meta-tag { display: inline-block; font-family: var(--hand2); font-size: 0.85rem; padding: 2px 8px; border-radius: 4px; background: var(--st-y); color: var(--st-text); margin-bottom: 12px; font-weight: 700; }
+.side .grp { font-family: var(--hand2); color: var(--pencil); font-size: 0.95rem; margin: 12px 0 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.side nav a { display: flex; align-items: center; gap: 8px; min-height: 38px; padding: 4px 8px; border-radius: 6px; color: var(--text); text-decoration: none; line-height: 1.3; margin-bottom: 2px; }
+.side nav a:hover { background: var(--hy); }
+.side nav a.on { background: var(--card); box-shadow: var(--shadow); font-weight: 600; color: var(--ink); }
+.side nav a .chip { width: 6px; border-radius: 3px; background: var(--tab); min-height: 22px; flex-shrink: 0; }
+.side nav a .t { flex: 1; font-size: 0.9rem; }
+.side nav a .ck { width: 18px; height: 18px; border: 2px solid var(--pencil); border-radius: 4px; display: grid; place-items: center; font-size: 0.8rem; color: var(--green); font-weight: 700; flex-shrink: 0; }
+.side nav a.done .ck::after { content: "✓"; }
+
+@media (min-width: 1100px) {
+  .side { transform: none; top: 58px; z-index: 30; box-shadow: none; width: var(--side); }
+  .side .close, #menuBtn { display: none; }
+  .wrap { margin-left: var(--side); }
+}
+
+/* Notebook Binder Page Layout */
+.wrap { padding: 74px 12px 50px; }
+.sheet {
+  position: relative; max-width: 940px; margin: 0 auto; background: var(--paper); border-radius: 6px 14px 14px 6px; box-shadow: var(--shadow);
+  padding: 24px 20px 40px 36px;
+  background-image: linear-gradient(90deg, transparent 22px, var(--margin) 22px, var(--margin) 24px, transparent 24px), repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh));
+  background-position: 0 0, 0 58px;
+}
+@media (min-width: 760px) {
+  .sheet {
+    padding: 34px 54px 44px 92px;
+    background-image: linear-gradient(90deg, transparent 66px, var(--margin) 66px, var(--margin) 68px, transparent 68px), repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh));
+  }
+  .sheet::before {
+    content: ""; position: absolute; left: -15px; top: 18px; bottom: 18px; width: 34px;
+    background: radial-gradient(circle at 17px 15px, var(--desk) 0 6.5px, transparent 7.5px) 0 0/34px 34px repeat-y;
+  }
+  .sheet::after {
+    content: ""; position: absolute; left: -22px; top: 18px; bottom: 18px; width: 22px;
+    background: repeating-linear-gradient(transparent 0 8px, #8d8f96 8px 11px, #c8cad0 11px 13px, transparent 13px 34px); opacity: .85; border-radius: 4px;
+  }
+}
+
+.binder-header { border-bottom: 2px dashed var(--line); padding-bottom: 16px; margin-bottom: 24px; }
+.binder-breadcrumbs { font-family: var(--hand2); font-size: 1.1rem; color: var(--pencil); margin-bottom: 6px; }
+.binder-breadcrumbs a { color: var(--ink); }
+h1.title { font-family: var(--hand); font-size: 2.6rem; color: var(--ink); margin: 0 0 8px; line-height: 1.15; }
+.subtitle { font-size: 1.15rem; color: var(--pencil); margin-bottom: 14px; font-weight: 500; }
+.meta-strip { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 0.9rem; }
+.tag-badge { background: var(--desk); color: var(--text); padding: 2px 10px; border-radius: 12px; font-weight: 600; border: 1px solid var(--line); }
+.status-pill { background: #e0f2fe; color: #0369a1; padding: 2px 10px; border-radius: 12px; font-weight: 700; border: 1px solid #bae6fd; font-family: var(--hand2); }
+
+/* Pages inside Binder */
+.page { display: none; }
+.page.on { display: block; animation: fadeIn .2s ease-in; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.sec-header { margin: 20px 0 16px; }
+.sec-num { font-family: var(--hand2); font-size: 1rem; color: var(--pencil); letter-spacing: 1px; font-weight: 700; }
+.sec-title { font-family: var(--hand); font-size: 2.2rem; color: var(--ink); margin: 2px 0 6px; line-height: 1.2; }
+.sec-divider { height: 2px; background: var(--line); width: 60px; margin-bottom: 16px; }
+
+/* Visual Blocks */
+p { margin: 0 0 16px; }
+strong { font-weight: 700; color: var(--ink); }
+html[data-theme="dark"] strong { color: #b4d2ff; }
+
+.sticky { background: var(--st-y); color: var(--st-text); padding: 14px 18px; border-radius: 2px 2px 12px 2px; box-shadow: var(--shadow); margin: 18px 0; font-family: var(--hand2); font-size: 1.15rem; transform: rotate(-0.5deg); }
+.sticky.blue { background: var(--st-b); transform: rotate(0.4deg); }
+.sticky.green { background: var(--st-g); transform: rotate(-0.3deg); }
+.sticky.pink { background: var(--st-r); transform: rotate(0.6deg); }
+.sticky p:last-child { margin-bottom: 0; }
+
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 18px; margin: 18px 0; box-shadow: var(--shadow); }
+.card h3 { font-family: var(--hand); font-size: 1.55rem; color: var(--ink); margin: 0 0 8px; }
+.card p:last-child { margin-bottom: 0; }
+
+.formula-card { background: var(--card); border-left: 5px solid var(--ink); border-radius: 4px; padding: 14px 18px; margin: 16px 0; font-family: var(--math); font-size: 1.15rem; box-shadow: var(--shadow); }
+.formula-label { font-family: var(--hand2); font-size: 1rem; color: var(--pencil); display: block; margin-bottom: 4px; }
+.formula-math { font-size: 1.3rem; font-weight: 600; color: var(--red); display: block; padding: 4px 0; }
+.formula-expl { font-family: var(--body); font-size: 0.95rem; color: var(--pencil); margin-top: 6px; }
+
+.comparison-table { width: 100%; border-collapse: collapse; margin: 18px 0; background: var(--card); border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); font-size: 0.95rem; }
+.comparison-table th, .comparison-table td { padding: 10px 14px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+.comparison-table th { background: var(--desk); font-family: var(--hand); font-size: 1.25rem; color: var(--ink); }
+
+.callout-box { border-left: 4px solid var(--amber); background: rgba(184, 110, 0, 0.08); padding: 14px 18px; border-radius: 4px; margin: 16px 0; }
+.callout-title { font-family: var(--hand); font-size: 1.3rem; color: var(--amber); font-weight: 700; margin-bottom: 4px; }
+
+.decision-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin: 18px 0; }
+.decision-card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 14px; box-shadow: var(--shadow); }
+.decision-card h4 { font-family: var(--hand); font-size: 1.35rem; color: var(--ink); margin: 0 0 6px; }
+.decision-card p { font-size: 0.92rem; margin-bottom: 0; }
+
+.nav-buttons { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 18px; border-top: 2px dashed var(--line); }
+.btn-nav { font-family: var(--hand2); font-size: 1.15rem; padding: 8px 18px; border-radius: 6px; border: 1px solid var(--line); background: var(--card); cursor: pointer; color: var(--ink); }
+.btn-nav:hover { background: var(--hy); }
+
+/* Quick Search Modal */
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 100; display: none; align-items: flex-start; justify-content: center; padding-top: 12vh; }
+.modal.on { display: flex; }
+.modal-in { background: var(--paper); border: 2px solid var(--ink); border-radius: 12px; width: min(92vw, 560px); padding: 20px; box-shadow: 0 12px 36px rgba(0,0,0,.3); }
+.modal-in input { width: 100%; padding: 12px; font-size: 1.1rem; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--text); }
+.sres { margin-top: 14px; max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+.sres a { padding: 8px 12px; border-radius: 6px; background: var(--card); border: 1px solid var(--line); font-size: 0.95rem; }
+.sres a:hover { background: var(--hy); }
+
+@media print {
+  .top, .side, .shade, .modal, .nav-buttons, #menuBtn { display: none !important; }
+  .wrap { margin: 0 !important; padding: 0 !important; }
+  .sheet { max-width: 100% !important; box-shadow: none !important; padding: 0 !important; background: none !important; }
+  .page { display: block !important; page-break-after: always; }
+}
+</style>
+</head>
+<body>
+
+<!-- Top Header Bar -->
+<header class="top">
+  <div class="top-in">
+    <button class="ib" id="menuBtn" aria-label="Open Table of Contents">☰</button>
+    <a href="../index.html" class="brand">Brain Hub</a>
+    <div class="cur"><a href="../index.html">Subjects</a> / <a href="index.html">Business</a> / Competitive and Corporate Strategy · Foundations & Frameworks</div>
+    <div class="pct" id="pct">10%</div>
+    <button class="ib" id="themeBtn" aria-label="Toggle Dark/Light Mode">🌓</button>
+    <button class="ib" id="searchBtn" aria-label="Search Notebook">🔍</button>
+    <button class="ib" id="printBtn" aria-label="Print Binder">🖨</button>
+  </div>
+  <div class="bar"><i id="bar"></i></div>
+</header>
+
+<div class="shade" id="shade"></div>
+
+<!-- Sidebar Drawer -->
+<aside class="side" id="side">
+  <button class="ib close" id="closeSide" style="float:right;">✕</button>
+  <h2>Strategy Foundations</h2>
+  <span class="meta-tag">Business · MBA Foundation</span>
+  <div class="grp">Notebook Curriculum (10 Sections)</div>
+  <nav id="nav">
+    
+      <a href="#sec-1" class="on">
+        <span class="chip"></span>
+        <span class="t">01. Definition & Nature</span>
+        <span class="ck" title="Mark section as reviewed"></span>
+      </a>
+    
+
+      <a href="#sec-2" class="">
+        <span class="chip"></span>
+        <span class="t">02. Why it Matters in MBA</span>
+        <span class="ck" title="Mark section as reviewed"></span>
+      </a>
+    
+
+      <a href="#sec-3" class="">
+        <span class="chip"></span>
+        <span class="t">03. Core Concepts</span>
+        <span class="ck" title="Mark section as reviewed"></span>
+      </a>
+    
+
+      <a href="#sec-4" class="">
+        <span class="chip"></span>
+        <span class="t">04. Key Terminology</span>
+        <span class="ck" title="Mark section as reviewed"></span>
+      </a>
+    
+
+      <a href="#sec-5" class="">
+        <span class="chip"></span>
+        <span class="t">05. Major Frameworks</span>
+        <span class="ck" title="Mark section as reviewed"></span>
+      </a>
+    
+
+      <a href="#sec-6" class="">
+        <span class="chip"></span>
+        <span class="t">06. Formulas & Metrics</span>
+        <span class="ck" title="Mark section as reviewed"></span>
+      </a>
+    
+
+      <a href="#sec-7" class="">
+        <span class="chip"></span>
+        <span class="t">07. Business Decisions</span>
+        <span class="ck" title="Mark section as reviewed"></span>
+      </a>
+    
+
+      <a href="#sec-8" class="">
+        <span class="chip"></span>
+        <span class="t">08. Real-World Applications</span>
+        <span class="ck" title="Mark section as reviewed"></span>
+      </a>
+    
+
+      <a href="#sec-9" class="">
+        <span class="chip"></span>
+        <span class="t">09. MBA Connections</span>
+        <span class="ck" title="Mark section as reviewed"></span>
+      </a>
+    
+
+      <a href="#sec-10" class="">
+        <span class="chip"></span>
+        <span class="t">010. What to Learn Next</span>
+        <span class="ck" title="Mark section as reviewed"></span>
+      </a>
+    
+  </nav>
+</aside>
+
+<!-- Main Binder Sheet -->
+<main class="wrap">
+  <div class="sheet">
+    <div class="binder-header">
+      <div class="binder-breadcrumbs">
+        <span><a href="../index.html">Brain Knowledge Hub</a></span> &rsaquo; 
+        <span><a href="index.html">Business</a></span> &rsaquo; 
+        <span>Strategic Management</span>
+      </div>
+      <h1 class="title">Competitive and Corporate Strategy · Foundations & Frameworks</h1>
+      <div class="subtitle">Executive MBA foundation guide to business and corporate strategy: competitive advantage, industry structure analysis, resource-based view (VRIO), corporate portfolio allocation, and strategic execution.</div>
+      <div class="meta-strip">
+        <span class="status-pill">Status: DRAFT (MBA Curriculum Foundation)</span>
+        <span class="tag-badge">Subject: Business</span>
+        <span class="tag-badge">Category: Strategic Management</span>
+        <span class="tag-badge">Reading Time: ~28 mins</span>
+        <span class="tag-badge">Coverage: 10/10 Core Questions</span>
+      </div>
+    </div>
+
+    <!-- 10 Academic Sections -->
+    <div id="pages-container">
+      
+    <article class="page on" id="sec-1" data-title="What is Strategic Management?">
+      <div class="sec-header">
+        <span class="sec-num">SECTION 01 OF 10</span>
+        <h2 class="sec-title">What is Strategic Management?</h2>
+        <div class="sec-divider"></div>
+      </div>
+      <div class="sec-content">
+        
+          <p><strong>Strategic Management</strong> is the integrative discipline concerned with how enterprises achieve and sustain superior economic performance over time. While operational effectiveness entails performing similar activities better than rivals (benchmarking, lean operations, total quality management), <em>strategy</em> is about being different—deliberately choosing a unique set of activities to deliver a distinct value proposition.</p>
+          <div class="sticky blue">
+            <p><strong>The Strategic Imperative:</strong> "Operational effectiveness is necessary for superior performance, but it is not sufficient. Strategy is about creating fit among a company's activities. The success of a strategy depends on doing many things well—not just a few—and integrating them." — <em>Michael E. Porter</em></p>
+          </div>
+          <p>Strategy operates at two distinct organizational levels:</p>
+          <ul>
+            <li><strong>Business Strategy (Competitive Strategy):</strong> How does a firm compete within an individual market or industry? Focuses on cost leadership, differentiation, or niche focus.</li>
+            <li><strong>Corporate Strategy:</strong> Which businesses should the firm be in, and how does the corporate parent add value to individual business units beyond what they could achieve as standalone entities? Focuses on portfolio management, vertical integration, mergers & acquisitions, and global footprint.</li>
+          </ul>
+        
+      </div>
+    </article>
+    
+
+    <article class="page " id="sec-2" data-title="Why Strategy Matters in an MBA">
+      <div class="sec-header">
+        <span class="sec-num">SECTION 02 OF 10</span>
+        <h2 class="sec-title">Why Strategy Matters in an MBA</h2>
+        <div class="sec-divider"></div>
+      </div>
+      <div class="sec-content">
+        
+          <p>Strategic management serves as the <strong>capstone general management discipline</strong> in the MBA curriculum. While functional courses (accounting, finance, marketing, operations) provide specialized analytical toolkits, strategy provides the integrative architecture that aligns these disparate functions toward an overarching organizational objective: <em>sustainable economic profit creation</em>.</p>
+          <div class="card">
+            <h3>General Management Perspective</h3>
+            <p>As future C-suite executives, business unit general managers, and strategy consultants, MBA graduates must synthesize incomplete information under high uncertainty, navigate conflicting stakeholder priorities, and make irreversible capital allocation decisions under intense competitive rivalry.</p>
+          </div>
+          <p>Mastering strategy prevents the common managerial pitfall of "optimizing parts of a machine that shouldn't be running in the first place." It teaches leaders how to evaluate external industry dynamics and internal capabilities to defend against margin compression, commoditization, and disruptive technological shifts.</p>
+        
+      </div>
+    </article>
+    
+
+    <article class="page " id="sec-3" data-title="Core Concepts of Strategic Management">
+      <div class="sec-header">
+        <span class="sec-num">SECTION 03 OF 10</span>
+        <h2 class="sec-title">Core Concepts of Strategic Management</h2>
+        <div class="sec-divider"></div>
+      </div>
+      <div class="sec-content">
+        
+          <p>Top MBA institutions anchor strategic thinking around several foundational concepts:</p>
+          <div class="decision-grid">
+            <div class="decision-card">
+              <h4>1. Sustainable Competitive Advantage (SCA)</h4>
+              <p>The ability of an enterprise to consistently earn an economic rate of return on invested capital above its Weighted Average Cost of Capital (ROIC > WACC), defended by structural barriers to imitation.</p>
+            </div>
+            <div class="decision-card">
+              <h4>2. Economic Value Creation vs. Capture</h4>
+              <p>Economic value is created when Willingness to Pay (WTP) exceeds Total Cost (TC). Strategy dictates how much of that surplus is captured as producer profit (Price - Cost) versus consumer surplus (WTP - Price).</p>
+            </div>
+            <div class="decision-card">
+              <h4>3. Activity System & Strategic Fit</h4>
+              <p>First-order fit (consistency), second-order fit (reinforcing activities), and third-order fit (optimization of effort). Competitors can copy individual activities, but cannot replicate an interconnected web of complementary activities.</p>
+            </div>
+            <div class="decision-card">
+              <h4>4. Disruptive Innovation (Christensen)</h4>
+              <p>Low-end or new-market disruption where an entrant introduces a simpler, cheaper, or more accessible solution that incumbent leaders initially ignore because of low profit margins, before moving upmarket.</p>
+            </div>
+          </div>
+        
+      </div>
+    </article>
+    
+
+    <article class="page " id="sec-4" data-title="Key Terminology Every Manager Must Know">
+      <div class="sec-header">
+        <span class="sec-num">SECTION 04 OF 10</span>
+        <h2 class="sec-title">Key Terminology Every Manager Must Know</h2>
+        <div class="sec-divider"></div>
+      </div>
+      <div class="sec-content">
+        
+          <table class="comparison-table">
+            <thead>
+              <tr><th>Strategic Term</th><th>Definition</th><th>MBA Context & Application</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>ROIC (Return on Invested Capital)</strong></td><td>Net Operating Profit After Tax (NOPAT) divided by Total Invested Capital.</td><td>The bedrock metric of business performance. An industry or firm that fails to earn its cost of capital destroys enterprise value.</td></tr>
+              <tr><td><strong>Economic Moat</strong></td><td>A structural advantage that protects a company's market share and profitability from competitors.</td><td>Five primary moat types: Network effects, Switching costs, Cost advantages, Intangible assets (patents/brands), and Efficient scale.</td></tr>
+              <tr><td><strong>Vertical Integration</strong></td><td>The degree to which a firm owns upstream suppliers (backward) or downstream distributors (forward).</td><td>Evaluated through transaction cost economics (TCE): Make vs. Buy based on asset specificity, opportunism, and coordination costs.</td></tr>
+              <tr><td><strong>Horizontal Diversification</strong></td><td>Expanding into adjacent or unrelated product categories and market segments.</td><td>Justified only when corporate parenting creates synergy (economies of scope) exceeding the overhead cost of central management.</td></tr>
+              <tr><td><strong>Switching Costs</strong></td><td>The fixed costs incurred by a buyer when changing from one supplier to another.</td><td>High switching costs (procedural, relational, financial) insulate software, enterprise systems, and platform ecosystems from churn.</td></tr>
+            </tbody>
+          </table>
+        
+      </div>
+    </article>
+    
+
+    <article class="page " id="sec-5" data-title="Major Frameworks and Analytical Models">
+      <div class="sec-header">
+        <span class="sec-num">SECTION 05 OF 10</span>
+        <h2 class="sec-title">Major Frameworks and Analytical Models</h2>
+        <div class="sec-divider"></div>
+      </div>
+      <div class="sec-content">
+        
+          <p>MBA strategic analysis relies on tested frameworks that deconstruct market structure and firm competencies:</p>
+          <div class="card">
+            <h3>1. Porter's Five Forces of Industry Attractiveness</h3>
+            <p>Determines industry profitability by examining: (1) Threat of New Entrants, (2) Bargaining Power of Buyers, (3) Bargaining Power of Suppliers, (4) Threat of Substitute Products, and (5) Rivalry Among Existing Competitors. High forces compress industry profitability toward the risk-free rate.</p>
+          </div>
+          <div class="card">
+            <h3>2. Resource-Based View (RBV) & Barney's VRIO Framework</h3>
+            <p>Internal capability assessment. A firm's resource or capability delivers a sustainable competitive advantage if it is:</p>
+            <ul>
+              <li><strong>Valuable (V):</strong> Exploits external opportunities or neutralizes threats.</li>
+              <li><strong>Rare (R):</strong> Controlled by a small number of competing firms.</li>
+              <li><strong>Inimitable (I):</strong> Costly to duplicate due to path dependency, causal ambiguity, or social complexity.</li>
+              <li><strong>Organized (O):</strong> Supported by organizational processes, structures, and systems to extract value.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>3. Hambrick & Fredrickson's Strategy Diamond</h3>
+            <p>Covers 5 interconnected strategic questions: <em>Arenas</em> (where will we be active?), <em>Vehicles</em> (how will we get there?), <em>Differentiators</em> (how will we win?), <em>Staging</em> (what will be our speed and sequence?), and <em>Economic Logic</em> (how will we obtain our returns?).</p>
+          </div>
+        
+      </div>
+    </article>
+    
+
+    <article class="page " id="sec-6" data-title="Important Formulas & Quantitative Measures">
+      <div class="sec-header">
+        <span class="sec-num">SECTION 06 OF 10</span>
+        <h2 class="sec-title">Important Formulas & Quantitative Measures</h2>
+        <div class="sec-divider"></div>
+      </div>
+      <div class="sec-content">
+        
+          <p>Strategic decisions must be grounded in disciplined quantitative economics:</p>
+          <div class="formula-card">
+            <span class="formula-label">Economic Value Added (EVA)</span>
+            <span class="formula-math">EVA = NOPAT - (WACC × Invested Capital)</span>
+            <div class="formula-expl">Measures economic profit generated after fully compensating both debt holders and equity shareholders for their opportunity cost of capital.</div>
+          </div>
+          <div class="formula-card">
+            <span class="formula-label">Herfindahl-Hirschman Index (HHI) - Industry Concentration</span>
+            <span class="formula-math">HHI = ∑ (s_i)² = s₁² + s₂² + ... + s_n²</span>
+            <div class="formula-expl">Where <em>s_i</em> is the market share percentage of firm <em>i</em>. HHI < 1,500 indicates unconcentrated markets; 1,500–2,500 indicates moderate concentration; > 2,500 indicates high concentration (oligopoly/monopoly), scrutinized in antitrust M&A reviews.</div>
+          </div>
+          <div class="formula-card">
+            <span class="formula-label">Economic Margin / Value Wedge</span>
+            <span class="formula-math">Value Wedge = WTP - Cost = (WTP - Price) + (Price - Cost)</span>
+            <div class="formula-expl">Competitive advantage is achieved by expanding the wedge between customer willingness to pay and unit cost compared to industry rivals.</div>
+          </div>
+        
+      </div>
+    </article>
+    
+
+    <article class="page " id="sec-7" data-title="Typical Strategic Business Decisions Involved">
+      <div class="sec-header">
+        <span class="sec-num">SECTION 07 OF 10</span>
+        <h2 class="sec-title">Typical Strategic Business Decisions Involved</h2>
+        <div class="sec-divider"></div>
+      </div>
+      <div class="sec-content">
+        
+          <p>Strategic leadership requires navigating high-stakes trade-offs where choosing what <em>not</em> to do is as vital as choosing what to do:</p>
+          <div class="decision-grid">
+            <div class="decision-card">
+              <h4>Positioning & Target Market Choice</h4>
+              <p>Choosing between low-cost leadership (Southwest, Walmart) vs. differentiation (Apple, Rolex). Avoiding the "stuck in the middle" trap where an enterprise lacks both cost efficiency and distinct brand premium.</p>
+            </div>
+            <div class="decision-card">
+              <h4>Build, Borrow, or Buy (Growth Vector)</h4>
+              <p>Should the firm enter a new market via internal R&D (Build), strategic alliance/joint venture (Borrow), or an outright acquisition (Buy)? Driven by speed, target market uncertainty, and integration risk.</p>
+            </div>
+            <div class="decision-card">
+              <h4>Capital Allocation & Divestiture</h4>
+              <p>Reallocating cash generated by mature "cash cows" into high-growth "stars," or divesting unprofitable, non-core divisions through spin-offs or carve-outs to unlock shareholder value.</p>
+            </div>
+            <div class="decision-card">
+              <h4>Ecosystem & Platform Governance</h4>
+              <p>Designing multisided platforms: determining subsidy sides, pricing architecture, API openness, and developer revenue-sharing splits to ignite network effects.</p>
+            </div>
+          </div>
+        
+      </div>
+    </article>
+    
+
+    <article class="page " id="sec-8" data-title="Real-World Business Applications">
+      <div class="sec-header">
+        <span class="sec-num">SECTION 08 OF 10</span>
+        <h2 class="sec-title">Real-World Business Applications</h2>
+        <div class="sec-divider"></div>
+      </div>
+      <div class="sec-content">
+        
+          <div class="card">
+            <h3>Case 1: Apple’s Closed Ecosystem & Activity Fit</h3>
+            <p>Apple does not simply manufacture hardware; it operates a self-reinforcing activity system encompassing proprietary silicon (M-series, A-series), closed OS ecosystems (iOS, macOS), proprietary developer APIs, retail experience, and digital services (iCloud, Apple Pay). The high switching costs created by this integrated activity system make imitation prohibitively costly for competitors.</p>
+          </div>
+          <div class="card">
+            <h3>Case 2: Netflix’s Strategic Pivots & Cannibalization</h3>
+            <p>Netflix famously navigated two existential technological transitions: first from DVD-by-mail to streaming (willingly cannibalizing its core revenue engine), and second from licensed content aggregator to original studio producer to insulate itself from supplier power when Disney and Warner began withholding content.</p>
+          </div>
+          <div class="card">
+            <h3>Case 3: Amazon’s Scale Moat & Two-Sided Marketplace</h3>
+            <p>Amazon leverages high fixed-cost infrastructure (fulfillment centers, AWS data centers) to operate at minimum efficient scale. Third-party marketplace sellers create network effects that expand product selection, driving customer traffic, which attracts more merchants and lowers per-unit shipping costs.</p>
+          </div>
+        
+      </div>
+    </article>
+    
+
+    <article class="page " id="sec-9" data-title="Cross-Disciplinary Connections to Other MBA Fields">
+      <div class="sec-header">
+        <span class="sec-num">SECTION 09 OF 10</span>
+        <h2 class="sec-title">Cross-Disciplinary Connections to Other MBA Fields</h2>
+        <div class="sec-divider"></div>
+      </div>
+      <div class="sec-content">
+        
+          <p>Strategy does not exist in a vacuum; it dictates the agenda for every functional business domain:</p>
+          <ul>
+            <li><strong>Corporate Finance:</strong> Strategy provides the qualitative thesis and competitive moat that justify projected free cash flows, terminal growth rates, and hurdle rates in DCF valuations.</li>
+            <li><strong>Marketing:</strong> Strategic positioning defines the target segment, value proposition, and pricing boundaries that brand managers and marketing teams execute.</li>
+            <li><strong>Operations & Supply Chain:</strong> Operations builds the physical and digital capabilities required to deliver the strategic promise—e.g., lean agility for fast-fashion (Zara) or ultra-low cost for commodity logistics.</li>
+            <li><strong>Organizational Behaviour:</strong> "Culture eats strategy for breakfast." Strategy execution requires organizational design, incentive alignment, talent management, and change leadership.</li>
+          </ul>
+        
+      </div>
+    </article>
+    
+
+    <article class="page " id="sec-10" data-title="What a Student Should Learn Next">
+      <div class="sec-header">
+        <span class="sec-num">SECTION 010 OF 10</span>
+        <h2 class="sec-title">What a Student Should Learn Next</h2>
+        <div class="sec-divider"></div>
+      </div>
+      <div class="sec-content">
+        
+          <p>To deepen strategic acumen beyond foundational frameworks, an MBA student should explore:</p>
+          <div class="sticky green">
+            <p><strong>Recommended Advanced Pathways:</strong></p>
+            <ul>
+              <li><strong>Advanced Corporate Strategy & M&A:</strong> Synergy valuation, post-merger integration, corporate governance, and activist investor defense.</li>
+              <li><strong>Platform Economics & Network Effects:</strong> Multisided markets, two-sided pricing models, and chicken-and-egg problem solving.</li>
+              <li><strong>Scenario Planning & Strategic War-Gaming:</strong> Dynamic decision-making under Knightian uncertainty and geopolitical volatility.</li>
+              <li><strong>The Innovator’s Dilemma & Dual Operating Systems:</strong> Managing core operational efficiency while simultaneously nurturing disruptive ventures.</li>
+            </ul>
+          </div>
+        
+      </div>
+    </article>
+    
+    </div>
+  </div>
+</main>
+
+<!-- In-Notebook Search Modal -->
+<div class="modal" id="searchModal">
+  <div class="modal-in">
+    <input type="text" id="sinput" placeholder="Search concepts, frameworks, formulas..." autofocus>
+    <div class="sres" id="sres"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var html = document.documentElement;
+  var themeBtn = document.getElementById("themeBtn");
+  var saved = localStorage.getItem("bkh_theme");
+  if (saved) html.setAttribute("data-theme", saved);
+  themeBtn.addEventListener("click", function(){
+    var next = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    html.setAttribute("data-theme", next);
+    localStorage.setItem("bkh_theme", next);
+  });
+
+  var side = document.getElementById("side"), shade = document.getElementById("shade");
+  function openSide(){ side.classList.add("open"); shade.classList.add("on"); }
+  function closeSide(){ side.classList.remove("open"); shade.classList.remove("on"); }
+  var menuBtn = document.getElementById("menuBtn");
+  if (menuBtn) menuBtn.addEventListener("click", openSide);
+  var closeBtn = document.getElementById("closeSide");
+  if (closeBtn) closeBtn.addEventListener("click", closeSide);
+  if (shade) shade.addEventListener("click", closeSide);
+
+  var pages = [].slice.call(document.querySelectorAll(".page"));
+  var links = [].slice.call(document.querySelectorAll("#nav a"));
+  var bar = document.getElementById("bar"), pct = document.getElementById("pct");
+
+  function showPage(id){
+    pages.forEach(function(p){ p.classList.remove("on"); });
+    links.forEach(function(l){ l.classList.remove("on"); });
+    var target = document.querySelector(id);
+    if (!target && pages.length) target = pages[0];
+    if (target) {
+      target.classList.add("on");
+      var match = links.filter(function(l){ return l.getAttribute("href") === id; })[0];
+      if (match) match.classList.add("on");
+      var idx = pages.indexOf(target);
+      var prog = Math.round(((idx + 1) / pages.length) * 100);
+      pct.textContent = prog + "%";
+      bar.style.width = prog + "%";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    closeSide();
+  }
+
+  links.forEach(function(a){
+    a.addEventListener("click", function(e){
+      e.preventDefault();
+      var href = a.getAttribute("href");
+      history.pushState(null, "", href);
+      showPage(href);
+    });
+  });
+
+  window.addEventListener("hashchange", function(){
+    if (location.hash) showPage(location.hash);
+  });
+  if (location.hash) showPage(location.hash);
+  else showPage("#sec-1");
+
+  [].forEach.call(document.querySelectorAll("#nav a .ck"), function(ck){
+    ck.addEventListener("click", function(e){
+      e.preventDefault(); e.stopPropagation();
+      ck.closest("a").classList.toggle("done");
+    });
+  });
+
+  var sModal = document.getElementById("searchModal"), sIn = document.getElementById("sinput"), sRes = document.getElementById("sres");
+  document.getElementById("searchBtn").addEventListener("click", function(){ sModal.classList.add("on"); sIn.focus(); });
+  sModal.addEventListener("click", function(e){ if (e.target === sModal) sModal.classList.remove("on"); });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape") sModal.classList.remove("on");
+    if (e.key === "/" && !["INPUT","TEXTAREA"].includes(document.activeElement.tagName)) {
+      e.preventDefault(); sModal.classList.add("on"); sIn.focus();
+    }
+  });
+
+  sIn.addEventListener("input", function(){
+    var q = sIn.value.trim().toLowerCase();
+    sRes.innerHTML = "";
+    if (q.length < 2) return;
+    pages.forEach(function(p){
+      if (p.textContent.toLowerCase().indexOf(q) >= 0) {
+        var item = document.createElement("a");
+        item.href = "#" + p.id;
+        item.textContent = p.dataset.title;
+        item.addEventListener("click", function(){ sModal.classList.remove("on"); });
+        sRes.appendChild(item);
+      }
+    });
+  });
+
+  document.getElementById("printBtn").addEventListener("click", function(){ window.print(); });
+})();
+</script>
+</body>
+</html>

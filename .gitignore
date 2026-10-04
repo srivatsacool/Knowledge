@@ -1,0 +1,31 @@
+# Build Output
+Website/dist/
+dist/
+_source_cache/
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Drafts & Private Staging (Prefix any draft notebook with _draft)
+_draft*
+*_draft.html
+
+# Cloudflare Wrangler Cache
+.wrangler/

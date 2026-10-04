@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 300" width="100%" height="auto" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <marker id="df-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="var(--ink)" />
+    </marker>
+  </defs>
+
+  <!-- Step 1: Master Data Foundations -->
+  <path d="M 20 60 Q 100 57 180 60 Q 182 130 180 200 Q 100 203 20 200 Q 18 130 20 60 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2.2"/>
+  <text x="100" y="90" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" font-weight="700" fill="var(--pencil)">LAYER 1 · STATIC</text>
+  <text x="100" y="118" text-anchor="middle" font-family="var(--font-hand)" font-size="19" font-weight="700" fill="var(--ink)">Master Data</text>
+  <text x="100" y="145" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">• Material Master</text>
+  <text x="100" y="165" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">• Customer / Vendor</text>
+  <text x="100" y="185" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">• Standard BOM</text>
+
+  <!-- Arrow 1 -> 2 -->
+  <path d="M 180 130 Q 200 128 220 130" fill="none" stroke="var(--ink)" stroke-width="2.4" marker-end="url(#df-arrow)"/>
+
+  <!-- Step 2: OLTP Transaction Processing -->
+  <path d="M 225 60 Q 315 57 405 60 Q 407 130 405 200 Q 315 203 225 200 Q 223 130 225 60 Z" fill="var(--sticky-y)" stroke="var(--amber)" stroke-width="2.2"/>
+  <text x="315" y="90" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" font-weight="700" fill="var(--amber)">LAYER 2 · DYNAMIC</text>
+  <text x="315" y="118" text-anchor="middle" font-family="var(--font-hand)" font-size="19" font-weight="700" fill="var(--ink)">OLTP Transactions</text>
+  <text x="315" y="145" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">• Sales Orders (SO)</text>
+  <text x="315" y="165" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">• Goods Receipts (GR)</text>
+  <text x="315" y="185" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">• General Ledger Posts</text>
+
+  <!-- Arrow 2 -> 3 -->
+  <path d="M 405 130 Q 425 128 445 130" fill="none" stroke="var(--ink)" stroke-width="2.4" marker-end="url(#df-arrow)"/>
+  <text x="425" y="115" text-anchor="middle" font-family="var(--font-hand2)" font-size="11" fill="var(--pencil)">CDC / Stream</text>
+
+  <!-- Step 3: Analytical OLAP Warehouse -->
+  <path d="M 450 60 Q 540 57 630 60 Q 632 130 630 200 Q 540 203 450 200 Q 448 130 450 60 Z" fill="var(--card)" stroke="var(--ink2)" stroke-width="2.2"/>
+  <text x="540" y="90" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" font-weight="700" fill="var(--ink2)">LAYER 3 · SYNTHESIS</text>
+  <text x="540" y="118" text-anchor="middle" font-family="var(--font-hand)" font-size="19" font-weight="700" fill="var(--ink2)">OLAP Lakehouse</text>
+  <text x="540" y="145" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">• Star Schema Cubes</text>
+  <text x="540" y="165" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">• Aggregated History</text>
+  <text x="540" y="185" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">• Multi-currency P&amp;L</text>
+
+  <!-- Arrow 3 -> 4 -->
+  <path d="M 630 130 Q 650 128 670 130" fill="none" stroke="var(--green)" stroke-width="2.4" marker-end="url(#df-arrow)"/>
+
+  <!-- Step 4: Executive Decision Intelligence -->
+  <path d="M 675 60 Q 760 57 845 60 Q 847 130 845 200 Q 760 203 675 200 Q 673 130 675 60 Z" fill="var(--sticky-g)" stroke="var(--green)" stroke-width="2.4"/>
+  <text x="760" y="90" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" font-weight="700" fill="var(--green)">LAYER 4 · ACTION</text>
+  <text x="760" y="118" text-anchor="middle" font-family="var(--font-hand)" font-size="19" font-weight="700" fill="var(--green)">Executive Intel</text>
+  <text x="760" y="145" text-anchor="middle" font-family="var(--font-body)" font-size="11" font-weight="600" fill="var(--text)">• Real-Time Margin KPIs</text>
+  <text x="760" y="165" text-anchor="middle" font-family="var(--font-body)" font-size="11" font-weight="600" fill="var(--text)">• Working Capital Drift</text>
+  <text x="760" y="185" text-anchor="middle" font-family="var(--font-body)" font-size="11" font-weight="600" fill="var(--text)">• Predictive Stock-outs</text>
+
+  <!-- Bottom Annotation -->
+  <text x="430" y="255" text-anchor="middle" font-family="var(--font-hand)" font-size="16" font-weight="700" fill="var(--ink)">
+    Rule: Never run heavy analytical queries on OLTP database; always decouple OLTP from OLAP reporting.
+  </text>
+</svg>

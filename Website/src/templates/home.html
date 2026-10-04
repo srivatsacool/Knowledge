@@ -1,0 +1,104 @@
+<!-- Hero Header -->
+<section class="hero-section">
+  <span class="hero-tagline">Academic Knowledge Vault</span>
+  <h1 class="hero-title">Rigorous study notebooks, blueprints &amp; frameworks.</h1>
+  <p class="hero-subtitle">
+    A curated, searchable academic library of standalone HTML study notebooks, technical architectures, and domain notes.
+  </p>
+
+  <!-- In-Hero Search Input -->
+  <div class="hero-search-wrapper">
+    <div class="hero-search-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </div>
+    <input type="text" id="heroSearchInput" class="hero-search-input" placeholder="Search topics, questions, formulas, or architecture (Press '/' to focus)..." aria-label="Quick Search">
+  </div>
+
+  <!-- Key Statistics Ribbon -->
+  <div class="stats-ribbon">
+    <div class="stat-item">
+      <span class="stat-value">{{totalSubjects}}</span>
+      <span class="stat-label">Subject Divisions</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value">{{totalPublishedNotebooks}}</span>
+      <span class="stat-label">Published Notebooks</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value">{{totalStudyModules}}</span>
+      <span class="stat-label">Core Modules</span>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Notebook Spotlight -->
+{{#hasFeatured}}
+<section class="featured-section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Featured Master Notebook</h2>
+      <p class="section-subtitle">Recommended comprehensive revision document</p>
+    </div>
+  </div>
+
+  <article class="featured-card">
+    <div>
+      <div class="featured-meta">
+        <span class="badge badge-featured">Featured Master Note</span>
+        <span class="badge badge-subject">{{featuredSubject}}</span>
+        <span class="badge badge-category">{{featuredCategory}}</span>
+      </div>
+
+      <h3 class="featured-title">
+        <a href="{{featuredUrl}}">{{featuredTitle}}</a>
+      </h3>
+
+      <p class="featured-desc">{{featuredDescription}}</p>
+
+      <div class="featured-tags">
+        {{#featuredTags}}
+        <span class="tag-pill">#{{.}}</span>
+        {{/featuredTags}}
+      </div>
+    </div>
+
+    <div class="featured-action">
+      <a href="{{featuredUrl}}" class="btn-primary">
+        <span>Read Notebook</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <div class="notebook-stats-pill">
+        <span>📖 {{featuredReadTime}} read</span> &bull; <span>{{featuredQuestions}} questions</span>
+      </div>
+    </div>
+  </article>
+</section>
+{{/hasFeatured}}
+
+<!-- Subject Areas Grid -->
+<section class="subjects-section">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Knowledge Divisions</h2>
+      <p class="section-subtitle">Browse study notebooks and materials by domain</p>
+    </div>
+  </div>
+
+  <div class="subjects-grid">
+    {{#subjects}}
+    <a href="{{url}}" class="subject-card">
+      <div>
+        <div class="subject-card-header">
+          <h3 class="subject-name">{{name}}</h3>
+          <span class="subject-count-badge {{badgeClass}}">{{countLabel}}</span>
+        </div>
+        <p class="subject-card-desc">{{description}}</p>
+      </div>
+      <div class="subject-card-footer">
+        <span>{{statusText}}</span>
+        <span class="subject-card-arrow">&rarr;</span>
+      </div>
+    </a>
+    {{/subjects}}
+  </div>
+</section>

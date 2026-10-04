@@ -1,0 +1,187 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Brain Knowledge Hub Notebook Metadata Standard 2.0",
+  "description": "Companion metadata configuration for standalone study notebooks conforming to Template 2.0 standard in Brain Knowledge Hub",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Authoritative title of the study notebook"
+    },
+    "subtitle": {
+      "type": "string",
+      "description": "Explanatory academic subtitle"
+    },
+    "description": {
+      "type": "string",
+      "description": "Comprehensive 1-2 sentence executive summary of scope and learning objectives"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Strictly lowercase, URL-safe slug without spaces (e.g. 'erp-business-applications')"
+    },
+    "subject": {
+      "type": "string",
+      "enum": [
+        "AI",
+        "Analytics",
+        "Business",
+        "Finance",
+        "General",
+        "Management",
+        "Operations",
+        "Placement_Interview",
+        "Technology"
+      ],
+      "description": "Canonical parent subject division"
+    },
+    "category": {
+      "type": "string",
+      "description": "Sub-domain or course category (e.g. 'Enterprise Systems', 'Deep Learning')"
+    },
+    "templateVersion": {
+      "type": "string",
+      "enum": ["1.0.0", "2.0.0"],
+      "default": "2.0.0",
+      "description": "Template design system specification version"
+    },
+    "archetype": {
+      "type": "string",
+      "enum": [
+        "exam",
+        "course",
+        "concept",
+        "case-study",
+        "research",
+        "technical",
+        "quant-formula",
+        "revision"
+      ],
+      "default": "course",
+      "description": "Target pedagogical notebook archetype"
+    },
+    "academicLevel": {
+      "type": "string",
+      "enum": [
+        "mba-foundation",
+        "mba-advanced",
+        "executive-mba",
+        "undergraduate",
+        "practitioner"
+      ],
+      "default": "mba-foundation",
+      "description": "Academic depth tier"
+    },
+    "targetAudience": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Primary intended audience (e.g. MBA students, systems architects)"
+    },
+    "contentDepth": {
+      "type": "string",
+      "enum": ["introductory", "intermediate", "advanced", "exhaustive"],
+      "default": "intermediate",
+      "description": "Conceptual depth of coverage"
+    },
+    "difficultyRating": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "default": 3,
+      "description": "Cognitive difficulty rating from 1 (fundamental) to 5 (advanced mastery)"
+    },
+    "estimatedReadTimeMinutes": {
+      "type": "integer",
+      "description": "Estimated reading and active study time in minutes"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "published", "archived"],
+      "default": "draft",
+      "description": "Publication status. Set to 'draft' to exclude from public builds."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "default": "2.0.0",
+      "description": "Semantic versioning of the study notebook"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO date string of last revision (YYYY-MM-DD)"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date",
+      "description": "Alternative date field for backwards compatibility (YYYY-MM-DD)"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Spotlight on portal homepage if true"
+    },
+    "file": {
+      "type": "string",
+      "description": "Exact filename of the companion HTML notebook"
+    },
+    "sourceGrounding": {
+      "type": "object",
+      "properties": {
+        "primarySources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "fileName": { "type": "string" },
+              "fileType": { "type": "string" },
+              "hash": { "type": "string" },
+              "extractedVia": { "type": "string", "enum": ["anydoc", "manual", "firecrawl"] }
+            },
+            "required": ["fileName", "fileType"]
+          }
+        },
+        "curriculumAlignment": { "type": "string" }
+      }
+    },
+    "pedagogicalStructure": {
+      "type": "object",
+      "properties": {
+        "learningOutcomes": { "type": "array", "items": { "type": "string" } },
+        "prerequisites": { "type": "array", "items": { "type": "string" } },
+        "nextTopics": { "type": "array", "items": { "type": "string" } },
+        "moduleCount": { "type": "integer" }
+      }
+    },
+    "visualManifest": {
+      "type": "object",
+      "properties": {
+        "diagramCount": { "type": "integer" },
+        "diagramTypes": { "type": "array", "items": { "type": "string" } },
+        "externalImages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "src": { "type": "string" },
+              "alt": { "type": "string" },
+              "source": { "type": "string" },
+              "license": { "type": "string" }
+            },
+            "required": ["src", "alt", "source"]
+          }
+        }
+      }
+    },
+    "examAlignment": {
+      "type": "object",
+      "properties": {
+        "totalQuestions": { "type": "integer" },
+        "mappedFAQs": { "type": "array", "items": { "type": "string" } },
+        "estimatedExamDurationMinutes": { "type": "integer" }
+      }
+    }
+  },
+  "required": ["title", "slug", "subject", "file", "templateVersion", "archetype", "status"]
+}

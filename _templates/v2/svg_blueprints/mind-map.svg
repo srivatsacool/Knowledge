@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 480" width="100%" height="auto" preserveAspectRatio="xMidYMid meet">
+  <!-- Central Hub Node -->
+  <path d="M 330 190 Q 430 185 530 190 Q 535 240 530 290 Q 430 295 330 290 Q 325 240 330 190 Z" fill="var(--sticky-y)" stroke="var(--ink)" stroke-width="3"/>
+  <text x="430" y="228" text-anchor="middle" font-family="var(--font-hand2)" font-size="14" font-weight="700" fill="var(--red)">CORE PILLAR</text>
+  <text x="430" y="255" text-anchor="middle" font-family="var(--font-hand)" font-size="24" font-weight="700" fill="var(--ink)">ERP Backbone</text>
+  <text x="430" y="278" text-anchor="middle" font-family="var(--font-body)" font-size="12" fill="var(--pencil)">Single Source of Truth</text>
+
+  <!-- Branch 1: Top-Left (Master Data) -->
+  <path d="M 360 195 Q 260 120 180 90" fill="none" stroke="var(--ink2)" stroke-width="2.6" stroke-linecap="round"/>
+  <rect x="70" y="45" width="200" height="75" rx="8" fill="var(--card)" stroke="var(--ink2)" stroke-width="2"/>
+  <text x="170" y="75" text-anchor="middle" font-family="var(--font-hand)" font-size="19" font-weight="700" fill="var(--ink2)">1. Master Data</text>
+  <text x="170" y="98" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">Material Master · Chart of Accounts</text>
+  <path d="M 170 120 Q 150 145 100 155" fill="none" stroke="var(--pencil)" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="95" y="172" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" fill="var(--pencil)">Garbage In = Garbage Out</text>
+
+  <!-- Branch 2: Top-Right (Process Integration) -->
+  <path d="M 500 195 Q 600 120 680 90" fill="none" stroke="var(--green)" stroke-width="2.6" stroke-linecap="round"/>
+  <rect x="590" y="45" width="200" height="75" rx="8" fill="var(--sticky-g)" stroke="var(--green)" stroke-width="2"/>
+  <text x="690" y="75" text-anchor="middle" font-family="var(--font-hand)" font-size="19" font-weight="700" fill="var(--green)">2. Process Flows</text>
+  <text x="690" y="98" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">Order-to-Cash · Procure-to-Pay</text>
+  <path d="M 690 120 Q 720 145 765 155" fill="none" stroke="var(--green)" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="765" y="172" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" fill="var(--green)">Cross-functional visibility</text>
+
+  <!-- Branch 3: Bottom-Left (Change & Governance) -->
+  <path d="M 360 285 Q 260 360 180 390" fill="none" stroke="var(--red)" stroke-width="2.6" stroke-linecap="round"/>
+  <rect x="70" y="360" width="200" height="75" rx="8" fill="var(--sticky-r)" stroke="var(--red)" stroke-width="2"/>
+  <text x="170" y="390" text-anchor="middle" font-family="var(--font-hand)" font-size="19" font-weight="700" fill="var(--red)">3. Human Capital</text>
+  <text x="170" y="413" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">Executive Sponsorship · Change Mgmt</text>
+  <path d="M 170 360 Q 140 335 100 325" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="95" y="318" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" fill="var(--red)">#1 Reason for failure!</text>
+
+  <!-- Branch 4: Bottom-Right (Analytics & Decisions) -->
+  <path d="M 500 285 Q 600 360 680 390" fill="none" stroke="var(--amber)" stroke-width="2.6" stroke-linecap="round"/>
+  <rect x="590" y="360" width="200" height="75" rx="8" fill="var(--card)" stroke="var(--amber)" stroke-width="2"/>
+  <text x="690" y="390" text-anchor="middle" font-family="var(--font-hand)" font-size="19" font-weight="700" fill="var(--amber)">4. Decision Intel</text>
+  <text x="690" y="413" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">Real-Time Variance · Actionable KPIs</text>
+  <path d="M 690 360 Q 720 335 765 325" fill="none" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="765" y="318" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" fill="var(--amber)">Shift from history to predictive</text>
+</svg>

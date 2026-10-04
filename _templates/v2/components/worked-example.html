@@ -1,0 +1,18 @@
+<!-- Component: WorkedExample (Numbered Student Step-by-Step Calculation) -->
+<div class="nb-card nb-worked-example" id="{{EXAMPLE_ID}}">
+  <div class="nb-tape nb-tape--right"></div>
+  <div class="nb-stamps">
+    <span class="nb-stamp nb-stamp--green">Worked Calculation</span>
+    <span class="nb-stamp nb-stamp--amber">{{DIFFICULTY_STAMP}}</span>
+  </div>
+  <h3 class="nb-card__title">{{EXAMPLE_TITLE}}</h3>
+  <div class="nb-worked-example__givens">
+    <strong>Problem Given:</strong> {{GIVENS_TEXT}}
+  </div>
+  <ol class="nb-method">
+    {{METHOD_STEPS}}
+  </ol>
+  <div class="nb-worked-example__takeaway">
+    ✏️ <strong>Managerial Takeaway:</strong> {{TAKEAWAY_TEXT}}
+  </div>
+</div>

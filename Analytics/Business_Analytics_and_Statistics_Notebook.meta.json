@@ -1,0 +1,24 @@
+{
+  "title": "Business Analytics & Statistics · Data-Driven Decision Making",
+  "slug": "business-analytics-and-statistics",
+  "subject": "Analytics",
+  "category": "Business Statistics",
+  "description": "Rigorous MBA foundation guide to business statistics and applied analytics: descriptive, diagnostic, predictive, and prescriptive paradigms, hypothesis testing, multiple regression modeling, and statistical inference.",
+  "file": "Business_Analytics_and_Statistics_Notebook.html",
+  "tags": [
+    "Analytics",
+    "Statistics",
+    "Regression",
+    "Hypothesis Testing",
+    "Predictive Analytics",
+    "Data-Driven"
+  ],
+  "status": "draft",
+  "source": "curriculum/mba-foundation",
+  "version": "1.0.0",
+  "updated": "2026-10-04",
+  "updatedAt": "2026-10-04",
+  "featured": false,
+  "readTimeMinutes": 28,
+  "questionsCount": 10
+}

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 300" width="100%" height="auto" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <marker id="sys-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="var(--ink)" />
+    </marker>
+    <marker id="fb-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="var(--red)" />
+    </marker>
+  </defs>
+
+  <!-- Outer System Boundary -->
+  <rect x="250" y="25" width="360" height="190" rx="14" fill="var(--paper)" stroke="var(--ink)" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="430" y="50" text-anchor="middle" font-family="var(--font-hand2)" font-size="14" font-weight="700" fill="var(--pencil)">ERP / ORGANIZATIONAL BOUNDARY</text>
+
+  <!-- Left: Inputs Box -->
+  <path d="M 25 70 Q 115 67 205 70 Q 207 125 205 180 Q 115 183 25 180 Q 23 125 25 70 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2.2"/>
+  <text x="115" y="98" text-anchor="middle" font-family="var(--font-hand)" font-size="20" font-weight="700" fill="var(--ink)">INPUTS</text>
+  <text x="115" y="125" text-anchor="middle" font-family="var(--font-body)" font-size="12" fill="var(--text)">• Customer Orders</text>
+  <text x="115" y="145" text-anchor="middle" font-family="var(--font-body)" font-size="12" fill="var(--text)">• Master Data & Inventory</text>
+  <text x="115" y="165" text-anchor="middle" font-family="var(--font-body)" font-size="12" fill="var(--text)">• Capital & Resource Hours</text>
+
+  <!-- Arrow: Input -> Engine -->
+  <path d="M 205 125 Q 230 123 268 125" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" marker-end="url(#sys-arrow)"/>
+
+  <!-- Center: Transformation Engine -->
+  <path d="M 270 70 Q 430 67 590 70 Q 592 125 590 180 Q 430 183 270 180 Q 268 125 270 70 Z" fill="var(--sticky-y)" stroke="var(--amber)" stroke-width="2.4"/>
+  <text x="430" y="98" text-anchor="middle" font-family="var(--font-hand)" font-size="21" font-weight="700" fill="var(--ink)">TRANSFORMATION ENGINE</text>
+  <text x="430" y="125" text-anchor="middle" font-family="var(--font-body)" font-size="13" font-weight="600" fill="var(--text)">MRP / ERP Integrated Business Logic</text>
+  <text x="430" y="148" text-anchor="middle" font-family="var(--font-body)" font-size="12" fill="var(--pencil)">BOM Explosion · Routing · Real-time Valuation</text>
+  <text x="430" y="168" text-anchor="middle" font-family="var(--font-hand2)" font-size="13" fill="var(--green)">Single Unified Source of Truth</text>
+
+  <!-- Arrow: Engine -> Output -->
+  <path d="M 590 125 Q 615 123 653 125" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" marker-end="url(#sys-arrow)"/>
+
+  <!-- Right: Outputs Box -->
+  <path d="M 655 70 Q 745 67 835 70 Q 837 125 835 180 Q 745 183 655 180 Q 653 125 655 70 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2.2"/>
+  <text x="745" y="98" text-anchor="middle" font-family="var(--font-hand)" font-size="20" font-weight="700" fill="var(--ink)">OUTPUTS</text>
+  <text x="745" y="125" text-anchor="middle" font-family="var(--font-body)" font-size="12" fill="var(--text)">• Fulfilled Shipments</text>
+  <text x="745" y="145" text-anchor="middle" font-family="var(--font-body)" font-size="12" fill="var(--text)">• Real-Time Financials</text>
+  <text x="745" y="165" text-anchor="middle" font-family="var(--font-body)" font-size="12" fill="var(--text)">• Actionable KPI Dashboards</text>
+
+  <!-- Feedback Loop Bottom -->
+  <path d="M 745 185 Q 745 260 430 260 Q 115 260 115 188" fill="none" stroke="var(--red)" stroke-width="2.2" stroke-dasharray="5 3" stroke-linecap="round" marker-end="url(#fb-arrow)"/>
+  <rect x="345" y="246" width="170" height="28" rx="6" fill="var(--card)" stroke="var(--red)" stroke-width="1.2"/>
+  <text x="430" y="265" text-anchor="middle" font-family="var(--font-hand)" font-size="16" font-weight="700" fill="var(--red)">Closed-Loop Feedback</text>
+</svg>

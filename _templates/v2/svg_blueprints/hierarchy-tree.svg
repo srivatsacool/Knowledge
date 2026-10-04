@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 360" width="100%" height="auto" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <marker id="ht-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="var(--ink)" />
+    </marker>
+  </defs>
+
+  <!-- Level 1: Enterprise / Corporate (Apex) -->
+  <path d="M 310 25 Q 430 22 550 25 Q 552 65 550 105 Q 430 108 310 105 Q 308 65 310 25 Z" fill="var(--sticky-y)" stroke="var(--ink)" stroke-width="2.6"/>
+  <text x="430" y="52" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" font-weight="700" fill="var(--pencil)">LEVEL 1 · ENTERPRISE</text>
+  <text x="430" y="78" text-anchor="middle" font-family="var(--font-hand)" font-size="20" font-weight="700" fill="var(--ink)">Corporate Client / Group</text>
+  <text x="430" y="98" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--pencil)">Unified Chart of Accounts & Global Policies</text>
+
+  <!-- Connecting Trunk -->
+  <path d="M 430 105 L 430 145" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M 215 145 L 645 145" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M 215 145 L 215 170" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round" marker-end="url(#ht-arrow)"/>
+  <path d="M 645 145 L 645 170" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round" marker-end="url(#ht-arrow)"/>
+
+  <!-- Level 2: Legal Entities / Company Codes -->
+  <!-- Left Subsidiary -->
+  <path d="M 100 175 Q 215 172 330 175 Q 332 215 330 255 Q 215 258 100 255 Q 98 215 100 175 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/>
+  <text x="215" y="200" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" font-weight="700" fill="var(--pencil)">LEVEL 2 · LEGAL ENTITY</text>
+  <text x="215" y="226" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--ink)">Company Code 1000 (US)</text>
+  <text x="215" y="246" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--pencil)">USD Currency · Local GAAP</text>
+
+  <!-- Right Subsidiary -->
+  <path d="M 530 175 Q 645 172 760 175 Q 762 215 760 255 Q 645 258 530 255 Q 528 215 530 175 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/>
+  <text x="645" y="200" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" font-weight="700" fill="var(--pencil)">LEVEL 2 · LEGAL ENTITY</text>
+  <text x="645" y="226" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--ink)">Company Code 2000 (EU)</text>
+  <text x="645" y="246" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--pencil)">EUR Currency · IFRS Statutory</text>
+
+  <!-- Sub-branches to Level 3 -->
+  <path d="M 215 255 L 215 285" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M 120 285 L 310 285" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M 120 285 L 120 305" stroke="var(--ink)" stroke-width="1.8" marker-end="url(#ht-arrow)"/>
+  <path d="M 310 285 L 310 305" stroke="var(--ink)" stroke-width="1.8" marker-end="url(#ht-arrow)"/>
+
+  <!-- Level 3 Operational Nodes (Plants / Storage Locations) -->
+  <rect x="50" y="305" width="140" height="42" rx="6" fill="var(--sticky-g)" stroke="var(--green)" stroke-width="1.5"/>
+  <text x="120" y="330" text-anchor="middle" font-family="var(--font-hand)" font-size="15" font-weight="700" fill="var(--green)">Plant 1010 (Mfg)</text>
+
+  <rect x="240" y="305" width="140" height="42" rx="6" fill="var(--card)" stroke="var(--ink)" stroke-width="1.5"/>
+  <text x="310" y="330" text-anchor="middle" font-family="var(--font-hand)" font-size="15" font-weight="700" fill="var(--ink)">Plant 1020 (DC)</text>
+
+  <!-- Level 3 Right Nodes -->
+  <path d="M 645 255 L 645 285" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M 550 285 L 740 285" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M 550 285 L 550 305" stroke="var(--ink)" stroke-width="1.8" marker-end="url(#ht-arrow)"/>
+  <path d="M 740 285 L 740 305" stroke="var(--ink)" stroke-width="1.8" marker-end="url(#ht-arrow)"/>
+
+  <rect x="480" y="305" width="140" height="42" rx="6" fill="var(--sticky-g)" stroke="var(--green)" stroke-width="1.5"/>
+  <text x="550" y="330" text-anchor="middle" font-family="var(--font-hand)" font-size="15" font-weight="700" fill="var(--green)">Plant 2010 (Mfg)</text>
+
+  <rect x="670" y="305" width="140" height="42" rx="6" fill="var(--card)" stroke="var(--ink)" stroke-width="1.5"/>
+  <text x="740" y="330" text-anchor="middle" font-family="var(--font-hand)" font-size="15" font-weight="700" fill="var(--ink)">Plant 2020 (DC)</text>
+</svg>

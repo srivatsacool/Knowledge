@@ -1,0 +1,24 @@
+{
+  "title": "Financial Management & Accounting · The Language of Business",
+  "slug": "financial-management-and-accounting",
+  "subject": "Finance",
+  "category": "Financial Accounting",
+  "description": "Rigorous MBA foundation guide to financial reporting and managerial accounting: 3-statement articulation, accrual vs. cash dynamics, DuPont ratio decomposition, and working capital optimization.",
+  "file": "Financial_Management_and_Accounting_Notebook.html",
+  "tags": [
+    "Finance",
+    "Accounting",
+    "Financial Statements",
+    "DuPont Analysis",
+    "Cash Flow",
+    "Working Capital"
+  ],
+  "status": "draft",
+  "source": "curriculum/mba-foundation",
+  "version": "1.0.0",
+  "updated": "2026-10-04",
+  "updatedAt": "2026-10-04",
+  "featured": false,
+  "readTimeMinutes": 28,
+  "questionsCount": 10
+}

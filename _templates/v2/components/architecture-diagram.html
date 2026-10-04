@@ -1,0 +1,46 @@
+<!-- Component: Architecture Diagram (3-Tier Native SVG) -->
+<figure class="nb-arch-diagram" id="{{DIAGRAM_ID}}" role="img" aria-label="{{DIAGRAM_LABEL}}">
+  <div class="nb-arch-diagram__svg-wrap">
+    <svg viewBox="0 0 800 320" width="100%" height="auto" preserveAspectRatio="xMidYMid meet">
+      <title>{{DIAGRAM_TITLE}}</title>
+      <desc>{{DIAGRAM_DESC}}</desc>
+      
+      <!-- Tier 1: Presentation -->
+      <rect x="30" y="40" width="200" height="240" rx="8" fill="var(--bg-surface-subtle)" stroke="var(--border-strong)" stroke-width="2"/>
+      <text x="130" y="70" text-anchor="middle" font-family="var(--font-ui)" font-weight="700" font-size="16" fill="var(--accent-primary)">Tier 1: Presentation</text>
+      <rect x="50" y="95" width="160" height="45" rx="4" fill="var(--bg-surface)" stroke="var(--border-subtle)"/>
+      <text x="130" y="122" text-anchor="middle" font-family="var(--font-ui)" font-size="13" fill="var(--text-primary)">Desktop SAP GUI</text>
+      <rect x="50" y="155" width="160" height="45" rx="4" fill="var(--bg-surface)" stroke="var(--border-subtle)"/>
+      <text x="130" y="182" text-anchor="middle" font-family="var(--font-ui)" font-size="13" fill="var(--text-primary)">Web Browser / Fiori</text>
+      <rect x="50" y="215" width="160" height="45" rx="4" fill="var(--bg-surface)" stroke="var(--border-subtle)"/>
+      <text x="130" y="242" text-anchor="middle" font-family="var(--font-ui)" font-size="13" fill="var(--text-primary)">Mobile Handheld / RF</text>
+
+      <!-- Connecting Arrows 1 -> 2 -->
+      <path d="M 230 160 L 290 160" stroke="var(--accent-secondary)" stroke-width="3" stroke-dasharray="4"/>
+      
+      <!-- Tier 2: Application Logic -->
+      <rect x="300" y="40" width="200" height="240" rx="8" fill="var(--bg-surface-subtle)" stroke="var(--border-strong)" stroke-width="2"/>
+      <text x="400" y="70" text-anchor="middle" font-family="var(--font-ui)" font-weight="700" font-size="16" fill="var(--accent-primary)">Tier 2: Application Logic</text>
+      <rect x="320" y="95" width="160" height="45" rx="4" fill="var(--bg-surface)" stroke="var(--border-subtle)"/>
+      <text x="400" y="122" text-anchor="middle" font-family="var(--font-ui)" font-size="13" fill="var(--text-primary)">Business Rules Engine</text>
+      <rect x="320" y="155" width="160" height="45" rx="4" fill="var(--bg-surface)" stroke="var(--border-subtle)"/>
+      <text x="400" y="182" text-anchor="middle" font-family="var(--font-ui)" font-size="13" fill="var(--text-primary)">Workflow Coordinator</text>
+      <rect x="320" y="215" width="160" height="45" rx="4" fill="var(--bg-surface)" stroke="var(--border-subtle)"/>
+      <text x="400" y="242" text-anchor="middle" font-family="var(--font-ui)" font-size="13" fill="var(--text-primary)">Dispatcher & Queue</text>
+
+      <!-- Connecting Arrows 2 -> 3 -->
+      <path d="M 500 160 L 560 160" stroke="var(--accent-secondary)" stroke-width="3" stroke-dasharray="4"/>
+
+      <!-- Tier 3: Database Tier -->
+      <rect x="570" y="40" width="200" height="240" rx="8" fill="var(--bg-surface-subtle)" stroke="var(--border-strong)" stroke-width="2"/>
+      <text x="670" y="70" text-anchor="middle" font-family="var(--font-ui)" font-weight="700" font-size="16" fill="var(--accent-primary)">Tier 3: Database</text>
+      <rect x="600" y="110" width="140" height="80" rx="4" fill="var(--bg-surface)" stroke="var(--border-subtle)"/>
+      <text x="670" y="145" text-anchor="middle" font-family="var(--font-ui)" font-weight="600" font-size="13" fill="var(--text-primary)">Central Relational DB</text>
+      <text x="670" y="165" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--text-secondary)">HANA / Oracle / SQL</text>
+      <text x="670" y="245" text-anchor="middle" font-family="var(--font-ui)" font-size="12" fill="var(--accent-success)">ACID Transaction Guarantee</text>
+    </svg>
+  </div>
+  <figcaption class="nb-arch-diagram__caption">
+    <strong>{{FIGURE_LABEL}}:</strong> {{CAPTION_TEXT}}
+  </figcaption>
+</figure>

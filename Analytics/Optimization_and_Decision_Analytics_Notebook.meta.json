@@ -1,0 +1,24 @@
+{
+  "title": "Optimization & Decision Analytics · Linear Models & Monte Carlo",
+  "slug": "optimization-and-decision-analytics",
+  "subject": "Analytics",
+  "category": "Decision Science",
+  "description": "Core MBA curriculum guide to management science and prescriptive analytics: constrained linear programming, sensitivity analysis & shadow prices, decision trees under uncertainty, and Monte Carlo simulation.",
+  "file": "Optimization_and_Decision_Analytics_Notebook.html",
+  "tags": [
+    "Decision Science",
+    "Optimization",
+    "Linear Programming",
+    "Monte Carlo",
+    "Decision Trees",
+    "Simulation"
+  ],
+  "status": "draft",
+  "source": "curriculum/mba-foundation",
+  "version": "1.0.0",
+  "updated": "2026-10-04",
+  "updatedAt": "2026-10-04",
+  "featured": false,
+  "readTimeMinutes": 27,
+  "questionsCount": 10
+}

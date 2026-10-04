@@ -1,0 +1,23 @@
+<!-- Component: Model Exam Answer Card -->
+<article class="nb-exam-answer" id="{{FAQ_ID}}">
+  <div class="nb-exam-answer__header">
+    <div class="nb-exam-answer__meta">
+      <span class="nb-badge nb-badge--archetype">{{FAQ_NUMBER_LABEL}}</span>
+      <span class="nb-exam-answer__marks">[{{MARKS_LABEL}}]</span>
+      <span class="nb-exam-answer__time">⏱ Recommended: {{TIME_LABEL}}</span>
+    </div>
+    <h3 class="nb-exam-answer__question">"{{QUESTION_TEXT}}"</h3>
+  </div>
+  <div class="nb-exam-answer__rubric">
+    <strong>Examiner Grading Rubric:</strong>
+    <ul>
+      {{RUBRIC_ITEMS}}
+    </ul>
+  </div>
+  <div class="nb-exam-answer__model-body">
+    {{ANSWER_BODY}}
+  </div>
+  <div class="nb-exam-answer__footer">
+    <span class="nb-exam-answer__tip">💡 High-Score Tip: {{EXAM_TIP}}</span>
+  </div>
+</article>

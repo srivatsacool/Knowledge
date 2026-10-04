@@ -1,0 +1,38 @@
+{
+  "title": "ERP Business Applications · Master MBA Study Guide & Exam Blueprint",
+  "slug": "erp",
+  "subject": "Operations",
+  "category": "Enterprise Systems",
+  "description": "Comprehensive postgraduate MBA study guide and exam blueprint covering ERP business and technology strategy, 3-tier architecture, the Five Pillars of ERP, Value Matrix Analysis, Plossl manufacturing theory, Master Data, Subway franchise case study, and 100% model FAQ exam answers.",
+  "file": "ERP_Business_Applications_Notebook.html",
+  "tags": [
+    "Operations",
+    "ERP",
+    "Enterprise Systems",
+    "BPR",
+    "Supply Chain",
+    "Value Matrix",
+    "Plossl",
+    "Master Data",
+    "MBA Curriculum",
+    "Altekar"
+  ],
+  "status": "published",
+  "source": "curriculum/weschool-term4-altekar",
+  "version": "2.0.0",
+  "templateVersion": "2.0.0",
+  "updated": "2026-10-04",
+  "updatedAt": "2026-10-04",
+  "featured": true,
+  "readTimeMinutes": 48,
+  "questionsCount": 18,
+  "courseContext": {
+    "course": "ERP Business Applications (Elective)",
+    "instructor": "Rahul Altekar",
+    "outcomes": [
+      "CO1",
+      "CO2",
+      "CO3"
+    ]
+  }
+}

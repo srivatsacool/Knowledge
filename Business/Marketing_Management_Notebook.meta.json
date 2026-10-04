@@ -1,0 +1,25 @@
+{
+  "title": "Marketing Management · Customer Value, STP & Market Execution",
+  "slug": "marketing-management",
+  "subject": "Business",
+  "category": "Marketing",
+  "description": "Foundational MBA guide to marketing management: consumer psychology, 5Cs situation analysis, STP framework (Segmentation, Targeting, Positioning), the 4Ps marketing mix, Customer Lifetime Value (CLV), and digital growth funnels.",
+  "file": "Marketing_Management_Notebook.html",
+  "tags": [
+    "Marketing",
+    "STP",
+    "4Ps",
+    "Customer Lifetime Value",
+    "Consumer Behaviour",
+    "Brand Management",
+    "Pricing Strategy"
+  ],
+  "status": "draft",
+  "source": "curriculum/mba-foundation",
+  "version": "1.0.0",
+  "updated": "2026-10-04",
+  "updatedAt": "2026-10-04",
+  "featured": false,
+  "readTimeMinutes": 26,
+  "questionsCount": 10
+}

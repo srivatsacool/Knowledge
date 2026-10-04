@@ -1,0 +1,17 @@
+{
+  "task_id": "task_sample_01",
+  "operation": "create_notebook",
+  "topic": "Economic Order Quantity",
+  "title": "Economic Order Quantity (EOQ) · Classical Model & Inventory Blueprints",
+  "subject": "Operations",
+  "category": "Inventory Management",
+  "destination_subfolder": "Inventory",
+  "slug": "economic-order-quantity",
+  "description": "Comprehensive academic study notebook on the Classical Economic Order Quantity (EOQ) model: calculus derivation, total cost curves, worked numerical cases, and exam defense frameworks.",
+  "publication_status": "draft",
+  "source": "curriculum/operations",
+  "version": "1.0.0",
+  "tags": ["Operations", "Inventory Management", "EOQ", "Supply Chain", "Optimization", "Cost Accounting"],
+  "readTimeMinutes": 35,
+  "author": "Orca / Agy CLI"
+}

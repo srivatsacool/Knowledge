@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 380" width="100%" height="auto" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <marker id="ex-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="var(--ink)" />
+    </marker>
+  </defs>
+
+  <!-- Step 1: Theoretical Thesis -->
+  <path d="M 30 40 Q 115 37 200 40 Q 202 145 200 250 Q 115 253 30 250 Q 28 145 30 40 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2.2"/>
+  <rect x="50" y="55" width="130" height="24" rx="4" fill="var(--paper)" stroke="var(--ink)" stroke-width="1"/>
+  <text x="115" y="72" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" font-weight="700" fill="var(--ink)">STEP 1 · 20% MARKS</text>
+  <text x="115" y="110" text-anchor="middle" font-family="var(--font-hand)" font-size="20" font-weight="700" fill="var(--ink)">Theoretical Thesis</text>
+  <text x="115" y="140" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">Define core concept,</text>
+  <text x="115" y="158" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">academic provenance,</text>
+  <text x="115" y="176" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">and formal boundary</text>
+  <text x="115" y="215" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" fill="var(--pencil)">"Never assume context"</text>
+
+  <!-- Arrow 1 -> 2 -->
+  <path d="M 200 145 Q 220 143 240 145" fill="none" stroke="var(--ink)" stroke-width="2.4" marker-end="url(#ex-arrow)"/>
+
+  <!-- Step 2: Diagnostic Framework -->
+  <path d="M 245 40 Q 335 37 425 40 Q 427 145 425 250 Q 335 253 245 250 Q 243 145 245 40 Z" fill="var(--sticky-y)" stroke="var(--amber)" stroke-width="2.2"/>
+  <rect x="270" y="55" width="130" height="24" rx="4" fill="var(--paper)" stroke="var(--amber)" stroke-width="1"/>
+  <text x="335" y="72" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" font-weight="700" fill="var(--amber)">STEP 2 · 25% MARKS</text>
+  <text x="335" y="110" text-anchor="middle" font-family="var(--font-hand)" font-size="20" font-weight="700" fill="var(--ink)">Framework / Matrix</text>
+  <text x="335" y="140" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">Map case variables</text>
+  <text x="335" y="158" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">to 2x2 matrix, value chain,</text>
+  <text x="335" y="176" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">or fishbone diagram</text>
+  <text x="335" y="215" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" fill="var(--red)">"Draw visual sketch!"</text>
+
+  <!-- Arrow 2 -> 3 -->
+  <path d="M 425 145 Q 445 143 465 145" fill="none" stroke="var(--ink)" stroke-width="2.4" marker-end="url(#ex-arrow)"/>
+
+  <!-- Step 3: Options Evaluation -->
+  <path d="M 470 40 Q 560 37 650 40 Q 652 145 650 250 Q 560 253 470 250 Q 468 145 470 40 Z" fill="var(--card)" stroke="var(--ink2)" stroke-width="2.2"/>
+  <rect x="495" y="55" width="130" height="24" rx="4" fill="var(--paper)" stroke="var(--ink2)" stroke-width="1"/>
+  <text x="560" y="72" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" font-weight="700" fill="var(--ink2)">STEP 3 · 30% MARKS</text>
+  <text x="560" y="110" text-anchor="middle" font-family="var(--font-hand)" font-size="20" font-weight="700" fill="var(--ink2)">Strategic Options</text>
+  <text x="560" y="140" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">Synthesize 2–3 paths</text>
+  <text x="560" y="158" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">Quantify trade-offs,</text>
+  <text x="560" y="176" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">costs, and risks</text>
+  <text x="560" y="215" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" fill="var(--pencil)">"Balance pros &amp; cons"</text>
+
+  <!-- Arrow 3 -> 4 -->
+  <path d="M 650 145 Q 670 143 690 145" fill="none" stroke="var(--green)" stroke-width="2.4" marker-end="url(#ex-arrow)"/>
+
+  <!-- Step 4: Executive Recommendation -->
+  <path d="M 695 40 Q 775 37 855 40 Q 857 145 855 250 Q 775 253 695 250 Q 693 145 695 40 Z" fill="var(--sticky-g)" stroke="var(--green)" stroke-width="2.4"/>
+  <rect x="710" y="55" width="130" height="24" rx="4" fill="var(--paper)" stroke="var(--green)" stroke-width="1"/>
+  <text x="775" y="72" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" font-weight="700" fill="var(--green)">STEP 4 · 25% MARKS</text>
+  <text x="775" y="110" text-anchor="middle" font-family="var(--font-hand)" font-size="20" font-weight="700" fill="var(--green)">Action &amp; Governance</text>
+  <text x="775" y="140" text-anchor="middle" font-family="var(--font-body)" font-size="11" font-weight="600" fill="var(--text)">Concrete recommendation</text>
+  <text x="775" y="158" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">Change management plan,</text>
+  <text x="775" y="176" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">KPIs, and milestones</text>
+  <text x="775" y="215" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" fill="var(--green)">"Decisive leadership tone"</text>
+
+  <!-- Bottom Rubber Stamp Banner -->
+  <rect x="230" y="295" width="400" height="48" rx="8" fill="var(--card)" stroke="var(--ink)" stroke-width="2" stroke-dasharray="4 2"/>
+  <text x="430" y="326" text-anchor="middle" font-family="var(--font-hand)" font-size="20" font-weight="700" fill="var(--ink)">
+    ⭐ RUBRIC: Theory (20%) + Diagram (25%) + Trade-offs (30%) + Action (25%) = 10/10
+  </text>
+</svg>

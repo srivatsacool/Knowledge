@@ -1,0 +1,15 @@
+<!-- Component: Quiz (Active Recall Self-Assessment with Marking Logic) -->
+<div class="nb-card nb-quiz" id="{{QUIZ_ID}}" data-qid="{{QID}}">
+  <div class="nb-stamps"><span class="nb-stamp nb-stamp--blue">Self-Check Quiz</span></div>
+  <h4 class="nb-card__title">{{QUESTION_PROMPT}}</h4>
+  <div class="nb-quiz__options">
+    {{QUIZ_OPTIONS}}
+  </div>
+  <details class="nb-quiz__exp">
+    <summary>View Official Marking Logic & Explanation</summary>
+    <div class="nb-quiz__details">
+      <strong>Correct Option: {{CORRECT_OPTION}}</strong>
+      <p>{{EXPLANATION_TEXT}}</p>
+    </div>
+  </details>
+</div>

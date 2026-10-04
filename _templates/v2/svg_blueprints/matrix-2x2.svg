@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 480" width="100%" height="auto" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <marker id="axis-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="var(--ink)" />
+    </marker>
+  </defs>
+
+  <!-- Y-Axis (Vertical Arrow) -->
+  <path d="M 80 440 L 80 30" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" marker-end="url(#axis-arrow)"/>
+  <text x="70" y="25" text-anchor="middle" font-family="var(--font-hand)" font-size="20" font-weight="700" fill="var(--ink)">
+    Strategic Value ↑
+  </text>
+
+  <!-- X-Axis (Horizontal Arrow) -->
+  <path d="M 70 430 L 730 430" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" marker-end="url(#axis-arrow)"/>
+  <text x="735" y="445" text-anchor="end" font-family="var(--font-hand)" font-size="20" font-weight="700" fill="var(--ink)">
+    User Adoption & Usability →
+  </text>
+
+  <!-- Quadrant II: Top Right (Transformational Core - Star) -->
+  <rect x="420" y="50" width="300" height="170" rx="8" fill="var(--sticky-g)" stroke="var(--green)" stroke-width="2.2" stroke-dasharray="2 1"/>
+  <text x="570" y="85" text-anchor="middle" font-family="var(--font-hand)" font-size="22" font-weight="700" fill="var(--green)">
+    Transformational Core ⭐
+  </text>
+  <text x="570" y="115" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">
+    High Strategic Value + High Adoption
+  </text>
+  <text x="570" y="145" text-anchor="middle" font-family="var(--font-body)" font-size="13" fill="var(--pencil)">
+    Drives real-time agility & cost reduction
+  </text>
+  <text x="570" y="180" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--green)">
+    "EXECUTE WITH GOVERNANCE"
+  </text>
+
+  <!-- Quadrant I: Top Left (Under-Leveraged Goldmine) -->
+  <rect x="100" y="50" width="300" height="170" rx="8" fill="var(--card)" stroke="var(--ink)" stroke-width="2.2"/>
+  <text x="250" y="85" text-anchor="middle" font-family="var(--font-hand)" font-size="22" font-weight="700" fill="var(--ink)">
+    Under-Leveraged Goldmine
+  </text>
+  <text x="250" y="115" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">
+    High Strategic Value + Low Adoption
+  </text>
+  <text x="250" y="145" text-anchor="middle" font-family="var(--font-body)" font-size="13" fill="var(--pencil)">
+    Suffers from user friction & resistance
+  </text>
+  <text x="250" y="180" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--amber)">
+    "CHANGE MANAGEMENT MANDATE"
+  </text>
+
+  <!-- Quadrant III: Bottom Left (Value Sink) -->
+  <rect x="100" y="240" width="300" height="170" rx="8" fill="var(--sticky-r)" stroke="var(--red)" stroke-width="2.2"/>
+  <text x="250" y="275" text-anchor="middle" font-family="var(--font-hand)" font-size="22" font-weight="700" fill="var(--red)">
+    Value Sink / Execution Pit ⚠️
+  </text>
+  <text x="250" y="305" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">
+    Low Strategic Value + Low Adoption
+  </text>
+  <text x="250" y="335" text-anchor="middle" font-family="var(--font-body)" font-size="13" fill="var(--pencil)">
+    Costly customizations that deliver zero ROI
+  </text>
+  <text x="250" y="370" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--red)">
+    "RUTHLESSLY DECOMMISSION"
+  </text>
+
+  <!-- Quadrant IV: Bottom Right (Operational Hygiene) -->
+  <rect x="420" y="240" width="300" height="170" rx="8" fill="var(--card)" stroke="var(--ink)" stroke-width="2.2"/>
+  <text x="570" y="275" text-anchor="middle" font-family="var(--font-hand)" font-size="22" font-weight="700" fill="var(--ink)">
+    Operational Hygiene
+  </text>
+  <text x="570" y="305" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">
+    Low Differentiation + High Usability
+  </text>
+  <text x="570" y="335" text-anchor="middle" font-family="var(--font-body)" font-size="13" fill="var(--pencil)">
+    Payroll & expense claims functioning smoothly
+  </text>
+  <text x="570" y="370" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--ink2)">
+    "STANDARDIZE ON SAAS"
+  </text>
+</svg>

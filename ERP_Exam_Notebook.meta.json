@@ -1,0 +1,25 @@
+{
+  "title": "ERP Business Applications",
+  "slug": "erp-benchmark-v1",
+  "subject": "Operations",
+  "category": "Enterprise Systems",
+  "description": "Comprehensive exam revision master notebook covering ERP architecture, SAP 3-tier structure, MRP logic, BOM explosions, inventory control, and enterprise workflow calculation models.",
+  "file": "ERP_Exam_Notebook.html",
+  "tags": [
+    "ERP",
+    "SAP",
+    "MRP",
+    "Operations",
+    "Enterprise Architecture",
+    "Supply Chain",
+    "BOM"
+  ],
+  "status": "archived",
+  "source": "curriculum/operations",
+  "version": "1.0.0",
+  "updated": "2026-10-01",
+  "updatedAt": "2026-10-01",
+  "featured": true,
+  "readTimeMinutes": 45,
+  "questionsCount": 18
+}

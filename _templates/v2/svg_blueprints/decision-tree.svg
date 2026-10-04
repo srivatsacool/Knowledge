@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 380" width="100%" height="auto" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <marker id="dt-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="var(--ink)" />
+    </marker>
+  </defs>
+
+  <!-- Root Decision Node -->
+  <path d="M 25 145 Q 115 142 205 145 Q 207 195 205 245 Q 115 248 25 245 Q 23 195 25 145 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2.4"/>
+  <text x="115" y="175" text-anchor="middle" font-family="var(--font-hand2)" font-size="13" font-weight="700" fill="var(--pencil)">STRATEGIC DECISION</text>
+  <text x="115" y="202" text-anchor="middle" font-family="var(--font-hand)" font-size="20" font-weight="700" fill="var(--ink)">ERP Fit Test</text>
+  <text x="115" y="226" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--text)">Standard vs Custom?</text>
+
+  <!-- Branch 1 (Top): Standard Fit >= 80% -->
+  <path d="M 205 170 Q 290 120 375 90" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" marker-end="url(#dt-arrow)"/>
+  <rect x="235" y="98" width="110" height="24" rx="4" fill="var(--sticky-g)" stroke="var(--green)" stroke-width="1"/>
+  <text x="290" y="115" text-anchor="middle" font-family="var(--font-hand)" font-size="14" font-weight="700" fill="var(--green)">Fit ≥ 80% (Adopt)</text>
+
+  <!-- Branch 2 (Bottom): Fit < 80% -->
+  <path d="M 205 220 Q 290 270 375 300" fill="none" stroke="var(--red)" stroke-width="2.5" stroke-linecap="round" marker-end="url(#dt-arrow)"/>
+  <rect x="235" y="272" width="110" height="24" rx="4" fill="var(--sticky-r)" stroke="var(--red)" stroke-width="1"/>
+  <text x="290" y="289" text-anchor="middle" font-family="var(--font-hand)" font-size="14" font-weight="700" fill="var(--red)">Fit &lt; 80% (Gap)</text>
+
+  <!-- Intermediate Node 1 (Top): Adopt Best Practice -->
+  <path d="M 380 50 Q 470 48 560 50 Q 562 90 560 130 Q 470 132 380 130 Q 378 90 380 50 Z" fill="var(--sticky-g)" stroke="var(--green)" stroke-width="2"/>
+  <text x="470" y="78" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--green)">Vanilla Standard</text>
+  <text x="470" y="104" text-anchor="middle" font-family="var(--font-body)" font-size="12" fill="var(--text)">Adopt out-of-the-box flows</text>
+
+  <!-- Intermediate Node 2 (Bottom): Analyze Gap Nature -->
+  <path d="M 380 260 Q 470 258 560 260 Q 562 300 560 340 Q 470 342 380 340 Q 378 300 380 260 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/>
+  <text x="470" y="288" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--ink)">Is Gap Differentiating?</text>
+  <text x="470" y="314" text-anchor="middle" font-family="var(--font-body)" font-size="12" fill="var(--pencil)">True moat or convenience?</text>
+
+  <!-- Sub-branch 1 -> Final Leaf 1 -->
+  <path d="M 560 90 Q 640 90 710 90" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round" marker-end="url(#dt-arrow)"/>
+  <path d="M 715 55 Q 780 53 845 55 Q 847 90 845 125 Q 780 127 715 125 Q 713 90 715 55 Z" fill="var(--card)" stroke="var(--green)" stroke-width="2.4"/>
+  <text x="780" y="82" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--green)">Lowest TCO ✓</text>
+  <text x="780" y="105" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--pencil)">Seamless cloud upgrades</text>
+
+  <!-- Sub-branch 2a -> Bolt-on Sidecar (Top Sub) -->
+  <path d="M 560 280 Q 635 240 710 215" fill="none" stroke="var(--amber)" stroke-width="2.2" stroke-linecap="round" marker-end="url(#dt-arrow)"/>
+  <text x="635" y="235" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" fill="var(--amber)">YES (Core Moat)</text>
+  <path d="M 715 180 Q 780 178 845 180 Q 847 215 845 250 Q 780 252 715 250 Q 713 215 715 180 Z" fill="var(--sticky-y)" stroke="var(--amber)" stroke-width="2"/>
+  <text x="780" y="206" text-anchor="middle" font-family="var(--font-hand)" font-size="17" font-weight="700" fill="var(--ink)">Decoupled Sidecar</text>
+  <text x="780" y="228" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--pencil)">Clean core via API</text>
+
+  <!-- Sub-branch 2b -> BPR Process Redesign (Bottom Sub) -->
+  <path d="M 560 320 Q 635 345 710 355" fill="none" stroke="var(--red)" stroke-width="2.2" stroke-linecap="round" marker-end="url(#dt-arrow)"/>
+  <text x="635" y="352" text-anchor="middle" font-family="var(--font-hand2)" font-size="12" fill="var(--red)">NO (Habit Only)</text>
+  <path d="M 715 320 Q 780 318 845 320 Q 847 355 845 375 Q 780 377 715 375 Q 713 355 715 320 Z" fill="var(--card)" stroke="var(--red)" stroke-width="2"/>
+  <text x="780" y="344" text-anchor="middle" font-family="var(--font-hand)" font-size="17" font-weight="700" fill="var(--red)">BPR Mandate ⚠️</text>
+  <text x="780" y="364" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--pencil)">Change internal behavior</text>
+</svg>

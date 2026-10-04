@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="100%" height="auto" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <marker id="fb-spine-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="var(--red)" />
+    </marker>
+  </defs>
+
+  <!-- Problem Statement Fish Head (Right Side) -->
+  <path d="M 680 160 L 850 220 L 680 280 Z" fill="var(--sticky-r)" stroke="var(--red)" stroke-width="2.5" stroke-linejoin="round"/>
+  <text x="740" y="212" text-anchor="middle" font-family="var(--font-hand2)" font-size="13" font-weight="700" fill="var(--red)">ROOT PROBLEM</text>
+  <text x="740" y="235" text-anchor="middle" font-family="var(--font-hand)" font-size="20" font-weight="700" fill="var(--text)">ERP Go-Live</text>
+  <text x="740" y="255" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--red)">Failure / Delay</text>
+
+  <!-- Central Backbone Spine -->
+  <path d="M 50 220 L 680 220" stroke="var(--red)" stroke-width="3.5" stroke-linecap="round" marker-end="url(#fb-spine-arrow)"/>
+
+  <!-- Top Rib 1: PEOPLE (North-West) -->
+  <path d="M 120 70 L 220 220" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"/>
+  <rect x="50" y="40" width="140" height="36" rx="6" fill="var(--card)" stroke="var(--ink)" stroke-width="1.8"/>
+  <text x="120" y="64" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--ink)">1. PEOPLE</text>
+  <!-- Sub-causes -->
+  <path d="M 100 120 L 155 120" stroke="var(--pencil)" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <text x="95" y="116" text-anchor="end" font-family="var(--font-body)" font-size="11" fill="var(--text)">Resistance to change</text>
+  <path d="M 125 170 L 188 170" stroke="var(--pencil)" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <text x="120" y="166" text-anchor="end" font-family="var(--font-body)" font-size="11" fill="var(--text)">Inadequate training</text>
+
+  <!-- Top Rib 2: PROCESS (North-Central) -->
+  <path d="M 330 70 L 430 220" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"/>
+  <rect x="260" y="40" width="140" height="36" rx="6" fill="var(--card)" stroke="var(--ink)" stroke-width="1.8"/>
+  <text x="330" y="64" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--ink)">2. PROCESS</text>
+  <!-- Sub-causes -->
+  <path d="M 310 120 L 365 120" stroke="var(--pencil)" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <text x="305" y="116" text-anchor="end" font-family="var(--font-body)" font-size="11" fill="var(--text)">No BPR before software</text>
+  <path d="M 335 170 L 398 170" stroke="var(--pencil)" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <text x="330" y="166" text-anchor="end" font-family="var(--font-body)" font-size="11" fill="var(--text)">Siloed department handoffs</text>
+
+  <!-- Top Rib 3: GOVERNANCE (North-East) -->
+  <path d="M 540 70 L 640 220" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"/>
+  <rect x="470" y="40" width="150" height="36" rx="6" fill="var(--card)" stroke="var(--ink)" stroke-width="1.8"/>
+  <text x="545" y="64" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--ink)">3. GOVERNANCE</text>
+  <!-- Sub-causes -->
+  <path d="M 520 120 L 575 120" stroke="var(--pencil)" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <text x="515" y="116" text-anchor="end" font-family="var(--font-body)" font-size="11" fill="var(--text)">Weak executive sponsor</text>
+  <path d="M 545 170 L 608 170" stroke="var(--pencil)" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <text x="540" y="166" text-anchor="end" font-family="var(--font-body)" font-size="11" fill="var(--text)">Scope creep unchecked</text>
+
+  <!-- Bottom Rib 1: DATA (South-West) -->
+  <path d="M 120 370 L 220 220" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"/>
+  <rect x="50" y="365" width="140" height="36" rx="6" fill="var(--sticky-y)" stroke="var(--amber)" stroke-width="1.8"/>
+  <text x="120" y="389" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--ink)">4. DATA QUALITY</text>
+  <!-- Sub-causes -->
+  <path d="M 100 320 L 155 320" stroke="var(--pencil)" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <text x="95" y="324" text-anchor="end" font-family="var(--font-body)" font-size="11" fill="var(--text)">Duplicate item codes</text>
+  <path d="M 125 270 L 188 270" stroke="var(--pencil)" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <text x="120" y="274" text-anchor="end" font-family="var(--font-body)" font-size="11" fill="var(--text)">Uncleansed legacy data</text>
+
+  <!-- Bottom Rib 2: TECHNOLOGY (South-Central) -->
+  <path d="M 330 370 L 430 220" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"/>
+  <rect x="260" y="365" width="140" height="36" rx="6" fill="var(--card)" stroke="var(--ink)" stroke-width="1.8"/>
+  <text x="330" y="389" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--ink)">5. TECHNOLOGY</text>
+  <!-- Sub-causes -->
+  <path d="M 310 320 L 365 320" stroke="var(--pencil)" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <text x="305" y="324" text-anchor="end" font-family="var(--font-body)" font-size="11" fill="var(--text)">Heavy customization</text>
+  <path d="M 335 270 L 398 270" stroke="var(--pencil)" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <text x="330" y="274" text-anchor="end" font-family="var(--font-body)" font-size="11" fill="var(--text)">Unstable API integration</text>
+
+  <!-- Bottom Rib 3: TESTING (South-East) -->
+  <path d="M 540 370 L 640 220" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"/>
+  <rect x="470" y="365" width="150" height="36" rx="6" fill="var(--card)" stroke="var(--ink)" stroke-width="1.8"/>
+  <text x="545" y="389" text-anchor="middle" font-family="var(--font-hand)" font-size="18" font-weight="700" fill="var(--ink)">6. TESTING & CUTOVER</text>
+  <!-- Sub-causes -->
+  <path d="M 520 320 L 575 320" stroke="var(--pencil)" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <text x="515" y="324" text-anchor="end" font-family="var(--font-body)" font-size="11" fill="var(--text)">Rushed UAT validation</text>
+  <path d="M 545 270 L 608 270" stroke="var(--pencil)" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <text x="540" y="274" text-anchor="end" font-family="var(--font-body)" font-size="11" fill="var(--text)">No fallback contingency</text>
+</svg>

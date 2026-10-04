@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" width="100%" height="auto" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <marker id="hand-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="var(--ink)" />
+    </marker>
+  </defs>
+  
+  <!-- Tier 1: Client GUI (Hand-Drawn Wobbly Stroke) -->
+  <path d="M 30 40 Q 130 38 230 40 Q 232 160 230 280 Q 130 282 30 280 Q 28 160 30 40 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/>
+  <text x="130" y="74" text-anchor="middle" font-family="var(--font-hand)" font-size="24" font-weight="700" fill="var(--ink)">Tier 1: Client GUI</text>
+  
+  <rect x="50" y="95" width="160" height="42" rx="6" fill="var(--hl-blue)" stroke="var(--ink)" stroke-width="1.6"/>
+  <text x="130" y="122" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">Desktop SAP GUI</text>
+  <rect x="50" y="150" width="160" height="42" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.5"/>
+  <text x="130" y="177" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">Web / Fiori Browser</text>
+  <rect x="50" y="205" width="160" height="42" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.5"/>
+  <text x="130" y="232" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">Warehouse Handheld RF</text>
+
+  <!-- Connector 1 -> 2 -->
+  <path d="M 230 160 Q 265 155 298 160" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-dasharray="4" marker-end="url(#hand-arrow)"/>
+  <text x="265" y="145" text-anchor="middle" font-family="var(--font-hand2)" font-size="14" fill="var(--red)">TCP/IP</text>
+
+  <!-- Tier 2: Application Server -->
+  <path d="M 300 40 Q 400 38 500 40 Q 502 160 500 280 Q 400 282 300 280 Q 298 160 300 40 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/>
+  <text x="400" y="74" text-anchor="middle" font-family="var(--font-hand)" font-size="24" font-weight="700" fill="var(--ink)">Tier 2: App Logic</text>
+  
+  <rect x="320" y="95" width="160" height="42" rx="6" fill="var(--hl-yellow)" stroke="var(--ink)" stroke-width="1.6"/>
+  <text x="400" y="122" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">Business Rules Engine</text>
+  <rect x="320" y="150" width="160" height="42" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.5"/>
+  <text x="400" y="177" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">Workflow Coordinator</text>
+  <rect x="320" y="205" width="160" height="42" rx="6" fill="var(--paper)" stroke="var(--line)" stroke-width="1.5"/>
+  <text x="400" y="232" text-anchor="middle" font-family="var(--font-hand2)" font-size="16" fill="var(--text)">Transaction Dispatcher</text>
+
+  <!-- Connector 2 -> 3 -->
+  <path d="M 500 160 Q 535 162 568 160" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-dasharray="4" marker-end="url(#hand-arrow)"/>
+  <text x="535" y="145" text-anchor="middle" font-family="var(--font-hand2)" font-size="14" fill="var(--red)">SQL</text>
+
+  <!-- Tier 3: Central Database -->
+  <path d="M 570 40 Q 670 38 770 40 Q 772 160 770 280 Q 670 282 570 280 Q 568 160 570 40 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/>
+  <text x="670" y="74" text-anchor="middle" font-family="var(--font-hand)" font-size="24" font-weight="700" fill="var(--ink)">Tier 3: Database</text>
+  
+  <rect x="590" y="110" width="160" height="90" rx="8" fill="var(--hl-green)" stroke="var(--ink)" stroke-width="1.8"/>
+  <text x="670" y="150" text-anchor="middle" font-family="var(--font-hand)" font-size="19" font-weight="700" fill="var(--ink)">Single Golden Record</text>
+  <text x="670" y="175" text-anchor="middle" font-family="var(--font-body)" font-size="13" font-weight="600" fill="var(--pencil)">HANA / Oracle / SQL Server</text>
+  <text x="670" y="245" text-anchor="middle" font-family="var(--font-hand2)" font-size="15" fill="var(--green)">✓ ACID Guaranteed</text>
+</svg>

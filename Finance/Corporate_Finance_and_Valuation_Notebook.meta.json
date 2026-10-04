@@ -1,0 +1,25 @@
+{
+  "title": "Corporate Finance & Valuation · Capital Allocation & DCF Models",
+  "slug": "corporate-finance-and-valuation",
+  "subject": "Finance",
+  "category": "Corporate Finance",
+  "description": "Core MBA curriculum guide to corporate finance and company valuation: Discounted Cash Flow (DCF), Weighted Average Cost of Capital (WACC), Capital Asset Pricing Model (CAPM), capital structure theory, and M&A multiples.",
+  "file": "Corporate_Finance_and_Valuation_Notebook.html",
+  "tags": [
+    "Corporate Finance",
+    "Valuation",
+    "DCF",
+    "WACC",
+    "CAPM",
+    "Capital Budgeting",
+    "Modigliani-Miller"
+  ],
+  "status": "draft",
+  "source": "curriculum/mba-foundation",
+  "version": "1.0.0",
+  "updated": "2026-10-04",
+  "updatedAt": "2026-10-04",
+  "featured": false,
+  "readTimeMinutes": 30,
+  "questionsCount": 10
+}
