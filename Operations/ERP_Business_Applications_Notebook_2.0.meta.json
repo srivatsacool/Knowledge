@@ -3,7 +3,7 @@
   "slug": "erp-business-applications-notebook-2",
   "subject": "Operations",
   "category": "Enterprise Systems",
-  "description": "Fresh rebuild from the TLP, faculty reading material and supplied PYQs: 11 modules, redrawn faculty diagrams, PYQ archive/analysis/practice, revision mode, last-minute card and a 30-question MCQ assessment.",
+  "description": "Master MBA study guide and exam blueprint covering ERP business strategy, 3-tier client-server architecture, the Five Pillars, Value Matrix Analysis, Plossl manufacturing theory, Master Data, Subway franchise case study, and 100% authentic model exam answers for 2023, 2024, and 2025 papers.",
   "file": "ERP_Business_Applications_Notebook_2.0.html",
   "tags": [
     "Operations",
@@ -11,7 +11,6 @@
     "MBA",
     "PYQ",
     "Revision",
-    "MCQ",
     "Altekar",
     "Trimester IV"
   ],
@@ -19,10 +18,10 @@
   "source": "curriculum/weschool-term4-altekar",
   "version": "2.0.0",
   "templateVersion": "erp-notebook-2.0",
-  "updated": "2026-10-04",
+  "updated": "2026-10-05",
   "featured": false,
-  "readTimeMinutes": 70,
-  "questionsCount": 30,
+  "readTimeMinutes": 75,
+  "questionsCount": 12,
   "courseContext": {
     "course": "ERP Business Applications (Elective)",
     "instructor": "Rahul Altekar",
