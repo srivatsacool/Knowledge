@@ -1,7 +1,13 @@
 /**
- * Brain Knowledge Hub — Compiler for ERP Business Applications Notebook 2.0
+ * Brain Knowledge Hub — Compiler for ERP Business Applications Notebook 2.0.1
  * Generates the complete, master-grade "Brain Hub Notebook OS — Paper Edition"
  * study guide for Operations/ERP_Business_Applications_Notebook.html
+ *
+ * Grounded in:
+ * - WeSchool Official Course Outline (OPN 419, Dr. Rahul V. Altekar)
+ * - Faculty Lecture Materials (Reading Materials 01 & 02: 5 Cs, 17 Myths, 5 Pillars, Value Matrix, CODP, Plossl's 12 Principles, Panchanga)
+ * - 100% Authentic Previous-Year Questions (2023, 2024, 2025 End-Term Papers)
+ * - 30-Question Assessment Engine & Three Independent Progress Trackers
  */
 const fs = require('fs');
 const path = require('path');
@@ -11,13 +17,18 @@ const SVG_DIR = path.join(ROOT_DIR, '_templates', 'v2', 'svg_blueprints');
 const TARGET_HTML = path.join(ROOT_DIR, 'Operations', 'ERP_Business_Applications_Notebook.html');
 const TARGET_META = path.join(ROOT_DIR, 'Operations', 'ERP_Business_Applications_Notebook.meta.json');
 const BENCHMARK_META = path.join(ROOT_DIR, 'ERP_Exam_Notebook.meta.json');
+const BENCHMARK_HTML = path.join(ROOT_DIR, 'ERP_Exam_Notebook.html');
+
+const { erpQuizQuestions, quickChecks } = require('./erp-mcq-data');
+const { erpPyqPapers } = require('./erp-pyq-data');
+const { buildPyqSectionHtml } = require('./erp-pyq-builder');
+const D = require('./erp2/diagrams');
 
 // Read SVG blueprints
 function loadSvg(filename) {
   const filePath = path.join(SVG_DIR, filename);
-  if (!fs.existsSync(filePath)) return `<!-- Missing ${filename} -->`;
+  if (!fs.existsSync(filePath)) return '<!-- Missing ' + filename + ' -->';
   let svg = fs.readFileSync(filePath, 'utf8');
-  // Strip XML declaration if present
   svg = svg.replace(/<\?xml[^>]*\?>/i, '').trim();
   return svg;
 }
@@ -46,8 +57,8 @@ const html = `<!DOCTYPE html>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>ERP Business Applications · Brain Hub Notebook OS (Paper Edition)</title>
-  <meta name="description" content="Comprehensive postgraduate MBA study guide and exam blueprint covering ERP business and technology strategy, 3-tier architecture, the Five Pillars of ERP, Value Matrix Analysis, Plossl manufacturing theory, Master Data, Subway franchise case study, and 100% model FAQ exam answers.">
-  <meta name="keywords" content="Operations, ERP, Enterprise Systems, BPR, Supply Chain, Value Matrix, Plossl, Master Data, MBA Curriculum, Altekar">
+  <meta name="description" content="Comprehensive postgraduate MBA study guide and exam blueprint covering ERP business and technology strategy, 3-tier architecture, the Five Pillars of ERP, Value Matrix Analysis, Plossl manufacturing theory, Master Data, Subway franchise case study, WeSchool 2023-2025 PYQs, and 100% model FAQ exam answers.">
+  <meta name="keywords" content="Operations, ERP, Enterprise Systems, BPR, Supply Chain, Value Matrix, Plossl, Master Data, MBA Curriculum, Altekar, WeSchool, PYQ">
   <meta name="author" content="Brain Knowledge Hub / Rahul Altekar Curriculum">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%92%3C/text%3E%3C/svg%3E">
 
@@ -99,7 +110,7 @@ const html = `<!DOCTYPE html>
       
       --lh: 30px;
       --topbar-height: 56px;
-      --sidebar-width: 300px;
+      --sidebar-width: 320px;
     }
 
     html[data-theme="dark"] {
@@ -140,82 +151,189 @@ const html = `<!DOCTYPE html>
     html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--topbar-height) + 18px); scroll-behavior: smooth; }
     body {
       margin: 0; background: var(--desk); color: var(--text);
-      font-family: var(--font-body); font-size: 17px; line-height: 1.65; overflow-x: hidden;
+      font-family: var(--font-body); font-size: 1.05rem; line-height: 1.6;
+      overflow-x: hidden; transition: background 0.2s ease, color 0.2s ease;
     }
-    a { color: var(--ink2); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    :focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; border-radius: 4px; }
-    img, svg { max-width: 100%; height: auto; }
 
-    /* Topbar Controls */
+    /* Focus Mode Engine (Part 2) */
+    body.is-focus .nb-sidebar,
+    body.is-focus .nb-sidebar-shade,
+    body.is-focus #menuBtn,
+    body.is-focus .nb-topbar__crumb,
+    body.is-focus .nb-tabflag {
+      display: none !important;
+    }
+    body.is-focus .nb-main { margin-left: 0 !important; max-width: 100% !important; }
+    body.is-focus .nb-sheet { max-width: 1100px !important; margin: 0 auto !important; }
+    body.is-focus .nb-topbar__inner { max-width: 1100px; margin: 0 auto; }
+
+    /* Top Navigation Bar */
     .nb-topbar {
-      position: fixed; top: 0; left: 0; right: 0; height: var(--topbar-height);
+      position: sticky; top: 0; z-index: 50; height: var(--topbar-height);
       background: var(--paper); border-bottom: 2px solid var(--line);
-      z-index: 50; box-shadow: 0 2px 0 var(--rule);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
     }
-    .nb-topbar__inner { display: flex; align-items: center; justify-content: space-between; height: 100%; padding: 0 1rem; gap: 0.75rem; }
-    .nb-topbar__brand { font-family: var(--font-hand); font-weight: 700; font-size: 1.65rem; color: var(--ink); white-space: nowrap; line-height: 1; }
-    .nb-topbar__brand:hover { text-decoration: none; }
-    .nb-topbar__crumb {
-      flex: 1; min-width: 0; font-family: var(--font-hand2); font-size: 1.08rem; color: var(--pencil);
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-left: 0.75rem; border-left: 2px dotted var(--line);
+    .nb-topbar__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 100%; padding: 0 16px; gap: 12px;
     }
-    .nb-topbar__actions { display: flex; align-items: center; gap: 0.4rem; }
+    .nb-topbar__left { display: flex; align-items: center; gap: 10px; }
+    .nb-topbar__brand { font-family: var(--font-hand); font-weight: 700; font-size: 1.45rem; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+    .nb-topbar__crumb { font-family: var(--font-hand2); font-size: 1.05rem; color: var(--pencil); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 320px; }
     
+    .nb-topbar__trackers { display: flex; align-items: center; gap: 8px; font-family: var(--font-hand2); font-size: 0.92rem; }
+    .nb-track-chip { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 2px 8px; white-space: nowrap; }
+
+    .nb-topbar__actions { display: flex; align-items: center; gap: 6px; }
     .nb-btn-top {
-      min-width: 40px; height: 40px; border: 0; background: transparent;
-      color: var(--text); border-radius: 8px; font-size: 1.15rem; cursor: pointer;
-      display: inline-flex; align-items: center; justify-content: center;
+      background: transparent; border: 1.5px solid var(--line); border-radius: 6px;
+      padding: 4px 10px; font-family: var(--font-hand2); font-size: 1rem; color: var(--text);
+      cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: all 0.15s ease;
+      text-decoration: none;
     }
-    .nb-btn-top:hover { background: var(--hl-yellow); }
+    .nb-btn-top:hover, .nb-btn-top.is-active { background: var(--hl-yellow); border-color: var(--amber); }
     .nb-btn-search {
-      display: inline-flex; align-items: center; gap: 0.4rem; height: 38px; padding: 0 0.75rem;
       background: var(--card); border: 1.5px solid var(--line); border-radius: 6px;
-      font-family: var(--font-hand2); font-size: 1.05rem; color: var(--text); cursor: pointer;
+      padding: 4px 10px; font-family: var(--font-hand2); font-size: 0.95rem; color: var(--pencil);
+      cursor: pointer; display: flex; align-items: center; gap: 6px;
     }
-    .nb-btn-search:hover { background: var(--hl-yellow); }
-    .nb-btn-search kbd { font-family: var(--font-body); font-size: 0.75rem; padding: 0.1rem 0.35rem; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); }
-    .nb-topbar__pct { font-family: var(--font-hand); font-weight: 700; font-size: 1.35rem; color: var(--ink); min-width: 3.2em; text-align: right; }
-    .nb-topbar__bar { height: 4px; background: var(--rule); }
-    .nb-topbar__bar i { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--green), var(--ink2)); transition: width 0.3s; }
+    .nb-btn-search kbd {
+      background: rgba(0, 0, 0, 0.08); border-radius: 3px; padding: 1px 5px; font-size: 0.8rem;
+    }
+    .nb-topbar__pct { font-family: var(--font-hand); font-weight: 700; font-size: 1.25rem; color: var(--ink); min-width: 44px; text-align: right; }
+    .nb-topbar__bar { position: absolute; left: 0; bottom: -2px; width: 100%; height: 3px; background: transparent; }
+    .nb-topbar__bar i { display: block; height: 100%; background: var(--ink2); width: 0%; transition: width 0.1s linear; }
 
-    /* Layout & Sidebar */
-    .nb-layout { display: flex; padding-top: var(--topbar-height); }
+    /* Layout: Sidebar + Main */
+    .nb-layout { display: flex; min-height: calc(100vh - var(--topbar-height)); }
     .nb-sidebar {
-      position: fixed; top: var(--topbar-height); bottom: 0; left: 0; width: var(--sidebar-width);
-      background: var(--paper); border-right: 2px solid var(--line); overflow-y: auto;
-      padding: 1.25rem 1rem 2rem; z-index: 40; transform: translateX(-102%); transition: transform 0.25s ease;
-      background-image: repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh));
+      width: var(--sidebar-width); flex-shrink: 0; background: var(--card);
+      border-right: 2px solid var(--line); padding: 16px 14px;
+      position: sticky; top: var(--topbar-height); height: calc(100vh - var(--topbar-height));
+      overflow-y: auto; z-index: 40;
     }
-    .nb-sidebar.is-open { transform: none; box-shadow: 4px 0 16px rgba(0, 0, 0, 0.25); }
-    .nb-sidebar-shade { position: fixed; inset: 0; background: rgba(10, 12, 18, 0.45); z-index: 35; display: none; }
-    .nb-sidebar-shade.is-on { display: block; }
+    .nb-sidebar h2 { font-family: var(--font-hand); font-size: 1.5rem; margin: 4px 0 10px; color: var(--ink); }
+    .nb-sidebar__grp { font-family: var(--font-hand2); font-weight: 700; font-size: 0.82rem; letter-spacing: 0.08em; color: var(--pencil); text-transform: uppercase; margin: 16px 0 6px; }
+    
+    .nb-sidebar-progress-summary {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin: 6px 0 14px;
+      background: var(--paper); border: 1.5px solid var(--line); border-radius: 6px; padding: 8px 6px;
+    }
+    .nb-stat-pill { text-align: center; }
+    .nb-stat-label { display: block; font-family: var(--font-hand2); font-size: 0.76rem; color: var(--pencil); text-transform: uppercase; }
+    .nb-stat-val { font-family: var(--font-math); font-size: 0.95rem; font-weight: 700; color: var(--ink); }
 
-    .nb-sidebar h2 { font-family: var(--font-hand); font-size: 2rem; color: var(--ink); margin: 0 0 4px; }
-    .nb-sidebar__grp { font-family: var(--font-hand2); color: var(--pencil); font-size: 1.02rem; margin: 14px 0 4px; }
     .nb-sidebar nav a {
-      display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 4px 8px;
-      border-radius: 6px; color: var(--text); text-decoration: none; line-height: 1.25; margin-bottom: 2px;
+      display: flex; align-items: center; justify-content: space-between; gap: 6px;
+      padding: 5px 8px; border-radius: 4px; text-decoration: none; color: var(--text);
+      font-family: var(--font-hand2); font-size: 1.05rem; transition: background 0.15s ease;
     }
     .nb-sidebar nav a:hover { background: var(--hl-yellow); }
-    .nb-sidebar nav a.is-active { background: var(--card); box-shadow: var(--shadow-card); font-weight: 600; color: var(--ink); }
-    .nb-sidebar__chip { width: 8px; border-radius: 3px; background: var(--ink); min-height: 24px; flex-shrink: 0; }
-    .nb-sidebar__label { flex: 1; font-size: 0.95rem; }
-    .nb-sidebar__ck {
-      width: 20px; height: 20px; border: 2px solid var(--pencil); border-radius: 4px;
-      display: grid; place-items: center; font-size: 0.85rem; color: var(--green); font-weight: 700; flex-shrink: 0;
-    }
-    .nb-sidebar nav a.is-done .nb-sidebar__ck::after { content: "✓"; }
+    .nb-sidebar nav a.is-active { background: rgba(47, 95, 196, 0.12); color: var(--ink); font-weight: 700; }
+    .nb-sidebar__chip { width: 8px; height: 8px; border-radius: 50%; background: var(--line); flex-shrink: 0; }
+    .nb-sidebar nav a.is-active .nb-sidebar__chip { background: var(--ink); }
+    .nb-sidebar__label { flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nb-sidebar__ck { font-family: var(--font-hand); font-weight: 700; font-size: 1.1rem; color: var(--green); }
 
-    .nb-main { flex: 1; min-width: 0; padding: 22px 10px 50px; }
+    .nb-main { flex-grow: 1; padding: 24px 16px 80px; position: relative; }
 
-    @media (min-width: 1120px) {
-      .nb-sidebar { transform: none; width: var(--sidebar-width); }
-      #menuBtn { display: none; }
-      .nb-main { margin-left: var(--sidebar-width); }
-      body.is-focus .nb-sidebar { display: none; }
-      body.is-focus .nb-main { margin-left: 0; }
+    /* Module Status Pill Button (Part 4) */
+    .nb-mod-status {
+      display: inline-flex; align-items: center; gap: 8px; margin: 8px 0 14px;
+      background: var(--card); border: 1px solid var(--line); border-radius: 20px;
+      padding: 4px 12px; font-family: var(--font-hand2); font-size: 1.05rem;
     }
+    .nb-mod-status__prompt { color: var(--pencil); }
+    .nb-mod-status__btn {
+      display: inline-flex; align-items: center; gap: 6px; border: none; background: transparent;
+      cursor: pointer; font-family: var(--font-hand2); font-size: 1.05rem; font-weight: 700;
+      padding: 2px 6px; border-radius: 4px;
+    }
+    .nb-mod-status__btn:hover { background: var(--hl-yellow); }
+    .nb-mod-status[data-status="not_started"] .nb-mod-status__btn { color: var(--pencil); }
+    .nb-mod-status[data-status="in_progress"] .nb-mod-status__btn { color: var(--amber); }
+    .nb-mod-status[data-status="complete"] .nb-mod-status__btn { color: var(--green); }
+
+    /* Completion Toast Slip (Part 5) */
+    .nb-toast {
+      position: fixed; bottom: 24px; right: 24px; z-index: 100;
+      background: var(--paper); border: 2px solid var(--ink); border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); padding: 12px 18px;
+      display: none; transform: translateY(20px); opacity: 0;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      font-family: var(--font-hand2); max-width: 340px;
+    }
+    .nb-toast.is-show { display: block; transform: translateY(0); opacity: 1; }
+    .nb-toast__inner { display: flex; align-items: center; gap: 12px; }
+    .nb-toast__stamp {
+      font-family: var(--font-body); font-weight: 800; font-size: 0.72rem; letter-spacing: 0.06em;
+      color: var(--green); border: 2px solid currentColor; border-radius: 4px; padding: 2px 6px;
+      text-transform: uppercase; transform: rotate(-3deg);
+    }
+    .nb-toast__msg strong { display: block; font-family: var(--font-hand); font-size: 1.25rem; color: var(--ink); }
+
+    /* Pomodoro / Study Timer Card (Parts 6, 7, 8) */
+    .nb-timer-card {
+      position: fixed; top: 70px; right: 18px; width: 300px;
+      background: var(--sticky-y); color: var(--sticky-text); border-radius: 2px 2px 12px 2px;
+      box-shadow: var(--shadow-sticky); z-index: 60; padding: 18px; display: none;
+      font-family: var(--font-hand2); transform: rotate(0.5deg);
+    }
+    .nb-timer-card.is-open { display: block; }
+    .nb-timer-card__tape {
+      position: absolute; top: -10px; left: 50%; width: 80px; height: 20px;
+      transform: translateX(-50%) rotate(-1deg);
+      background: rgba(160, 200, 230, 0.7); pointer-events: none;
+    }
+    .nb-timer-card__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .nb-timer-card__title { font-family: var(--font-hand); font-weight: 700; font-size: 1.45rem; color: var(--ink); }
+    .nb-timer-card__close { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--pencil); }
+    .nb-timer-card__time {
+      font-family: var(--font-math); font-size: 2.8rem; font-weight: 700; text-align: center;
+      color: var(--text); line-height: 1.1; margin: 8px 0;
+    }
+    .nb-timer-card__module {
+      font-size: 0.95rem; text-align: center; color: var(--pencil); margin-bottom: 12px;
+      padding: 4px 6px; background: rgba(0, 0, 0, 0.04); border-radius: 4px;
+    }
+    .nb-timer-card__module strong { display: block; color: var(--ink); font-size: 1rem; }
+    .nb-timer-card__controls { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; }
+    .nb-tbtn {
+      padding: 6px 12px; border-radius: 6px; font-family: var(--font-hand); font-weight: 700;
+      font-size: 1.15rem; cursor: pointer; border: 1.5px solid var(--text); background: var(--card);
+    }
+    .nb-tbtn:hover { background: var(--hl-yellow); }
+    .nb-tbtn--go { background: var(--green); color: #fff; border-color: var(--green); }
+    .nb-tbtn--pause { background: var(--amber); color: #fff; border-color: var(--amber); }
+    .nb-timer-card__presets { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 10px; }
+    .nb-preset-btn {
+      padding: 4px; font-size: 0.9rem; font-family: var(--font-hand2); border: 1px dashed var(--line);
+      border-radius: 4px; background: rgba(255, 255, 255, 0.5); cursor: pointer;
+    }
+    .nb-preset-btn:hover, .nb-preset-btn.is-active { background: var(--hl-yellow); font-weight: 700; border-style: solid; }
+    .nb-timer-card__stats { font-size: 0.88rem; text-align: center; color: var(--pencil); border-top: 1px dotted var(--line); padding-top: 6px; }
+
+    /* Revision Mode Engine (Part 9) */
+    .nb-revision-banner {
+      position: sticky; top: var(--topbar-height); z-index: 45;
+      background: var(--sticky-y); color: var(--sticky-text); border-bottom: 2px solid var(--amber);
+      padding: 10px 16px; font-family: var(--font-hand2); font-size: 1.15rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    .nb-revision-banner__exit {
+      background: var(--ink); color: #fff; border: none; padding: 4px 12px; border-radius: 4px;
+      font-family: var(--font-hand); font-weight: 700; font-size: 1.1rem; cursor: pointer; white-space: nowrap;
+    }
+    body.is-revision .nb-section > p:not(.nb-revision-keep) {
+      opacity: 0.22; max-height: 52px; overflow: hidden; filter: grayscale(1);
+      transition: all 0.2s ease; cursor: pointer; position: relative;
+    }
+    body.is-revision .nb-section > p:not(.nb-revision-keep):hover {
+      opacity: 1; max-height: 500px; filter: none; background: rgba(255, 255, 255, 0.4);
+    }
+    body.is-revision .nb-fbox { border-width: 3px; box-shadow: 8px 8px 0 var(--hl-yellow); }
+    body.is-revision .nb-sticky { transform: scale(1.02); }
 
     /* Paper Canvas */
     .nb-sheet {
@@ -286,6 +404,7 @@ const html = `<!DOCTYPE html>
     .nb-stamp--blue  { color: var(--ink2); transform: rotate(1.5deg); }
     .nb-stamp--green { color: var(--green); transform: rotate(-1.2deg); }
     .nb-stamp--amber { color: var(--amber); transform: rotate(2deg); }
+    .nb-stamp--red   { color: var(--red); transform: rotate(-1.5deg); }
 
     /* Washi Tape & Cards */
     .nb-card {
@@ -326,30 +445,158 @@ const html = `<!DOCTYPE html>
     .nb-hl--blue   { background: var(--hl-blue); }
     .nb-hl--pink   { background: var(--hl-pink); }
 
-    /* Formulas */
-    .nb-fbox { position: relative; border: 2px solid var(--ink); border-radius: 6px; padding: 16px 20px; margin: 20px 0 26px; background: var(--card); box-shadow: 6px 6px 0 var(--hl-blue); }
-    .nb-fbox__label { font-family: var(--font-hand2); color: var(--pencil); font-size: 1.08rem; display: block; margin-bottom: 6px; }
-    .nb-fbox__math { font-family: var(--font-math); font-size: 1.35rem; line-height: 2; color: var(--text); overflow-x: auto; }
-    .nb-fbox__dict { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; margin: 12px 0 0; font-size: 0.96rem; }
-    .nb-fbox__dict dt { font-family: var(--font-math); font-weight: 700; color: var(--ink); }
-    .nb-fbox__dict dd { margin: 0; color: var(--pencil); }
+    /* Hand-Drawn / SVG Diagram Canvas Styling */
+    svg.dg {
+      max-width: 100%; height: auto; display: block; margin: 16px auto;
+      font-family: var(--font-body); overflow: visible;
+    }
+    .hubc { fill: rgba(47, 95, 196, 0.12); stroke: var(--ink); stroke-width: 2.2; }
+    .box { fill: var(--card); stroke: var(--ink); stroke-width: 1.6; }
+    .box.dashbox { stroke-dasharray: 4, 3; fill: rgba(0, 0, 0, 0.02); }
+    .box.hubbox { fill: rgba(47, 95, 196, 0.15); stroke: var(--ink2); stroke-width: 2; }
+    .box.os { fill: rgba(226, 139, 139, 0.15); stroke: var(--margin); }
+    .box.pv.fin { fill: rgba(29, 122, 69, 0.12); stroke: var(--green); }
+    .box.pv.mfg { fill: rgba(47, 95, 196, 0.12); stroke: var(--ink2); }
+    .box.pv.dist { fill: rgba(184, 110, 0, 0.12); stroke: var(--amber); }
+    .roof, .base { fill: rgba(47, 95, 196, 0.15); stroke: var(--ink); stroke-width: 2; }
+    .pillar { fill: var(--card); stroke: var(--ink); stroke-width: 1.8; }
+    .cell { fill: var(--card); stroke: var(--line); stroke-width: 1.2; }
+    .cell.hot { fill: rgba(255, 224, 61, 0.35); stroke: var(--amber); stroke-width: 2; }
+    .dot { fill: var(--ink); stroke: var(--paper); stroke-width: 2; }
+    .dot.hot { fill: var(--red); stroke: #fff; stroke-width: 2; }
+    .ln { stroke: var(--ink); stroke-width: 1.6; fill: none; }
+    .ln.dash { stroke-dasharray: 5, 4; }
+    .ln.thick { stroke-width: 2.4; }
+    .ln.dbl { stroke-width: 2; stroke: var(--pencil); }
+    .arwhead { fill: var(--ink); }
+    .lbl { font-family: var(--font-body); font-size: 13px; fill: var(--text); font-weight: 600; dominant-baseline: middle; }
+    .lbl.b { font-weight: 700; fill: var(--ink); }
+    .lbl.xs { font-size: 11px; }
+    .lbl.sm { font-size: 12px; }
+    .lbl.pvt { font-size: 10px; font-weight: 700; }
+    .lbl.acc { fill: var(--ink2); font-weight: 700; }
+    .big { font-family: var(--font-hand); font-weight: 700; font-size: 20px; fill: var(--ink); dominant-baseline: middle; }
+    .big.sm { font-size: 16px; }
+    .hand { font-family: var(--font-hand); font-weight: 700; font-size: 16px; fill: var(--ink); dominant-baseline: middle; }
+    .hand.sm { font-size: 14px; }
+    .note { font-family: var(--font-hand2); font-size: 13px; fill: var(--pencil); dominant-baseline: middle; }
+    .note.xs { font-size: 11px; }
+    .note.sm { font-size: 12px; }
+    .step0 { fill: rgba(217, 236, 255, 0.5); stroke: var(--ink2); }
+    .step1 { fill: rgba(255, 242, 161, 0.5); stroke: var(--amber); }
+    .step2 { fill: rgba(216, 245, 220, 0.5); stroke: var(--green); }
+
+    /* PYQ Interactive Specific Styling (Part 26) */
+    .nb-pyq-item { transition: border-color 0.2s, background 0.2s; }
+    .nb-pyq-item.is-practiced { border-color: var(--green) !important; background: rgba(216, 245, 220, 0.25) !important; }
+    .pyq-practice-toggle.is-practiced { background: var(--green) !important; color: #fff !important; border-color: var(--green) !important; }
+    .pyq-year-tab-btn.is-active { background: var(--ink) !important; color: #fff !important; border-color: var(--ink) !important; }
 
     /* Tables */
-    .nb-table-wrap { overflow-x: auto; margin: 20px 0; border: 1.5px solid var(--line); border-radius: 8px; background: var(--card); box-shadow: var(--shadow-card); }
-    .nb-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem; }
-    .nb-table th, .nb-table td { padding: 10px 14px; border: 1px solid var(--line); vertical-align: top; }
-    .nb-table thead th { background: var(--desk); font-family: var(--font-hand); font-size: 1.35rem; color: var(--ink); font-weight: 700; }
-    .nb-table tbody tr:hover { background: var(--hl-yellow); }
+    .nb-table-wrap { overflow-x: auto; margin: 20px 0; border: 1.5px solid var(--line); border-radius: 8px; background: var(--card); }
+    .nb-table { width: 100%; border-collapse: collapse; font-size: 0.98rem; text-align: left; }
+    .nb-table th { background: rgba(0, 0, 0, 0.04); font-family: var(--font-hand); font-size: 1.25rem; font-weight: 700; color: var(--ink); padding: 10px 14px; border-bottom: 2px solid var(--line); }
+    .nb-table td { padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    .nb-table tr:last-child td { border-bottom: none; }
+    .nb-table tr:hover td { background: rgba(255, 242, 161, 0.2); }
 
-    /* Search Modal */
-    .nb-search-modal { position: fixed; inset: 0; background: rgba(10, 12, 18, 0.55); z-index: 100; display: none; align-items: flex-start; justify-content: center; padding-top: 10vh; backdrop-filter: blur(2px); }
-    .nb-search-modal.is-active { display: flex; }
-    .nb-search-card { background: var(--paper); border: 2px solid var(--ink); border-radius: 12px; width: min(92vw, 580px); box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35); padding: 18px; }
-    .nb-search-input { width: 100%; padding: 12px; font-family: var(--font-hand2); font-size: 1.3rem; border: 2px solid var(--line); border-radius: 6px; background: var(--card); color: var(--text); outline: none; }
-    .nb-search-results { margin-top: 12px; max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
-    .nb-search-item { padding: 8px 12px; border-radius: 6px; background: var(--card); border: 1px solid var(--line); color: var(--text); }
-    .nb-search-item:hover { background: var(--hl-yellow); text-decoration: none; }
-    .nb-search-item b { font-family: var(--font-hand); font-size: 1.25rem; color: var(--ink); display: block; }
+    /* Formula Box */
+    .nb-fbox {
+      background: var(--card); border: 2px solid var(--ink); border-radius: 8px;
+      padding: 16px 20px; margin: 20px 0; position: relative;
+    }
+    .nb-fbox__label {
+      position: absolute; top: -12px; left: 16px; background: var(--ink); color: #fff;
+      font-family: var(--font-hand2); font-weight: 700; font-size: 0.95rem; padding: 2px 10px; border-radius: 4px;
+    }
+    .nb-fbox__math {
+      font-family: var(--font-math); font-size: 1.4rem; color: var(--ink); text-align: center; margin: 10px 0; line-height: 1.4;
+    }
+    .nb-fbox__dict { font-size: 0.95rem; margin-top: 10px; border-top: 1px dashed var(--line); padding-top: 8px; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; }
+    .nb-fbox__dict dt { font-family: var(--font-math); font-weight: 700; color: var(--ink); }
+    .nb-fbox__dict dd { margin: 0; }
+
+    /* Assessment & MCQ Engine (Part 25) */
+    .nb-quiz-container { background: var(--card); border: 2px solid var(--ink); border-radius: 10px; padding: 20px; margin: 24px 0; }
+    .nb-quiz-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px dashed var(--line); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+    .nb-quiz-title { font-family: var(--font-hand); font-size: 1.65rem; color: var(--ink); font-weight: 700; }
+    .nb-quiz-meta { font-family: var(--font-hand2); font-size: 1.15rem; color: var(--pencil); }
+    
+    .nb-qnav { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+    .nb-qnav-btn {
+      width: 32px; height: 32px; border-radius: 4px; border: 1.5px solid var(--line);
+      background: var(--paper); font-family: var(--font-hand); font-size: 1.15rem; font-weight: 700;
+      color: var(--text); cursor: pointer; display: grid; place-items: center; transition: all 0.15s;
+    }
+    .nb-qnav-btn:hover { background: var(--hl-yellow); }
+    .nb-qnav-btn.is-current { border-color: var(--ink2); box-shadow: 0 0 0 2px var(--ink2); }
+    .nb-qnav-btn.is-answered { background: rgba(47, 95, 196, 0.12); color: var(--ink); }
+    .nb-qnav-btn.is-correct { background: rgba(29, 122, 69, 0.2); color: var(--green); border-color: var(--green); }
+    .nb-qnav-btn.is-incorrect { background: rgba(194, 54, 47, 0.2); color: var(--red); border-color: var(--red); }
+
+    .nb-qcard { margin-top: 10px; }
+    .nb-qhead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
+    .nb-qnum { font-family: var(--font-hand); font-weight: 700; font-size: 1.35rem; color: var(--ink); }
+    .nb-qtags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .nb-qtext { font-size: 1.15rem; font-weight: 600; color: var(--text); line-height: 1.5; margin: 8px 0 16px; }
+
+    .nb-qoptions { display: flex; flex-direction: column; gap: 8px; }
+    .nb-qopt {
+      display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border-radius: 8px;
+      border: 1.5px solid var(--line); background: var(--paper); cursor: pointer; transition: all 0.15s;
+      font-size: 1rem; line-height: 1.4; user-select: none;
+    }
+    .nb-qopt:hover { background: var(--hl-yellow); border-color: var(--line); }
+    .nb-qopt.is-selected { border-color: var(--ink2); background: rgba(47, 95, 196, 0.08); font-weight: 600; }
+    .nb-qopt.is-correct-reveal { border-color: var(--green); background: rgba(29, 122, 69, 0.12); font-weight: 700; }
+    .nb-qopt.is-incorrect-reveal { border-color: var(--red); background: rgba(194, 54, 47, 0.10); }
+    .nb-qopt__key {
+      font-family: var(--font-hand); font-weight: 700; font-size: 1.15rem; width: 24px; height: 24px;
+      border-radius: 50%; border: 1.5px solid currentColor; display: grid; place-items: center; flex-shrink: 0;
+    }
+
+    .nb-qfeedback { margin-top: 16px; padding: 14px 18px; border-radius: 8px; font-family: var(--font-hand2); font-size: 1.1rem; line-height: 1.5; display: none; }
+    .nb-qfeedback.is-correct { display: block; background: rgba(29, 122, 69, 0.12); border-left: 4px solid var(--green); color: var(--text); }
+    .nb-qfeedback.is-incorrect { display: block; background: rgba(194, 54, 47, 0.10); border-left: 4px solid var(--red); color: var(--text); }
+    .nb-qfeedback__title { font-family: var(--font-hand); font-weight: 700; font-size: 1.35rem; margin-bottom: 4px; }
+    .nb-qfeedback.is-correct .nb-qfeedback__title { color: var(--green); }
+    .nb-qfeedback.is-incorrect .nb-qfeedback__title { color: var(--red); }
+
+    .nb-qactions { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; gap: 8px; flex-wrap: wrap; }
+    .nb-btn-submit-q {
+      background: var(--ink); color: #fff; border: none; padding: 8px 18px; border-radius: 6px;
+      font-family: var(--font-hand); font-weight: 700; font-size: 1.25rem; cursor: pointer; transition: background 0.15s;
+    }
+    .nb-btn-submit-q:hover { background: var(--ink2); }
+    .nb-btn-submit-q:disabled { opacity: 0.5; cursor: not-allowed; }
+    .nb-btn-nav-q {
+      background: var(--card); border: 1.5px solid var(--line); padding: 6px 14px; border-radius: 6px;
+      font-family: var(--font-hand); font-size: 1.15rem; cursor: pointer; color: var(--text);
+    }
+    .nb-btn-nav-q:hover { background: var(--hl-yellow); }
+
+    .nb-scorecard {
+      background: var(--paper); border: 2px solid var(--ink); border-radius: 10px;
+      padding: 24px; margin-top: 20px; display: none; text-align: center;
+    }
+    .nb-scorecard.is-active { display: block; }
+    .nb-scorecard__badge {
+      display: inline-block; font-family: var(--font-hand); font-weight: 700; font-size: 1.45rem;
+      padding: 4px 16px; border-radius: 20px; margin-bottom: 12px;
+    }
+    .nb-badge--excellent { background: rgba(29, 122, 69, 0.2); color: var(--green); border: 2px solid var(--green); }
+    .nb-badge--strong { background: rgba(47, 95, 196, 0.2); color: var(--ink); border: 2px solid var(--ink); }
+    .nb-badge--revisit { background: rgba(194, 54, 47, 0.2); color: var(--red); border: 2px solid var(--red); }
+    .nb-score-num { font-family: var(--font-math); font-size: 3rem; font-weight: 700; color: var(--ink); line-height: 1; }
+    .nb-score-pct { font-family: var(--font-hand2); font-size: 1.35rem; color: var(--pencil); margin: 4px 0 16px; }
+
+    .nb-weak-box { text-align: left; background: var(--card); border: 1.5px solid var(--line); border-radius: 8px; padding: 14px 18px; margin: 18px 0; }
+    .nb-weak-title { font-family: var(--font-hand); font-weight: 700; font-size: 1.35rem; color: var(--ink); margin-bottom: 6px; }
+    .nb-weak-list { list-style: none; padding: 0; margin: 0; }
+    .nb-weak-item { padding: 5px 0; font-family: var(--font-hand2); font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px dotted var(--line); }
+    .nb-weak-item:last-child { border-bottom: none; }
+    .nb-weak-item a { color: var(--ink2); text-decoration: underline; font-weight: 600; }
+
     mark { background: var(--hl-yellow); color: inherit; padding: 0 2px; }
 
     @media print {
@@ -366,13 +613,33 @@ const html = `<!DOCTYPE html>
   <!-- Top Global Navigation Bar -->
   <header class="nb-topbar">
     <div class="nb-topbar__inner">
-      <button class="nb-btn-top" id="menuBtn" aria-label="Open Notebook Index">☰</button>
-      <a href="../index.html" class="nb-topbar__brand">📖 Brain Hub</a>
-      <div class="nb-topbar__crumb">Operations / <strong>ERP Business Applications · Master Notebook OS</strong></div>
+      <div class="nb-topbar__left">
+        <button class="nb-btn-top" id="menuBtn" aria-label="Open Notebook Index">☰</button>
+        <a class="nb-topbar__back" href="/operations/" title="Back to Operations Catalog" style="display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-hand2); text-decoration: none; color: var(--ink); font-weight: 700; font-size: 1rem; margin-right: 4px;">
+          <span class="nb-topbar__back-arrow">&larr;</span>
+          <span class="nb-topbar__back-text">Operations Catalog</span>
+        </a>
+        <div class="nb-topbar__crumb">Operations / <strong>ERP Business Applications · Master Notebook OS</strong></div>
+      </div>
+      
+      <!-- Topbar Live Progress Trackers (Three Independent Systems) -->
+      <div class="nb-topbar__trackers">
+        <span class="nb-track-chip" title="Curriculum Modules Completed">📚 <span id="nbProgressRatio">0 / 16 modules complete</span></span>
+        <span class="nb-track-chip" title="Previous-Year Exam Questions Practiced">📜 <span id="nbPyqRatio">0 / 12 practiced</span></span>
+        <span class="nb-track-chip" title="MCQ Assessment Mastery Score">📝 <span id="nbMcqRatio">0 / 30 mastered</span></span>
+      </div>
+
+      <!-- Notebook Study Tools Toolbar -->
       <div class="nb-topbar__actions">
+        <button class="nb-btn-top" id="toolFocus" title="Focus Mode (Shortcut: F)">🎯 <span>Focus</span></button>
+        <button class="nb-btn-top" id="toolPomodoro" title="Pomodoro Study Timer">🍅 <span>Timer</span></button>
+        <button class="nb-btn-top" id="toolRevision" title="Exam Revision Mode (Shortcut: R)">🧠 <span>Revision</span></button>
+        <a href="#sec-pyq" class="nb-btn-top" id="toolPyq" title="Previous-Year Questions (2023, 2024, 2025)">📜 <span>PYQ</span></a>
+        <a href="#sec-quiz" class="nb-btn-top" id="toolQuiz" title="Master Knowledge Check (30 MCQs)">📝 <span>Quiz</span></a>
         <button class="nb-btn-search" id="searchTrigger" aria-label="Open Search">
-          <span>Search Index</span> <kbd>/</kbd>
+          <span>Search</span> <kbd>/</kbd>
         </button>
+        <button class="nb-btn-top" id="toolPrint" title="Print Study Guide">🖨</button>
         <button class="nb-btn-top" id="themeToggle" aria-label="Toggle Night/Day Mode">🌙</button>
         <div class="nb-topbar__pct" id="pct">0%</div>
       </div>
@@ -380,12 +647,35 @@ const html = `<!DOCTYPE html>
     <div class="nb-topbar__bar"><i id="barfill" style="width: 0%;"></i></div>
   </header>
 
+  <!-- Revision Mode Banner -->
+  <div class="nb-revision-banner" id="revisionBanner" style="display: none;">
+    <span>🧠 <strong>REVISION MODE ACTIVE:</strong> Highlighting core formulas, frameworks, case dossiers &amp; model answers. Lecture prose is collapsed.</span>
+    <button class="nb-revision-banner__exit" id="exitRevisionBtn">Exit Revision (R)</button>
+  </div>
+
   <div class="nb-layout">
     <div class="nb-sidebar-shade" id="shade"></div>
     
     <!-- Notebook Index Sidebar -->
     <aside class="nb-sidebar" id="sidebar">
       <h2>INDEX</h2>
+
+      <!-- Sidebar Progress Summary Box -->
+      <div class="nb-sidebar-progress-summary">
+        <div class="nb-stat-pill">
+          <span class="nb-stat-label">Modules</span>
+          <span class="nb-stat-val" id="sideProgressRatio">0/16</span>
+        </div>
+        <div class="nb-stat-pill">
+          <span class="nb-stat-label">PYQ Practiced</span>
+          <span class="nb-stat-val" id="sidePyqRatio">0/12</span>
+        </div>
+        <div class="nb-stat-pill">
+          <span class="nb-stat-label">MCQ Mastery</span>
+          <span class="nb-stat-val" id="sideMcqRatio">0/30</span>
+        </div>
+      </div>
+
       <div class="nb-sidebar__grp">CURRICULUM MODULES (16)</div>
       <nav id="sidebarNav">
         <a href="#sec-cover" class="is-active">
@@ -440,38 +730,52 @@ const html = `<!DOCTYPE html>
         </a>
         <a href="#sec-matrix">
           <span class="nb-sidebar__chip"></span>
-          <span class="nb-sidebar__label">010. Value Realization Matrix</span>
+          <span class="nb-sidebar__label">10. Value Realization Matrix</span>
           <span class="nb-sidebar__ck"></span>
         </a>
         <a href="#sec-masterdata">
           <span class="nb-sidebar__chip"></span>
-          <span class="nb-sidebar__label">011. Master Data & Signal Codes</span>
+          <span class="nb-sidebar__label">11. Master Data & Signal Codes</span>
           <span class="nb-sidebar__ck"></span>
         </a>
         <a href="#sec-plossl">
           <span class="nb-sidebar__chip"></span>
-          <span class="nb-sidebar__label">012. Plossl Manufacturing Theory</span>
+          <span class="nb-sidebar__label">12. Plossl Manufacturing Theory</span>
           <span class="nb-sidebar__ck"></span>
         </a>
         <a href="#sec-subway">
           <span class="nb-sidebar__chip"></span>
-          <span class="nb-sidebar__label">013. Subway Hierarchy Case</span>
+          <span class="nb-sidebar__label">13. Subway Hierarchy Case</span>
           <span class="nb-sidebar__ck"></span>
         </a>
         <a href="#sec-risks">
           <span class="nb-sidebar__chip"></span>
-          <span class="nb-sidebar__label">014. Failure Modes & Ishikawa Fishbone</span>
+          <span class="nb-sidebar__label">14. Failure Modes & Ishikawa Fishbone</span>
           <span class="nb-sidebar__ck"></span>
         </a>
         <a href="#sec-cloud">
           <span class="nb-sidebar__chip"></span>
-          <span class="nb-sidebar__label">015. Modern Cloud ERP & Evaluation</span>
+          <span class="nb-sidebar__label">15. Modern Cloud ERP & Evaluation</span>
           <span class="nb-sidebar__ck"></span>
         </a>
         <a href="#sec-exam-answers">
           <span class="nb-sidebar__chip"></span>
-          <span class="nb-sidebar__label">016. Complete 18 FAQ Model Answers</span>
+          <span class="nb-sidebar__label">16. Complete 18 FAQ Model Answers</span>
           <span class="nb-sidebar__ck"></span>
+        </a>
+
+        <div class="nb-sidebar__grp">EXAM VAULT &amp; PRACTICE</div>
+        <a href="#sec-pyq">
+          <span class="nb-sidebar__chip" style="background: var(--red);"></span>
+          <span class="nb-sidebar__label">📜 Previous-Year Questions</span>
+          <span class="nb-sidebar__ck" id="sidebarPyqStatus">0/12</span>
+        </a>
+
+        <div class="nb-sidebar__grp">FINAL ASSESSMENT</div>
+        <a href="#sec-quiz">
+          <span class="nb-sidebar__chip" style="background: var(--amber);"></span>
+          <span class="nb-sidebar__label">17. Final Knowledge Check</span>
+          <span class="nb-sidebar__ck" id="sidebarQuizStatus">📝</span>
         </a>
       </nav>
     </aside>
@@ -489,19 +793,28 @@ const html = `<!DOCTYPE html>
             <span class="nb-stamp nb-stamp--green">Operations</span>
             <span class="nb-stamp nb-stamp--amber">MBA Curriculum</span>
             <span class="nb-stamp">100% Exam Mapped</span>
+            <span class="nb-stamp nb-stamp--blue">WeSchool Term IV</span>
           </div>
 
           <h1 class="nb-hand-underline">ERP Business Applications</h1>
-          <p style="font-family: var(--font-hand2); font-size: 1.35rem; color: var(--pencil); margin-top: 0;">
-            <em>"Enterprise Integration, Architecture Selection, Best-Practice Amalgamation &amp; Complete 18 Model Exam Solutions"</em>
+          <p style="font-family: var(--font-hand2); font-size: 1.35rem; color: var(--pencil); margin-top: 2px;">
+            Comprehensive Postgraduate Study Guide, Strategic Frameworks &amp; Complete Exam Blueprint
           </p>
 
-          <div class="nb-sticky nb-sticky--blue">
-            <div class="nb-sticky__title">📖 Academic Syllabus Grounding</div>
-            <p>
-              Curriculum reference: <strong>Prof. Rahul V. Altekar</strong> (<em>Enterprise Wide Resource Planning: Concepts and Cases</em>, Prentice Hall) and <strong>Carol Ptak</strong> (<em>ERP: Tools, Techniques and Applications for Integrating the Supply Chain</em>).<br>
-              Direct alignment with Course Outcomes: <span class="nb-hl nb-hl--yellow">CO1 (Process Integration)</span>, <span class="nb-hl nb-hl--green">CO2 (Adoption & Value Realization)</span>, and <span class="nb-hl nb-hl--pink">CO3 (BPR & Operational Governance)</span>.
-            </p>
+          <div class="nb-card" style="margin-top: 14px; background: rgba(255, 242, 161, 0.25);">
+            <div class="nb-tape"></div>
+            <div style="font-family: var(--font-hand2); font-size: 1.1rem; line-height: 1.5;">
+              <strong>Course:</strong> ERP Business Applications (OPN 419) &nbsp;|&nbsp;
+              <strong>Instructor:</strong> Dr. Rahul V. Altekar (Director Digital Supply Chain Solutions, SAP SE) &nbsp;|&nbsp;
+              <strong>Institution:</strong> WeSchool (Welingkar) &nbsp;|&nbsp;
+              <strong>Academic Scope:</strong> Sessions 1.0 to 8.0 &bull; CO1, CO2, CO3 &bull; 100% FAQ &amp; PYQ Coverage
+            </div>
+          </div>
+
+          <div class="nb-card">
+            <div class="nb-tape nb-tape--right"></div>
+            <div class="nb-card__title">📐 ENTERPRISE INTEGRATION BLUEPRINT · "ONE SYSTEM"</div>
+            ${D.cover}
           </div>
         </header>
 
@@ -510,9 +823,15 @@ const html = `<!DOCTYPE html>
           <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 01</span> ERP Fundamentals &amp; Strategy</h2>
           
           <div class="nb-sticky">
-            <div class="nb-sticky__title">FAQ Q1 Core Thesis</div>
+            <div class="nb-sticky__title">FAQ Q1 Core Thesis &amp; Dr. Altekar's 3 ERP Concepts</div>
             <p><strong>Is ERP a Software/Technology Strategy or a Business Strategy?</strong><br>
             Axiom: <span class="nb-hl nb-hl--yellow">ERP is primarily a Business Strategy enabled by technology, NOT a software project.</span> Treating ERP merely as an IT system upgrade is the single greatest cause of multi-million dollar corporate failure.</p>
+            <p style="margin-top: 8px; font-size: 1.05rem;">
+              <strong>Dr. Rahul Altekar's Three Fundamental Concepts of ERP:</strong><br>
+              1. <em>"A planning methodology or philosophy based on the seamless integration of all business processes of an enterprise."</em><br>
+              2. <em>"A software suite covering major business areas (finance, logistics, sales, materials, manufacturing, distribution) so tightly integrated that any activity recorded in one place is immediately reflected everywhere."</em><br>
+              3. <em>"The finest expression of the inseparability of info-tech and business—an enabling technology and managerial tool integrating all levels and improving reportability."</em>
+            </p>
           </div>
 
           <p>
@@ -521,9 +840,126 @@ const html = `<!DOCTYPE html>
 
           <div class="nb-card">
             <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 SYSTEM BOUNDARY &amp; INTEGRATION ENGINE</div>
-            <p style="font-family: var(--font-hand2); color: var(--pencil); margin-top:0;">Hand-drawn vector sketch of the organizational ERP boundary and closed-loop feedback engine:</p>
-            ${svgSystem}
+            <div class="nb-card__title">📐 INFORMATION SILOS VS. UNIFIED ERP COMMON TRUTH</div>
+            ${D.oneSystem}
+          </div>
+
+          <!-- Dr. Altekar's System Types -->
+          <div class="nb-card" style="border-left: 4px solid var(--ink);">
+            <div class="nb-card__title">📊 DR. ALTEKAR'S SYSTEM TYPES LADDER</div>
+            <p style="font-family: var(--font-hand2); color: var(--pencil); margin-top: 0;">
+              Evolution of enterprise decision intelligence across three ascending tiers:
+            </p>
+            ${D.sysTypes}
+            <div class="nb-table-wrap" style="margin-top: 14px;">
+              <table class="nb-table">
+                <thead><tr><th>System Type</th><th>Primary Focus</th><th>Data Availability</th><th>Decision-Making Logic</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Connected</strong></td>
+                    <td>Data Focused</td>
+                    <td>Available across users</td>
+                    <td>Common decision making is an optional <strong>human choice</strong>.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Integrated</strong></td>
+                    <td>Information Focused</td>
+                    <td>Available across users</td>
+                    <td>Common decision making is <strong>enforced by the system</strong> via industry best practices.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Synchronized</strong></td>
+                    <td>Knowledge Focused</td>
+                    <td>Real-time autonomous flows</td>
+                    <td>Autonomous closed-loop optimization across extended partner networks.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Watch 5 Cs of ERP -->
+          <div class="nb-sticky nb-sticky--green">
+            <div class="nb-sticky__title">🔍 Watch: The 5 Cs of ERP (Faculty Core Framework)</div>
+            <ul style="margin: 0; padding-left: 18px;">
+              <li><strong>Complete:</strong> End-to-end coverage of all core business processes without disconnected manual side-systems.</li>
+              <li><strong>Connected:</strong> Internal cross-functional harmony (<em>Integrated</em>) + External supply chain connectivity (<em>Connected</em>).</li>
+              <li><strong>Cognitive:</strong> Automated pattern detection for failure modes, bottleneck forecasting, and anomaly alerts.</li>
+              <li><strong>Compliant:</strong> Statutory legal adherence, industry Best Practices, Good Manufacturing Practices (GMP), and internal SOPs.</li>
+              <li><strong>Capable:</strong> High-speed transaction processing and massive volume handling without system degradation (accuracy is assumed).</li>
+            </ul>
+          </div>
+
+          <!-- 17 ERP Myths -->
+          <div class="nb-card">
+            <div class="nb-tape nb-tape--right"></div>
+            <div class="nb-card__title">⚠️ THE 17 ERP MYTHS VS. THE THREE TRUTHS</div>
+            <p style="font-family: var(--font-hand2); font-size: 1.1rem; color: var(--pencil);">
+              Verbatim refutation of the 17 common executive misconceptions identified by Dr. Altekar:
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 8px; font-size: 0.95rem;">
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 1:</strong> "ERP = Everyday Reduction of Profit or Early Risky Proposition."<br><em>Reality: ERP drives long-term margin expansion via working capital velocity.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 2:</strong> "Different concepts of ERP based on vendors."<br><em>Reality: Core philosophy of integration and planning is identical across SAP, Oracle, Microsoft.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 3:</strong> "ERP is a computerization / IT project."<br><em>Reality: ERP is an enterprise-wide business operating model transformation.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 4:</strong> "ERP is just software."<br><em>Reality: Software is only the enabler; people and process discipline constitute 80% of success.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 5:</strong> "ERP is an advanced legacy system."<br><em>Reality: Legacy systems were siloed; ERP is horizontally process-integrated.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 6:</strong> "ERP modules are individually an ERP solution."<br><em>Reality: Isolated modules recreate information silos; true ERP requires cross-module synergy.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 7:</strong> "ERP in India must be Indian ERP."<br><em>Reality: Global business logic applies everywhere; localization is achieved via configuration.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 8:</strong> "Customized ERP is true ERP."<br><em>Reality: Excessive customization ('paving cow paths') breaks upgradability and inflates TCO.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 9:</strong> "ERP is outdated; ERP II is the only solution."<br><em>Reality: ERP II merely extends core ERP to collaborative external commerce.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 10:</strong> "ERP is a downsizing tool."<br><em>Reality: ERP rightsizes operations, redeploying labor from clerical data entry to strategic growth.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 11:</strong> "ERP applies only to manufacturing, not services."<br><em>Reality: Service industries (banking, telecom, consulting) rely heavily on project and billing ERP.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 12:</strong> "ERP is a panacea for all business problems."<br><em>Reality: ERP exposes bad management; it cannot fix flawed strategy or toxic leadership.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 13:</strong> "ERP only supports transactional needs."<br><em>Reality: Transactional data fuels executive analytics, predictive S&OP, and strategic planning.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 14:</strong> "ERP is a white elephant."<br><em>Reality: Unmanaged scope makes it expensive; disciplined execution delivers compelling ROI.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 15:</strong> "ERP is a fad that has already gone away."<br><em>Reality: ERP is the permanent transactional operating backbone of global commerce.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 16:</strong> "More ERP systems = More productivity."<br><em>Reality: Proliferation of multiple ERP instances creates new fragmented silos and massive integration overhead.</em>
+              </div>
+              <div style="background: rgba(194, 54, 47, 0.08); padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--red);">
+                <strong>Myth 17:</strong> "ERP is not suitable for small-scale companies."<br><em>Reality: Cloud SaaS multi-tenant solutions make ERP affordable and rapid for SMEs.</em>
+              </div>
+            </div>
+
+            <!-- The ERP Truth -->
+            <div style="margin-top: 14px; padding: 12px; background: rgba(29, 122, 69, 0.1); border-left: 4px solid var(--green); border-radius: 4px;">
+              <strong style="color: var(--green); font-family: var(--font-hand); font-size: 1.3rem;">The Three Unavoidable Truths of ERP:</strong>
+              <div style="margin-top: 4px; font-size: 1rem;">
+                1. <strong>Readiness Audit:</strong> You must audit organizational data, culture, and processes before touching software.<br>
+                2. <strong>Performance Measurement:</strong> Value realization must be tracked through concrete operational KPIs.<br>
+                3. <strong>Unavoidable:</strong> In modern networked competition, operating without an integrated ERP backbone is competitive suicide.
+              </div>
+            </div>
           </div>
 
           <div class="nb-table-wrap">
@@ -555,6 +991,20 @@ const html = `<!DOCTYPE html>
               </tbody>
             </table>
           </div>
+
+          <!-- Module 01 Quick Check -->
+          <div class="nb-card nb-quick-check" style="margin-top: 24px; background: rgba(255, 242, 161, 0.35);">
+            <div class="nb-tape"></div>
+            <span class="nb-stamp nb-stamp--amber">${quickChecks.mod1.stamp}</span>
+            <h4 style="margin: 8px 0 4px; font-size: 1.3rem;">${quickChecks.mod1.title}</h4>
+            <p style="font-size: 1.05rem; margin-bottom: 8px;">${quickChecks.mod1.prompt}</p>
+            <details style="font-family: var(--font-hand2); font-size: 1.08rem; cursor: pointer;">
+              <summary style="color: var(--ink2); font-weight: 700;">Reveal Answer &amp; Exam Key Takeaway ▾</summary>
+              <div style="margin-top: 8px; padding: 10px 14px; background: rgba(29, 122, 69, 0.1); border-left: 3px solid var(--green); border-radius: 4px;">
+                ${quickChecks.mod1.reveal}
+              </div>
+            </details>
+          </div>
         </section>
 
         <!-- SECTION 02: Historical Evolution of Enterprise Systems -->
@@ -562,13 +1012,29 @@ const html = `<!DOCTYPE html>
           <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 02</span> Historical Evolution: From MRP I to Autonomous Cloud ERP</h2>
           
           <p>
-            Enterprise systems did not emerge overnight; they evolved through five distinct historical epochs in response to expanding supply chain complexity and computational capabilities:
+            Enterprise systems evolved through five distinct historical epochs in direct response to expanding supply chain complexity and computational capabilities:
           </p>
 
           <div class="nb-card">
             <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 EVOLUTIONARY TIMELINE OF ENTERPRISE PLANNING</div>
-            ${svgTimeline}
+            <div class="nb-card__title">📐 EVOLUTIONARY TIMELINE (DR. ALTEKAR'S SEQUENCE)</div>
+            ${D.evolution}
+          </div>
+
+          <!-- Value Matrix Analysis -->
+          <div class="nb-card" style="border: 2px solid var(--ink);">
+            <div class="nb-tape nb-tape--right"></div>
+            <div class="nb-card__title">📊 VALUE MATRIX ANALYSIS (FACULTY WHITEBOARD BLUEPRINT)</div>
+            <p style="font-family: var(--font-hand2); font-size: 1.15rem; color: var(--pencil); margin-top: 0;">
+              Evolution of manufacturing paradigms from Mass Production to Lean and Mass Customization:
+            </p>
+            ${D.valueMatrix}
+            <div class="nb-sticky nb-sticky--blue" style="margin-top: 14px;">
+              <div class="nb-sticky__title">Key Dynamic of the Value Matrix</div>
+              <p>
+                <strong>The Resetting Ticket:</strong> What constituted <em>Market Leadership</em> in decade N (e.g., Lowest Price in the 1980s, Quality in the 1990s) becomes the minimum <em>Market Entry</em> qualifying ticket in decade N+1. Today, in the 2000s and beyond, <strong>Delivery (D), Agility, and Customer Service</strong> determine market leadership—and these can only be achieved through real-time ERP synchronization.
+              </p>
+            </div>
           </div>
 
           <div class="nb-table-wrap">
@@ -579,7 +1045,7 @@ const html = `<!DOCTYPE html>
               <tbody>
                 <tr>
                   <td><strong>1960s</strong></td>
-                  <td><strong>Inventory Control (IC)</strong></td>
+                  <td><strong>Inventory Control (SIC)</strong></td>
                   <td>Reorder point (ROP) calculators, economic order quantity (EOQ) batch cards.</td>
                   <td>Mainframe batch punchcards, sequential magnetic tapes.</td>
                 </tr>
@@ -592,221 +1058,266 @@ const html = `<!DOCTYPE html>
                 <tr>
                   <td><strong>1980s</strong></td>
                   <td><strong>Manufacturing Resource Planning (MRP II)</strong></td>
-                  <td>Closed-loop capacity requirements planning (CRP), shop-floor routing, financial tie-in.</td>
-                  <td>Minicomputers, early relational database engines.</td>
+                  <td>Closed-loop capacity planning (RCCP/CRP), master production scheduling (MPS), shop floor control.</td>
+                  <td>Minicomputers (DEC VAX, IBM AS/400), early relational database tables.</td>
                 </tr>
                 <tr>
                   <td><strong>1990s</strong></td>
                   <td><strong>Enterprise Resource Planning (ERP)</strong></td>
-                  <td>Total cross-functional integration: P2P, O2C, HR, Plant Maintenance, General Ledger.</td>
-                  <td>3-tier Client/Server, SAP R/3, Oracle Applications.</td>
+                  <td>Enterprise-wide cross-functional integration: finance, HR, materials, distribution, order-to-cash.</td>
+                  <td>Client-server 3-tier architectures (SAP R/3, Oracle Applications), relational RDBMS (Oracle, DB2, Informix).</td>
                 </tr>
                 <tr>
-                  <td><strong>2000s–Present</strong></td>
-                  <td><strong>Extended ERP &amp; Autonomous Cloud</strong></td>
-                  <td>CRM, SCM, Supplier Portals, RESTful APIs, in-memory computing (HANA), AI forecasting.</td>
-                  <td>Multi-tenant Cloud SaaS, microservices, mobile UX.</td>
+                  <td><strong>2000s+</strong></td>
+                  <td><strong>Extended ERP (E-ERP) &amp; SCM</strong></td>
+                  <td>Collaborative commerce, CRM, Advanced Planning and Scheduling (APS), web portals.</td>
+                  <td>Multi-tier web services, XML/EDI protocols, enterprise service buses (ESB).</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </section>
 
-        <!-- SECTION 03: Three-Tier Client-Server Architecture -->
+        <!-- SECTION 03: Architecture Selection -->
         <section class="nb-section" id="sec-architecture">
           <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 03</span> Three-Tier Client-Server Architecture &amp; Selection</h2>
           
           <div class="nb-sticky nb-sticky--blue">
             <div class="nb-sticky__title">FAQ Q3 Core Thesis</div>
-            <p><strong>Why is 3-Tier Architecture superior to 2-Tier Architecture in ERP implementations?</strong><br>
-            In 2-Tier architecture, business logic is either bloated on client machines ("fat client") or embedded inside database stored procedures. In 3-Tier architecture, the Application Logic is fully decoupled into dedicated application servers, delivering scalability, centralized maintenance, and security isolation.</p>
+            <p><strong>Why is 3-Tier Architecture superior to 2-Tier Client-Server?</strong><br>
+            Separation of concerns: Decoupling the <em>Application Logic Server</em> from both the <em>User Interface (Presentation)</em> and the <em>Database (RDBMS)</em> eliminates network bottlenecks, prevents fatal database locks, enables elastic horizontal scaling, and provides centralized security governance.</p>
           </div>
 
           <div class="nb-card">
             <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 SAP R/3 THREE-TIER STRUCTURAL BLUEPRINT</div>
-            ${svg3Tier}
+            <div class="nb-card__title">📐 CLIENT-SERVER ARCHITECTURE (2 / 3 / N-TIER)</div>
+            ${D.architecture}
           </div>
 
           <div class="nb-table-wrap">
             <table class="nb-table">
               <thead>
-                <tr><th>Architecture Tier</th><th>Technological Function</th><th>Enterprise Responsibilities</th></tr>
+                <tr><th>Architectural Tier</th><th>Physical Component</th><th>Technical Responsibility</th><th>Enterprise Failure Mode if Compromised</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Tier 1: Presentation Layer</strong></td>
-                  <td>Thin Client GUI, Web Browser, Mobile Interface (SAP Fiori)</td>
-                  <td>Accepts user input, validates field syntax, renders screens, formats reports. Zero business logic execution.</td>
+                  <td><strong>Tier 1: Presentation</strong></td>
+                  <td>Web Browser, GUI Driver, Mobile Client</td>
+                  <td>User interaction, data entry formatting, field-level validation, rendering visual themes.</td>
+                  <td>Loss of productivity if fat clients require local machine installations; solved by zero-footprint HTML5 browsers.</td>
                 </tr>
                 <tr>
-                  <td><strong>Tier 2: Application Layer</strong></td>
-                  <td>Clustered Application Servers (e.g., SAP NetWeaver disp+work processes)</td>
-                  <td>Executes business logic: credit checks, ATP calculations, BOM explosion, tax calculations, three-way matching.</td>
+                  <td><strong>Tier 2: Application Logic</strong></td>
+                  <td>Application Servers, Compute Clusters</td>
+                  <td>Executes business rules, MRP net requirement math, posting workflows, and authorization checks.</td>
+                  <td>Processing queue choke if batch runs lock out daytime transactional users; resolved via horizontal server scaling.</td>
                 </tr>
                 <tr>
-                  <td><strong>Tier 3: Database Layer</strong></td>
-                  <td>Centralized RDBMS / In-Memory Database (e.g., SAP HANA, Oracle DB)</td>
-                  <td>Manages ACID transactions, data persistence, referential integrity, record locking, and table indexing.</td>
+                  <td><strong>Tier 3: Database Engine</strong></td>
+                  <td>RDBMS (In-Memory HANA, Oracle, DB Driver)</td>
+                  <td>ACID-compliant relational data repository, data integrity, journal logs, persistence.</td>
+                  <td>Catastrophic enterprise halt if DB crashes without automated hot-standby failover and point-in-time recovery.</td>
                 </tr>
               </tbody>
             </table>
           </div>
+
+          <!-- Module 03 Quick Check -->
+          <div class="nb-card nb-quick-check" style="margin-top: 24px; background: rgba(255, 242, 161, 0.35);">
+            <div class="nb-tape"></div>
+            <span class="nb-stamp nb-stamp--amber">${quickChecks.mod3.stamp}</span>
+            <h4 style="margin: 8px 0 4px; font-size: 1.3rem;">${quickChecks.mod3.title}</h4>
+            <p style="font-size: 1.05rem; margin-bottom: 8px;">${quickChecks.mod3.prompt}</p>
+            <details style="font-family: var(--font-hand2); font-size: 1.08rem; cursor: pointer;">
+              <summary style="color: var(--ink2); font-weight: 700;">Reveal Answer &amp; Exam Key Takeaway ▾</summary>
+              <div style="margin-top: 8px; padding: 10px 14px; background: rgba(29, 122, 69, 0.1); border-left: 3px solid var(--green); border-radius: 4px;">
+                ${quickChecks.mod3.reveal}
+              </div>
+            </details>
+          </div>
         </section>
 
-        <!-- SECTION 04: The Five Pillars of ERP & Best-Practice Amalgamation -->
+        <!-- SECTION 04: The Five Pillars of ERP -->
         <section class="nb-section" id="sec-pillars">
           <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 04</span> The Five Pillars of ERP &amp; Best-Practice Amalgamation</h2>
           
           <div class="nb-sticky">
             <div class="nb-sticky__title">FAQ Q2 Core Thesis</div>
             <p><strong>What are the Five Pillars of ERP and how do they amalgamate best practices?</strong><br>
-            ERP vendors spent decades studying thousands of leading global corporations, crystallizing their most efficient workflows into pre-configured software algorithms. These best practices rest upon 5 interdependent pillars.</p>
+            Dr. Altekar's Five Pillars form the structural temple supporting enterprise value realization: <em>1) Process-Based Flat Organization</em>, <em>2) Assemble-to-Order / Make-to-Order Philosophy</em>, <em>3) Empowered Employees</em>, <em>4) Customer and Supplier Integration</em>, and <em>5) Sophisticated IT Systems</em>. They generate customer focus, minimal waste, and superior economic return.</p>
           </div>
 
           <div class="nb-card">
             <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 THE FIVE PILLARS OF ERP ARCHITECTURE</div>
-            ${svgMindMap}
+            <div class="nb-card__title">📐 THE FIVE PILLARS CONCEPTUAL TEMPLE</div>
+            ${D.pillars}
           </div>
 
           <div class="nb-table-wrap">
             <table class="nb-table">
               <thead>
-                <tr><th>Pillar</th><th>Enterprise Function</th><th>Best-Practice Amalgamation Mechanism</th></tr>
+                <tr><th>Pillar</th><th>Core Conceptual Mechanism</th><th>Operational Translation in Modern ERP</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>1. Process (Workflows)</strong></td>
-                  <td>Standardized cross-functional process execution</td>
-                  <td>Pre-configured reference models (e.g. Procure-to-Pay, Order-to-Cash) eliminating redundant manual hand-offs.</td>
+                  <td><strong>1. Process-Based Flat Org</strong></td>
+                  <td>Eliminates vertical functional silos in favor of horizontal value streams (Order-to-Cash, Procure-to-Pay).</td>
+                  <td>Roles mapped to process workflows with automated routing; reduces managerial approval layers from 7 to 2.</td>
                 </tr>
                 <tr>
-                  <td><strong>2. People (Human Capital)</strong></td>
-                  <td>Change leadership, role governance, user proficiency</td>
-                  <td>Enforces role-based access control (RBAC), segregation of duties (SoD), and cross-training across functional silos.</td>
+                  <td><strong>2. ATO / MTO Philosophy</strong></td>
+                  <td>Postpones final product differentiation to the Customer Order Decoupling Point (CODP) to minimize finished stock liability.</td>
+                  <td>Modular BOMs, variant configuration engines, and real-time Available-to-Promise (ATP) calculations.</td>
                 </tr>
                 <tr>
-                  <td><strong>3. Technology (Infrastructure)</strong></td>
-                  <td>Robust hardware, network latency, scalable runtime</td>
-                  <td>Multi-tier scalability, high-availability disaster recovery clustering, API microservices integration.</td>
+                  <td><strong>3. Empowered Employees</strong></td>
+                  <td>Democratizes single-source-of-truth data, allowing frontline operators to make immediate operational choices.</td>
+                  <td>Self-service analytics, automated exception alerts, and decentralized goods receipts directly at the dock.</td>
                 </tr>
                 <tr>
-                  <td><strong>4. Data (Master Data Backbone)</strong></td>
-                  <td>Enterprise taxonomy, single source of truth</td>
-                  <td>Strict data dictionary governance: standardized material numbers, universal chart of accounts, single vendor master.</td>
+                  <td><strong>4. Customer &amp; Supplier Integration</strong></td>
+                  <td>Extends visibility beyond organizational boundaries to incorporate Tier-1 suppliers and direct customers.</td>
+                  <td>Vendor Managed Inventory (VMI), automated EDI/API purchase orders, and customer delivery tracking portals.</td>
                 </tr>
                 <tr>
-                  <td><strong>5. Governance (Executive Sponsorship)</strong></td>
-                  <td>Steering committee, scope control, post-go-live KPI audit</td>
-                  <td>Formal PMO change control gate: zero code customizations without verified executive ROI sign-off.</td>
+                  <td><strong>5. Sophisticated IT Systems</strong></td>
+                  <td>Provides the real-time computational muscle, transaction integrity, and database consistency required for scale.</td>
+                  <td>In-memory relational databases, real-time MRP runs in seconds, and enterprise-grade role-based security.</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </section>
 
-        <!-- SECTION 05: Functional Modules, Industry Scope & Target KPIs -->
+        <!-- SECTION 05: Core Functional Modules & Scope -->
         <section class="nb-section" id="sec-modules">
           <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 05</span> Core Modules, Industry Scope &amp; Target KPIs</h2>
           
-          <p>
-            An ERP system maps directly across Michael Porter's enterprise value chain, providing specialized transactional modules that feed into the general ledger:
-          </p>
-
           <div class="nb-card">
             <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 PORTER'S VALUE CHAIN &amp; ERP FUNCTIONAL MODULE MAPPING</div>
-            ${svgValueChain}
+            <div class="nb-card__title">📐 ERP FUNCTIONAL MODULE TRIAD</div>
+            ${D.moduleTriad}
+          </div>
+
+          <!-- ERP Business Process View -->
+          <div class="nb-card" style="border: 2px solid var(--ink);">
+            <div class="nb-tape nb-tape--right"></div>
+            <div class="nb-card__title">📐 ERP BUSINESS PROCESS VIEW (FACULTY MASTER SLIDE 14)</div>
+            <p style="font-family: var(--font-hand2); color: var(--pencil); margin-top: 0;">
+              Complete textbook process architecture mapping Distribution, Manufacturing Planning, and Financials:
+            </p>
+            ${D.processView}
           </div>
 
           <div class="nb-table-wrap">
             <table class="nb-table">
               <thead>
-                <tr><th>Module Area</th><th>Industry Operational Scope</th><th>Governing Metrics &amp; KPIs</th></tr>
+                <tr><th>Functional Module</th><th>Core Sub-Components</th><th>Key Operating Processes</th><th>Critical Performance KPIs</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Production Planning (PP / MRP)</strong></td>
-                  <td>Discrete assembly, process batch manufacturing, job shops</td>
-                  <td>Capacity utilization rate (%), schedule adherence (%), scrap rate (%), setup changeover hours.</td>
+                  <td><strong>Manufacturing</strong></td>
+                  <td>BOM, Routings, Work Centers, MRP, CRP, Shop Floor Control.</td>
+                  <td>Production scheduling, capacity leveling, work order release, scrap confirmation.</td>
+                  <td>OEE (Overall Equipment Effectiveness), Schedule Adherence %, WIP Turns.</td>
                 </tr>
                 <tr>
-                  <td><strong>Materials Management (MM / P2P)</strong></td>
-                  <td>Strategic sourcing, inventory management, warehouse routing</td>
-                  <td>Inventory turnover ratio, purchase order cycle time (days), stock-out rate (%), vendor on-time delivery (OTD %).</td>
+                  <td><strong>Distribution &amp; Logistics</strong></td>
+                  <td>Sales Orders, Shipping, DRP, Inventory Control, Warehouse Management.</td>
+                  <td>ATP calculation, pick-pack-ship, freight documentation, depot transfer orders.</td>
+                  <td>OTIF (On-Time In-Full) %, Order Fill Rate, Shipping Cycle Time.</td>
                 </tr>
                 <tr>
-                  <td><strong>Sales &amp; Distribution (SD / O2C)</strong></td>
-                  <td>Pricing, order fulfillment, export compliance, shipping</td>
-                  <td>Order-to-delivery lead time, order fill rate (OTIF %), days sales outstanding (DSO), revenue leakage (%).</td>
-                </tr>
-                <tr>
-                  <td><strong>Financial Accounting &amp; Controlling (FICO)</strong></td>
-                  <td>General ledger, AP/AR, asset accounting, cost center variance</td>
-                  <td>Month-end financial close duration (days), gross margin per SKU, standard vs. actual cost variance.</td>
+                  <td><strong>Financials &amp; Controlling</strong></td>
+                  <td>General Ledger, Accounts Payable, Accounts Receivable, Cost Center Accounting.</td>
+                  <td>3-way invoice matching, revenue recognition, multi-currency ledger close, variance analysis.</td>
+                  <td>Days Sales Outstanding (DSO), Days Payable Outstanding (DPO), Month-End Close Days.</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </section>
 
-        <!-- SECTION 06: Procure-to-Pay (P2P) & 3-Way Match -->
+        <!-- SECTION 06: Procure-to-Pay (P2P) -->
         <section class="nb-section" id="sec-p2p">
           <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 06</span> Procure-to-Pay (P2P), 3-Way Matching &amp; Internal Controls</h2>
           
           <p>
-            The <strong>Procure-to-Pay (P2P)</strong> process is the foundational purchasing spine of enterprise operations. To prevent financial fraud, overpayment, and phantom inventory, ERP enforces an automated <span class="nb-hl nb-hl--yellow">Three-Way Matching Gate</span> before releasing funds:
+            The <strong>Procure-to-Pay (P2P)</strong> cycle orchestrates all activities from identifying a material requirement through vendor payment release. The cornerstone of financial governance within P2P is the automated <strong>Three-Way Match</strong>:
           </p>
 
           <div class="nb-card">
             <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 PROCURE-TO-PAY TRANSACTION FLOW &amp; 3-WAY MATCHING GATE</div>
+            <div class="nb-card__title">📐 THE THREE-WAY MATCHING RECONCILIATION GATE</div>
             ${svgProcess}
+            <div style="font-family: var(--font-hand2); font-size: 1.15rem; margin-top: 8px;">
+              <strong>Rule:</strong> Purchase Order (Quantity &amp; Price) &equiv; Goods Receipt Note (Quantity Received) &equiv; Vendor Invoice (Quantity &amp; Price Billed). Any price or quantity variance exceeding system tolerance triggers an automated payment block.
+            </div>
           </div>
 
-          <div class="nb-fbox">
-            <span class="nb-fbox__label">P2P Accounting Balance Verification</span>
-            <div class="nb-fbox__math">
-              Goods Receipt (GR): Debit Inventory (1400) / Credit GR/IR Clearing (2110)<br>
-              Invoice Verification (IR): Debit GR/IR Clearing (2110) / Credit Vendor AP (2000)<br>
-              Payment Run: Debit Vendor AP (2000) / Credit Bank Cash (1000)
-            </div>
-            <dl class="nb-fbox__dict">
-              <dt>GR/IR Account</dt>
-              <dd>Provisional liability clearing account that ensures company only pays for goods physically received and inspected.</dd>
-              <dt>Tolerance Limits</dt>
-              <dd>Configurable parameter (e.g. ±2% price variance or ±5 units quantity) beyond which an automated payment block is triggered.</dd>
-            </dl>
+          <div class="nb-table-wrap">
+            <table class="nb-table">
+              <thead>
+                <tr><th>P2P Stage</th><th>Originating Document</th><th>Posting Impact on General Ledger</th><th>Internal Control Gate</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1. Requisition</strong></td>
+                  <td>Purchase Requisition (PR)</td>
+                  <td>No accounting journal entry; commitment recorded against department budget.</td>
+                  <td>Hierarchy-based signature limit approval.</td>
+                </tr>
+                <tr>
+                  <td><strong>2. Order Placement</strong></td>
+                  <td>Purchase Order (PO)</td>
+                  <td>No GL entry; legal contract established with selected vendor.</td>
+                  <td>Approved vendor master list validation.</td>
+                </tr>
+                <tr>
+                  <td><strong>3. Goods Receipt</strong></td>
+                  <td>Goods Receipt Note (GRN)</td>
+                  <td><strong>Debit:</strong> Inventory (Asset)<br><strong>Credit:</strong> GR/IR Clearing Account (Liability)</td>
+                  <td>Physical inspection &amp; warehouse barcode scan.</td>
+                </tr>
+                <tr>
+                  <td><strong>4. Invoice Receipt</strong></td>
+                  <td>Vendor Invoice (LIV)</td>
+                  <td><strong>Debit:</strong> GR/IR Clearing Account<br><strong>Credit:</strong> Accounts Payable (Vendor Account)</td>
+                  <td>Three-way matching engine tolerance check.</td>
+                </tr>
+                <tr>
+                  <td><strong>5. Payment</strong></td>
+                  <td>Payment Voucher</td>
+                  <td><strong>Debit:</strong> Accounts Payable<br><strong>Credit:</strong> Bank Operating Cash</td>
+                  <td>Segregation of duties: Dual signatory approval.</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </section>
 
-        <!-- SECTION 07: Order-to-Cash (O2C) & ATP Verification Engine -->
+        <!-- SECTION 07: Order-to-Cash (O2C) -->
         <section class="nb-section" id="sec-o2c">
           <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 07</span> Order-to-Cash (O2C) &amp; Available-to-Promise (ATP)</h2>
           
           <p>
-            The <strong>Order-to-Cash (O2C)</strong> cycle governs customer demand fulfillment. A cornerstone of ERP excellence is real-time <strong>Available-to-Promise (ATP)</strong> calculation, ensuring sales representatives never confirm orders that production cannot deliver.
+            The <strong>Order-to-Cash (O2C)</strong> cycle spans all customer-facing touchpoints from inquiry to cash collection. The vital operational lever within O2C is <strong>Available-to-Promise (ATP)</strong> logic:
           </p>
 
           <div class="nb-fbox">
-            <span class="nb-fbox__label">Available-to-Promise (ATP) Mathematical Logic</span>
+            <span class="nb-fbox__label">Available-to-Promise (ATP) Standard Formula</span>
             <div class="nb-fbox__math">
-              ATP = On-Hand Physical Stock + Scheduled Production Receipts − Committed Customer Orders
+              ATP = On-Hand Stock + Scheduled Receipts - Committed Customer Orders
             </div>
-            <dl class="nb-fbox__dict">
-              <dt>On-Hand Stock</dt>
-              <dd>Unrestricted physical inventory verified in storage locations.</dd>
-              <dt>Scheduled Receipts</dt>
-              <dd>Confirmed Purchase Orders (PO) and released Production Orders due before the requested delivery date.</dd>
-              <dt>Committed Orders</dt>
-              <dd>Existing unfulfilled sales orders already allocated to prior customers.</dd>
-            </dl>
+            <div style="font-family: var(--font-hand2); font-size: 1.05rem; text-align: center; color: var(--pencil);">
+              Calculated dynamically across discrete time buckets to commit firm delivery dates without risking stockouts.
+            </div>
           </div>
 
-          <div class="nb-sticky nb-sticky--green">
-            <div class="nb-sticky__title">Automated Credit Limit Check Gate</div>
-            <p>During sales order entry, the ERP engine calculates: <span class="nb-hl nb-hl--yellow">Total Exposure = Open Invoices + Open Deliveries + Value of Current Sales Order</span>. If Total Exposure &gt; Approved Credit Limit, the system places a mandatory billing block, requiring formal credit committee release.</p>
+          <div class="nb-card">
+            <div class="nb-tape nb-tape--right"></div>
+            <div class="nb-card__title">📐 ORDER-TO-CASH VALUE STREAM</div>
+            ${svgValueChain}
           </div>
         </section>
 
@@ -814,71 +1325,92 @@ const html = `<!DOCTYPE html>
         <section class="nb-section" id="sec-mrp">
           <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 08</span> S&amp;OP, Master Production Scheduling &amp; Closed-Loop MRP</h2>
           
-          <p>
-            Enterprise resource scheduling operates as a hierarchical closed loop connecting high-level corporate revenue strategy down to shop-floor work centers:
-          </p>
-
-          <div class="nb-card">
-            <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 CLOSED-LOOP MANUFACTURING &amp; S&amp;OP PDCA CYCLE</div>
-            ${svgCycle}
+          <div class="nb-sticky nb-sticky--blue">
+            <div class="nb-sticky__title">Closed-Loop Manufacturing Discipline</div>
+            <p><strong>How does Closed-Loop MRP maintain production stability?</strong><br>
+            By establishing tight feedback loops: Sales &amp; Operations Planning (S&amp;OP) sets macro volume targets &rarr; Master Production Schedule (MPS) disaggregates into specific product mixes validated by Rough-Cut Capacity Planning (RCCP) &rarr; Material Requirements Planning (MRP) explodes component needs validated by detailed Capacity Requirements Planning (CRP).</p>
           </div>
 
+          <!-- Customer Order Decoupling Point (CODP) Diagram -->
+          <div class="nb-card">
+            <div class="nb-tape"></div>
+            <div class="nb-card__title">📐 CUSTOMER ORDER DECOUPLING POINT (CODP WHITEBOARD BLUEPRINT)</div>
+            <p style="font-family: var(--font-hand2); color: var(--pencil); margin-top: 0;">
+              Faculty whiteboard diagram showing decoupling points across MTS, ATO/CTO, MTO, and ETO:
+            </p>
+            ${D.codp}
+          </div>
+
+          <!-- Planning Time Fences Table -->
           <div class="nb-table-wrap">
             <table class="nb-table">
-              <thead>
-                <tr><th>Planning Level</th><th>Planning Horizon</th><th>Planning Unit</th><th>Governing Business Process</th></tr>
-              </thead>
+              <thead><tr><th>Planning Zone</th><th>Time Horizon</th><th>Order Change Rules</th><th>Operational Reality in ERP</th></tr></thead>
               <tbody>
                 <tr>
-                  <td><strong>Sales &amp; Operations Planning (S&amp;OP)</strong></td>
-                  <td>12 – 24 Months (Rolling)</td>
-                  <td>Aggregate Product Families</td>
-                  <td>Executive consensus aligning sales forecast with capital and aggregate capacity constraints.</td>
+                  <td><strong>Frozen Zone</strong></td>
+                  <td>Current Week to W+1</td>
+                  <td>Zero changes permitted without VP Operations approval.</td>
+                  <td>Parts staged on assembly line; materials in transit via JIT/JIS call-offs.</td>
                 </tr>
                 <tr>
-                  <td><strong>Master Production Schedule (MPS)</strong></td>
-                  <td>1 – 12 Weeks (Frozen Zone)</td>
-                  <td>Finished Goods (SKU Level)</td>
-                  <td>Contracted production schedule driving detailed materials planning.</td>
+                  <td><strong>Slushy Zone</strong></td>
+                  <td>Week +2 to Week +4</td>
+                  <td>Mix modifications permitted; total production volume locked.</td>
+                  <td>Sub-assemblies ordered; components being machined in work centers.</td>
                 </tr>
                 <tr>
-                  <td><strong>Material Requirements Planning (MRP)</strong></td>
-                  <td>Daily / Weekly Runs</td>
-                  <td>Raw Materials, Subassemblies</td>
-                  <td>Explodes Bill of Materials (BOM), offsets component lead times, generates planned orders.</td>
-                </tr>
-                <tr>
-                  <td><strong>Shop Floor Execution &amp; CRP</strong></td>
-                  <td>Hours / Shifts / Days</td>
-                  <td>Work Centers, Machines, Shifts</td>
-                  <td>Dispatches shop-floor travelers, monitors machine uptime, tracks scrap and actual labor hours.</td>
+                  <td><strong>Liquid Zone</strong></td>
+                  <td>Week +5 and beyond</td>
+                  <td>Full flexibility to alter both product mix and aggregate volume.</td>
+                  <td>Driven purely by forecasting and aggregate S&amp;OP monthly planning runs.</td>
                 </tr>
               </tbody>
             </table>
           </div>
+
+          <!-- Module 08 Quick Check -->
+          <div class="nb-card nb-quick-check" style="margin-top: 24px; background: rgba(255, 242, 161, 0.35);">
+            <div class="nb-tape"></div>
+            <span class="nb-stamp nb-stamp--amber">${quickChecks.mod8.stamp}</span>
+            <h4 style="margin: 8px 0 4px; font-size: 1.3rem;">${quickChecks.mod8.title}</h4>
+            <p style="font-size: 1.05rem; margin-bottom: 8px;">${quickChecks.mod8.prompt}</p>
+            <details style="font-family: var(--font-hand2); font-size: 1.08rem; cursor: pointer;">
+              <summary style="color: var(--ink2); font-weight: 700;">Reveal Answer &amp; Exam Key Takeaway ▾</summary>
+              <div style="margin-top: 8px; padding: 10px 14px; background: rgba(29, 122, 69, 0.1); border-left: 3px solid var(--green); border-radius: 4px;">
+                ${quickChecks.mod8.reveal}
+              </div>
+            </details>
+          </div>
         </section>
 
-        <!-- SECTION 09: BPR, Rightsizing vs Downsizing -->
+        <!-- SECTION 09: BPR & Organizational Transformation -->
         <section class="nb-section" id="sec-bpr">
           <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 09</span> BPR, Rightsizing vs. Downsizing &amp; Standard Fit</h2>
           
-          <div class="nb-sticky nb-sticky--pink">
+          <div class="nb-sticky">
             <div class="nb-sticky__title">FAQ Q4 Core Thesis</div>
             <p><strong>Is ERP an instrument for Downsizing or Rightsizing?</strong><br>
-            A common corporate fallacy views ERP as a tool for crude headcount reduction ("downsizing"). In reality, ERP is a <strong>Rightsizing and Capability-Enabling Instrument</strong>: it eliminates low-value transactional bookkeeping to redeploy personnel into strategic analysis, vendor development, and customer service.</p>
+            <span class="nb-hl nb-hl--yellow">ERP is strictly an instrument for Rightsizing, NOT Downsizing.</span> Downsizing is a crude reduction of headcount. Rightsizing is the strategic reallocation and elevation of human capital from clerical data entry to high-value analysis and growth management.</p>
           </div>
 
-          <div class="nb-card">
+          <!-- BPR & ERP Chicken & Egg Paradox -->
+          <div class="nb-card" style="border-left: 4px solid var(--ink);">
             <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 STANDARD FIT VS. CUSTOMIZATION DECISION TREE</div>
-            ${svgDecisionTree}
+            <div class="nb-card__title">🔄 BPR &amp; ERP CHICKEN &amp; EGG PARADOX (FACULTY BLUEPRINT)</div>
+            ${D.chickenEgg}
+            <div style="font-family: var(--font-hand2); font-size: 1.12rem; margin-top: 10px;">
+              <strong>The Dilemma:</strong> Does Business Process Reengineering (BPR) precede ERP implementation, or does ERP package adoption dictate process redesign?<br>
+              <strong>The Resolution:</strong> High-level process simplification must precede software selection; then adopt packaged vanilla best practices for 80% commodity processes, reserving custom BPR exclusively for proprietary differentiators.
+            </div>
           </div>
 
-          <div class="nb-sticky">
-            <div class="nb-sticky__title">The Vanilla ERP Rule (Fit ≥ 80%)</div>
-            <p>
-              Leading academic literature mandates: <em>"If commercial off-the-shelf ERP software covers 80% or more of organizational requirements, adapt internal company processes to the software (BPR), rather than modifying the software code."</em> Modifying source code destroys upgradeability and creates immense long-term technical debt.
+          <!-- ERP Panchanga & Implementation Methodology -->
+          <div class="nb-card">
+            <div class="nb-tape nb-tape--right"></div>
+            <div class="nb-card__title">🏛️ ERP PANĆĀNGA: THE FIVE ELEMENTS OF ERP SUCCESS</div>
+            ${D.implMethod}
+            <p style="font-family: var(--font-hand2); font-size: 1.1rem; color: var(--pencil); margin-top: 8px;">
+              Dr. Altekar's Panchanga maps the five essential dimensions: <strong>The Client</strong> (Industry Focus), <strong>The User</strong> (Culture Focus), <strong>The ERP Brand</strong> (Best Practice), <strong>The Consultant</strong> (BPR Focus), and <strong>The Methodology</strong> (Value Focus).
             </p>
           </div>
         </section>
@@ -887,372 +1419,314 @@ const html = `<!DOCTYPE html>
         <section class="nb-section" id="sec-matrix">
           <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 10</span> Value Realization Matrix Analysis</h2>
           
-          <div class="nb-sticky">
+          <div class="nb-sticky nb-sticky--blue">
             <div class="nb-sticky__title">FAQ Q5 Core Thesis</div>
-            <p><strong>Explain Value Matrix Analysis in ERP Systems.</strong><br>
-            The Value Matrix evaluates software capabilities across two axes: <strong>Strategic Business Value</strong> (revenue impact, margin expansion) versus <strong>User Adoption &amp; Usability</strong> (ease of daily operation, compliance).</p>
+            <p><strong>How does the Value Realization Matrix govern ERP ROI?</strong><br>
+            It maps benefits across two intersecting axes: <em>Tangible vs. Intangible</em> and <em>Operational vs. Strategic</em>, establishing clear accountability and measurement mechanisms to prevent post-go-live value decay.</p>
           </div>
 
           <div class="nb-card">
             <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 VALUE REALIZATION 2x2 QUADRANT MATRIX</div>
+            <div class="nb-card__title">📐 VALUE REALIZATION 2x2 PORTFOLIO</div>
             ${svgMatrix}
-          </div>
-
-          <div class="nb-table-wrap">
-            <table class="nb-table">
-              <thead>
-                <tr><th>Quadrant</th><th>Strategic Value</th><th>Adoption / Usability</th><th>Executive Governance Strategy</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Transformational Core ⭐</strong></td>
-                  <td>High</td>
-                  <td>High</td>
-                  <td><strong>Invest &amp; Govern:</strong> Primary drivers of enterprise agility, real-time S&amp;OP, automated P2P. Protect standard workflows.</td>
-                </tr>
-                <tr>
-                  <td><strong>Under-Leveraged Goldmine</strong></td>
-                  <td>High</td>
-                  <td>Low</td>
-                  <td><strong>Change Management Mandate:</strong> Valuable analytics or automated planning modules under-used due to training gaps. Mandate user training.</td>
-                </tr>
-                <tr>
-                  <td><strong>Operational Hygiene</strong></td>
-                  <td>Low</td>
-                  <td>High</td>
-                  <td><strong>Standardize on SaaS:</strong> Essential compliance tools (e.g. payroll, expense claims) running smoothly. Minimize maintenance expenditure.</td>
-                </tr>
-                <tr>
-                  <td><strong>Value Sink / Execution Pit ⚠️</strong></td>
-                  <td>Low</td>
-                  <td>Low</td>
-                  <td><strong>Ruthlessly Decommission:</strong> Expensive custom reports or bespoke screens delivering zero business value. Eliminate immediately.</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </section>
 
-        <!-- SECTION 11: Master Data & Signal Codes -->
+        <!-- SECTION 11: Master Data Taxonomy & Signal Codes -->
         <section class="nb-section" id="sec-masterdata">
           <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 11</span> Master Data Taxonomy, Item Types &amp; Signal Codes</h2>
           
-          <div class="nb-sticky nb-sticky--blue">
+          <div class="nb-sticky">
             <div class="nb-sticky__title">FAQ Q7 Core Thesis</div>
-            <p><strong>Explain Master Data, Item Types, and Signal Codes in ERP.</strong><br>
-            Master Data is the non-transactional, permanent foundational data asset of an enterprise. Item Types dictate business rules and financial valuation, while Signal Codes govern replenishment triggering.</p>
+            <p><strong>Define Master Data, Material Types, and Signal Codes.</strong><br>
+            Master Data is the persistent single-source-of-truth business taxonomy. Material Types classify items by their operational role (ROH, HALB, FERT, VERP). Signal Codes dictate planning parameters, safety stock buffers, and procurement algorithms.</p>
           </div>
 
+          <!-- ABC Analysis Table -->
           <div class="nb-card">
             <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 ENTERPRISE DATA HIERARCHY &amp; ORGANIZATIONAL STRUCTURE</div>
-            ${svgHierarchy}
-          </div>
-
-          <div class="nb-table-wrap">
-            <table class="nb-table">
-              <thead>
-                <tr><th>SAP Material Type</th><th>Industry Designation</th><th>Financial Valuation Behavior</th><th>Procurement &amp; Sales Views</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>ROH</strong></td>
-                  <td>Raw Material</td>
-                  <td>Valuated at standard or moving average cost; zero sales view.</td>
-                  <td>Purchased externally from vendors; consumed in production BOMs.</td>
-                </tr>
-                <tr>
-                  <td><strong>HALB</strong></td>
-                  <td>Semifinished Good (WIP)</td>
-                  <td>Valuated at accumulated standard production cost.</td>
-                  <td>Manufactured in-house; intermediate assembly item.</td>
-                </tr>
-                <tr>
-                  <td><strong>FERT</strong></td>
-                  <td>Finished Product</td>
-                  <td>Full absorption cost valuation; mandatory sales &amp; tax views.</td>
-                  <td>Produced in-house; sold directly to distributors or customers.</td>
-                </tr>
-                <tr>
-                  <td><strong>HAWA</strong></td>
-                  <td>Trading Good</td>
-                  <td>Commercial wholesale valuation; both purchase &amp; sales views.</td>
-                  <td>Purchased externally and resold directly without manufacturing modification.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="nb-card">
-            <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 ENTERPRISE DATA PIPELINE: OLTP TO OLAP DECISION INTEL</div>
-            ${svgDataFlow}
+            <div class="nb-card__title">📊 ABC INVENTORY GOVERNANCE (PARETO 80/20 LAW)</div>
+            <div class="nb-table-wrap">
+              <table class="nb-table">
+                <thead><tr><th>Category</th><th>SKU Volume %</th><th>Annual Spend %</th><th>ERP Control Policy</th><th>Cycle Count Frequency</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Class A</strong></td>
+                    <td>10–15%</td>
+                    <td>70–80%</td>
+                    <td>Strict JIT, daily scheduling, minimum safety stocks, VP sign-off.</td>
+                    <td>Daily / Weekly perpetual audit.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Class B</strong></td>
+                    <td>20–25%</td>
+                    <td>15–20%</td>
+                    <td>Standard MRP lot-sizing, bi-weekly orders, moderate safety stock.</td>
+                    <td>Monthly audit.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Class C</strong></td>
+                    <td>60–70%</td>
+                    <td>5–10%</td>
+                    <td>Automated two-bin reorder point (ROP), bulk buying, generous buffer.</td>
+                    <td>Quarterly / Annual physical count.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </section>
 
-        <!-- SECTION 12: Plossl Manufacturing Theory -->
+        <!-- SECTION 12: Plossl's Law of Manufacturing Management -->
         <section class="nb-section" id="sec-plossl">
           <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 12</span> Plossl's Law of Manufacturing Management</h2>
           
           <div class="nb-sticky nb-sticky--pink">
-            <div class="nb-sticky__title">FAQ Q8 Core Thesis (Paraphrased Academic Analysis)</div>
-            <p><strong>George Plossl's First Law of Manufacturing:</strong><br>
+            <div class="nb-sticky__title">FAQ Q8 Core Thesis &amp; Plossl's First Law</div>
+            <p><strong>George Plossl's Core Manufacturing Law:</strong><br>
             <em>"All benefits in manufacturing stem from the speed of flow of materials and information; conversely, all costs and risks increase with lead time and operational stagnation."</em></p>
           </div>
 
-          <p>
-            Plossl demonstrated that bloated work-in-process (WIP) inventories do not protect production; they obscure scrap, machine unreliability, and supplier defects. ERP operationalizes Plossl's law by synchronizing information velocity with material velocity, collapsing lead times and optimizing batch sizes.
-          </p>
-
-          <div class="nb-card">
-            <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 EOQ INVENTORY MATHEMATICAL TRADE-OFF MODEL</div>
-            ${svgCalculation}
+          <!-- George Plossl's 12 Verbatim Principles -->
+          <div class="nb-card" style="border: 2px solid var(--ink);">
+            <div class="nb-tape nb-tape--right"></div>
+            <div class="nb-card__title">📜 GEORGE PLOSSL'S 12 PRINCIPLES (FACULTY SLIDES 12 &amp; 13 VERBATIM)</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.96rem; margin-top: 10px;">
+              <div style="background: var(--paper); padding: 10px 14px; border-radius: 6px; border-left: 3px solid var(--ink);">
+                <strong>1. Production Problems:</strong> Production problems must and can be eliminated. They cannot be covered up successfully with cushions of inventory and time.
+              </div>
+              <div style="background: var(--paper); padding: 10px 14px; border-radius: 6px; border-left: 3px solid var(--ink);">
+                <strong>2. Inventory is a Liability:</strong> Inventory is more of a liability than an asset, having real value only when it is flowing through operations or used to support them.
+              </div>
+              <div style="background: var(--paper); padding: 10px 14px; border-radius: 6px; border-left: 3px solid var(--ink);">
+                <strong>3. Tolerating Downtime:</strong> Tolerating some downtime while striving to eliminate their causes is better than preventing idle time by manufacturing items not required immediately.
+              </div>
+              <div style="background: var(--paper); padding: 10px 14px; border-radius: 6px; border-left: 3px solid var(--ink);">
+                <strong>4. Re-Planning Frequency:</strong> More frequent and precise re-planning, such as computing daily rather than weekly, does not make it more accurate.
+              </div>
+              <div style="background: var(--paper); padding: 10px 14px; border-radius: 6px; border-left: 3px solid var(--ink);">
+                <strong>5. Re-Planning vs Execution:</strong> Re-planning is admitting failure; it is no substitute for sound execution.
+              </div>
+              <div style="background: var(--paper); padding: 10px 14px; border-radius: 6px; border-left: 3px solid var(--ink);">
+                <strong>6. Realistic Plans:</strong> Plans impossible to execute are worse than useless.
+              </div>
+              <div style="background: var(--paper); padding: 10px 14px; border-radius: 6px; border-left: 3px solid var(--ink2);">
+                <strong>7. Controlling Lead Times:</strong> Lead times cannot only be monitored and adjusted but can also be controlled.
+              </div>
+              <div style="background: var(--paper); padding: 10px 14px; border-radius: 6px; border-left: 3px solid var(--ink2);">
+                <strong>8. Setup Reduction:</strong> Reducing setup time is worth the effort.
+              </div>
+              <div style="background: var(--paper); padding: 10px 14px; border-radius: 6px; border-left: 3px solid var(--ink2);">
+                <strong>9. Planning vs Execution:</strong> Planning defines resources needed to make what is planned; execution applies available resources to make what customers want now.
+              </div>
+              <div style="background: var(--paper); padding: 10px 14px; border-radius: 6px; border-left: 3px solid var(--ink2);">
+                <strong>10. Planning Horizons:</strong> Only resources requiring long periods for actions should be planned ahead; detailed plans should cover only very short horizons.
+              </div>
+              <div style="background: var(--paper); padding: 10px 14px; border-radius: 6px; border-left: 3px solid var(--ink2);">
+                <strong>11. Universal Framework:</strong> There is one manufacturing planning and control system framework common to all types of manufacturing.
+              </div>
+              <div style="background: var(--paper); padding: 10px 14px; border-radius: 6px; border-left: 3px solid var(--ink2);">
+                <strong>12. Continuous Education:</strong> All employees need continuous education.
+              </div>
+            </div>
           </div>
 
           <div class="nb-fbox">
-            <span class="nb-fbox__label">Economic Order Quantity (EOQ) &amp; Total Cost Formula</span>
+            <span class="nb-fbox__label">Economic Order Quantity (EOQ) Formula</span>
             <div class="nb-fbox__math">
-              TC(Q) = (D / Q) · S + (Q / 2) · H<br>
-              Q* = √ [ (2 · D · S) / H ]
+              TC(Q) = (D / Q) &bull; S + (Q / 2) &bull; H<br>
+              Q* = &radic; [ (2 &bull; D &bull; S) / H ]
             </div>
-            <dl class="nb-fbox__dict">
-              <dt>D</dt>
-              <dd>Annual deterministic demand in units.</dd>
-              <dt>S</dt>
-              <dd>Fixed setup or procurement ordering cost per batch ($).</dd>
-              <dt>H</dt>
-              <dd>Annual inventory carrying cost per unit per year ($).</dd>
-              <dt>Q*</dt>
-              <dd>Optimal lot size where annual ordering cost equals annual holding cost.</dd>
-            </dl>
           </div>
         </section>
 
-        <!-- SECTION 13: Subway Franchise Multi-Level Hierarchy Case -->
+        <!-- SECTION 13: Case Dossiers & Real-World Scenarios -->
         <section class="nb-section" id="sec-subway">
-          <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 13</span> Subway Franchise Multi-Level Hierarchy Conceptual Case</h2>
+          <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 13</span> Executive Case Dossiers: Strategy, Industry &amp; Multi-Tier Systems</h2>
           
           <div class="nb-sticky nb-sticky--blue">
-            <div class="nb-sticky__title">FAQ Q6 Core Exam Question</div>
-            <p><strong>"You are Subway with a multi-level hierarchy; will the business fail? Explain."</strong><br>
-            A conceptual MBA case analysis evaluating organizational hierarchy, standardization, and decentralized franchise agility.</p>
+            <div class="nb-sticky__title">Real-World Case Portfolio: WeSchool Exam Benchmark</div>
+            <p>
+              Executive scenarios test your ability to synthesize ERP theory with business reality. The curriculum explores four distinct operational contexts:
+            </p>
           </div>
 
-          <div class="nb-card">
+          <!-- Dossier 1: Ms. Vijaya Loki (LPU Ltd, Chemical Co - 2025 Compulsory Case) -->
+          <div class="nb-card" style="border-left: 4px solid var(--ink);">
             <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 MBA CASE ANALYSIS: WILL SUBWAY FAIL UNDER RIGID MULTI-LEVEL HIERARCHY?</div>
-            <p><strong>1. Theoretical Diagnosis:</strong> In a fast-food franchise network characterized by thousands of geographically dispersed, owner-operated retail outlets, a rigid bureaucratic multi-level hierarchy causes severe operational latency. Customer tastes, local supply chain shocks (e.g. regional produce shortages), and labor dynamics require immediate store-level responsiveness.</p>
-            
-            <p><strong>2. Structural Pathology:</strong> If every inventory adjustment, store promotion, or supplier substitution requires multi-level hierarchical corporate sign-off across Regional Managers, Country Directors, and Global Headquarters, store margins collapse due to waste, stock-outs, and customer churn.</p>
+            <span class="nb-stamp nb-stamp--red">2025 EXAM CASE · 20 MARKS</span>
+            <h3 style="margin: 8px 0 4px;">Case Dossier 1: Ms. Vijaya Loki · Growth Management in Process Chemicals</h3>
+            <p><strong>Context:</strong> Ms. Vijaya Loki, newly appointed CDO of LPU Ltd (a renowned Indian chemical firm), views ERP as a technical architecture intervention (databases, servers, APIs). She must pivot to viewing ERP as an organizational growth engine.</p>
+            <p><strong>Strategic Solution:</strong> Reframing ERP via Dr. Altekar's 5 Cs (Complete, Connected, Cognitive, Compliant, Capable) and adopting a Franchised rollout method by manufacturing plant rather than a risky Big Bang.</p>
+          </div>
 
-            <p><strong>3. The ERP Architectural Solution (Two-Tier Operating Model):</strong>
-            <ul style="padding-left: 20px; line-height: 1.8;">
-              <li><strong>Centralized Global Core (Corporate Tier 1):</strong> Enforces global master data standards, food safety compliance, brand recipes, and consolidated financial reporting.</li>
-              <li><strong>Decentralized Local Cloud POS / ERP (Franchisee Tier 2):</strong> Gives store operators real-time autonomy over daily replenishment, shift scheduling, and local cash reconciliation via lightweight cloud apps.</li>
-            </ul>
-            </p>
+          <!-- Dossier 2: Ms. Aishwarya (Prabha Automobiles - 2024 Compulsory Case) -->
+          <div class="nb-card" style="border-left: 4px solid var(--ink2);">
+            <span class="nb-stamp nb-stamp--blue">2024 EXAM CASE · 20 MARKS</span>
+            <h3 style="margin: 8px 0 4px;">Case Dossier 2: Ms. Aishwarya · Customer-Centric Transformation at Prabha Auto</h3>
+            <p><strong>Context:</strong> CIO transitioning a legacy push manufacturer into a customer-centric automotive ecosystem.</p>
+            <p><strong>Strategic Solution:</strong> Dealer Management System integration, online vehicle configurator with Available-to-Promise (ATP), and Just-In-Sequence supplier call-offs.</p>
+          </div>
 
-            <div class="nb-sticky nb-sticky--green">
-              <div class="nb-sticky__title">Definitive Exam Conclusion</div>
-              <p>Subway will <strong>NOT</strong> fail if its multi-level hierarchy is backed by an agile, two-tier ERP system that decouples corporate brand governance from localized store operational decision-making.</p>
-            </div>
+          <!-- Dossier 3: Ms. Deepika (Pharma Co - 2023 Compulsory Case) -->
+          <div class="nb-card" style="border-left: 4px solid var(--green);">
+            <span class="nb-stamp nb-stamp--green">2023 EXAM CASE · 10 MARKS</span>
+            <h3 style="margin: 8px 0 4px;">Case Dossier 3: Ms. Deepika · Strategic ERP Charter in Regulated Pharmaceuticals</h3>
+            <p><strong>Context:</strong> Formulating an ERP Strategy Charter demonstrating why ERP in pharma is a business strategy, not an IT tool.</p>
+            <p><strong>Strategic Solution:</strong> US FDA 21 CFR Part 11 compliance, electronic batch records (eBR), strict vanilla core doctrine, and executive steering committee governance.</p>
+          </div>
+
+          <!-- Dossier 4: Subway Multi-Level Hierarchy Conceptual Case -->
+          <div class="nb-card">
+            <span class="nb-stamp nb-stamp--amber">FAQ Q6 CASE · 10 MARKS</span>
+            <h3 style="margin: 8px 0 4px;">Case Dossier 4: Subway Franchise Multi-Level Hierarchy Analysis</h3>
+            <p><strong>Examination Prompt:</strong> <em>"You are Subway with a multi-level hierarchy; will the business fail? Explain."</em></p>
+            <p><strong>Conceptual Analysis:</strong> Multi-level franchise hierarchies (Store &rarr; Franchisee &rarr; Regional Development Agent &rarr; Corporate HQ) do <strong>not</strong> inevitably fail if ERP enforces standardized Master Recipes and global POS integration while allowing localized procurement of perishable vegetables within strict quality parameters.</p>
           </div>
         </section>
 
-        <!-- SECTION 14: Implementation Failure Modes & Ishikawa Fishbone -->
+        <!-- SECTION 14: Failure Modes & Ishikawa Root Cause -->
         <section class="nb-section" id="sec-risks">
           <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 14</span> Failure Modes, Risk Mitigation &amp; Ishikawa Root Cause</h2>
           
-          <p>
-            Historically, over 60% of enterprise ERP implementations exceed their budgets, miss go-live targets, or face catastrophic operational disruption. Kaoru Ishikawa's cause-and-effect framework categorizes these failure modes across 6 root causes:
-          </p>
-
           <div class="nb-card">
             <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 ISHIKAWA 6-RIB ROOT CAUSE ANALYSIS OF ERP FAILURE</div>
+            <div class="nb-card__title">📐 ISHIKAWA FISHBONE ROOT-CAUSE DIAGRAM</div>
             ${svgFishbone}
-          </div>
-
-          <div class="nb-table-wrap">
-            <table class="nb-table">
-              <thead>
-                <tr><th>Failure Category</th><th>Observed Corporate Pathology</th><th>Mandatory Mitigation Framework</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>People &amp; Culture</strong></td>
-                  <td>Middle management resistance, fear of transparency, lack of training.</td>
-                  <td>Prosci ADKAR change management, executive town halls, formal role re-skilling budgets.</td>
-                </tr>
-                <tr>
-                  <td><strong>Data Quality</strong></td>
-                  <td>Migrating dirty legacy records (duplicate vendors, unverified BOMs).</td>
-                  <td>Strict pre-migration data cleansing audits: "Garbage In, Disaster Out".</td>
-                </tr>
-                <tr>
-                  <td><strong>Scope Creep</strong></td>
-                  <td>Uncontrolled customization of core code to preserve outdated habits.</td>
-                  <td>Formal PMO change freeze; vanilla adoption doctrine; sidecar API extensions.</td>
-                </tr>
-                <tr>
-                  <td><strong>Cutover &amp; Testing</strong></td>
-                  <td>Rushed User Acceptance Testing (UAT) without real-world volume stress testing.</td>
-                  <td>Conducting 3 complete end-to-end mock cutover simulations before production release.</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </section>
 
-        <!-- SECTION 15: Modern Cloud ERP & Evaluation Criteria -->
+        <!-- SECTION 15: Modern Cloud ERP & Architecture -->
         <section class="nb-section" id="sec-cloud">
           <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 15</span> Modern Cloud ERP, Multi-Tenant SaaS &amp; Clean Core</h2>
           
-          <div class="nb-sticky nb-sticky--blue">
-            <div class="nb-sticky__title">Modern Cloud Paradigm Shift</div>
-            <p>Legacy on-premise ERP resulted in "version lock"—enterprises spent years trapped on 15-year-old releases because custom ABAP/Java code prevented vendor upgrades. Modern cloud ERP enforces the <span class="nb-hl nb-hl--yellow">"Clean Core"</span> paradigm.</p>
-          </div>
-
-          <div class="nb-card">
-            <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 COMPARISON: LEGACY ON-PREMISE VS. MODERN MULTI-TENANT CLOUD SAAS</div>
-            ${svgComparison}
-          </div>
-
           <div class="nb-table-wrap">
             <table class="nb-table">
-              <thead>
-                <tr><th>Evaluation Dimension</th><th>Legacy On-Premise ERP</th><th>Modern Multi-Tenant Cloud SaaS</th></tr>
-              </thead>
+              <thead><tr><th>Dimension</th><th>On-Premise ERP</th><th>Private Cloud (Hosted Single-Tenant)</th><th>Public Cloud (Multi-Tenant SaaS)</th></tr></thead>
               <tbody>
                 <tr>
-                  <td><strong>Financial Model</strong></td>
-                  <td>Heavy upfront CapEx (servers, perpetual licenses) + 20% annual maintenance.</td>
-                  <td>Predictable subscription OpEx; zero hardware amortization; lower 5-year TCO.</td>
+                  <td><strong>Infrastructure</strong></td>
+                  <td>Owned corporate servers</td>
+                  <td>Dedicated cloud virtual machines</td>
+                  <td>Shared hyperscaler cloud infrastructure</td>
+                </tr>
+                <tr>
+                  <td><strong>Customization</strong></td>
+                  <td>Unrestricted code modification</td>
+                  <td>High flexibility</td>
+                  <td>Strict <em>Clean Core</em> extension via APIs</td>
                 </tr>
                 <tr>
                   <td><strong>Upgrade Cadence</strong></td>
-                  <td>Major disruption every 5–8 years; costly multi-million dollar migration projects.</td>
-                  <td>Continuous bi-annual updates applied automatically by vendor with zero downtime.</td>
-                </tr>
-                <tr>
-                  <td><strong>Extensibility</strong></td>
-                  <td>Modifying core source code inside the database engine.</td>
-                  <td>Clean core: extensions decoupled via RESTful APIs and sidecar cloud platforms.</td>
+                  <td>Every 5–7 years (massive project)</td>
+                  <td>Annual manual patching</td>
+                  <td>Automated quarterly releases</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </section>
 
-        <!-- SECTION 16: Complete 18 FAQ Model Answers -->
+        <!-- SECTION 16: Complete 18 FAQ Model Exam Answers & Rubrics -->
         <section class="nb-section" id="sec-exam-answers">
           <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">MOD 16</span> Complete 18 FAQ Model Exam Answers &amp; Rubrics</h2>
           
-          <div class="nb-sticky nb-sticky--green">
-            <div class="nb-sticky__title">Gold Standard 10-Mark Exam Answer Architecture</div>
-            <p>Every postgraduate MBA exam answer should follow this four-stage structure: <span class="nb-hl nb-hl--yellow">1. Core Academic Thesis (20%)</span> + <span class="nb-hl nb-hl--blue">2. Diagnostic Framework / Matrix (25%)</span> + <span class="nb-hl nb-hl--pink">3. Strategic Trade-off Analysis (30%)</span> + <span class="nb-hl nb-hl--green">4. Decisive Managerial Action (25%)</span>.</p>
+          <div class="nb-sticky nb-sticky--blue">
+            <div class="nb-sticky__title">Curriculum FAQ Master Bank</div>
+            <p>
+              Authoritative model answers for all 18 primary course FAQ questions, formatted for maximum postgraduate exam marks.
+            </p>
           </div>
 
-          <div class="nb-card">
-            <div class="nb-tape"></div>
-            <div class="nb-card__title">📐 GOLD STANDARD 10-MARK EXAM ANSWER ARCHITECTURE</div>
-            ${svgExam}
-          </div>
-
-          <!-- FAQ Answers Container -->
-          <div style="display: flex; flex-direction: column; gap: 24px; margin-top: 24px;">
-            
+          <div class="nb-cards-grid">
             <div class="nb-card">
               <span class="nb-stamp nb-stamp--green">FAQ Q1 · 10 MARKS</span>
               <h3 style="margin-top: 8px;">Q1: Is ERP a Software/Technology Strategy or a Business Strategy?</h3>
-              <p><strong>Model Answer:</strong> ERP is an enterprise-wide business strategy executed through technology, not merely a software procurement project. Software provides relational database tables and transaction processing engines, but organizational competitiveness requires reengineering business processes, eliminating functional silos, standardizing master data, and fostering cultural change. Treating ERP as an IT project leads to massive customization, scope creep, and failure.</p>
+              <p><strong>Model Answer:</strong> ERP is primarily a comprehensive business strategy enabled by technology. Treating ERP as an IT project delegates strategic process ownership to technicians, leading to fatal misalignment. ERP fundamentally reorganizes cross-functional processes, eliminates organizational silos, and establishes real-time operational discipline.</p>
             </div>
 
             <div class="nb-card">
               <span class="nb-stamp nb-stamp--green">FAQ Q2 · 10 MARKS</span>
               <h3 style="margin-top: 8px;">Q2: What are the Five Pillars of ERP and how do they amalgamate best practices?</h3>
-              <p><strong>Model Answer:</strong> The five pillars are: 1) Process (standardized end-to-end flows), 2) People (change leadership and role governance), 3) Technology (multi-tier scalability and integration), 4) Data (single source of truth master records), and 5) Governance (executive steering committee and scope control). Best-practice amalgamation represents decades of distilled operational wisdom from leading global enterprises embedded directly into pre-configured software templates.</p>
+              <p><strong>Model Answer:</strong> The Five Pillars are: 1) Process-based Flat Organization, 2) ATO/MTO Philosophy, 3) Empowered Employees, 4) Customer and Supplier Integration, and 5) Sophisticated IT Systems. They amalgamate best practices by eliminating functional handoff delays, decoupling inventory at optimum buffer points, providing single-truth visibility, and ensuring real-time operational discipline.</p>
             </div>
 
             <div class="nb-card">
               <span class="nb-stamp nb-stamp--green">FAQ Q3 · 10 MARKS</span>
               <h3 style="margin-top: 8px;">Q3: Explain the 3-Tier Architecture of ERP and why it is superior to 2-Tier systems.</h3>
-              <p><strong>Model Answer:</strong> 3-tier architecture decouples: 1) Presentation Layer (thin client UI), 2) Application Layer (business logic rules and calculations), and 3) Database Layer (transaction persistence and ACID compliance). It is vastly superior to 2-tier architecture because 2-tier requires either bloated client machines or complex stored procedures, limiting scalability, security, and cloud deployment.</p>
+              <p><strong>Model Answer:</strong> 3-Tier architecture separates Presentation (GUI Driver), Business Logic (Application Server), and Data Storage (RDBMS). It is superior to 2-Tier because it isolates compute-intensive logic from database tables, prevents network congestion caused by fat clients, allows horizontal application server scaling, and centralizes security enforcement.</p>
             </div>
 
             <div class="nb-card">
               <span class="nb-stamp nb-stamp--green">FAQ Q4 · 10 MARKS</span>
               <h3 style="margin-top: 8px;">Q4: Is ERP an instrument for Downsizing or Rightsizing?</h3>
-              <p><strong>Model Answer:</strong> ERP is an instrument for rightsizing and capacity optimization, not crude downsizing. While ERP automates redundant transactional data entry (e.g. invoice keying and manual reconciliations), high-performing organizations redeploy staff into strategic sourcing, customer experience management, and analytical decision-making.</p>
+              <p><strong>Model Answer:</strong> ERP is strictly an instrument for Rightsizing. Downsizing is a crude reduction in staff numbers. Rightsizing reconfigures and redeploys human resources, automating repetitive clerical ledger entries and elevating knowledge workers to strategic exception handling, customer relationship management, and data-driven optimization.</p>
             </div>
 
             <div class="nb-card">
               <span class="nb-stamp nb-stamp--green">FAQ Q5 · 10 MARKS</span>
               <h3 style="margin-top: 8px;">Q5: Detail the Value Realization Matrix in ERP implementation.</h3>
-              <p><strong>Model Answer:</strong> The Value Realization Matrix maps Strategic Business Value (Y-axis) against User Usability &amp; Adoption (X-axis). Quadrants comprise: 1) Transformational Core (High Value, High Adoption — protect and govern), 2) Under-Leveraged Goldmine (High Value, Low Adoption — focus on change management and training), 3) Operational Hygiene (Low Value, High Adoption — standardize on SaaS), and 4) Value Sink (Low Value, Low Adoption — ruthlessly eliminate).</p>
+              <p><strong>Model Answer:</strong> The matrix evaluates benefits across Tangible/Intangible and Operational/Strategic quadrants. Tangible operational gains include inventory reduction and faster order cycles; tangible strategic gains include cash-to-cash compression. Intangible operational gains include higher data accuracy; intangible strategic gains include superior decision agility and enterprise resilience.</p>
             </div>
 
             <div class="nb-card">
               <span class="nb-stamp nb-stamp--green">FAQ Q6 · 10 MARKS</span>
               <h3 style="margin-top: 8px;">Q6: You are Subway with a multi-level hierarchy; will the business fail? Explain.</h3>
-              <p><strong>Model Answer:</strong> Subway will only fail if it imposes a rigid, centralized bureaucratic hierarchy on localized store operations. In retail food franchising, customer responsiveness and ingredient sourcing vary by region. The winning strategy is a Two-Tier ERP Model: Tier 1 centralized corporate governance for brand standards, global recipes, and financial consolidation; Tier 2 agile decentralized POS and local ordering for store managers.</p>
+              <p><strong>Model Answer:</strong> Business failure is not inevitable if ERP unifies data architecture. Standardizing global POS recipes, centralized vendor pricing agreements, and real-time royalty clearing automates corporate governance while allowing decentralized franchisees the operational agility to procure local perishable produce under strict quality master data tolerances.</p>
             </div>
 
             <div class="nb-card">
               <span class="nb-stamp nb-stamp--green">FAQ Q7 · 10 MARKS</span>
               <h3 style="margin-top: 8px;">Q7: Define Master Data, Material Types, and Signal Codes.</h3>
-              <p><strong>Model Answer:</strong> Master data represents the core non-transactional entities of an organization (Customer, Vendor, Material, Chart of Accounts). Material types (e.g., ROH Raw Materials, HALB WIP, FERT Finished Goods, HAWA Trading Goods) dictate procurement, inventory valuation, and sales behavior. Signal codes (e.g. 1-9) serve as automated status indicators triggering downstream replenishment, quality holds, or obsolescence workflows.</p>
+              <p><strong>Model Answer:</strong> Master Data represents persistent, authoritative core business entities (Customers, Vendors, Materials). Material Types categorize items by operational function: ROH (Raw Materials), HALB (Semi-Finished), FERT (Finished Goods), and VERP (Packaging). Signal Codes represent algorithmic triggers (reorder points, lot sizing rules, safety stock cushions, lead-time offsets) that direct automated MRP planning.</p>
             </div>
 
             <div class="nb-card">
               <span class="nb-stamp nb-stamp--green">FAQ Q8 · 10 MARKS</span>
-              <h3 style="margin-top: 8px;">Q8: Analyze George Plossl's First Law of Manufacturing Management.</h3>
-              <p><strong>Model Answer:</strong> Plossl asserted that all benefits in manufacturing stem from the speed of flow of materials and information, while all costs and risks increase with lead time and operational stagnation. ERP operationalizes Plossl's law by eliminating informational delays, synchronizing BOM requirements, and balancing holding costs with setup costs via economic order quantities.</p>
+              <h3 style="margin-top: 8px;">Q8: How does Plossl's Theory of Manufacturing link with ERP?</h3>
+              <p><strong>Model Answer:</strong> George Plossl's first law posits that all manufacturing benefits stem from the speed of material and information flow. ERP operationalizes Plossl's principles by replacing inventory cushions with real-time demand information, compressing lead times, reducing machine setups, and enforcing rigorous execution over chaotic re-planning.</p>
             </div>
 
             <div class="nb-card">
               <span class="nb-stamp nb-stamp--green">FAQ Q9 · 10 MARKS</span>
-              <h3 style="margin-top: 8px;">Q9: Compare Leading Global ERP Vendors and their market strengths.</h3>
-              <p><strong>Model Answer:</strong> 1) SAP: Global leader in enterprise manufacturing, complex supply chains, and multinational financial consolidation (S/4HANA). 2) Oracle: Dominant in cloud database scalability, enterprise financials, and HCM (Fusion Cloud). 3) Microsoft Dynamics 365: Strong integration with Office 365, Azure, Power Platform, and mid-market agile deployments.</p>
+              <h3 style="margin-top: 8px;">Q9: Contrast Assemble-to-Order (ATO) with Make-to-Order (MTO).</h3>
+              <p><strong>Model Answer:</strong> In ATO, the Customer Order Decoupling Point (CODP) is positioned at the Semi-Finished Goods (SFG) level; sub-assemblies are pre-built to forecast and final assembly is triggered by customer order. In MTO, the CODP is positioned upstream at raw materials; fabrication and assembly begin only upon receipt of a firm order, eliminating finished goods inventory liability.</p>
             </div>
 
             <div class="nb-card">
               <span class="nb-stamp nb-stamp--green">FAQ Q10 · 10 MARKS</span>
-              <h3 style="margin-top: 8px;">Q10: Explain the 3-Way Matching Process in Procure-to-Pay (P2P).</h3>
-              <p><strong>Model Answer:</strong> Three-Way Matching reconciles: 1) Purchase Order (PO) issued to vendor, 2) Goods Receipt (GR) note confirming physical warehouse receipt, and 3) Vendor Invoice (IR). If quantities, prices, and terms match within pre-configured tolerance limits, the invoice clears for automated payment release.</p>
+              <h3 style="margin-top: 8px;">Q10: Detail the 3-Way Matching Process in Procure-to-Pay (P2P).</h3>
+              <p><strong>Model Answer:</strong> 3-Way Matching automatically reconciles: 1) Purchase Order (Quantity &amp; Price authorized), 2) Goods Receipt Note (Quantity physically verified at dock), and 3) Vendor Invoice (Quantity &amp; Price billed). Discrepancies exceeding defined tolerance limits trigger automated invoice payment blocks, eliminating fraudulent and duplicate disbursements.</p>
             </div>
 
             <div class="nb-card">
               <span class="nb-stamp nb-stamp--green">FAQ Q11 · 10 MARKS</span>
-              <h3 style="margin-top: 8px;">Q11: Detail Available-to-Promise (ATP) calculation in Order-to-Cash.</h3>
-              <p><strong>Model Answer:</strong> ATP calculates available inventory for future customer orders by taking on-hand physical stock, adding confirmed scheduled receipts (purchase orders and production runs), and subtracting existing committed customer sales orders across the planning horizon.</p>
+              <h3 style="margin-top: 8px;">Q11: Explain Available-to-Promise (ATP) and Capable-to-Promise (CTP).</h3>
+              <p><strong>Model Answer:</strong> ATP calculates uncommitted physical inventory and scheduled receipts in defined time buckets to confirm order delivery dates. CTP extends this logic by checking uncommitted machine and labor capacity, determining whether custom manufacturing orders can be produced and delivered by the requested date.</p>
             </div>
 
             <div class="nb-card">
               <span class="nb-stamp nb-stamp--green">FAQ Q12 · 10 MARKS</span>
-              <h3 style="margin-top: 8px;">Q12: How does Closed-Loop MRP link S&amp;OP to the Shop Floor?</h3>
-              <p><strong>Model Answer:</strong> Closed-Loop MRP creates feedback loops between: 1) Long-range S&amp;OP aggregate plans, 2) Master Production Schedule (MPS) for finished goods, 3) Material Requirements Planning (MRP) component explosion, and 4) Capacity Requirements Planning (CRP) validating machine and labor hours at shop-floor work centers.</p>
+              <h3 style="margin-top: 8px;">Q12: Describe the Role of Sales and Operations Planning (S&amp;OP) in ERP.</h3>
+              <p><strong>Model Answer:</strong> S&amp;OP is a monthly executive consensus process balancing unconstrained commercial demand forecasts with operational supply capacity and corporate financial targets. The approved S&amp;OP plan establishes the boundary constraints that drive the Master Production Schedule (MPS).</p>
             </div>
 
             <div class="nb-card">
               <span class="nb-stamp nb-stamp--green">FAQ Q13 · 10 MARKS</span>
-              <h3 style="margin-top: 8px;">Q13: Explain Business Process Reengineering (BPR) prior to ERP implementation.</h3>
-              <p><strong>Model Answer:</strong> BPR radically redesigns core business processes to achieve dramatic improvements in cost, quality, speed, and service. Implementing ERP without BPR simply automates legacy inefficiencies: "Paving the cow paths". BPR simplifies workflows so that standard off-the-shelf software can be adopted without costly customizations.</p>
+              <h3 style="margin-top: 8px;">Q13: How do Planning Time Fences (PTFs) maintain production schedule stability?</h3>
+              <p><strong>Model Answer:</strong> Planning Time Fences segment the planning horizon into: 1) Frozen Zone (zero changes allowed; production in process), 2) Slushy Zone (product mix changes allowed within locked total volume), and 3) Liquid Zone (full flexibility to alter mix and volume based on updated market forecasts).</p>
             </div>
 
             <div class="nb-card">
               <span class="nb-stamp nb-stamp--green">FAQ Q14 · 10 MARKS</span>
-              <h3 style="margin-top: 8px;">Q14: Explain the Ishikawa Fishbone framework for ERP Failure Analysis.</h3>
-              <p><strong>Model Answer:</strong> The Ishikawa Fishbone diagram analyzes root causes across six ribs: People (change resistance, poor training), Process (lack of BPR, departmental silos), Technology (unstable APIs, heavy customization), Data (dirty legacy master data), Governance (lack of executive sponsorship, scope creep), and Testing (rushed cutover without stress simulation).</p>
+              <h3 style="margin-top: 8px;">Q14: Explain the BPR vs. Vanilla ERP Implementation Paradox.</h3>
+              <p><strong>Model Answer:</strong> The paradox weighs customizing software to fit unique legacy workflows against forcing organizational processes into standard vendor best practices (Vanilla). Best practice dictates adopting vanilla workflows for commodity operational functions while engineering custom extensions only for core competitive differentiators.</p>
             </div>
 
             <div class="nb-card">
               <span class="nb-stamp nb-stamp--green">FAQ Q15 · 10 MARKS</span>
-              <h3 style="margin-top: 8px;">Q15: What is the "Clean Core" strategy in Cloud ERP?</h3>
-              <p><strong>Model Answer:</strong> Clean Core mandates that the standard ERP application source code and data model remain completely unmodified. Any business-specific customizations or sidecars are developed outside the ERP core on platform-as-a-service (PaaS) clouds using standardized RESTful APIs and events, guaranteeing seamless quarterly vendor upgrades.</p>
+              <h3 style="margin-top: 8px;">Q15: What are the Primary Causes of ERP Implementation Failures?</h3>
+              <p><strong>Model Answer:</strong> 1) Lack of executive sponsorship, 2) Inadequate organizational change management and end-user training, 3) Uncontrolled scope creep and excessive code customization, 4) Poor master data hygiene, and 5) Treating the initiative as an isolated IT project rather than a business transformation.</p>
             </div>
 
             <div class="nb-card">
@@ -1276,162 +1750,874 @@ const html = `<!DOCTYPE html>
           </div>
         </section>
 
-        <!-- Academic References & Grounding -->
-        <footer class="nb-card" style="margin-top: 48px;">
-          <div class="nb-tape"></div>
-          <h3 style="margin-top: 0; font-family: var(--font-hand); font-size: 1.8rem; color: var(--ink);">📚 Academic Provenance &amp; References</h3>
-          <ul style="padding-left: 20px; line-height: 1.8; font-size: 1.05rem;">
-            <li><strong>Altekar, Rahul V.</strong> (2005). <em>Enterprise Wide Resource Planning: Concepts and Cases</em>. Prentice Hall of India.</li>
-            <li><strong>Ptak, Carol A., &amp; Schragenheim, Eli</strong> (2003). <em>ERP: Tools, Techniques, and Applications for Integrating the Supply Chain</em>. CRC Press.</li>
-            <li><strong>Plossl, George W.</strong> (1985). <em>Production and Inventory Control: Principles and Techniques</em>. Prentice Hall.</li>
-            <li><strong>Davenport, Thomas H.</strong> (1998). <em>"Putting the Enterprise into the Enterprise System"</em>. Harvard Business Review, 76(4), 121–131.</li>
-            <li><strong>Hammer, Michael, &amp; Champy, James</strong> (1993). <em>Reengineering the Corporation: A Manifesto for Business Revolution</em>. Harper Business.</li>
-          </ul>
-        </footer>
+        <!-- SECTION: PREVIOUS-YEAR QUESTIONS (Part 26) -->
+        ${buildPyqSectionHtml()}
+
+        <!-- SECTION 17: Comprehensive Assessment / Knowledge Check (Part 25) -->
+        <section class="nb-section nb-quiz-section" id="sec-quiz" data-title="17. Master Knowledge Check &amp; Assessment System">
+          <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--amber">FINAL ASSESSMENT</span> 17. Master Knowledge Check &amp; MCQ Assessment System</h2>
+          
+          <div class="nb-sticky nb-sticky--blue">
+            <div class="nb-sticky__title">🎯 Postgraduate MBA Assessment Engine</div>
+            <p>
+              This comprehensive assessment rigorously evaluates your mastery across all 16 modules of the ERP curriculum. It spans <strong>30 questions</strong> with balanced difficulty (Easy, Moderate, Difficult) and four cognitive tiers: <em>Recall</em>, <em>Understanding</em>, <em>Application</em>, and <em>Analysis</em>. Immediate conceptual feedback, weak-topic diagnosis, and an automated retry mode are provided.
+            </p>
+          </div>
+
+          <div class="nb-quiz-container" id="erpQuizContainer">
+            <div class="nb-quiz-header">
+              <div>
+                <span class="nb-stamp nb-stamp--green" id="quizStatusStamp">ASSESSMENT IN PROGRESS</span>
+                <span class="nb-quiz-title" style="display: block; margin-top: 4px;">ERP Comprehensive Exam Check</span>
+              </div>
+              <div class="nb-quiz-meta">
+                <span id="quizCounterText">Question 1 of 30</span> &bull;
+                <span id="quizScoreText" style="font-weight: 700; color: var(--ink);">Score: 0 / 30</span>
+              </div>
+            </div>
+
+            <!-- Question Navigator (1 to 30) -->
+            <div class="nb-qnav" id="erpQuizNav" aria-label="Question Navigator"></div>
+
+            <!-- Active Question Card -->
+            <div class="nb-card nb-qcard" id="erpQCard">
+              <div class="nb-qhead">
+                <span class="nb-qnum" id="qCardNum">Question 01</span>
+                <div class="nb-qtags">
+                  <span class="nb-stamp nb-stamp--blue" id="qCardLevel">Understanding</span>
+                  <span class="nb-stamp" id="qCardDiff">Easy</span>
+                  <span class="nb-stamp nb-stamp--amber" id="qCardModule">01. Fundamentals</span>
+                </div>
+              </div>
+
+              <div class="nb-qtext" id="qCardText">Loading question...</div>
+
+              <div class="nb-qoptions" id="qCardOptions"></div>
+
+              <div class="nb-qfeedback" id="qCardFeedback">
+                <div class="nb-qfeedback__title" id="qFeedbackTitle">Feedback</div>
+                <div id="qFeedbackText">Explanation text</div>
+                <div style="margin-top: 8px;">
+                  <a href="#" id="qFeedbackJump" style="color: var(--ink2); text-decoration: underline; font-weight: 600;">Review Module Section &rarr;</a>
+                </div>
+              </div>
+
+              <div class="nb-qactions">
+                <div>
+                  <button type="button" class="nb-btn-nav-q" id="btnPrevQ">&larr; Previous</button>
+                  <button type="button" class="nb-btn-nav-q" id="btnNextQ">Next &rarr;</button>
+                </div>
+                <div>
+                  <button type="button" class="nb-btn-submit-q" id="btnSubmitQ" disabled>Submit Answer</button>
+                  <button type="button" class="nb-btn-nav-q" id="btnShowScorecard" style="margin-left: 6px;">View Scorecard 📊</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Scorecard Panel -->
+            <div class="nb-scorecard" id="erpScorecard">
+              <div class="nb-scorecard__badge" id="scorecardBadge">Assessment Completed</div>
+              <div class="nb-score-num" id="scorecardNum">0 / 30</div>
+              <div class="nb-score-pct" id="scorecardPct">Overall Assessment Accuracy: 0%</div>
+
+              <div class="nb-weak-box">
+                <div class="nb-weak-title">Diagnosed Knowledge Deficits &amp; Recommended Review:</div>
+                <ul class="nb-weak-list" id="scorecardWeakList"></ul>
+              </div>
+
+              <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap;">
+                <button type="button" class="nb-btn-submit-q" id="btnRetryIncorrect" style="background: var(--amber);">Retry Incorrect Questions Only 🔄</button>
+                <button type="button" class="nb-btn-nav-q" id="btnResetQuiz">Retake Full Assessment From Scratch</button>
+                <button type="button" class="nb-btn-nav-q" id="btnReturnToQuestions">Return to Questions</button>
+              </div>
+            </div>
+
+          </div>
+        </section>
 
       </div>
     </main>
   </div>
 
-  <!-- Library Card Search Modal -->
-  <div class="nb-search-modal" id="searchModal" role="dialog" aria-modal="true" aria-label="Search Notebook">
-    <div class="nb-search-card">
-      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-        <span style="font-family: var(--font-hand); font-weight: 700; font-size: 1.5rem; color: var(--ink);">📚 Library Index Card Search</span>
-        <button id="closeSearch" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">✕</button>
+  <!-- Pomodoro Floating Card Widget -->
+  <div class="nb-timer-card" id="pomodoroCard">
+    <div class="nb-timer-card__tape"></div>
+    <div class="nb-timer-card__header">
+      <span class="nb-timer-card__title">🍅 Study Pomodoro</span>
+      <button class="nb-timer-card__close" id="pomodoroClose" aria-label="Close Timer">&times;</button>
+    </div>
+    <div class="nb-timer-card__module" id="pomodoroModule">Active Module: <strong>General Study</strong></div>
+    <div class="nb-timer-card__time" id="pomodoroTime">25:00</div>
+    <div class="nb-timer-card__controls">
+      <button class="nb-tbtn nb-tbtn--go" id="pomodoroStart">Start</button>
+      <button class="nb-tbtn" id="pomodoroReset">Reset</button>
+    </div>
+    <div class="nb-timer-card__presets">
+      <button class="nb-preset-btn is-active" data-mins="25">25m Standard</button>
+      <button class="nb-preset-btn" data-mins="40">40m Deep Dive / Q1</button>
+      <button class="nb-preset-btn" data-mins="50">50m Master Session</button>
+      <button class="nb-preset-btn" data-mins="5">5m Short Break</button>
+    </div>
+    <div class="nb-timer-card__stats" id="pomodoroStats">Completed sessions: 0 &bull; Total: 0 mins</div>
+  </div>
+
+  <!-- In-Page Fast Search Modal -->
+  <div class="nb-search-modal" id="searchModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; place-items: center;">
+    <div style="background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; width: 90%; max-width: 600px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="margin: 0; font-family: var(--font-hand); font-size: 1.5rem; color: var(--ink);">Search Study Notebook</h3>
+        <button id="searchClose" style="background: none; border: none; font-size: 1.4rem; cursor: pointer;">&times;</button>
       </div>
-      <input type="search" class="nb-search-input" id="searchInput" placeholder="Type keyword (e.g. 3-tier, P2P, Plossl, subway, ATP)..." autocomplete="off">
-      <div class="nb-search-results" id="searchResults">
-        <p style="color: var(--pencil); font-family: var(--font-hand2); font-size: 1.1rem;">Type at least 2 letters to search notebook...</p>
-      </div>
+      <input type="text" id="searchInput" placeholder="Type keywords (e.g., S&OP, 3-Tier, Plossl, 5 Cs, Subway)..." style="width: 100%; padding: 10px 14px; border: 1.5px solid var(--line); border-radius: 6px; font-family: var(--font-hand2); font-size: 1.15rem; background: var(--card); color: var(--text);">
+      <div id="searchResults" style="max-height: 340px; overflow-y: auto; margin-top: 14px;"></div>
     </div>
   </div>
 
-  <!-- Client-side Interactive Engine -->
+  <!-- Client-Side JavaScript Engine -->
   <script>
     (function() {
-      'use strict';
+      const notebookSlug = 'erp';
+      
+      // 1. Reading Progress & Header Fill
+      const bar = document.getElementById('barfill');
+      const pct = document.getElementById('pct');
+      window.addEventListener('scroll', () => {
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        const current = window.scrollY;
+        const ratio = Math.min(100, Math.max(0, Math.round((current / total) * 100)));
+        if (bar) bar.style.width = ratio + '%';
+        if (pct) pct.textContent = ratio + '%';
+      }, { passive: true });
 
-      // Day / Night Theme Toggle
-      const root = document.documentElement;
+      // 2. Night / Day Theme Toggle
       const themeBtn = document.getElementById('themeToggle');
-      function applyTheme(t) {
-        root.setAttribute('data-theme', t);
-        if (themeBtn) themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
-        try { localStorage.setItem('nb-theme', t); } catch {}
+      function setTheme(t) {
+        document.documentElement.setAttribute('data-theme', t);
+        try { localStorage.setItem('brainhub:theme', t); } catch (e) {}
+        if (themeBtn) themeBtn.textContent = (t === 'dark') ? '☀️' : '🌙';
       }
-      try {
-        const saved = localStorage.getItem('nb-theme');
-        if (saved) applyTheme(saved);
-      } catch {}
+      const savedTheme = localStorage.getItem('brainhub:theme') || 'light';
+      setTheme(savedTheme);
       if (themeBtn) {
         themeBtn.addEventListener('click', () => {
-          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-          applyTheme(next);
+          const cur = document.documentElement.getAttribute('data-theme') || 'light';
+          setTheme(cur === 'dark' ? 'light' : 'dark');
         });
       }
 
-      // Sidebar Mobile Drawer & Shade
-      const side = document.getElementById('sidebar');
-      const shade = document.getElementById('shade');
+      // 3. Focus Mode Toggle (Part 2)
+      const focusBtn = document.getElementById('toolFocus');
+      function setFocusMode(on) {
+        document.body.classList.toggle('is-focus', on);
+        if (focusBtn) focusBtn.classList.toggle('is-active', on);
+        try { localStorage.setItem('brainhub:focus:' + notebookSlug, on ? '1' : '0'); } catch (e) {}
+      }
+      if (focusBtn) {
+        focusBtn.addEventListener('click', () => {
+          const isCurrentlyFocus = document.body.classList.contains('is-focus');
+          setFocusMode(!isCurrentlyFocus);
+        });
+      }
+      if (localStorage.getItem('brainhub:focus:' + notebookSlug) === '1') {
+        setFocusMode(true);
+      }
+
+      // 4. Revision Mode Toggle (Part 9)
+      const revisionBtn = document.getElementById('toolRevision');
+      const revisionBanner = document.getElementById('revisionBanner');
+      const exitRevBtn = document.getElementById('exitRevisionBtn');
+      function setRevisionMode(on) {
+        document.body.classList.toggle('is-revision', on);
+        if (revisionBtn) revisionBtn.classList.toggle('is-active', on);
+        if (revisionBanner) revisionBanner.style.display = on ? 'flex' : 'none';
+        try { localStorage.setItem('brainhub:revision:' + notebookSlug, on ? '1' : '0'); } catch (e) {}
+      }
+      if (revisionBtn) {
+        revisionBtn.addEventListener('click', () => {
+          const isCurrentlyRev = document.body.classList.contains('is-revision');
+          setRevisionMode(!isCurrentlyRev);
+        });
+      }
+      if (exitRevBtn) exitRevBtn.addEventListener('click', () => setRevisionMode(false));
+      if (localStorage.getItem('brainhub:revision:' + notebookSlug) === '1') {
+        setRevisionMode(true);
+      }
+
+      // 5. Sidebar Navigation & Drawer
       const menuBtn = document.getElementById('menuBtn');
+      const sidebar = document.getElementById('sidebar');
+      const shade = document.getElementById('shade');
       function toggleSide(open) {
-        side.classList.toggle('is-open', open);
-        shade.classList.toggle('is-on', open);
+        if (sidebar) sidebar.classList.toggle('is-open', open);
+        if (shade) shade.classList.toggle('is-open', open);
       }
       if (menuBtn) menuBtn.addEventListener('click', () => toggleSide(true));
       if (shade) shade.addEventListener('click', () => toggleSide(false));
 
-      // Scroll Progress Indicator
-      const bar = document.getElementById('barfill');
-      const pct = document.getElementById('pct');
-      const sections = Array.from(document.querySelectorAll('.nb-section, .nb-cover'));
-      const navLinks = Array.from(document.querySelectorAll('.nb-sidebar nav a'));
+      // 6. Module Completion Progress Tracking
+      const modStatusStorageKey = 'brainhub:progress:' + notebookSlug;
+      let modStates = {};
+      try {
+        modStates = JSON.parse(localStorage.getItem(modStatusStorageKey) || '{}');
+      } catch (e) {}
 
-      function onScroll() {
-        const h = document.documentElement;
-        const total = h.scrollHeight - h.clientHeight;
-        const current = h.scrollTop || document.body.scrollTop;
-        const p = total > 0 ? Math.min(100, Math.round((current / total) * 100)) : 0;
-        if (bar) bar.style.width = p + '%';
-        if (pct) pct.textContent = p + '%';
-
-        // Active section detection
-        const scrollMid = current + 120;
-        let activeId = '';
-        for (const sec of sections) {
-          if (sec.offsetTop <= scrollMid) {
-            activeId = sec.id;
+      function updateModuleUI() {
+        const total = 16;
+        let completeCount = 0;
+        document.querySelectorAll('.nb-mod-status').forEach(el => {
+          const modId = el.getAttribute('data-mod-id');
+          const status = modStates[modId] || 'not_started';
+          el.setAttribute('data-status', status);
+          
+          const icon = el.querySelector('.nb-mod-status__icon');
+          const text = el.querySelector('.nb-mod-status__text');
+          if (status === 'complete') {
+            completeCount++;
+            if (icon) icon.textContent = '✓';
+            if (text) text.textContent = 'Completed';
+          } else if (status === 'in_progress') {
+            if (icon) icon.textContent = '◐';
+            if (text) text.textContent = 'In progress';
+          } else {
+            if (icon) icon.textContent = '□';
+            if (text) text.textContent = 'Not started';
           }
+
+          // Sidebar tick
+          const sideLink = document.querySelector('.nb-sidebar nav a[href="#' + modId + '"]');
+          if (sideLink) {
+            const ck = sideLink.querySelector('.nb-sidebar__ck');
+            if (ck) ck.textContent = (status === 'complete') ? '✓' : '';
+          }
+        });
+
+        const ratioEl = document.getElementById('nbProgressRatio');
+        if (ratioEl) ratioEl.textContent = completeCount + ' / ' + total + ' modules complete';
+        const sideRatioEl = document.getElementById('sideProgressRatio');
+        if (sideRatioEl) sideRatioEl.textContent = completeCount + '/' + total;
+      }
+
+      document.querySelectorAll('.nb-mod-status__btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const parent = this.closest('.nb-mod-status');
+          const modId = parent.getAttribute('data-mod-id');
+          const cur = modStates[modId] || 'not_started';
+          let next = 'in_progress';
+          if (cur === 'not_started') next = 'in_progress';
+          else if (cur === 'in_progress') next = 'complete';
+          else if (cur === 'complete') next = 'not_started';
+          
+          modStates[modId] = next;
+          try { localStorage.setItem(modStatusStorageKey, JSON.stringify(modStates)); } catch (e) {}
+          updateModuleUI();
+        });
+      });
+      updateModuleUI();
+
+      // 7. Pomodoro Study Timer
+      const timerBtn = document.getElementById('toolPomodoro');
+      const timerCard = document.getElementById('pomodoroCard');
+      const timerClose = document.getElementById('pomodoroClose');
+      const timerTime = document.getElementById('pomodoroTime');
+      const timerStart = document.getElementById('pomodoroStart');
+      const timerReset = document.getElementById('pomodoroReset');
+      const timerStats = document.getElementById('pomodoroStats');
+      let timerDuration = 25 * 60;
+      let timerRemaining = timerDuration;
+      let timerInterval = null;
+      let completedSessions = 0;
+
+      function renderTimer() {
+        const m = Math.floor(timerRemaining / 60);
+        const s = timerRemaining % 60;
+        if (timerTime) timerTime.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+      }
+
+      function startTimer() {
+        if (timerInterval) return;
+        if (timerStart) {
+          timerStart.textContent = 'Pause';
+          timerStart.className = 'nb-tbtn nb-tbtn--pause';
         }
-        if (activeId) {
-          navLinks.forEach(link => {
-            const match = link.getAttribute('href') === '#' + activeId;
-            link.classList.toggle('is-active', match);
-            if (match && sec.offsetTop < current) {
-              link.classList.add('is-done');
+        timerInterval = setInterval(() => {
+          if (timerRemaining > 0) {
+            timerRemaining--;
+            renderTimer();
+          } else {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            completedSessions++;
+            if (timerStart) {
+              timerStart.textContent = 'Start';
+              timerStart.className = 'nb-tbtn nb-tbtn--go';
             }
-          });
+            if (timerStats) timerStats.textContent = 'Completed sessions: ' + completedSessions + ' • Total: ' + (completedSessions * 25) + ' mins';
+            alert('🍅 Pomodoro Session Completed! Take a well-deserved study break.');
+            timerRemaining = timerDuration;
+            renderTimer();
+          }
+        }, 1000);
+      }
+
+      function pauseTimer() {
+        if (!timerInterval) return;
+        clearInterval(timerInterval);
+        timerInterval = null;
+        if (timerStart) {
+          timerStart.textContent = 'Resume';
+          timerStart.className = 'nb-tbtn nb-tbtn--go';
         }
       }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
 
-      // Library Card Search Modal
-      const modal = document.getElementById('searchModal');
-      const openBtn = document.getElementById('searchTrigger');
-      const closeBtn = document.getElementById('closeSearch');
-      const sInput = document.getElementById('searchInput');
-      const resultsDiv = document.getElementById('searchResults');
+      if (timerBtn) {
+        timerBtn.addEventListener('click', () => {
+          const isOpen = timerCard && timerCard.classList.contains('is-open');
+          if (timerCard) timerCard.classList.toggle('is-open', !isOpen);
+          timerBtn.classList.toggle('is-active', !isOpen);
+        });
+      }
+      if (timerClose) timerClose.addEventListener('click', () => {
+        if (timerCard) timerCard.classList.remove('is-open');
+        if (timerBtn) timerBtn.classList.remove('is-active');
+      });
 
-      // Pre-index sections
-      const searchIndex = sections.map(s => {
-        const titleEl = s.querySelector('h1, h2');
-        const title = titleEl ? titleEl.textContent.trim() : s.id;
-        const text = s.textContent.toLowerCase();
-        return { id: s.id, title, text };
+      if (timerStart) {
+        timerStart.addEventListener('click', () => {
+          if (timerInterval) pauseTimer();
+          else startTimer();
+        });
+      }
+      if (timerReset) {
+        timerReset.addEventListener('click', () => {
+          pauseTimer();
+          timerRemaining = timerDuration;
+          if (timerStart) {
+            timerStart.textContent = 'Start';
+            timerStart.className = 'nb-tbtn nb-tbtn--go';
+          }
+          renderTimer();
+        });
+      }
+
+      document.querySelectorAll('.nb-preset-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.nb-preset-btn').forEach(b => b.classList.remove('is-active'));
+          this.classList.add('is-active');
+          const mins = parseInt(this.getAttribute('data-mins'), 10) || 25;
+          pauseTimer();
+          timerDuration = mins * 60;
+          timerRemaining = timerDuration;
+          if (timerStart) {
+            timerStart.textContent = 'Start';
+            timerStart.className = 'nb-tbtn nb-tbtn--go';
+          }
+          renderTimer();
+        });
+      });
+
+      // Global window hook for custom question timer launch
+      window.startPomodoroCustom = function(mins) {
+        pauseTimer();
+        timerDuration = mins * 60;
+        timerRemaining = timerDuration;
+        if (timerStart) {
+          timerStart.textContent = 'Pause';
+          timerStart.className = 'nb-tbtn nb-tbtn--pause';
+        }
+        renderTimer();
+        startTimer();
+      };
+
+      // 8. In-Page Search Engine
+      const searchTrigger = document.getElementById('searchTrigger');
+      const searchModal = document.getElementById('searchModal');
+      const searchClose = document.getElementById('searchClose');
+      const searchInput = document.getElementById('searchInput');
+      const searchResults = document.getElementById('searchResults');
+
+      const searchData = [];
+      document.querySelectorAll('.nb-section').forEach(sec => {
+        const id = sec.id;
+        const title = (sec.getAttribute('data-title') || sec.querySelector('h2')?.textContent || id).replace(/[\n\r]+/g, ' ').trim();
+        const text = sec.textContent.replace(/[\n\r]+/g, ' ').substring(0, 1500);
+        searchData.push({ id, title, text });
       });
 
       function openSearch() {
-        modal.classList.add('is-active');
-        setTimeout(() => sInput.focus(), 60);
+        if (searchModal) {
+          searchModal.style.display = 'grid';
+          if (searchInput) {
+            searchInput.value = '';
+            searchInput.focus();
+          }
+          if (searchResults) searchResults.innerHTML = '';
+        }
       }
       function closeSearch() {
-        modal.classList.remove('is-active');
-        sInput.value = '';
+        if (searchModal) searchModal.style.display = 'none';
       }
-      if (openBtn) openBtn.addEventListener('click', openSearch);
-      if (closeBtn) closeBtn.addEventListener('click', closeSearch);
-      modal.addEventListener('click', (e) => { if (e.target === modal) closeSearch(); });
 
+      if (searchTrigger) searchTrigger.addEventListener('click', openSearch);
+      if (searchClose) searchClose.addEventListener('click', closeSearch);
+
+      if (searchInput) {
+        searchInput.addEventListener('input', function() {
+          const q = this.value.trim().toLowerCase();
+          if (!q) {
+            searchResults.innerHTML = '';
+            return;
+          }
+          const matches = searchData.filter(d => d.title.toLowerCase().includes(q) || d.text.toLowerCase().includes(q));
+          if (matches.length === 0) {
+            searchResults.innerHTML = '<div style="padding: 12px; color: var(--pencil); font-family: var(--font-hand2);">No sections matched your query.</div>';
+            return;
+          }
+          searchResults.innerHTML = matches.map(m => {
+            return '<a href="#' + m.id + '" style="display: block; padding: 10px; border-bottom: 1px dashed var(--line); text-decoration: none; color: var(--text); border-radius: 4px;" onclick="document.getElementById(\'searchModal\').style.display=\'none\'">' +
+                   '<strong style="font-family: var(--font-hand); font-size: 1.25rem; color: var(--ink);">' + m.title + '</strong>' +
+                   '<p style="margin: 4px 0 0; font-size: 0.92rem; color: var(--pencil);">' + m.text.substring(0, 140) + '...</p>' +
+                   '</a>';
+          }).join('');
+        });
+      }
+
+      // 9. Master MCQ Assessment Engine (Part 25)
+      (function initMCQEngine() {
+        const QUIZ_DATA = ${JSON.stringify(erpQuizQuestions)};
+        const storageKey = 'brainhub:mcq:' + notebookSlug;
+        
+        let activeIdx = 0;
+        let userAnswers = {};
+        let isSubmitted = {};
+        let isRetryMode = false;
+        let questionPool = QUIZ_DATA.map(function(_, i) { return i; });
+
+        // Load saved state
+        try {
+          const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+          if (saved.userAnswers) userAnswers = saved.userAnswers;
+          if (saved.isSubmitted) isSubmitted = saved.isSubmitted;
+        } catch (e) {}
+
+        function saveState() {
+          try {
+            localStorage.setItem(storageKey, JSON.stringify({
+              userAnswers: userAnswers,
+              isSubmitted: isSubmitted,
+              updatedAt: new Date().toISOString()
+            }));
+          } catch (e) {}
+          updateHeaderScore();
+        }
+
+        function updateHeaderScore() {
+          const score = getScore();
+          const mcqRatioEl = document.getElementById('nbMcqRatio');
+          if (mcqRatioEl) mcqRatioEl.textContent = score + ' / ' + QUIZ_DATA.length + ' mastered';
+          const sideMcqEl = document.getElementById('sideMcqRatio');
+          if (sideMcqEl) sideMcqEl.textContent = score + '/' + QUIZ_DATA.length;
+        }
+
+        const navEl = document.getElementById('erpQuizNav');
+        const qCardEl = document.getElementById('erpQCard');
+        const scorecardEl = document.getElementById('erpScorecard');
+        const numEl = document.getElementById('qCardNum');
+        const levelEl = document.getElementById('qCardLevel');
+        const diffEl = document.getElementById('qCardDiff');
+        const modEl = document.getElementById('qCardModule');
+        const textEl = document.getElementById('qCardText');
+        const optionsEl = document.getElementById('qCardOptions');
+        const feedbackEl = document.getElementById('qCardFeedback');
+        const feedbackTitle = document.getElementById('qFeedbackTitle');
+        const feedbackText = document.getElementById('qFeedbackText');
+        const feedbackJump = document.getElementById('qFeedbackJump');
+        const submitBtn = document.getElementById('btnSubmitQ');
+        const prevBtn = document.getElementById('btnPrevQ');
+        const nextBtn = document.getElementById('btnNextQ');
+        const showScorecardBtn = document.getElementById('btnShowScorecard');
+        const counterText = document.getElementById('quizCounterText');
+        const scoreText = document.getElementById('quizScoreText');
+
+        if (!navEl || !qCardEl) return;
+
+        function getScore() {
+          let score = 0;
+          QUIZ_DATA.forEach(function(q) {
+            if (isSubmitted[q.id] && userAnswers[q.id] === q.correct) {
+              score++;
+            }
+          });
+          return score;
+        }
+
+        function renderNavigator() {
+          navEl.innerHTML = '';
+          questionPool.forEach(function(qIndex, pos) {
+            const q = QUIZ_DATA[qIndex];
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'nb-qnav-btn';
+            btn.textContent = (pos + 1 < 10 ? '0' : '') + (pos + 1);
+            btn.title = 'Question ' + (pos + 1) + ': ' + q.level + ' (' + q.diff + ')';
+            
+            if (pos === activeIdx) btn.classList.add('is-current');
+            if (isSubmitted[q.id]) {
+              if (userAnswers[q.id] === q.correct) btn.classList.add('is-correct');
+              else btn.classList.add('is-incorrect');
+            } else if (userAnswers[q.id] !== undefined) {
+              btn.classList.add('is-answered');
+            }
+
+            btn.addEventListener('click', function() {
+              activeIdx = pos;
+              renderQuestion();
+            });
+            navEl.appendChild(btn);
+          });
+        }
+
+        function renderQuestion() {
+          if (qCardEl) qCardEl.style.display = 'block';
+          if (scorecardEl) scorecardEl.classList.remove('is-active');
+
+          const qIndex = questionPool[activeIdx];
+          const q = QUIZ_DATA[qIndex];
+          if (!q) return;
+
+          const qNumFormatted = (activeIdx + 1 < 10 ? '0' : '') + (activeIdx + 1);
+          numEl.textContent = 'Question ' + qNumFormatted + (isRetryMode ? ' (Retry Mode)' : '');
+          levelEl.textContent = q.level;
+          diffEl.textContent = q.diff;
+          modEl.textContent = q.modTitle;
+          textEl.textContent = q.text;
+
+          // Render Options
+          optionsEl.innerHTML = '';
+          const submitted = Boolean(isSubmitted[q.id]);
+          const userChoice = userAnswers[q.id];
+
+          q.options.forEach(function(optText, optIdx) {
+            const optDiv = document.createElement('div');
+            optDiv.className = 'nb-qopt';
+            if (userChoice === optIdx) optDiv.classList.add('is-selected');
+
+            if (submitted) {
+              if (optIdx === q.correct) optDiv.classList.add('is-correct-reveal');
+              else if (userChoice === optIdx) optDiv.classList.add('is-incorrect-reveal');
+            }
+
+            const keySpan = document.createElement('span');
+            keySpan.className = 'nb-qopt__key';
+            keySpan.textContent = ['A', 'B', 'C', 'D'][optIdx];
+
+            const textSpan = document.createElement('span');
+            textSpan.className = 'nb-qopt__text';
+            textSpan.textContent = optText;
+
+            optDiv.appendChild(keySpan);
+            optDiv.appendChild(textSpan);
+
+            if (!submitted) {
+              optDiv.addEventListener('click', function() {
+                userAnswers[q.id] = optIdx;
+                saveState();
+                renderQuestion();
+              });
+            }
+
+            optionsEl.appendChild(optDiv);
+          });
+
+          // Submit button status
+          if (submitted) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitted ✓';
+          } else {
+            submitBtn.disabled = (userChoice === undefined);
+            submitBtn.textContent = 'Submit Answer';
+          }
+
+          // Feedback Box
+          if (submitted) {
+            const isCorrect = (userChoice === q.correct);
+            feedbackEl.className = 'nb-qfeedback ' + (isCorrect ? 'is-correct' : 'is-incorrect');
+            feedbackTitle.textContent = isCorrect ? '✓ Correct Concept!' : '✗ Concept Clarification:';
+            feedbackText.textContent = q.explanation;
+            feedbackJump.href = '#' + q.modId;
+            feedbackJump.textContent = 'Review Module: ' + q.modTitle + ' →';
+          } else {
+            feedbackEl.className = 'nb-qfeedback';
+          }
+
+          // Prev / Next buttons
+          prevBtn.disabled = (activeIdx === 0);
+          nextBtn.disabled = (activeIdx === questionPool.length - 1);
+
+          // Top status counters
+          const totalQ = questionPool.length;
+          counterText.textContent = 'Question ' + (activeIdx + 1) + ' of ' + totalQ;
+          const currentScore = getScore();
+          scoreText.textContent = 'Score: ' + currentScore + ' / ' + QUIZ_DATA.length;
+
+          renderNavigator();
+          updateHeaderScore();
+        }
+
+        submitBtn.addEventListener('click', function() {
+          const qIndex = questionPool[activeIdx];
+          const q = QUIZ_DATA[qIndex];
+          if (userAnswers[q.id] === undefined) return;
+          isSubmitted[q.id] = true;
+          saveState();
+          renderQuestion();
+        });
+
+        prevBtn.addEventListener('click', function() {
+          if (activeIdx > 0) {
+            activeIdx--;
+            renderQuestion();
+          }
+        });
+
+        nextBtn.addEventListener('click', function() {
+          if (activeIdx < questionPool.length - 1) {
+            activeIdx++;
+            renderQuestion();
+          } else {
+            showScorecard();
+          }
+        });
+
+        function showScorecard() {
+          if (qCardEl) qCardEl.style.display = 'none';
+          if (scorecardEl) scorecardEl.classList.add('is-active');
+
+          const score = getScore();
+          const total = QUIZ_DATA.length;
+          const pct = Math.round((score / total) * 100);
+
+          const badgeEl = document.getElementById('scorecardBadge');
+          const numElScore = document.getElementById('scorecardNum');
+          const pctElScore = document.getElementById('scorecardPct');
+          const weakListEl = document.getElementById('scorecardWeakList');
+
+          numElScore.textContent = score + ' / ' + total;
+          pctElScore.textContent = 'Overall Assessment Accuracy: ' + pct + '%';
+
+          badgeEl.className = 'nb-scorecard__badge ';
+          if (pct >= 80) {
+            badgeEl.className += 'nb-badge--excellent';
+            badgeEl.textContent = '🏆 EXCELLENT MASTERY (' + pct + '%)';
+          } else if (pct >= 60) {
+            badgeEl.className += 'nb-badge--strong';
+            badgeEl.textContent = '📘 COMPETENT — MINOR REVISION (' + pct + '%)';
+          } else {
+            badgeEl.className += 'nb-badge--revisit';
+            badgeEl.textContent = '⚠️ REVISION REQUIRED (' + pct + '%)';
+          }
+
+          // Build weak topics list
+          const weakMap = {};
+          QUIZ_DATA.forEach(function(q) {
+            if (isSubmitted[q.id] && userAnswers[q.id] !== q.correct) {
+              if (!weakMap[q.modId]) {
+                weakMap[q.modId] = { title: q.modTitle, count: 0 };
+              }
+              weakMap[q.modId].count++;
+            }
+          });
+
+          const weakKeys = Object.keys(weakMap);
+          if (weakKeys.length === 0) {
+            weakListEl.innerHTML = '<li style="padding: 10px; color: var(--green); font-weight: 700; font-family: var(--font-hand2); font-size: 1.2rem;">🌟 Outstanding! Zero weak topics detected across all modules!</li>';
+            document.getElementById('btnRetryIncorrect').style.display = 'none';
+          } else {
+            document.getElementById('btnRetryIncorrect').style.display = 'inline-block';
+            weakListEl.innerHTML = weakKeys.map(function(modId) {
+              const item = weakMap[modId];
+              return '<li class="nb-weak-item">' +
+                     '<span><strong>' + item.title + '</strong> (' + item.count + ' missed)</span>' +
+                     '<a href="#' + modId + '">Jump to Module &rarr;</a>' +
+                     '</li>';
+            }).join('');
+          }
+        }
+
+        showScorecardBtn.addEventListener('click', showScorecard);
+
+        const returnBtn = document.getElementById('btnReturnToQuestions');
+        if (returnBtn) {
+          returnBtn.addEventListener('click', function() {
+            renderQuestion();
+          });
+        }
+
+        const retryBtn = document.getElementById('btnRetryIncorrect');
+        if (retryBtn) {
+          retryBtn.addEventListener('click', function() {
+            const incorrectIndices = [];
+            QUIZ_DATA.forEach(function(q, idx) {
+              if (isSubmitted[q.id] && userAnswers[q.id] !== q.correct) {
+                incorrectIndices.push(idx);
+                delete isSubmitted[q.id];
+                delete userAnswers[q.id];
+              }
+            });
+            if (incorrectIndices.length > 0) {
+              isRetryMode = true;
+              questionPool = incorrectIndices;
+              activeIdx = 0;
+              saveState();
+              renderQuestion();
+            }
+          });
+        }
+
+        const resetBtn = document.getElementById('btnResetQuiz');
+        if (resetBtn) {
+          resetBtn.addEventListener('click', function() {
+            if (confirm('Reset all assessment answers and retake quiz from scratch?')) {
+              userAnswers = {};
+              isSubmitted = {};
+              isRetryMode = false;
+              questionPool = QUIZ_DATA.map(function(_, i) { return i; });
+              activeIdx = 0;
+              try { localStorage.removeItem(storageKey); } catch (e) {}
+              renderQuestion();
+            }
+          });
+        }
+
+        // Initialize question display and header score
+        renderQuestion();
+        updateHeaderScore();
+      })();
+
+      // 10. Previous-Year Questions (PYQ) Practice Engine (Part 26)
+      (function initPYQEngine() {
+        const pyqStorageKey = 'brainhub:pyq:' + notebookSlug;
+        let practicedQuestions = {};
+
+        try {
+          const saved = JSON.parse(localStorage.getItem(pyqStorageKey) || '{}');
+          if (saved && typeof saved === 'object') practicedQuestions = saved;
+        } catch (e) {}
+
+        function savePyqState() {
+          try {
+            localStorage.setItem(pyqStorageKey, JSON.stringify(practicedQuestions));
+          } catch (e) {}
+          updatePyqProgress();
+        }
+
+        function updatePyqProgress() {
+          const totalPyqs = 12; // 4 in 2025, 4 in 2024, 4 in 2023
+          const practicedCount = Object.keys(practicedQuestions).filter(k => practicedQuestions[k]).length;
+          
+          const ratioEl = document.getElementById('nbPyqRatio');
+          if (ratioEl) ratioEl.textContent = practicedCount + ' / ' + totalPyqs + ' practiced';
+          const sideEl = document.getElementById('sidePyqRatio');
+          if (sideEl) sideEl.textContent = practicedCount + '/' + totalPyqs;
+          const sideNavEl = document.getElementById('sidebarPyqStatus');
+          if (sideNavEl) sideNavEl.textContent = practicedCount + '/' + totalPyqs;
+
+          document.querySelectorAll('.pyq-practice-toggle').forEach(btn => {
+            const qId = btn.getAttribute('data-pyq-id');
+            const itemEl = document.getElementById('pyq-q-' + qId);
+            const isDone = Boolean(practicedQuestions[qId]);
+            const icon = btn.querySelector('.pyq-check-icon');
+            const label = btn.querySelector('.pyq-check-label');
+
+            btn.setAttribute('aria-pressed', isDone ? 'true' : 'false');
+            if (isDone) {
+              btn.classList.add('is-practiced');
+              if (icon) icon.textContent = '☑';
+              if (label) label.textContent = 'Practiced ✓';
+              if (itemEl) itemEl.classList.add('is-practiced');
+            } else {
+              btn.classList.remove('is-practiced');
+              if (icon) icon.textContent = '□';
+              if (label) label.textContent = 'Mark Practiced';
+              if (itemEl) itemEl.classList.remove('is-practiced');
+            }
+          });
+        }
+
+        // Toggle button event listeners
+        document.querySelectorAll('.pyq-practice-toggle').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const qId = this.getAttribute('data-pyq-id');
+            practicedQuestions[qId] = !practicedQuestions[qId];
+            savePyqState();
+          });
+        });
+
+        // Year Tab Switching
+        document.querySelectorAll('.pyq-year-tab-btn').forEach(tabBtn => {
+          tabBtn.addEventListener('click', function() {
+            const targetYear = this.getAttribute('data-target-year');
+            document.querySelectorAll('.pyq-year-tab-btn').forEach(b => b.classList.remove('is-active'));
+            this.classList.add('is-active');
+
+            document.querySelectorAll('.nb-pyq-paper').forEach(paper => {
+              if (paper.id === 'pyq-paper-' + targetYear) {
+                paper.style.display = 'block';
+                paper.classList.add('is-active');
+              } else {
+                paper.style.display = 'none';
+                paper.classList.remove('is-active');
+              }
+            });
+          });
+        });
+
+        // Timed Exam Practice in Pomodoro Widget
+        document.querySelectorAll('.pyq-timer-btn').forEach(timerBtn => {
+          timerBtn.addEventListener('click', function() {
+            const minutes = parseInt(this.getAttribute('data-time'), 10) || 25;
+            const qTitle = this.getAttribute('data-q-title') || 'PYQ Exam Practice';
+            
+            const pCard = document.getElementById('pomodoroCard');
+            const pBtn = document.getElementById('toolPomodoro');
+            const modEl = document.getElementById('pomodoroModule');
+            
+            if (pCard && pBtn) {
+              pCard.classList.add('is-open');
+              pBtn.classList.add('is-active');
+              if (modEl) {
+                modEl.innerHTML = 'Practicing PYQ: <strong>' + qTitle + '</strong>';
+              }
+              if (typeof window.startPomodoroCustom === 'function') {
+                window.startPomodoroCustom(minutes);
+              }
+            }
+          });
+        });
+
+        // Initial progress update
+        updatePyqProgress();
+      })();
+
+      // 11. Keyboard Shortcuts: 'F' (Focus), 'R' (Revision), '/' (Search), 'Escape'
       document.addEventListener('keydown', (e) => {
-        if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+        if (e.key === '/' || (e.ctrlKey && e.key === 'k')) {
           e.preventDefault();
           openSearch();
-        }
-        if (e.key === 'Escape') {
+        } else if (e.key === 'f' || e.key === 'F') {
+          e.preventDefault();
+          const isCurrent = document.body.classList.contains('is-focus');
+          setFocusMode(!isCurrent);
+        } else if (e.key === 'r' || e.key === 'R') {
+          e.preventDefault();
+          const isCurrent = document.body.classList.contains('is-revision');
+          setRevisionMode(!isCurrent);
+        } else if (e.key === 'Escape') {
           closeSearch();
           toggleSide(false);
+          if (timerCard) timerCard.classList.remove('is-open');
+          if (timerBtn) timerBtn.classList.remove('is-active');
         }
-      });
-
-      sInput.addEventListener('input', () => {
-        const query = sInput.value.trim().toLowerCase();
-        if (query.length < 2) {
-          resultsDiv.innerHTML = '<p style="color: var(--pencil); font-family: var(--font-hand2); font-size: 1.1rem;">Type at least 2 letters...</p>';
-          return;
-        }
-        const matches = searchIndex.filter(item => item.text.includes(query));
-        if (matches.length === 0) {
-          resultsDiv.innerHTML = '<p style="color: var(--pencil); font-family: var(--font-hand2); font-size: 1.1rem;">No matching sections found.</p>';
-          return;
-        }
-        resultsDiv.innerHTML = matches.map(m => {
-          return '<a href="#' + m.id + '" class="nb-search-item" onclick="document.getElementById(\\'searchModal\\').classList.remove(\\'is-active\\');">' +
-                 '<b>' + m.title + '</b>' +
-                 '<span style="font-size: 0.9rem; color: var(--pencil);">Jump to section #' + m.id + ' &rarr;</span>' +
-                 '</a>';
-        }).join('');
       });
 
     })();
@@ -1439,9 +2625,27 @@ const html = `<!DOCTYPE html>
 </body>
 </html>`;
 
+// Programmatically enrich all 16 module sections with interactive module status bars and data-title
+const finalHtml = html.replace(
+  /<section class="nb-section" id="([^"]+)">\s*<h2 class="nb-sec-title">(<span[^>]*>[^<]+<\/span>)\s*([^<]+)<\/h2>/g,
+  (match, secId, stamp, title) => {
+    const cleanTitle = title.replace(/&amp;/g, '&').trim();
+    return `<section class="nb-section" id="${secId}" data-title="${cleanTitle}">\n          <h2 class="nb-sec-title">${stamp} ${title}</h2>\n          \n          <div class="nb-mod-status" data-mod-id="${secId}">\n            <span class="nb-mod-status__prompt">Module Status:</span>\n            <button class="nb-mod-status__btn" type="button" aria-label="Toggle module completion status">\n              <span class="nb-mod-status__icon">□</span>\n              <span class="nb-mod-status__text">Not started</span>\n            </button>\n          </div>`;
+  }
+);
+
+// Verify Master Benchmark remains untouched
+if (fs.existsSync(BENCHMARK_HTML)) {
+  const currentBenchmarkBytes = fs.statSync(BENCHMARK_HTML).size;
+  if (currentBenchmarkBytes !== 226460) {
+    console.error(`FATAL ERROR: Benchmark file tampered! Expected 226460, found ${currentBenchmarkBytes}`);
+    process.exit(1);
+  }
+}
+
 // Write HTML
-fs.writeFileSync(TARGET_HTML, html, 'utf8');
-console.log(`✔ Generated Template 2.0 Paper Edition ERP Notebook: ${TARGET_HTML} (${html.length} bytes)`);
+fs.writeFileSync(TARGET_HTML, finalHtml, 'utf8');
+console.log(`✔ Generated Template 2.0.1 Paper Edition ERP Notebook: ${TARGET_HTML} (${finalHtml.length} bytes)`);
 
 // Update Target Metadata
 const now = new Date().toISOString().split('T')[0];
@@ -1450,7 +2654,7 @@ const targetMetadata = {
   slug: "erp",
   subject: "Operations",
   category: "Enterprise Systems",
-  description: "Comprehensive postgraduate MBA study guide and exam blueprint covering ERP business and technology strategy, 3-tier architecture, the Five Pillars of ERP, Value Matrix Analysis, Plossl manufacturing theory, Master Data, Subway franchise case study, and 100% model FAQ exam answers.",
+  description: "Comprehensive postgraduate MBA study guide and exam blueprint covering ERP business and technology strategy, 3-tier architecture, the Five Pillars of ERP, Value Matrix Analysis, Plossl manufacturing theory, Master Data, Subway franchise case study, WeSchool 2023-2025 authentic PYQs, and 100% model FAQ exam answers.",
   file: "ERP_Business_Applications_Notebook.html",
   tags: [
     "Operations",
@@ -1462,25 +2666,31 @@ const targetMetadata = {
     "Plossl",
     "Master Data",
     "MBA Curriculum",
-    "Altekar"
+    "Altekar",
+    "WeSchool",
+    "PYQ"
   ],
   status: "published",
   source: "curriculum/weschool-term4-altekar",
-  version: "2.0.0",
-  templateVersion: "2.0.0",
+  version: "2.0.1",
+  templateVersion: "2.0.1",
   updated: now,
   updatedAt: now,
   featured: true,
-  readTimeMinutes: 48,
+  readTimeMinutes: 52,
   questionsCount: 18,
+  pyqCount: 12,
   courseContext: {
-    course: "ERP Business Applications (Elective)",
-    instructor: "Rahul Altekar",
-    outcomes: ["CO1", "CO2", "CO3"]
+    course: "ERP Business Applications (OPN 419)",
+    institution: "WeSchool (Welingkar)",
+    trimester: "Trimester IV",
+    instructor: "Dr. Rahul V. Altekar (Director Digital Supply Chain Solutions, SAP SE)",
+    outcomes: ["CO1", "CO2", "CO3", "CO4", "CO5", "CO6"],
+    examPapers: ["2023 End-Term", "2024 End-Term", "2025 End-Term"]
   }
 };
 fs.writeFileSync(TARGET_META, JSON.stringify(targetMetadata, null, 2), 'utf8');
-console.log(`✔ Updated companion metadata: ${TARGET_META} (status: published, slug: erp)`);
+console.log(`✔ Updated companion metadata: ${TARGET_META} (status: published, slug: erp, version: 2.0.1)`);
 
 // Update Benchmark Metadata (Archived, preserve benchmark file intact)
 if (fs.existsSync(BENCHMARK_META)) {

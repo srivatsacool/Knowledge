@@ -308,3 +308,23 @@ When invoked with `--json`, the pipeline guarantees pure JSON output on `stdout`
 | `TEMPLATE_NOT_FOUND` | 500 Internal | Master notebook template missing from `_templates/` |
 | `QA_VALIDATION_FAILED` | 422 Unprocessable | Generated HTML notebook failed one or more 12-point QA assertions |
 | `PROMOTION_DENIED` | 403 Forbidden | Automated promotion attempted without validation or approval |
+
+---
+
+### 7. Topic Boundary Check & Multi-Notebook Decomposition
+
+#### 7.1 Objective
+Prevent uncontrolled notebook proliferation and silent scope expansion. Before drafting begins, the orchestrator/agent evaluates whether the requested knowledge topic constitutes a single coherent notebook or decomposes into multiple substantial standalone curricula.
+
+#### 7.2 Decision Protocol
+1. **Single Coherent Topic**:
+   - The topic possesses a focused conceptual perimeter (e.g., *Economic Order Quantity*, *Capital Budgeting*, *ERP Business Applications*).
+   - Even if long (e.g., 16 modules, extensive problem sets), the topic remains fundamentally unified.
+   - **Action**: Proceed with normal single-notebook generation.
+2. **Decomposable Composite Topic**:
+   - The topic naturally consists of multiple independently useful disciplines (e.g., *Supply Chain Management*, *Business Analytics*, *Corporate Finance*).
+   - **Action**: The agent must **HALT** and present structured options to the user before generating any files:
+     - **Option A**: One comprehensive master notebook containing all subtopics.
+     - **Option B**: Separate standalone notebooks for each major subtopic.
+     - **Option C**: One master overview notebook linking to separate child notebooks.
+

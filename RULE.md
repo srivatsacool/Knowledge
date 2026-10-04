@@ -111,6 +111,14 @@ All autonomous agents must operate under strict safety guidelines:
 - **Rule 8.2 (Minimal Surgical Footprint)**: Change only what is strictly required to accomplish the user prompt. Do not conduct broad, unsolicited refactors of working systems.
 - **Rule 8.3 (Non-Destructive Policy)**: Never delete, rename, or overwrite user knowledge files, notebooks, or slide decks without explicit user authorization.
 - **Rule 8.4 (Verification Mandate)**: An agent must run the build and test suite (`npm test`) after modifying publishing or metadata logic, and verify that all assertions pass.
+- **Rule 8.5 (Topic Boundary Check & Multi-Notebook Decomposition)**:
+  - Before creating a notebook, the agent must analyze the requested topic to determine appropriate knowledge boundaries.
+  - The agent must not silently expand the user's request into adjacent subjects or unilaterally decompose a broad topic into multiple standalone notebooks.
+  - If the requested topic naturally contains multiple major independent subjects (e.g. *Supply Chain Management* encompassing *Demand Planning*, *Inventory Management*, *Procurement*, *Logistics*, and *S&OP*), the agent must **STOP and ASK THE USER** for approval before proceeding:
+    1. *One comprehensive notebook*
+    2. *Separate notebooks for each topic*
+    3. *One master notebook linking to separate topic notebooks*
+  - **Important Distinction**: A single coherent topic may naturally require many modules and pages (e.g. *ERP Business Applications* with 16 modules). The agent must never ask merely because a notebook will be long, but only when the subject decomposes into multiple independent standalone knowledge units.
 
 ---
 

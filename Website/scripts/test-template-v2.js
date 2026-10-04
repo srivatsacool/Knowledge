@@ -116,6 +116,97 @@ check(`Master ERP length is exactly ${EXPECTED_BENCHMARK_BYTES} bytes`, () => {
 });
 
 // -----------------------------------------------------------------------------
+// Test 5: Template 2.0.1 Paper Edition Features & MCQ Assessment Engine
+// -----------------------------------------------------------------------------
+console.log('\n[Test 5] Template 2.0.1 ERP Paper Edition & MCQ Engine:');
+const ERP_V2_PATH = path.join(ROOT_DIR, 'Operations', 'ERP_Business_Applications_Notebook.html');
+const erpContent = fs.existsSync(ERP_V2_PATH) ? fs.readFileSync(ERP_V2_PATH, 'utf8') : '';
+
+check('ERP Notebook 2.0.1 exists on disk', () => {
+  assert.ok(fs.existsSync(ERP_V2_PATH), 'ERP_Business_Applications_Notebook.html missing');
+});
+
+check('Contains Section 17 (#sec-quiz) Final Knowledge Check', () => {
+  assert.ok(erpContent.includes('id="sec-quiz"'), 'Missing #sec-quiz');
+  assert.ok(erpContent.includes('Master Knowledge Check'), 'Missing Master Knowledge Check title');
+});
+
+check('Embeds complete 30-question ERP assessment dataset', () => {
+  const { erpQuizQuestions } = require('./pipeline/erp-mcq-data');
+  assert.strictEqual(erpQuizQuestions.length, 30, 'Expected exactly 30 questions');
+  assert.ok(erpContent.includes('QUIZ_DATA ='), 'Missing client QUIZ_DATA initialization');
+});
+
+check('Contains MCQ Engine elements: Navigator, Question Card, Scorecard & Retry', () => {
+  assert.ok(erpContent.includes('id="erpQuizNav"'), 'Missing #erpQuizNav');
+  assert.ok(erpContent.includes('id="erpQCard"'), 'Missing #erpQCard');
+  assert.ok(erpContent.includes('id="erpScorecard"'), 'Missing #erpScorecard');
+  assert.ok(erpContent.includes('id="btnRetryIncorrect"'), 'Missing #btnRetryIncorrect');
+  assert.ok(erpContent.includes('id="btnResetQuiz"'), 'Missing #btnResetQuiz');
+  assert.ok(erpContent.includes("'brainhub:mcq:' + notebookSlug") || erpContent.includes('brainhub:mcq:erp'), 'Missing independent MCQ localStorage key');
+});
+
+check('Contains 3 in-module Quick Checks (Modules 1, 3, 8)', () => {
+  const qcMatches = erpContent.match(/nb-quick-check/g) || [];
+  assert.strictEqual(qcMatches.length, 3, `Expected 3 quick checks, found ${qcMatches.length}`);
+});
+
+check('Contains Focus Mode, Revision Mode & Pomodoro Study Timer', () => {
+  assert.ok(erpContent.includes('id="toolFocus"'), 'Missing #toolFocus');
+  assert.ok(erpContent.includes('id="toolRevision"'), 'Missing #toolRevision');
+  assert.ok(erpContent.includes('id="toolPomodoro"'), 'Missing #toolPomodoro');
+  assert.ok(erpContent.includes('id="pomodoroCard"'), 'Missing #pomodoroCard');
+  assert.ok(erpContent.includes('id="revisionBanner"'), 'Missing #revisionBanner');
+});
+
+check('Contains discrete module completion controls for all 16 learning modules', () => {
+  const modStatusMatches = erpContent.match(/class="nb-mod-status"/g) || [];
+  assert.strictEqual(modStatusMatches.length, 16, `Expected 16 module status bars, found ${modStatusMatches.length}`);
+  assert.ok(erpContent.includes('id="nbProgressRatio"'), 'Missing discrete progress ratio element');
+});
+
+check(`Master ERP benchmark is byte-for-byte untouched (${EXPECTED_BENCHMARK_BYTES} bytes)`, () => {
+  const benchmarkBytes = fs.statSync(MASTER_BENCHMARK_PATH).size;
+  assert.strictEqual(benchmarkBytes, EXPECTED_BENCHMARK_BYTES);
+});
+
+// -----------------------------------------------------------------------------
+// Test 6: Part 26 Previous-Year Questions (PYQ) System
+// -----------------------------------------------------------------------------
+console.log('\n[Test 6] Part 26 Previous-Year Questions (PYQ) System:');
+check('Contains Section #sec-pyq Previous-Year Questions Archive', () => {
+  assert.ok(erpContent.includes('id="sec-pyq"'), 'Missing #sec-pyq section');
+  assert.ok(erpContent.includes('Previous-Year Questions (PYQ) Master Vault'), 'Missing PYQ vault heading');
+});
+
+check('Embeds all three authentic examination papers (2023, 2024, 2025)', () => {
+  assert.ok(erpContent.includes('id="pyq-paper-2025"'), 'Missing 2025 paper');
+  assert.ok(erpContent.includes('id="pyq-paper-2024"'), 'Missing 2024 paper');
+  assert.ok(erpContent.includes('id="pyq-paper-2023"'), 'Missing 2023 paper');
+  assert.ok(erpContent.includes('Ms. Vijaya Loki'), 'Missing 2025 Vijaya Loki prompt');
+  assert.ok(erpContent.includes('Ms. Aishwarya'), 'Missing 2024 Aishwarya prompt');
+  assert.ok(erpContent.includes('Ms. Deepika'), 'Missing 2023 Deepika prompt');
+});
+
+check('Contains High-Yield Recurrence Matrix ("The Altekar Trinity")', () => {
+  assert.ok(erpContent.includes('THE ALTEKAR TRINITY'), 'Missing Altekar Trinity matrix');
+  assert.ok(erpContent.includes('75-MINUTE EXAM TIME BUDGET'), 'Missing 75-minute exam budget guide');
+});
+
+check('Embeds all 12 authentic exam questions with AI Model Answer Frameworks', () => {
+  const qMatches = erpContent.match(/class="nb-pyq-item"/g) || [];
+  assert.strictEqual(qMatches.length, 12, `Expected exactly 12 exam questions, found ${qMatches.length}`);
+  assert.ok(erpContent.includes('[AI MODEL ANSWER FRAMEWORK — COMPREHENSIVE STUDY BLUEPRINT]'), 'Missing AI model answer badge');
+});
+
+check('Contains independent PYQ localStorage persistence key', () => {
+  assert.ok(erpContent.includes("'brainhub:pyq:' + notebookSlug") || erpContent.includes('brainhub:pyq:erp'), 'Missing independent PYQ localStorage key');
+  assert.ok(erpContent.includes('id="nbPyqRatio"'), 'Missing #nbPyqRatio element');
+  assert.ok(erpContent.includes('id="nbMcqRatio"'), 'Missing #nbMcqRatio element');
+});
+
+
+// -----------------------------------------------------------------------------
 // Cleanup temporary test notebook
 // -----------------------------------------------------------------------------
 try {
@@ -130,3 +221,4 @@ console.log(`Template 2.0 Test Results: ${passed} passed, ${failed} failed.`);
 console.log('====================================================');
 
 process.exit(failed > 0 ? 1 : 0);
+

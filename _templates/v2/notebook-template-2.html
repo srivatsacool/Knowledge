@@ -16,7 +16,7 @@
 
   <style>
     /* ==========================================================================
-       BRAIN HUB NOTEBOOK OS — PAPER EDITION MASTER DESIGN TOKENS
+       BRAIN HUB NOTEBOOK OS — PAPER EDITION MASTER DESIGN TOKENS (TEMPLATE 2.0.1)
        ========================================================================== */
     :root {
       --paper: #fcf8ee;
@@ -57,7 +57,7 @@
       
       --lh: 30px;
       --topbar-height: 56px;
-      --sidebar-width: 290px;
+      --sidebar-width: 300px;
     }
 
     html[data-theme="dark"] {
@@ -111,29 +111,32 @@
       background: var(--paper); border-bottom: 2px solid var(--line);
       z-index: 50; box-shadow: 0 2px 0 var(--rule);
     }
-    .nb-topbar__inner { display: flex; align-items: center; justify-content: space-between; height: 100%; padding: 0 1rem; gap: 0.75rem; }
-    .nb-topbar__brand { font-family: var(--font-hand); font-weight: 700; font-size: 1.65rem; color: var(--ink); white-space: nowrap; line-height: 1; }
+    .nb-topbar__inner { display: flex; align-items: center; justify-content: space-between; height: 100%; padding: 0 0.85rem; gap: 0.5rem; }
+    .nb-topbar__brand { font-family: var(--font-hand); font-weight: 700; font-size: 1.55rem; color: var(--ink); white-space: nowrap; line-height: 1; }
     .nb-topbar__brand:hover { text-decoration: none; }
     .nb-topbar__crumb {
-      flex: 1; min-width: 0; font-family: var(--font-hand2); font-size: 1.08rem; color: var(--pencil);
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-left: 0.75rem; border-left: 2px dotted var(--line);
+      flex: 1; min-width: 0; font-family: var(--font-hand2); font-size: 1.02rem; color: var(--pencil);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-left: 0.65rem; border-left: 2px dotted var(--line);
     }
-    .nb-topbar__actions { display: flex; align-items: center; gap: 0.4rem; }
+    .nb-topbar__actions { display: flex; align-items: center; gap: 0.35rem; }
     
     .nb-btn-top {
-      min-width: 40px; height: 40px; border: 0; background: transparent;
-      color: var(--text); border-radius: 8px; font-size: 1.15rem; cursor: pointer;
-      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 36px; height: 36px; border: 1px solid transparent; background: transparent;
+      color: var(--text); border-radius: 6px; font-size: 1.05rem; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.3rem;
+      padding: 0 0.45rem; font-family: var(--font-hand2); transition: background 0.15s, border-color 0.15s;
     }
-    .nb-btn-top:hover { background: var(--hl-yellow); }
+    .nb-btn-top:hover { background: var(--hl-yellow); border-color: var(--line); }
+    .nb-btn-top.is-active { background: var(--hl-yellow); border: 1.5px solid var(--amber); font-weight: 700; color: var(--ink); }
+
     .nb-btn-search {
-      display: inline-flex; align-items: center; gap: 0.4rem; height: 38px; padding: 0 0.75rem;
+      display: inline-flex; align-items: center; gap: 0.35rem; height: 36px; padding: 0 0.6rem;
       background: var(--card); border: 1.5px solid var(--line); border-radius: 6px;
-      font-family: var(--font-hand2); font-size: 1.05rem; color: var(--text); cursor: pointer;
+      font-family: var(--font-hand2); font-size: 1rem; color: var(--text); cursor: pointer;
     }
     .nb-btn-search:hover { background: var(--hl-yellow); }
-    .nb-btn-search kbd { font-family: var(--font-body); font-size: 0.75rem; padding: 0.1rem 0.35rem; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); }
-    .nb-topbar__pct { font-family: var(--font-hand); font-weight: 700; font-size: 1.35rem; color: var(--ink); min-width: 3.2em; text-align: right; }
+    .nb-btn-search kbd { font-family: var(--font-body); font-size: 0.72rem; padding: 0.1rem 0.3rem; border: 1px solid var(--line); border-radius: 3px; background: var(--paper); }
+    .nb-topbar__pct { font-family: var(--font-hand); font-weight: 700; font-size: 1.25rem; color: var(--ink); min-width: 3.5em; text-align: right; }
     .nb-topbar__bar { height: 4px; background: var(--rule); }
     .nb-topbar__bar i { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--green), var(--ink2)); transition: width 0.3s; }
 
@@ -142,38 +145,48 @@
     .nb-sidebar {
       position: fixed; top: var(--topbar-height); bottom: 0; left: 0; width: var(--sidebar-width);
       background: var(--paper); border-right: 2px solid var(--line); overflow-y: auto;
-      padding: 1.25rem 1rem 2rem; z-index: 40; transform: translateX(-102%); transition: transform 0.25s ease;
+      padding: 1.25rem 0.85rem 2rem; z-index: 40; transform: translateX(-102%); transition: transform 0.25s ease;
       background-image: repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh));
     }
     .nb-sidebar.is-open { transform: none; box-shadow: 4px 0 16px rgba(0, 0, 0, 0.25); }
     .nb-sidebar-shade { position: fixed; inset: 0; background: rgba(10, 12, 18, 0.45); z-index: 35; display: none; }
     .nb-sidebar-shade.is-on { display: block; }
 
-    .nb-sidebar h2 { font-family: var(--font-hand); font-size: 2rem; color: var(--ink); margin: 0 0 4px; }
+    .nb-sidebar h2 { font-family: var(--font-hand); font-size: 1.85rem; color: var(--ink); margin: 0 0 4px; }
     .nb-sidebar__grp { font-family: var(--font-hand2); color: var(--pencil); font-size: 1.02rem; margin: 14px 0 4px; }
     .nb-sidebar nav a {
-      display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 4px 8px;
+      display: flex; align-items: center; gap: 8px; min-height: 38px; padding: 4px 8px;
       border-radius: 6px; color: var(--text); text-decoration: none; line-height: 1.25; margin-bottom: 2px;
+      transition: background 0.15s;
     }
     .nb-sidebar nav a:hover { background: var(--hl-yellow); }
     .nb-sidebar nav a.is-active { background: var(--card); box-shadow: var(--shadow-card); font-weight: 600; color: var(--ink); }
-    .nb-sidebar__chip { width: 8px; border-radius: 3px; background: var(--ink); min-height: 24px; flex-shrink: 0; }
-    .nb-sidebar__label { flex: 1; font-size: 0.95rem; }
+    .nb-sidebar__chip { width: 6px; border-radius: 3px; background: var(--ink); min-height: 22px; flex-shrink: 0; }
+    .nb-sidebar__label { flex: 1; font-size: 0.92rem; }
+    
+    /* Module Completion Checkbox in Sidebar */
     .nb-sidebar__ck {
-      width: 20px; height: 20px; border: 2px solid var(--pencil); border-radius: 4px;
-      display: grid; place-items: center; font-size: 0.85rem; color: var(--green); font-weight: 700; flex-shrink: 0;
+      width: 22px; height: 22px; border: 1.5px solid var(--pencil); border-radius: 4px;
+      display: inline-grid; place-items: center; font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
+      color: var(--pencil); background: var(--card); cursor: pointer; user-select: none;
     }
-    .nb-sidebar nav a.is-done .nb-sidebar__ck::after { content: "✓"; }
+    .nb-sidebar nav a.is-in-progress .nb-sidebar__ck { border-color: var(--amber); color: var(--amber); }
+    .nb-sidebar nav a.is-done .nb-sidebar__ck { border-color: var(--green); color: var(--green); background: rgba(29, 122, 69, 0.1); }
 
-    .nb-main { flex: 1; min-width: 0; padding: 22px 10px 50px; }
+    .nb-main { flex: 1; min-width: 0; padding: 22px 10px 50px; transition: margin 0.2s ease; }
 
     @media (min-width: 1100px) {
       .nb-sidebar { transform: none; width: var(--sidebar-width); }
       #menuBtn { display: none; }
       .nb-main { margin-left: var(--sidebar-width); }
-      body.is-focus .nb-sidebar { display: none; }
-      body.is-focus .nb-main { margin-left: 0; }
     }
+
+    /* Focus Mode Engine (Part 2) */
+    body.is-focus .nb-sidebar { display: none !important; }
+    body.is-focus #menuBtn { display: none !important; }
+    body.is-focus .nb-main { margin-left: 0 !important; }
+    body.is-focus .nb-topbar__crumb { opacity: 0.45; }
+    body.is-focus .nb-sheet { max-width: 1100px; width: 95%; }
 
     /* Paper Canvas */
     .nb-sheet {
@@ -184,6 +197,7 @@
         linear-gradient(90deg, transparent 22px, var(--margin) 22px, var(--margin) 24px, transparent 24px),
         repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh));
       background-position: 0 0, 0 54px;
+      transition: max-width 0.25s ease;
     }
 
     @media (min-width: 760px) {
@@ -216,6 +230,118 @@
       writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.04em;
       cursor: pointer; user-select: none; z-index: 10;
     }
+
+    /* Module Progress Banner in Sheet */
+    .nb-progress-card {
+      background: var(--card); border: 1.5px solid var(--line); border-radius: 8px;
+      padding: 14px 18px; margin: 18px 0 24px; box-shadow: var(--shadow-card);
+    }
+    .nb-progress-card__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .nb-hand-title { font-family: var(--font-hand); font-weight: 700; font-size: 1.45rem; color: var(--ink); }
+    .nb-progress-ratio { font-family: var(--font-hand2); font-size: 1.15rem; color: var(--pencil); font-weight: 600; }
+    .nb-progress-track { height: 10px; border-radius: 5px; background: var(--rule); overflow: hidden; }
+    .nb-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--green), var(--ink2)); transition: width 0.3s ease; }
+    .nb-progress-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; font-family: var(--font-hand2); font-size: 0.98rem; color: var(--pencil); }
+    .nb-btn-reset-prog { background: none; border: none; color: var(--pencil); font-family: var(--font-hand2); cursor: pointer; text-decoration: underline; font-size: 0.95rem; }
+    .nb-btn-reset-prog:hover { color: var(--red); }
+
+    /* Section Module Status Bar (Part 3) */
+    .nb-mod-status {
+      display: inline-flex; align-items: center; gap: 8px; margin: 8px 0 14px;
+      background: var(--card); border: 1px solid var(--line); border-radius: 20px;
+      padding: 4px 12px; font-family: var(--font-hand2); font-size: 1.05rem;
+    }
+    .nb-mod-status__prompt { color: var(--pencil); }
+    .nb-mod-status__btn {
+      display: inline-flex; align-items: center; gap: 6px; border: none; background: transparent;
+      cursor: pointer; font-family: var(--font-hand2); font-size: 1.05rem; font-weight: 700;
+      padding: 2px 6px; border-radius: 4px;
+    }
+    .nb-mod-status__btn:hover { background: var(--hl-yellow); }
+    .nb-mod-status[data-status="not_started"] .nb-mod-status__btn { color: var(--pencil); }
+    .nb-mod-status[data-status="in_progress"] .nb-mod-status__btn { color: var(--amber); }
+    .nb-mod-status[data-status="complete"] .nb-mod-status__btn { color: var(--green); }
+
+    /* Completion Toast Slip (Part 5) */
+    .nb-toast {
+      position: fixed; bottom: 24px; right: 24px; z-index: 100;
+      background: var(--paper); border: 2px solid var(--ink); border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); padding: 12px 18px;
+      display: none; transform: translateY(20px); opacity: 0;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      font-family: var(--font-hand2); max-width: 340px;
+    }
+    .nb-toast.is-show { display: block; transform: translateY(0); opacity: 1; }
+    .nb-toast__inner { display: flex; align-items: center; gap: 12px; }
+    .nb-toast__stamp {
+      font-family: var(--font-body); font-weight: 800; font-size: 0.72rem; letter-spacing: 0.06em;
+      color: var(--green); border: 2px solid currentColor; border-radius: 4px; padding: 2px 6px;
+      text-transform: uppercase; transform: rotate(-3deg);
+    }
+    .nb-toast__msg strong { display: block; font-family: var(--font-hand); font-size: 1.25rem; color: var(--ink); }
+
+    /* Pomodoro / Study Timer Card (Parts 6, 7, 8) */
+    .nb-timer-card {
+      position: fixed; top: 70px; right: 18px; width: 300px;
+      background: var(--sticky-y); color: var(--sticky-text); border-radius: 2px 2px 12px 2px;
+      box-shadow: var(--shadow-sticky); z-index: 60; padding: 18px; display: none;
+      font-family: var(--font-hand2); transform: rotate(0.5deg);
+    }
+    .nb-timer-card.is-open { display: block; }
+    .nb-timer-card__tape {
+      position: absolute; top: -10px; left: 50%; width: 80px; height: 20px;
+      transform: translateX(-50%) rotate(-1deg);
+      background: rgba(160, 200, 230, 0.7); pointer-events: none;
+    }
+    .nb-timer-card__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .nb-timer-card__title { font-family: var(--font-hand); font-weight: 700; font-size: 1.45rem; color: var(--ink); }
+    .nb-timer-card__close { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--pencil); }
+    .nb-timer-card__time {
+      font-family: var(--font-math); font-size: 2.8rem; font-weight: 700; text-align: center;
+      color: var(--text); line-height: 1.1; margin: 8px 0;
+    }
+    .nb-timer-card__module {
+      font-size: 0.95rem; text-align: center; color: var(--pencil); margin-bottom: 12px;
+      padding: 4px 6px; background: rgba(0, 0, 0, 0.04); border-radius: 4px;
+    }
+    .nb-timer-card__module strong { display: block; color: var(--ink); font-size: 1rem; }
+    .nb-timer-card__controls { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; }
+    .nb-tbtn {
+      padding: 6px 12px; border-radius: 6px; font-family: var(--font-hand); font-weight: 700;
+      font-size: 1.15rem; cursor: pointer; border: 1.5px solid var(--text); background: var(--card);
+    }
+    .nb-tbtn:hover { background: var(--hl-yellow); }
+    .nb-tbtn--go { background: var(--green); color: #fff; border-color: var(--green); }
+    .nb-tbtn--pause { background: var(--amber); color: #fff; border-color: var(--amber); }
+    .nb-timer-card__presets { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 10px; }
+    .nb-preset-btn {
+      padding: 4px; font-size: 0.9rem; font-family: var(--font-hand2); border: 1px dashed var(--line);
+      border-radius: 4px; background: rgba(255, 255, 255, 0.5); cursor: pointer;
+    }
+    .nb-preset-btn:hover, .nb-preset-btn.is-active { background: var(--hl-yellow); font-weight: 700; border-style: solid; }
+    .nb-timer-card__stats { font-size: 0.88rem; text-align: center; color: var(--pencil); border-top: 1px dotted var(--line); padding-top: 6px; }
+
+    /* Revision Mode Engine (Part 9) */
+    .nb-revision-banner {
+      position: sticky; top: var(--topbar-height); z-index: 45;
+      background: var(--sticky-y); color: var(--sticky-text); border-bottom: 2px solid var(--amber);
+      padding: 10px 16px; font-family: var(--font-hand2); font-size: 1.15rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    .nb-revision-banner__exit {
+      background: var(--ink); color: #fff; border: none; padding: 4px 12px; border-radius: 4px;
+      font-family: var(--font-hand); font-weight: 700; font-size: 1.1rem; cursor: pointer; white-space: nowrap;
+    }
+    body.is-revision .nb-section > p:not(.nb-revision-keep) {
+      opacity: 0.22; max-height: 52px; overflow: hidden; filter: grayscale(1);
+      transition: all 0.2s ease; cursor: pointer; position: relative;
+    }
+    body.is-revision .nb-section > p:not(.nb-revision-keep):hover {
+      opacity: 1; max-height: 500px; filter: none; background: rgba(255, 255, 255, 0.4);
+    }
+    body.is-revision .nb-fbox { border-width: 3px; box-shadow: 8px 8px 0 var(--hl-yellow); }
+    body.is-revision .nb-sticky { transform: scale(1.02); }
 
     /* Typography */
     h1, h2, h3, h4 { font-family: var(--font-hand); color: var(--ink); line-height: 1.15; font-weight: 700; }
@@ -305,10 +431,91 @@
     .nb-search-item { padding: 8px 12px; border-radius: 6px; background: var(--card); border: 1px solid var(--line); color: var(--text); }
     .nb-search-item:hover { background: var(--hl-yellow); text-decoration: none; }
     .nb-search-item b { font-family: var(--font-hand); font-size: 1.25rem; color: var(--ink); display: block; }
-    mark { background: var(--hl-yellow); color: inherit; padding: 0 2px; }
+    /* MCQ / Knowledge Check Assessment System (Part 25) */
+    .nb-quiz-section { margin-top: 40px; padding-top: 24px; border-top: 3px double var(--line); }
+    .nb-quiz-container { background: var(--card); border: 2px solid var(--ink); border-radius: 10px; box-shadow: var(--shadow-card); padding: 22px; position: relative; margin: 20px 0; }
+    .nb-quiz-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1.5px dashed var(--line); padding-bottom: 12px; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+    .nb-quiz-title { font-family: var(--font-hand); font-weight: 700; font-size: 1.6rem; color: var(--ink); }
+    .nb-quiz-meta { font-family: var(--font-hand2); font-size: 1.05rem; color: var(--pencil); display: flex; align-items: center; gap: 12px; }
+    
+    .nb-qnav { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 20px; padding: 10px 12px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; }
+    .nb-qnav-btn {
+      width: 32px; height: 32px; border-radius: 6px; border: 1.5px solid var(--line); background: var(--card);
+      font-family: var(--font-hand2); font-size: 0.95rem; font-weight: 700; color: var(--text);
+      cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.15s;
+    }
+    .nb-qnav-btn:hover { background: var(--hl-yellow); }
+    .nb-qnav-btn.is-current { border-color: var(--ink); box-shadow: 0 0 0 2px var(--ink2); font-weight: 800; }
+    .nb-qnav-btn.is-correct { background: rgba(29, 122, 69, 0.15); border-color: var(--green); color: var(--green); }
+    .nb-qnav-btn.is-incorrect { background: rgba(194, 54, 47, 0.15); border-color: var(--red); color: var(--red); }
+    .nb-qnav-btn.is-answered:not(.is-correct):not(.is-incorrect) { background: var(--desk); border-color: var(--pencil); }
+
+    .nb-qcard { margin: 10px 0; }
+    .nb-qhead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
+    .nb-qnum { font-family: var(--font-hand); font-weight: 700; font-size: 1.35rem; color: var(--ink); }
+    .nb-qtags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .nb-qtext { font-size: 1.15rem; font-weight: 600; color: var(--text); line-height: 1.5; margin: 8px 0 16px; }
+
+    .nb-qoptions { display: flex; flex-direction: column; gap: 8px; }
+    .nb-qopt {
+      display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border-radius: 8px;
+      border: 1.5px solid var(--line); background: var(--paper); cursor: pointer; transition: all 0.15s;
+      font-size: 1rem; line-height: 1.4; user-select: none;
+    }
+    .nb-qopt:hover { background: var(--hl-yellow); border-color: var(--line); }
+    .nb-qopt.is-selected { border-color: var(--ink2); background: rgba(47, 95, 196, 0.08); font-weight: 600; }
+    .nb-qopt.is-correct-reveal { border-color: var(--green); background: rgba(29, 122, 69, 0.12); font-weight: 700; }
+    .nb-qopt.is-incorrect-reveal { border-color: var(--red); background: rgba(194, 54, 47, 0.10); }
+    .nb-qopt__key {
+      font-family: var(--font-hand); font-weight: 700; font-size: 1.15rem; width: 24px; height: 24px;
+      border-radius: 50%; border: 1.5px solid currentColor; display: grid; place-items: center; flex-shrink: 0;
+    }
+
+    .nb-qfeedback { margin-top: 16px; padding: 14px 18px; border-radius: 8px; font-family: var(--font-hand2); font-size: 1.1rem; line-height: 1.5; display: none; }
+    .nb-qfeedback.is-correct { display: block; background: rgba(29, 122, 69, 0.12); border-left: 4px solid var(--green); color: var(--text); }
+    .nb-qfeedback.is-incorrect { display: block; background: rgba(194, 54, 47, 0.10); border-left: 4px solid var(--red); color: var(--text); }
+    .nb-qfeedback__title { font-family: var(--font-hand); font-weight: 700; font-size: 1.35rem; margin-bottom: 4px; }
+    .nb-qfeedback.is-correct .nb-qfeedback__title { color: var(--green); }
+    .nb-qfeedback.is-incorrect .nb-qfeedback__title { color: var(--red); }
+
+    .nb-qactions { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; gap: 8px; flex-wrap: wrap; }
+    .nb-btn-submit-q {
+      background: var(--ink); color: #fff; border: none; padding: 8px 18px; border-radius: 6px;
+      font-family: var(--font-hand); font-weight: 700; font-size: 1.25rem; cursor: pointer; transition: background 0.15s;
+    }
+    .nb-btn-submit-q:hover { background: var(--ink2); }
+    .nb-btn-submit-q:disabled { opacity: 0.5; cursor: not-allowed; }
+    .nb-btn-nav-q {
+      background: var(--card); border: 1.5px solid var(--line); padding: 6px 14px; border-radius: 6px;
+      font-family: var(--font-hand); font-size: 1.15rem; cursor: pointer; color: var(--text);
+    }
+    .nb-btn-nav-q:hover { background: var(--hl-yellow); }
+
+    .nb-scorecard {
+      background: var(--paper); border: 2px solid var(--ink); border-radius: 10px;
+      padding: 24px; margin-top: 20px; display: none; text-align: center;
+    }
+    .nb-scorecard.is-active { display: block; }
+    .nb-scorecard__badge {
+      display: inline-block; font-family: var(--font-hand); font-weight: 700; font-size: 1.45rem;
+      padding: 4px 16px; border-radius: 20px; margin-bottom: 12px;
+    }
+    .nb-badge--excellent { background: rgba(29, 122, 69, 0.2); color: var(--green); border: 2px solid var(--green); }
+    .nb-badge--strong { background: rgba(47, 95, 196, 0.2); color: var(--ink); border: 2px solid var(--ink); }
+    .nb-badge--review { background: rgba(184, 110, 0, 0.2); color: var(--amber); border: 2px solid var(--amber); }
+    .nb-badge--revisit { background: rgba(194, 54, 47, 0.2); color: var(--red); border: 2px solid var(--red); }
+    .nb-score-num { font-family: var(--font-math); font-size: 3rem; font-weight: 700; color: var(--ink); line-height: 1; }
+    .nb-score-pct { font-family: var(--font-hand2); font-size: 1.35rem; color: var(--pencil); margin: 4px 0 16px; }
+
+    .nb-weak-box { text-align: left; background: var(--card); border: 1.5px solid var(--line); border-radius: 8px; padding: 14px 18px; margin: 18px 0; }
+    .nb-weak-title { font-family: var(--font-hand); font-weight: 700; font-size: 1.35rem; color: var(--ink); margin-bottom: 6px; }
+    .nb-weak-list { list-style: none; padding: 0; margin: 0; }
+    .nb-weak-item { padding: 5px 0; font-family: var(--font-hand2); font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px dotted var(--line); }
+    .nb-weak-item:last-child { border-bottom: none; }
+    .nb-weak-item a { color: var(--ink2); text-decoration: underline; font-weight: 600; }
 
     @media print {
-      .nb-topbar, .nb-sidebar, .nb-search-modal, #menuBtn, .nb-tabflag { display: none !important; }
+      .nb-topbar, .nb-sidebar, .nb-search-modal, .nb-timer-card, .nb-toast, .nb-revision-banner, #menuBtn, .nb-tabflag { display: none !important; }
       body { background: #fff !important; color: #000 !important; }
       .nb-main { margin: 0 !important; padding: 0 !important; }
       .nb-sheet { box-shadow: none !important; max-width: 100% !important; padding: 0 !important; background: none !important; }
@@ -324,16 +531,29 @@
       <button class="nb-btn-top" id="menuBtn" aria-label="Open Notebook Index">☰</button>
       <a href="../index.html" class="nb-topbar__brand">📖 Brain Hub</a>
       <div class="nb-topbar__crumb">{{SUBJECT}} / <strong>{{TITLE}}</strong></div>
+      
+      <!-- Notebook Study Tools Toolbar (Part 10) -->
       <div class="nb-topbar__actions">
+        <button class="nb-btn-top" id="toolFocus" title="Focus Mode (Shortcut: F)">🎯 <span>Focus</span></button>
+        <button class="nb-btn-top" id="toolPomodoro" title="Pomodoro Study Timer">🍅 <span>Timer</span></button>
+        <button class="nb-btn-top" id="toolRevision" title="Exam Revision Mode (Shortcut: R)">🧠 <span>Revision</span></button>
+        <button class="nb-btn-top" id="toolQuiz" title="Final Knowledge Check (MCQs)">📝 <span>Quiz</span></button>
         <button class="nb-btn-search" id="searchTrigger" aria-label="Open Search">
-          <span>Search Index</span> <kbd>/</kbd>
+          <span>Search</span> <kbd>/</kbd>
         </button>
+        <button class="nb-btn-top" id="toolPrint" title="Print Study Notebook">🖨</button>
         <button class="nb-btn-top" id="themeToggle" aria-label="Toggle Night/Day Mode">🌙</button>
         <div class="nb-topbar__pct" id="pct">0%</div>
       </div>
     </div>
     <div class="nb-topbar__bar"><i id="barfill" style="width: 0%;"></i></div>
   </header>
+
+  <!-- Revision Mode Banner (Part 9) -->
+  <div class="nb-revision-banner" id="revisionBanner" style="display: none;">
+    <span>🧠 <strong>REVISION MODE ACTIVE:</strong> Highlighting core formulas, frameworks, case dossiers &amp; model answers. Lecture prose is collapsed.</span>
+    <button class="nb-revision-banner__exit" id="exitRevisionBtn">Exit Revision (R)</button>
+  </div>
 
   <div class="nb-layout">
     <div class="nb-sidebar-shade" id="shade"></div>
@@ -366,16 +586,78 @@
           </p>
         </header>
 
+        <!-- Module Progress Banner (Part 4) -->
+        <div class="nb-progress-card">
+          <div class="nb-progress-card__header">
+            <span class="nb-hand-title">📖 Module Completion</span>
+            <span class="nb-progress-ratio" id="nbProgressRatio">0 / 0 complete</span>
+          </div>
+          <div class="nb-progress-track">
+            <div class="nb-progress-fill" id="nbProgressFill" style="width: 0%;"></div>
+          </div>
+          <div class="nb-progress-meta">
+            <span id="nbProgressPct">0% master curriculum complete</span>
+            <button class="nb-btn-reset-prog" id="resetProgressBtn" title="Reset all module completion states">↺ Reset</button>
+          </div>
+        </div>
+
         <!-- Dynamic Module Sections Stream -->
         <div class="nb-sections-stream">
           {{MODULE_CONTENT}}
         </div>
+
+        <!-- Final Knowledge Check Assessment (Part 25) -->
+        {{MCQ_ASSESSMENT}}
 
         <!-- Grounding & Provenance -->
         {{SOURCE_CITATIONS}}
 
       </div>
     </main>
+  </div>
+
+  <!-- Pomodoro Study Timer Tool Panel (Parts 6, 7, 8) -->
+  <div class="nb-timer-card" id="pomodoroCard" role="region" aria-label="Pomodoro Study Timer">
+    <div class="nb-timer-card__tape"></div>
+    <div class="nb-timer-card__header">
+      <span class="nb-timer-card__title">🍅 STUDY TIMER</span>
+      <button class="nb-timer-card__close" id="closeTimerBtn" aria-label="Close Timer">✕</button>
+    </div>
+    <div class="nb-timer-card__time" id="timerDisplay">25:00</div>
+    <div class="nb-timer-card__module" id="timerActiveModule">
+      <span style="font-size: 0.85rem; color: var(--pencil); display: block;">Active Module:</span>
+      <strong id="timerModuleName">01. Overview</strong>
+    </div>
+    
+    <div class="nb-timer-card__controls">
+      <button class="nb-tbtn nb-tbtn--go" id="timerStartBtn">▶ Start</button>
+      <button class="nb-tbtn nb-tbtn--pause" id="timerPauseBtn" style="display:none;">Ⅱ Pause</button>
+      <button class="nb-tbtn" id="timerResetBtn">↺ Reset</button>
+      <button class="nb-tbtn" id="timerAdd5Btn">＋ 5m</button>
+    </div>
+    
+    <div class="nb-timer-card__presets">
+      <button class="nb-preset-btn is-active" data-mins="25">🍅 25m Focus</button>
+      <button class="nb-preset-btn" data-mins="5">☕ 5m Break</button>
+      <button class="nb-preset-btn" data-mins="50">🍅 50m Deep</button>
+      <button class="nb-preset-btn" data-mins="10">☕ 10m Break</button>
+    </div>
+
+    <div class="nb-timer-card__stats" id="timerStats">
+      <span>Focus time: <strong id="statsTotalTime">0m</strong></span> &bull; 
+      <span>Sessions: <strong id="statsTotalSessions">0</strong></span>
+    </div>
+  </div>
+
+  <!-- Notebook-Style Completion Confirmation Toast (Part 5) -->
+  <div class="nb-toast" id="nbToast" role="status" aria-live="polite">
+    <div class="nb-toast__inner">
+      <span class="nb-toast__stamp">✓ COMPLETE</span>
+      <div class="nb-toast__msg">
+        <strong id="nbToastTitle">Module Complete</strong>
+        <span>checked off in your study binder!</span>
+      </div>
+    </div>
   </div>
 
   <!-- Library Card Search Modal -->
@@ -396,11 +678,19 @@
     (function() {
       'use strict';
       const root = document.documentElement;
+      const notebookSlug = window.location.pathname.replace(/\/$/, '').split('/').pop() || 'notebook';
+
+      // 1. Theme Switcher
       const themeBtn = document.getElementById('themeToggle');
       function applyTheme(t) {
         root.setAttribute('data-theme', t);
         if (themeBtn) themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+        try { localStorage.setItem('nb_theme', t); } catch (e) {}
       }
+      try {
+        const savedTheme = localStorage.getItem('nb_theme');
+        if (savedTheme) applyTheme(savedTheme);
+      } catch (e) {}
       if (themeBtn) {
         themeBtn.addEventListener('click', () => {
           const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
@@ -408,33 +698,448 @@
         });
       }
 
+      // 2. Sidebar Drawer (Mobile)
       const side = document.getElementById('sidebar');
       const shade = document.getElementById('shade');
       const menuBtn = document.getElementById('menuBtn');
       function toggleSide(open) {
+        if (!side) return;
         side.classList.toggle('is-open', open);
-        shade.classList.toggle('is-on', open);
+        if (shade) shade.classList.toggle('is-on', open);
       }
       if (menuBtn) menuBtn.addEventListener('click', () => toggleSide(true));
       if (shade) shade.addEventListener('click', () => toggleSide(false));
 
+      // 3. Focus Mode (Part 2)
+      const focusBtn = document.getElementById('toolFocus');
+      function setFocusMode(active) {
+        document.body.classList.toggle('is-focus', active);
+        if (focusBtn) focusBtn.classList.toggle('is-active', active);
+        try { localStorage.setItem('nb_focus_' + notebookSlug, active ? 'true' : 'false'); } catch (e) {}
+      }
+      if (focusBtn) {
+        focusBtn.addEventListener('click', () => {
+          const isCurrent = document.body.classList.contains('is-focus');
+          setFocusMode(!isCurrent);
+        });
+      }
+      try {
+        if (localStorage.getItem('nb_focus_' + notebookSlug) === 'true') {
+          setFocusMode(true);
+        }
+      } catch (e) {}
+
+      // 4. Revision Mode (Part 9)
+      const revBtn = document.getElementById('toolRevision');
+      const revBanner = document.getElementById('revisionBanner');
+      const exitRevBtn = document.getElementById('exitRevisionBtn');
+      function setRevisionMode(active) {
+        document.body.classList.toggle('is-revision', active);
+        if (revBtn) revBtn.classList.toggle('is-active', active);
+        if (revBanner) revBanner.style.display = active ? 'flex' : 'none';
+        try { localStorage.setItem('nb_revision_' + notebookSlug, active ? 'true' : 'false'); } catch (e) {}
+      }
+      if (revBtn) {
+        revBtn.addEventListener('click', () => {
+          const isCurrent = document.body.classList.contains('is-revision');
+          setRevisionMode(!isCurrent);
+        });
+      }
+      if (exitRevBtn) exitRevBtn.addEventListener('click', () => setRevisionMode(false));
+      try {
+        if (localStorage.getItem('nb_revision_' + notebookSlug) === 'true') {
+          setRevisionMode(true);
+        }
+      } catch (e) {}
+
+      // 5. Print Support (Part 10)
+      const printBtn = document.getElementById('toolPrint');
+      if (printBtn) printBtn.addEventListener('click', () => window.print());
+
+      // 5b. Quiz Shortcut
+      const toolQuiz = document.getElementById('toolQuiz');
+      if (toolQuiz) {
+        toolQuiz.addEventListener('click', () => {
+          const qSec = document.getElementById('sec-quiz');
+          if (qSec) qSec.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+
+      // 6. Module Completion & Discrete Progress (Parts 3, 4, 5)
+      const sections = Array.from(document.querySelectorAll('.nb-section'));
+      const sidebarLinks = Array.from(document.querySelectorAll('#sidebarNav a'));
+      const toast = document.getElementById('nbToast');
+      const toastTitle = document.getElementById('nbToastTitle');
+      let toastTimer = null;
+
+      function showCompletionToast(title) {
+        if (!toast) return;
+        if (toastTitle) toastTitle.textContent = title || 'Module';
+        toast.classList.add('is-show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('is-show'), 3500);
+      }
+
+      function getModuleStates() {
+        try {
+          return JSON.parse(localStorage.getItem('nb_mod_states_' + notebookSlug)) || {};
+        } catch (e) {
+          return {};
+        }
+      }
+
+      function saveModuleStates(states) {
+        try {
+          localStorage.setItem('nb_mod_states_' + notebookSlug, JSON.stringify(states));
+        } catch (e) {}
+      }
+
+      function updateOverallProgress() {
+        const states = getModuleStates();
+        const total = sections.length;
+        if (total === 0) return;
+        let completeCount = 0;
+        sections.forEach(sec => {
+          const st = states[sec.id] || 'not_started';
+          if (st === 'complete') completeCount++;
+        });
+
+        const pct = Math.round((completeCount / total) * 100);
+        const topPct = document.getElementById('pct');
+        const barFill = document.getElementById('barfill');
+        const progRatio = document.getElementById('nbProgressRatio');
+        const progFill = document.getElementById('nbProgressFill');
+        const progPct = document.getElementById('nbProgressPct');
+
+        if (topPct) topPct.textContent = `${pct}%`;
+        if (barFill) barFill.style.width = `${pct}%`;
+        if (progRatio) progRatio.textContent = `${completeCount} / ${total} complete`;
+        if (progFill) progFill.style.width = `${pct}%`;
+        if (progPct) progPct.textContent = `${pct}% master curriculum complete (${completeCount} of ${total} modules checked off)`;
+      }
+
+      function applyModuleState(secId, state, triggerToast = false) {
+        const sec = document.getElementById(secId);
+        const sLink = sidebarLinks.find(a => a.getAttribute('href') === '#' + secId);
+        const sCk = sLink ? sLink.querySelector('.nb-sidebar__ck') : null;
+        const statusWidget = sec ? sec.querySelector('.nb-mod-status') : null;
+        const statusBtn = statusWidget ? statusWidget.querySelector('.nb-mod-status__btn') : null;
+        const statusIcon = statusWidget ? statusWidget.querySelector('.nb-mod-status__icon') : null;
+        const statusText = statusWidget ? statusWidget.querySelector('.nb-mod-status__text') : null;
+
+        if (sLink) {
+          sLink.classList.remove('is-done', 'is-in-progress', 'is-not-started');
+          if (state === 'complete') sLink.classList.add('is-done');
+          else if (state === 'in_progress') sLink.classList.add('is-in-progress');
+          else sLink.classList.add('is-not-started');
+        }
+        if (sCk) {
+          sCk.textContent = state === 'complete' ? '✓' : (state === 'in_progress' ? '◐' : '□');
+        }
+        if (statusWidget) {
+          statusWidget.setAttribute('data-status', state);
+        }
+        if (statusIcon) {
+          statusIcon.textContent = state === 'complete' ? '✓' : (state === 'in_progress' ? '◐' : '□');
+        }
+        if (statusText) {
+          statusText.textContent = state === 'complete' ? 'Complete' : (state === 'in_progress' ? 'In progress' : 'Not started');
+        }
+
+        if (triggerToast && state === 'complete') {
+          const title = sec ? (sec.getAttribute('data-title') || secId) : secId;
+          showCompletionToast(title);
+        }
+
+        updateOverallProgress();
+      }
+
+      function cycleModuleState(secId) {
+        const states = getModuleStates();
+        const cur = states[secId] || 'not_started';
+        let next = 'in_progress';
+        if (cur === 'in_progress') next = 'complete';
+        else if (cur === 'complete') next = 'not_started';
+        states[secId] = next;
+        saveModuleStates(states);
+        applyModuleState(secId, next, next === 'complete');
+      }
+
+      // Initialize module states from localStorage
+      const initialStates = getModuleStates();
+      sections.forEach(sec => {
+        const st = initialStates[sec.id] || 'not_started';
+        applyModuleState(sec.id, st, false);
+      });
+      updateOverallProgress();
+
+      // Click listener for section status widgets and sidebar checkboxes
+      sections.forEach(sec => {
+        const btn = sec.querySelector('.nb-mod-status__btn');
+        if (btn) btn.addEventListener('click', () => cycleModuleState(sec.id));
+      });
+      sidebarLinks.forEach(link => {
+        const ck = link.querySelector('.nb-sidebar__ck');
+        const secId = (link.getAttribute('href') || '').replace(/^#/, '');
+        if (ck) {
+          ck.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            cycleModuleState(secId);
+          });
+        }
+      });
+
+      const resetProgBtn = document.getElementById('resetProgressBtn');
+      if (resetProgBtn) {
+        resetProgBtn.addEventListener('click', () => {
+          if (confirm('Reset module progress for this notebook?')) {
+            saveModuleStates({});
+            sections.forEach(sec => applyModuleState(sec.id, 'not_started', false));
+            updateOverallProgress();
+          }
+        });
+      }
+
+      // 7. Pomodoro Study Timer (Parts 6, 7, 8)
+      const timerBtn = document.getElementById('toolPomodoro');
+      const timerCard = document.getElementById('pomodoroCard');
+      const closeTimerBtn = document.getElementById('closeTimerBtn');
+      const timerDisplay = document.getElementById('timerDisplay');
+      const timerStartBtn = document.getElementById('timerStartBtn');
+      const timerPauseBtn = document.getElementById('timerPauseBtn');
+      const timerResetBtn = document.getElementById('timerResetBtn');
+      const timerAdd5Btn = document.getElementById('timerAdd5Btn');
+      const timerActiveModEl = document.getElementById('timerModuleName');
+      const presetBtns = Array.from(document.querySelectorAll('.nb-preset-btn'));
+
+      let timerDuration = 25 * 60;
+      let timerRemaining = timerDuration;
+      let timerInterval = null;
+      let timerState = 'IDLE'; // IDLE, RUNNING, PAUSED, COMPLETED
+      let activeModuleId = sections[0] ? sections[0].id : '';
+
+      // Soft chime via Web Audio API
+      function playChime() {
+        try {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (!AudioContext) return;
+          const ctx = new AudioContext();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+          osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.3); // A5
+          gain.gain.setValueAtTime(0.3, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 1.2);
+        } catch (e) {}
+      }
+
+      function formatTime(sec) {
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+      }
+
+      function updateTimerDisplay() {
+        if (timerDisplay) timerDisplay.textContent = formatTime(timerRemaining);
+      }
+
+      function getStudyStats() {
+        try {
+          return JSON.parse(localStorage.getItem('nb_stats_' + notebookSlug)) || { totalSessions: 0, totalMinutes: 0, modules: {} };
+        } catch (e) {
+          return { totalSessions: 0, totalMinutes: 0, modules: {} };
+        }
+      }
+
+      function recordStudySession(minutes) {
+        const stats = getStudyStats();
+        stats.totalSessions = (stats.totalSessions || 0) + 1;
+        stats.totalMinutes = (stats.totalMinutes || 0) + minutes;
+        if (activeModuleId) {
+          if (!stats.modules[activeModuleId]) stats.modules[activeModuleId] = { sessions: 0, minutes: 0 };
+          stats.modules[activeModuleId].sessions += 1;
+          stats.modules[activeModuleId].minutes += minutes;
+        }
+        try { localStorage.setItem('nb_stats_' + notebookSlug, JSON.stringify(stats)); } catch (e) {}
+        updateStudyStatsUI();
+      }
+
+      function updateStudyStatsUI() {
+        const stats = getStudyStats();
+        const totalTimeEl = document.getElementById('statsTotalTime');
+        const totalSessionsEl = document.getElementById('statsTotalSessions');
+        if (totalTimeEl) totalTimeEl.textContent = `${stats.totalMinutes}m`;
+        if (totalSessionsEl) totalSessionsEl.textContent = `${stats.totalSessions}`;
+      }
+      updateStudyStatsUI();
+
+      function detectActiveModule() {
+        const scrollY = window.scrollY + 140;
+        for (let i = sections.length - 1; i >= 0; i--) {
+          const sec = sections[i];
+          if (sec.offsetTop <= scrollY) {
+            activeModuleId = sec.id;
+            const title = sec.getAttribute('data-title') || sec.id;
+            if (timerActiveModEl) timerActiveModEl.textContent = title;
+            return;
+          }
+        }
+        if (sections[0]) {
+          activeModuleId = sections[0].id;
+          if (timerActiveModEl) timerActiveModEl.textContent = sections[0].getAttribute('data-title') || sections[0].id;
+        }
+      }
+      window.addEventListener('scroll', detectActiveModule, { passive: true });
+      detectActiveModule();
+
+      function startTimer() {
+        if (timerState === 'RUNNING') return;
+        timerState = 'RUNNING';
+        if (timerStartBtn) timerStartBtn.style.display = 'none';
+        if (timerPauseBtn) timerPauseBtn.style.display = 'inline-block';
+        
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+          if (timerRemaining > 0) {
+            timerRemaining--;
+            updateTimerDisplay();
+          } else {
+            clearInterval(timerInterval);
+            timerState = 'COMPLETED';
+            if (timerStartBtn) timerStartBtn.style.display = 'inline-block';
+            if (timerPauseBtn) timerPauseBtn.style.display = 'none';
+            playChime();
+            const minutesDone = Math.round(timerDuration / 60);
+            recordStudySession(minutesDone);
+            showCompletionToast('🍅 FOCUS SESSION COMPLETE (' + minutesDone + 'm)');
+          }
+        }, 1000);
+      }
+
+      function pauseTimer() {
+        timerState = 'PAUSED';
+        clearInterval(timerInterval);
+        if (timerStartBtn) timerStartBtn.style.display = 'inline-block';
+        if (timerPauseBtn) timerPauseBtn.style.display = 'none';
+      }
+
+      function resetTimer() {
+        pauseTimer();
+        timerState = 'IDLE';
+        timerRemaining = timerDuration;
+        updateTimerDisplay();
+      }
+
+      if (timerBtn) {
+        timerBtn.addEventListener('click', () => {
+          if (!timerCard) return;
+          timerCard.classList.toggle('is-open');
+          timerBtn.classList.toggle('is-active', timerCard.classList.contains('is-open'));
+        });
+      }
+      if (closeTimerBtn) {
+        closeTimerBtn.addEventListener('click', () => {
+          if (timerCard) timerCard.classList.remove('is-open');
+          if (timerBtn) timerBtn.classList.remove('is-active');
+        });
+      }
+      if (timerStartBtn) timerStartBtn.addEventListener('click', startTimer);
+      if (timerPauseBtn) timerPauseBtn.addEventListener('click', pauseTimer);
+      if (timerResetBtn) timerResetBtn.addEventListener('click', resetTimer);
+      if (timerAdd5Btn) {
+        timerAdd5Btn.addEventListener('click', () => {
+          timerRemaining += 300;
+          updateTimerDisplay();
+        });
+      }
+
+      presetBtns.forEach(p => {
+        p.addEventListener('click', () => {
+          presetBtns.forEach(b => b.classList.remove('is-active'));
+          p.classList.add('is-active');
+          const mins = parseInt(p.getAttribute('data-mins'), 10) || 25;
+          timerDuration = mins * 60;
+          resetTimer();
+        });
+      });
+
+      // 8. Search Modal Logic
       const modal = document.getElementById('searchModal');
       const openBtn = document.getElementById('searchTrigger');
       const closeBtn = document.getElementById('closeSearch');
       const sInput = document.getElementById('searchInput');
+      const sResults = document.getElementById('searchResults');
 
-      function openSearch() { modal.classList.add('is-active'); setTimeout(() => sInput.focus(), 50); }
-      function closeSearch() { modal.classList.remove('is-active'); sInput.value = ''; }
+      const searchIndex = sections.map(s => {
+        const titleEl = s.querySelector('h2');
+        const title = titleEl ? titleEl.textContent.trim() : (s.getAttribute('data-title') || s.id);
+        const text = s.textContent.toLowerCase();
+        return { id: s.id, title, text };
+      });
+
+      function openSearch() {
+        if (!modal) return;
+        modal.classList.add('is-active');
+        setTimeout(() => sInput && sInput.focus(), 60);
+      }
+      function closeSearch() {
+        if (!modal) return;
+        modal.classList.remove('is-active');
+        if (sInput) sInput.value = '';
+      }
       if (openBtn) openBtn.addEventListener('click', openSearch);
       if (closeBtn) closeBtn.addEventListener('click', closeSearch);
-      modal.addEventListener('click', (e) => { if (e.target === modal) closeSearch(); });
+      if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) closeSearch(); });
 
+      if (sInput) {
+        sInput.addEventListener('input', () => {
+          const query = sInput.value.trim().toLowerCase();
+          if (query.length < 2) {
+            sResults.innerHTML = '<p style="color: var(--pencil); font-family: var(--font-hand2); font-size: 1.1rem;">Type at least 2 letters...</p>';
+            return;
+          }
+          const matches = searchIndex.filter(item => item.text.includes(query));
+          if (matches.length === 0) {
+            sResults.innerHTML = '<p style="color: var(--pencil); font-family: var(--font-hand2); font-size: 1.1rem;">No matching sections found.</p>';
+            return;
+          }
+          sResults.innerHTML = matches.map(m => {
+            return '<a href="#' + m.id + '" class="nb-search-item" onclick="document.getElementById(\'searchModal\').classList.remove(\'is-active\');">' +
+                   '<b>' + m.title + '</b>' +
+                   '<span style="font-size: 0.9rem; color: var(--pencil);">Jump to section #' + m.id + ' &rarr;</span>' +
+                   '</a>';
+          }).join('');
+        });
+      }
+
+      // 9. Keyboard Shortcuts: 'F' (Focus), 'R' (Revision), '/' (Search), 'Escape'
       document.addEventListener('keydown', (e) => {
-        if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
-          e.preventDefault(); openSearch();
+        if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+        if (e.key === '/' || (e.ctrlKey && e.key === 'k')) {
+          e.preventDefault();
+          openSearch();
+        } else if (e.key === 'f' || e.key === 'F') {
+          e.preventDefault();
+          const isCurrent = document.body.classList.contains('is-focus');
+          setFocusMode(!isCurrent);
+        } else if (e.key === 'r' || e.key === 'R') {
+          e.preventDefault();
+          const isCurrent = document.body.classList.contains('is-revision');
+          setRevisionMode(!isCurrent);
+        } else if (e.key === 'Escape') {
+          closeSearch();
+          toggleSide(false);
+          if (timerCard) timerCard.classList.remove('is-open');
+          if (timerBtn) timerBtn.classList.remove('is-active');
         }
-        if (e.key === 'Escape') { closeSearch(); toggleSide(false); }
       });
+
     })();
   </script>
 </body>

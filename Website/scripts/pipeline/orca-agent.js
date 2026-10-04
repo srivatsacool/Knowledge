@@ -172,6 +172,79 @@ function checkExistingKnowledge(topic, subject = null, customSlug = null) {
 }
 
 /**
+ * Topic Boundary Check (Governance Rule 8.5)
+ * Analyzes whether a requested topic naturally decomposes into multiple substantial standalone curricula.
+ * Prevents unauthorized notebook proliferation and silent scope expansion.
+ */
+function checkTopicBoundary(topic, subject = null) {
+  if (!topic || typeof topic !== 'string') {
+    return { isComposite: false, needsConfirmation: false };
+  }
+  const cleanTopic = topic.trim().toLowerCase();
+  
+  // Knowledge maps for known broad composite umbrellas
+  const COMPOSITE_TOPIC_MAP = {
+    'supply chain management': [
+      'Supply Chain Fundamentals',
+      'Demand Planning & Forecasting',
+      'Inventory Management & Control',
+      'Procurement & Sourcing',
+      'Logistics & Distribution',
+      'Sales & Operations Planning (S&OP)'
+    ],
+    'business analytics': [
+      'Descriptive & Exploratory Analytics',
+      'Predictive Modeling & Machine Learning',
+      'Prescriptive Optimization',
+      'Data Storytelling & Visualization',
+      'Causal Inference & Experimentation'
+    ],
+    'operations management': [
+      'Process Flow & Capacity Analysis',
+      'Quality Management & Six Sigma',
+      'Lean Operations & Theory of Constraints',
+      'Inventory & Replenishment Systems',
+      'Supply Network Design'
+    ],
+    'corporate finance': [
+      'Time Value of Money & Valuation',
+      'Capital Budgeting & Investment Criteria',
+      'Cost of Capital & Capital Structure',
+      'Working Capital Management',
+      'Mergers & Acquisitions'
+    ]
+  };
+
+  const matchedKey = Object.keys(COMPOSITE_TOPIC_MAP).find(k => cleanTopic === k || cleanTopic === `introduction to ${k}` || cleanTopic === `advanced ${k}`);
+  
+  if (matchedKey) {
+    const subtopics = COMPOSITE_TOPIC_MAP[matchedKey];
+    return {
+      isComposite: true,
+      needsConfirmation: true,
+      umbrellaTopic: topic,
+      proposedSubtopics: subtopics,
+      message: `Topic "${topic}" can reasonably be structured as multiple standalone notebooks.`,
+      options: [
+        'A. One comprehensive master notebook covering all modules',
+        'B. Separate standalone notebooks for each major subtopic',
+        'C. One master notebook linking to separate topic notebooks'
+      ],
+      prompt: `This topic can reasonably be structured as multiple standalone notebooks:\n\n` +
+        subtopics.map((st, i) => `${i + 1}. ${st}`).join('\n') +
+        `\n\nWould you like:\nA. One comprehensive notebook\nB. Separate notebooks for each topic\nC. One master notebook linking to separate topic notebooks`
+    };
+  }
+
+  return {
+    isComposite: false,
+    needsConfirmation: false,
+    topic,
+    subject
+  };
+}
+
+/**
  * Natural language intent parser
  * Translates natural English prompts or /knowledge commands into a structured task contract
  */
@@ -890,6 +963,7 @@ module.exports = {
   ORCA_OPERATIONS,
   scanAllNotebooks,
   checkExistingKnowledge,
+  checkTopicBoundary,
   parseNaturalLanguageIntent,
   createExecutionPlan,
   formatStatusReport,

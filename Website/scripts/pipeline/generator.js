@@ -172,6 +172,14 @@ function generateNotebook(task, resolved) {
       <section class="nb-section" id="${sec.id}" data-title="${sec.number || `0${idx + 1}`}. ${escapeHtml(sec.title)}">
         <h2 class="nb-sec-title"><span class="nb-stamp nb-stamp--blue">${sec.number || `0${idx + 1}`}</span> ${escapeHtml(sec.title)}</h2>
         
+        <div class="nb-mod-status" data-mod-id="${sec.id}">
+          <span class="nb-mod-status__prompt">Module Status:</span>
+          <button class="nb-mod-status__btn" type="button" aria-label="Toggle module completion status">
+            <span class="nb-mod-status__icon">□</span>
+            <span class="nb-mod-status__text">Not started</span>
+          </button>
+        </div>
+        
         ${sec.learningObjective ? `
         <div class="nb-sticky nb-sticky--blue">
           <div class="nb-sticky__title">💡 Key Learning Objective</div>

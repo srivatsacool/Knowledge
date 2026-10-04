@@ -973,3 +973,126 @@ h1, h2, h3, h4 {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   Personal Digital Academic Archive Elements (Srivatsa)
+   ========================================================================== */
+.archive-badge-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Caveat", "Segoe Print", cursive;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent-navy);
+  background-color: var(--accent-forest-subtle);
+  border: 1.5px solid rgba(30, 107, 66, 0.35);
+  border-radius: 20px;
+  padding: 0.25rem 0.85rem;
+  margin-top: 0.75rem;
+}
+
+.about-archive-section {
+  margin-bottom: 4rem;
+}
+
+.about-archive-card {
+  background-color: var(--bg-card);
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  padding: 2.2rem 2.5rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  background-image: repeating-linear-gradient(transparent 0 calc(28px - 1px), var(--line-subtle) calc(28px - 1px) 28px);
+}
+
+.about-archive-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px dashed var(--line-rule);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.about-archive-title {
+  font-family: var(--font-serif);
+  font-size: 1.85rem;
+  color: var(--ink-primary);
+  margin: 0;
+}
+
+.about-archive-author {
+  font-family: "Caveat", "Segoe Print", cursive;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--accent-burgundy);
+}
+
+.about-archive-statement {
+  font-size: 1.12rem;
+  line-height: 1.7;
+  color: var(--ink-primary);
+  margin-bottom: 2rem;
+}
+
+.archive-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.archive-pillar-item {
+  background-color: var(--bg-paper);
+  border: 1px solid var(--line-rule);
+  border-radius: var(--radius-sm);
+  padding: 1.2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.archive-pillar-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.archive-pillar-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 0.35rem;
+}
+
+.archive-pillar-desc {
+  font-size: 0.88rem;
+  color: var(--ink-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.archive-signature-box {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line-rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.archive-signature-text {
+  font-family: "Caveat", "Segoe Print", cursive;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--accent-navy);
+}
+
+.archive-signature-note {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+}
+

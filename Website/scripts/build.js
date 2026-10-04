@@ -436,11 +436,12 @@ function build(options = {}) {
   const featuredNotebook = notebooks.find(n => n.featured) || notebooks[0];
   const homeData = {
     basePath: '.',
-    title: 'Digital Academic Library & Knowledge Vault',
-    description: 'A curated personal knowledge repository and digital academic library publishing standalone study notebooks and technical frameworks.',
+    title: 'Personal Digital Academic Archive · Srivatsa',
+    description: 'My personal intellectual repository — rigorous MBA study notebooks, architecture blueprints, and quantitative decision models by Srivatsa.',
+    author: 'Srivatsa',
     totalSubjects: SUBJECTS.length,
     totalPublishedNotebooks: notebooks.length,
-    totalStudyModules: notebooks.reduce((acc, n) => acc + (n.questionsCount || 0), 0) || 18,
+    totalStudyModules: notebooks.reduce((acc, n) => acc + (n.questionsCount || 0), 0) || 16,
     hasFeatured: Boolean(featuredNotebook),
     featuredTitle: featuredNotebook ? featuredNotebook.title : '',
     featuredSubject: featuredNotebook ? featuredNotebook.subject : '',

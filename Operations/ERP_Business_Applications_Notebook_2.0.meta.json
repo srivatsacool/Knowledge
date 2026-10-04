@@ -1,0 +1,35 @@
+{
+  "title": "ERP Business Applications · Interactive MBA Study Notebook 2.0",
+  "slug": "erp-business-applications-notebook-2",
+  "subject": "Operations",
+  "category": "Enterprise Systems",
+  "description": "Fresh rebuild from the TLP, faculty reading material and supplied PYQs: 11 modules, redrawn faculty diagrams, PYQ archive/analysis/practice, revision mode, last-minute card and a 30-question MCQ assessment.",
+  "file": "ERP_Business_Applications_Notebook_2.0.html",
+  "tags": [
+    "Operations",
+    "ERP",
+    "MBA",
+    "PYQ",
+    "Revision",
+    "MCQ",
+    "Altekar",
+    "Trimester IV"
+  ],
+  "status": "published",
+  "source": "curriculum/weschool-term4-altekar",
+  "version": "2.0.0",
+  "templateVersion": "erp-notebook-2.0",
+  "updated": "2026-10-04",
+  "featured": false,
+  "readTimeMinutes": 70,
+  "questionsCount": 30,
+  "courseContext": {
+    "course": "ERP Business Applications (Elective)",
+    "instructor": "Rahul Altekar",
+    "outcomes": [
+      "CO1",
+      "CO2",
+      "CO3"
+    ]
+  }
+}
