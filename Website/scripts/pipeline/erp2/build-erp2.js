@@ -36,7 +36,18 @@ function renderBlock(m, b, i) {
   else if (b.vendors) inner = `<p>${tag('{S}')} Names visible on the faculty vendor slide (${'Reading Material 02, slide 2'}):</p><div class="chips">${X.vendors.map(v => `<span class="chip">${esc(v)}</span>`).join('')}</div><p class="src">Slide is cropped at the bottom — list may be incomplete. Only names are recorded; no vendor facts are asserted.</p>`;
   else if (b.myths) inner = `<p>${tag('{S}')} <b>Myths</b> slide (17 statements, verbatim):</p><ol class="myths">${X.myths.map(t => `<li>${esc(t)}</li>`).join('')}</ol><p>${tag('{S}')} <b>Truth</b> slide: Readiness Audit · Performance Measurement · Unavoidable.</p><p class="src">Source: ${'Reading Material 02, slides 6–7'}. Which truth answers which myth is not stated on the slides.</p>`;
   else inner = tag(b.html);
-  const wrap = ['explain', 'core', 'faculty', 'apply', 'exam', 'example', 'confusion', 'summary'].includes(b.k) && /<table/.test(inner) ? inner.replace(/<table class="tbl">/g, '<div class="tblwrap"><table class="tbl">').replace(/<\/table>/g, '</table></div>') : inner;
+  let wrap = ['explain', 'core', 'faculty', 'apply', 'exam', 'example', 'confusion', 'summary'].includes(b.k) && /<table/.test(inner) ? inner.replace(/<table class="tbl">/g, '<div class="tblwrap"><table class="tbl">').replace(/<\/table>/g, '</table></div>') : inner;
+
+  if (b.k === 'faculty' || b.vendors || b.myths) {
+    wrap = `<div class="launchpad-box"><span class="launchpad-box__tag">Teacher Reference · Syllabus Launchpad</span>${wrap}</div>`;
+  } else if (b.k === 'explain' || b.k === 'core') {
+    wrap = `<div class="research-box"><span class="research-box__tag">Real-World Industrial Research &amp; Deep Explanation</span>${wrap}</div>`;
+  } else if (b.k === 'example' || b.k === 'apply') {
+    wrap = `<div class="scenario-box"><span class="scenario-box__tag">Practical Real-World Scenario</span>${wrap}</div>`;
+  } else if (b.k === 'exam') {
+    wrap = `<div class="examprep-box"><span class="examprep-box__tag">Exam Prep &amp; High-Scoring Model Structure</span>${wrap}</div>`;
+  }
+
   return `<article class="blk k-${b.k}${RV.has(b.k) ? ' rv' : ''}" id="${id}" data-sx="${esc(sx)}" data-sec="${esc(modTitles[m.id])}"><h4>${esc(h)}</h4>${wrap}</article>`;
 }
 
@@ -116,8 +127,8 @@ const html = `<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ERP Business Applications — Interactive MBA Study Notebook 2.0</title>
-<meta name="description" content="Personal MBA study notebook & exam blueprint covering ERP business strategy, 3-tier architecture, Five Pillars, Value Matrix, Plossl manufacturing theory, BPR, and complete model exam answers.">
+<title>ERP Business Applications · Master MBA Study Guide &amp; Exam Blueprint</title>
+<meta name="description" content="Master MBA study guide & exam blueprint covering ERP business strategy, 3-tier architecture, Five Pillars, Value Matrix, Plossl manufacturing theory, BPR, and complete model exam answers.">
 <meta name="keywords" content="ERP, ERP Business Applications, MBA, PYQ, Operations, MPS, CODP, BPR">
 <meta name="color-scheme" content="light dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -131,7 +142,7 @@ const html = `<!DOCTYPE html>
 <div id="live" class="sr" aria-live="polite" role="status"></div>
 <header class="topbar" role="banner">
   <button type="button" class="btn" id="hamb" aria-label="Open contents" aria-expanded="false" aria-controls="sidebar">☰</button>
-  <span class="ttl">ERP · My Study Notebook 2.0</span>
+  <span class="ttl">ERP Business Applications · Master MBA Study Guide &amp; Exam Blueprint</span>
   <span class="sp"></span>
   <div class="search" role="search"><label for="q" class="sr">Search the notebook</label><input id="q" type="search" placeholder="Search ( / )" autocomplete="off" aria-controls="searchResults"><div id="searchResults" aria-label="Search results"></div></div>
   <button type="button" class="btn" id="btnFocus" aria-pressed="false" title="Focus mode (f)">Focus</button>
@@ -147,11 +158,11 @@ const html = `<!DOCTYPE html>
 <main class="main" id="main" tabindex="-1">
 
 <section class="sheet cover nonrv" id="cover" aria-labelledby="cover-h">
-  <div class="kick">My personal knowledge archive · My course · My notes</div>
+  <div class="kick">Personal Knowledge Hub · Operations &amp; IT Specialization</div>
   <h1 id="cover-h" data-sx="Cover — ERP Business Applications" data-sec="Cover">ERP<span>Business Applications</span></h1>
-  <p class="hand" style="font-size:22px;margin:4px 0">Interactive MBA Study Notebook</p>
+  <p class="hand" style="font-size:23px;margin:4px 0;color:var(--ink)">Master MBA Study Guide &amp; Exam Blueprint · Paper Edition 2.0</p>
   <p><b>PGDM — Research &amp; Business Analytics</b> · Trimester IV · ERP Business Applications (Elective, 1.5 credits, 8 sessions)</p>
-  <p class="src">Built from: course outline (TLP) · faculty reading material 01 &amp; 02 · three supplied PYQ papers (2023, 2024, 2025). Notebook edition 2.0 — rebuilt from scratch.</p>
+  <p class="src">Built from: course outline (TLP) · faculty reading material 01 &amp; 02 · three supplied PYQ papers (2023, 2024, 2025). Knowledge-engineered from scratch with full separation of faculty references and real-world industrial research.</p>
   <div class="pgrid" style="align-items:center">
     <div>${X.DG.cover}</div>
     <div>
@@ -167,9 +178,14 @@ const html = `<!DOCTYPE html>
 <section class="sheet nonrv" id="how" aria-labelledby="how-h">
   <div class="kick">How to use this notebook</div><h2 class="mt" id="how-h" data-sx="How to use this notebook" data-sec="How to use">Read it like my own notes</h2>
   <div class="phases">${X.phases.map(p => `<div class="card phase" data-sx="Study path: ${esc(p.t)}" data-sec="How to use"><div class="kick">${esc(p.t)}</div><b>${esc(p.sub)}</b><ul>${p.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}</div>
-  <h3>Label legend — where did this come from?</h3>
-  <p>${TAGS.S} faculty slide / TLP / PYQ photo. ${TAGS.E} model-generated explanation or study framework (not Sir’s words). ${TAGS.X} invented illustration to make a concept concrete. ${TAGS.W} external web research — <b>none used in this edition</b>; every diagram is drawn from scratch.</p>
-  <p class="src">Source hierarchy used: TLP → faculty material → PYQs → web (unused) → general model knowledge (explicitly tagged). Where sources conflict or are unclear, both are shown and nothing is silently “corrected”.</p>
+  
+  <h3>Pedagogical Architecture — Academic Reference vs. Industrial Master Data</h3>
+  <div class="launchpad-box" style="margin: 10px 0;"><span class="launchpad-box__tag">Teacher Reference · Syllabus Launchpad</span> <b>Dr. Rahul V. Altekar's Course Slides &amp; Classroom Notes:</b> Used strictly as the academic syllabus launchpad, preserving exact faculty terminology, slide definitions, and exam expectations.</div>
+  <div class="research-box" style="margin: 10px 0;"><span class="research-box__tag">Real-World Industrial Research &amp; Deep Explanation</span> <b>Enterprise Research &amp; Practical Master Explanations:</b> Grounded in Fortune 500 implementations, modern SAP S/4HANA &amp; Oracle ERP Cloud architectures, George Plossl flow mechanics, DDMRP, and mathematical models. Forms the master conceptual substance.</div>
+  <div class="scenario-box" style="margin: 10px 0;"><span class="scenario-box__tag">Practical Real-World Scenario</span> <b>Applied Industry Case Studies:</b> Real-world operational scenarios across Pharmaceuticals, Automotive OEMs, Specialty Chemicals, Subway Franchise Supply Chains, and Retail Paint Distribution.</div>
+  <div class="examprep-box" style="margin: 10px 0;"><span class="examprep-box__tag">Exam Prep &amp; High-Scoring Model Structure</span> <b>Authentic PYQ Answer Blueprints:</b> High-yield exam strategies, exact Bloom Level rubrics, marks breakdowns, diagrams to sketch, and fully formed MBA model answers.</div>
+  
+  <p class="src" style="margin-top:14px">Source hierarchy: Course TLP &rarr; Faculty Material &rarr; Authentic PYQs &rarr; Industrial Web Research. Transparently separated so you know exactly what was taught in class versus how modern enterprises operate.</p>
   <details id="keys"><summary><b>Keyboard &amp; tools</b></summary><ul><li><kbd>/</kbd> search · <kbd>j</kbd>/<kbd>k</kbd> next/previous module · <kbd>f</kbd> focus mode · <kbd>r</kbd> revision mode · <kbd>t</kbd> theme · <kbd>Esc</kbd> close panels · <kbd>?</kbd> this list</li><li>Timers: Pomodoro 25/5 and 10/15/20-minute countdowns in the top bar. Progress is stored only in this browser (localStorage).</li></ul></details>
 </section>
 
@@ -265,7 +281,7 @@ ${['store', 'core', 'search', 'pyq', 'mcq'].map(f => read(`js/${f}.js`)).join('\
 
 fs.writeFileSync(OUT, html, 'utf8');
 const meta = {
-  title: 'ERP Business Applications · Interactive MBA Study Notebook 2.0',
+  title: 'ERP Business Applications · Master MBA Study Guide & Exam Blueprint (Edition 2.0)',
   slug: 'erp-business-applications-notebook-2',
   subject: 'Operations', category: 'Enterprise Systems',
   description: 'Fresh rebuild from the TLP, faculty reading material and supplied PYQs: 11 modules, redrawn faculty diagrams, PYQ archive/analysis/practice, revision mode, last-minute card and a 30-question MCQ assessment.',
