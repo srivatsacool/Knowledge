@@ -105,7 +105,7 @@ const lastCard = `<ul class="lm"><li><b>Q1 skeleton:</b> Context → Reframe (bu
 
 const DATA = {
   mods: X.modules.map(m => m.id), modTitles, topics: X.T,
-  pyqs: X.pyqs.map(({ id, year, qno, marks, type, diff, rep, mods, topics, text, think, frame }) => ({ id, year, qno, marks, type, diff, rep: rep || null, mods, topics, text, think, frame })),
+  pyqs: X.pyqs.map(({ id, year, qno, marks, type, diff, rep, mods, topics, text, think, frame, answerHtml }) => ({ id, year, qno, marks, type, diff, rep: rep || null, mods, topics, text, think, frame, answerHtml: answerHtml || null })),
   mcqs: X.mcqs
 };
 
@@ -117,9 +117,12 @@ const html = `<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ERP Business Applications — Interactive MBA Study Notebook 2.0</title>
-<meta name="description" content="My personal ERP Business Applications study notebook (PGDM RBA, Trimester IV) rebuilt from the TLP, faculty reading material and supplied PYQs: modules, redrawn diagrams, PYQ intelligence, revision mode and a 30-question MCQ assessment.">
+<meta name="description" content="Personal MBA study notebook & exam blueprint covering ERP business strategy, 3-tier architecture, Five Pillars, Value Matrix, Plossl manufacturing theory, BPR, and complete model exam answers.">
 <meta name="keywords" content="ERP, ERP Business Applications, MBA, PYQ, Operations, MPS, CODP, BPR">
 <meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>${read('notebook.css')}
 .flash{animation:fl 1.4s}@keyframes fl{0%,60%{box-shadow:0 0 0 4px var(--hl)}100%{box-shadow:none}}</style>
 </head>

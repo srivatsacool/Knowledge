@@ -25,8 +25,9 @@
       '<div class="steps"><button class="btn sm th" type="button" aria-expanded="false">1 · Think</button> <button class="btn sm pr" type="button" aria-pressed="false">✔ Mark practiced</button></div>' +
       '<div class="think" hidden><p><b>THINK</b> — prompts only:</p><ul>' + p.think.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul></div>' +
       '<label for="a-' + p.id + '"><b>2 · Write your answer</b> (autosaved on this device)</label><textarea id="a-' + p.id + '" placeholder="Write your answer here…"></textarea>' +
-      '<button class="btn sm rv" type="button" aria-expanded="false">3 · Reveal model framework</button>' +
-      '<div class="ans" hidden><div class="lbl">AI-GENERATED STUDY FRAMEWORK BASED ON SUPPLIED COURSE MATERIAL — NOT AN OFFICIAL ANSWER</div><ol>' + p.frame.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('') + '</ol></div></article>';
+      '<button class="btn sm rv" type="button" aria-expanded="false">3 · Reveal full model answer & framework</button>' +
+      '<div class="ans" hidden><div class="lbl">MODEL MBA EXAM ANSWER & EXECUTIVE RUBRIC</div>' +
+      (p.answerHtml ? '<div class="model-ans">' + p.answerHtml + '</div>' : '<ol>' + p.frame.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('') + '</ol>') + '</div></article>';
   }).join('');
   $$('.q', list).forEach(function (q) {
     var id = q.dataset.id, ta = $('textarea', q);
