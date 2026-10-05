@@ -1,0 +1,40 @@
+{
+  "title": "LSCM \u00b7 Master 15-Topic Syllabus & 100% Solved PYQ Bank (2023\u20132025)",
+  "slug": "lscm-master-syllabus-pyq-notebook",
+  "subject": "Operations",
+  "category": "Supply Chain Management",
+  "description": "The master examination guide synthesizing all 15 syllabus sessions, integrated cross-faculty frameworks, formula cheat sheet, PYQ intelligence matrix, and 100% question-by-question solved end-term examination papers (2023, 2024, 2025).",
+  "file": "04_LSCM_Complete_Syllabus_PYQ_Master_Notebook.html",
+  "tags": [
+    "LSCM",
+    "Supply Chain",
+    "Operations",
+    "WeSchool",
+    "Trimester IV",
+    "PYQ",
+    "Incoterms",
+    "EOQ"
+  ],
+  "status": "published",
+  "source": "curriculum/weschool-term4-lscm",
+  "version": "2.0.0",
+  "templateVersion": "erp-notebook-2.0",
+  "updated": "2026-10-05",
+  "featured": true,
+  "readTimeMinutes": 60,
+  "courseContext": {
+    "course": "Logistics & Supply Chain Management",
+    "code": "OPN40 / OPN405 / OPN417",
+    "instructors": [
+      "Prof. Ajit M. Maurya",
+      "Prof. Manoj",
+      "Prof. Praful More"
+    ],
+    "outcomes": [
+      "CO1",
+      "CO2",
+      "CO3",
+      "CO4"
+    ]
+  }
+}

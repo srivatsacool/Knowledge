@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>LSCM Study Notebook · Prof. Praful More (WeSchool Trimester IV)</title>
+  <meta name="description" content="Master Study Notebook covering Quantitative Inventory Theory, EOQ, EPQ, Quantity Discounts, Safety Stock, Newsvendor Model, Kraljic Matrix, TCO, 4 Core Cases, and Solved PYQs.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%8A%3C/text%3E%3C/svg%3E">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({startOnLoad: true, theme: 'neutral'});</script>
+
+  <style>
+/* Paper Edition Design Tokens */
+:root {
+  --desk: #e9e1cf;
+  --bg: #e9e1cf;
+  --paper: #fcf8ee;
+  --paper2: #fffdf7;
+  --card: #fffdf7;
+  --rule: #d6e3ef;
+  --margin: #e28b8b;
+  --line: #c9bfa8;
+  
+  --ink: #1d3c8c;
+  --ink2: #2f5fc4;
+  --text: #25262b;
+  --pencil: #5a5d66;
+  
+  --shadow-sheet: 0 1px 2px rgba(60, 45, 20, 0.12), 0 8px 24px rgba(60, 45, 20, 0.14);
+  --shadow-card: 0 1px 3px rgba(60, 45, 20, 0.10), 0 4px 12px rgba(60, 45, 20, 0.08);
+  --shadow-sticky: 0 2px 4px rgba(0, 0, 0, 0.12), 0 10px 18px -6px rgba(0, 0, 0, 0.22);
+  
+  --hl-yellow: rgba(255, 224, 61, 0.68);
+  --hl-green: rgba(120, 228, 156, 0.62);
+  --hl-blue: rgba(110, 196, 255, 0.55);
+  --hl-pink: rgba(255, 138, 188, 0.52);
+
+  --sticky-y: #fff2a1;
+  --sticky-r: #ffd6d3;
+  --sticky-b: #d9ecff;
+  --sticky-g: #d8f5dc;
+  --sticky-text: #22252a;
+  
+  --red: #c2362f;
+  --green: #1d7a45;
+  --amber: #b86e00;
+  --blue: #1d3c8c;
+  
+  --serif: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --sans: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --hand: "Caveat", "Segoe Print", cursive;
+  --hand2: "Patrick Hand", "Segoe Print", cursive;
+  --math: "STIX Two Text", "Cambria Math", Georgia, serif;
+  --mono: "JetBrains Mono", monospace;
+  --ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  --bar: 52px;
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .4  0 0 0 0 .3  0 0 0 0 .1  0 0 0 .07 0'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>");
+}
+
+[data-theme="dark"] {
+  --desk: #0f141d;
+  --bg: #0f141d;
+  --paper: #18202e;
+  --paper2: #1d2636;
+  --card: #1d2636;
+  --rule: #243049;
+  --margin: #7c3d48;
+  --line: #344058;
+  
+  --ink: #9cc0ff;
+  --ink2: #7fb0ff;
+  --text: #e7e9ef;
+  --pencil: #aab3c5;
+  
+  --shadow-sheet: 0 2px 4px rgba(0, 0, 0, 0.45), 0 10px 28px rgba(0, 0, 0, 0.40);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.35), 0 6px 16px rgba(0, 0, 0, 0.30);
+  --shadow-sticky: 0 2px 6px rgba(0, 0, 0, 0.45), 0 12px 24px -6px rgba(0, 0, 0, 0.50);
+  
+  --hl-yellow: rgba(255, 214, 0, 0.32);
+  --hl-green: rgba(70, 220, 130, 0.30);
+  --hl-blue: rgba(80, 170, 255, 0.32);
+  --hl-pink: rgba(255, 105, 170, 0.32);
+
+  --sticky-y: #2d2a1b;
+  --sticky-r: #331f20;
+  --sticky-b: #1c2738;
+  --sticky-g: #1c2e22;
+  --sticky-text: #f0f3f8;
+  
+  --red: #ff8a80;
+  --green: #7be0a4;
+  --amber: #ffc266;
+  --blue: #8fb2f2;
+}
+
+/* Scrollbar Suppression */
+html, body, .side, .main, #searchResults, * {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+*::-webkit-scrollbar { display: none !important; width: 0 !important; }
+
+/* Base Reset */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--bar) + 14px); }
+body {
+  margin: 0; background: var(--desk) var(--grain); color: var(--text);
+  font-family: var(--serif); font-size: 16.5px; line-height: 1.7;
+}
+a { color: var(--ink2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Paper Components */
+.nb-card {
+  background: var(--paper2); border: 1.5px solid var(--line); border-radius: 8px;
+  box-shadow: var(--shadow-card); padding: 20px 22px; margin: 24px 0; position: relative;
+}
+.nb-tape {
+  position: absolute; width: 86px; height: 22px; top: -10px; left: 22px; transform: rotate(-3.5deg);
+  background: repeating-linear-gradient(-45deg, rgba(255,255,255,.45) 0 5px, rgba(255,255,255,0) 5px 10px), rgba(255,185,200,.75);
+  opacity: .92; pointer-events: none; z-index: 5;
+}
+.nb-tape--right { left: auto; right: 22px; transform: rotate(4deg); }
+
+.nb-sticky {
+  position: relative; background: var(--sticky-y); color: var(--sticky-text); font-family: var(--hand2);
+  font-size: 1.12rem; line-height: 1.55; padding: 18px 20px 16px; margin: 22px 0; border-radius: 2px 2px 14px 2px;
+  box-shadow: var(--shadow-sticky); transform: rotate(-0.8deg);
+}
+.nb-sticky::before {
+  content: ""; position: absolute; top: -11px; left: 50%; width: 90px; height: 22px; transform: translateX(-50%) rotate(-2deg);
+  background: repeating-linear-gradient(45deg, rgba(255,255,255,.55) 0 6px, rgba(255,255,255,.25) 6px 12px), rgba(160,200,230,.65);
+}
+.nb-sticky--pink { background: var(--sticky-r); transform: rotate(0.6deg); }
+.nb-sticky--blue { background: var(--sticky-b); transform: rotate(-0.5deg); }
+.nb-sticky--green { background: var(--sticky-g); transform: rotate(0.8deg); }
+.nb-sticky__title { font-family: var(--hand); font-weight: 700; font-size: 1.4rem; margin: 0 0 6px; color: var(--ink); line-height: 1.15; }
+.nb-sticky--pink .nb-sticky__title { color: var(--red); }
+
+.nb-stamp {
+  display: inline-block; padding: 2px 10px; font-family: var(--ui); font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em; border: 1.5px solid var(--ink); border-radius: 4px;
+  background: var(--paper); color: var(--ink); transform: rotate(-1.5deg); margin-right: 6px;
+}
+.nb-stamp--blue { border-color: var(--blue); color: var(--blue); }
+.nb-stamp--green { border-color: var(--green); color: var(--green); }
+.nb-stamp--amber { border-color: var(--amber); color: var(--amber); }
+.nb-stamp--red { border-color: var(--red); color: var(--red); }
+
+.nb-fbox {
+  position: relative; border: 2px solid var(--ink); border-radius: 6px; padding: 16px 20px;
+  margin: 20px 0 24px; background: var(--paper2); box-shadow: 5px 5px 0 var(--blue);
+}
+.nb-fbox__label { font-family: var(--hand); color: var(--pencil); font-size: 1.15rem; display: block; margin-bottom: 6px; font-weight: 700; }
+.nb-fbox__math { font-family: var(--math); font-size: 1.25rem; line-height: 1.8; color: var(--ink); overflow-x: auto; }
+.nb-fbox__dict { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; margin: 12px 0 0; font-size: .95rem; font-family: var(--ui); }
+.nb-fbox__dict dt { font-weight: 700; color: var(--blue); }
+.nb-fbox__dict dd { margin: 0; color: var(--pencil); }
+
+/* Pedagogical Separation Boxes */
+.launchpad-box {
+  margin: 18px 0; padding: 14px 18px; background: rgba(255, 248, 225, 0.65);
+  border: 1.5px solid #d4c19c; border-left: 6px solid #b86e00; border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(184, 110, 0, 0.08); position: relative;
+}
+[data-theme="dark"] .launchpad-box { background: rgba(45, 42, 27, 0.6); border-color: #554a2b; border-left-color: #ffc266; }
+.launchpad-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--amber); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+.research-box {
+  margin: 20px 0; padding: 16px 20px; background: rgba(240, 246, 255, 0.75);
+  border: 1.5px solid #b8cce6; border-left: 6px solid var(--ink); border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(29, 60, 140, 0.08); position: relative;
+}
+[data-theme="dark"] .research-box { background: rgba(28, 39, 56, 0.65); border-color: #2b3d5c; border-left-color: #9cc0ff; }
+.research-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--ink); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+.scenario-box {
+  margin: 18px 0; padding: 14px 18px; background: rgba(240, 252, 244, 0.75);
+  border: 1.5px solid #b5d9c2; border-left: 6px solid var(--green); border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(29, 122, 69, 0.08); position: relative;
+}
+[data-theme="dark"] .scenario-box { background: rgba(28, 46, 34, 0.65); border-color: #2e4a36; border-left-color: #7be0a4; }
+.scenario-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--green); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+.examprep-box {
+  margin: 18px 0; padding: 14px 18px; background: rgba(254, 242, 242, 0.75);
+  border: 1.5px solid #eec0bd; border-left: 6px solid var(--red); border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(194, 54, 47, 0.08); position: relative;
+}
+[data-theme="dark"] .examprep-box { background: rgba(51, 31, 32, 0.65); border-color: #593033; border-left-color: #ff8a80; }
+.examprep-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--red); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+/* Top Bar */
+.topbar {
+  position: sticky; top: 0; z-index: 60; height: var(--bar);
+  display: flex; align-items: center; gap: 8px; padding: 0 16px;
+  background: var(--paper); border-bottom: 2px solid var(--line);
+  font-family: var(--ui); font-size: 14px; box-shadow: 0 2px 0 var(--rule);
+}
+.topbar .ttl { font-family: var(--hand); font-weight: 700; font-size: 1.25rem; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 0 1 auto; }
+.topbar .sp { flex: 1; }
+.btn {
+  font: 600 13px var(--ui); background: var(--card); color: var(--text);
+  border: 1.5px solid var(--line); border-radius: 6px; padding: 6px 11px;
+  cursor: pointer; min-height: 34px; transition: background 0.15s ease;
+}
+.btn:hover { background: var(--hl-yellow); }
+.progressWrap { position: absolute; left: 0; right: 0; bottom: -4px; height: 4px; background: transparent; }
+#progressBar { height: 4px; width: 0; background: linear-gradient(90deg, var(--green), var(--ink2)); transition: width .3s; }
+
+.search { position: relative; }
+.search input {
+  font: 14px var(--ui); padding: 6px 12px; width: 200px;
+  background: var(--card); color: var(--text); border: 1.5px solid var(--line);
+  border-radius: 6px; min-height: 34px;
+}
+.search input:focus { border-color: var(--ink); outline: none; }
+#searchResults {
+  position: absolute; right: 0; top: 40px; width: min(480px, 92vw); max-height: 60vh;
+  overflow: auto; background: var(--paper2); border: 2px solid var(--line);
+  border-radius: 8px; box-shadow: var(--shadow-sheet); display: none; font-family: var(--ui); z-index: 100;
+}
+#searchResults.open { display: block; }
+#searchResults a { display: block; padding: 10px 14px; border-bottom: 1px solid var(--line); text-decoration: none; color: var(--text); font-size: 13.5px; }
+#searchResults a:hover { background: var(--hl-yellow); }
+
+.timerPanel {
+  position: absolute; right: 8px; top: calc(var(--bar) + 6px); width: 260px;
+  background: var(--paper2); border: 2px solid var(--line); border-radius: 10px;
+  padding: 14px; display: none; box-shadow: var(--shadow-sheet); z-index: 100;
+}
+.timerPanel.open { display: block; }
+.timerPanel .clock { font: 700 36px var(--hand); text-align: center; color: var(--ink); }
+.timerPanel .row { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+
+/* Layout Shell */
+.shell { display: grid; grid-template-columns: 280px minmax(0, 1fr); max-width: 1360px; margin: 0 auto; gap: 0; }
+.side {
+  position: sticky; top: var(--bar); height: calc(100vh - var(--bar));
+  overflow-y: auto; padding: 16px 12px 40px 16px; font-family: var(--ui); font-size: 13px;
+  background: var(--paper); border-right: 2px solid var(--line);
+  background-image: repeating-linear-gradient(transparent 0 29px, var(--rule) 29px 30px);
+}
+.side h2 { font: 700 11.5px var(--ui); letter-spacing: .12em; text-transform: uppercase; color: var(--pencil); margin: 16px 8px 6px; }
+.side a {
+  display: flex; gap: 8px; align-items: center; padding: 6px 9px; margin: 2px 0;
+  text-decoration: none; color: var(--text); border-radius: 6px; border-left: 3px solid transparent;
+}
+.side a:hover { background: var(--hl-yellow); }
+.side a.cur { background: var(--card); border-left-color: var(--ink); font-weight: 700; color: var(--ink); }
+.dot { flex: none; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--pencil); }
+.st-done { background: var(--green); border-color: var(--green); }
+
+/* Main Sheet */
+.main { padding: 22px 24px 80px; min-width: 0; }
+.sheet {
+  position: relative; background: var(--paper) var(--grain); border: 1px solid var(--line);
+  border-radius: 6px 14px 14px 6px; box-shadow: var(--shadow-sheet); margin: 0 0 34px;
+  padding: 34px 40px 36px 74px;
+  background-image: var(--grain), repeating-linear-gradient(to bottom, transparent 0 29px, var(--rule) 29px 30px);
+  background-position: 0 0, 0 14px;
+}
+.sheet::before { content: ""; position: absolute; left: 54px; top: 0; bottom: 0; width: 2px; background: var(--margin); opacity: .75; }
+.sheet::after {
+  content: ""; position: absolute; left: 14px; top: 34px; bottom: 34px; width: 14px;
+  background: radial-gradient(circle, var(--desk) 5px, transparent 6px) 0 0/14px 64px repeat-y; opacity: .9;
+}
+
+h1, h2, h3, h4 { font-family: var(--serif); line-height: 1.25; margin: 0; }
+h1 { font-family: var(--hand); font-size: clamp(2rem, 5vw, 2.8rem); color: var(--ink); margin-bottom: 6px; }
+h2.mt { font-size: clamp(22px, 3.5vw, 30px); margin: 6px 0 12px; color: var(--ink); font-weight: 700; }
+h3 { font-size: 20px; margin: 22px 0 8px; border-bottom: 2px solid var(--ink); padding-bottom: 4px; display: inline-block; color: var(--ink); }
+h4 { font-size: 16px; font-family: var(--hand); color: var(--blue); margin: 0 0 6px; font-weight: 700; }
+p { margin: 0 0 .9em; }
+ul { padding-left: 1.4em; margin-bottom: 1em; }
+li { margin-bottom: .35em; }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; border: 1.5px solid var(--line); border-radius: 6px; background: var(--paper2); }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; text-align: left; }
+th { background: rgba(0,0,0,0.04); color: var(--ink); font-weight: 700; padding: 10px 12px; border-bottom: 2px solid var(--line); }
+td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(0,0,0,0.02); }
+
+.mermaid { background: var(--paper2); border: 1.5px solid var(--line); border-radius: 6px; padding: 16px; margin: 20px 0; text-align: center; }
+pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6px; font-family: var(--mono); font-size: .84rem; overflow-x: auto; line-height: 1.45; }
+
+@media (max-width: 900px) {
+  .shell { grid-template-columns: 1fr; }
+  .side { display: none; }
+  .sheet { padding: 24px 20px 24px 34px; }
+  .sheet::before { left: 24px; }
+  .sheet::after { display: none; }
+}
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <span class="ttl">LSCM Study Notebook · Prof. Praful More</span>
+  <div class="sp"></div>
+  <div class="search">
+    <input type="text" id="searchInput" placeholder="Search Praful Sir's notes...">
+    <div id="searchResults"></div>
+  </div>
+  <button class="btn" id="timerBtn" title="Pomodoro Study Timer">⏱ 25m</button>
+  <button class="btn" id="themeBtn">🌓 Theme</button>
+  <div class="progressWrap"><div id="progressBar"></div></div>
+</header>
+
+<div class="timerPanel" id="timerPanel">
+  <div class="clock" id="clockDisplay">25:00</div>
+  <div class="row">
+    <button class="btn sm" id="timerStart">Start</button>
+    <button class="btn sm" id="timerReset">Reset</button>
+  </div>
+</div>
+
+<div class="shell">
+  <aside class="side">
+    <h2>Sessions & Modules</h2>
+    <a href="#cover" class="cur"><span class="dot st-done"></span> Overview & Meta</a>
+    <a href="#mod1"><span class="dot"></span> 1. Inventory Costs & Functions</a>
+    <a href="#mod2"><span class="dot"></span> 2. Deterministic Lot-Sizing</a>
+    <a href="#mod3"><span class="dot"></span> 3. Uncertainty & Safety Stock</a>
+    <a href="#mod4"><span class="dot"></span> 4. Newsvendor Stochastic Model</a>
+    <a href="#mod5"><span class="dot"></span> 5. Kraljic Sourcing & TCO</a>
+    <a href="#mod6"><span class="dot"></span> 6. Smart Warehouses & ESG</a>
+    <h2>Cases & PYQs</h2>
+    <a href="#cases"><span class="dot"></span> 4 Core Cases</a>
+    <a href="#pyq-section"><span class="dot"></span> Solved PYQs (2023–2025)</a>
+  </aside>
+
+  <main class="main">
+    <article class="sheet" id="cover">
+      <div class="nb-tape"></div>
+      <div style="margin-bottom:14px;">
+        <span class="nb-stamp nb-stamp--blue">WeSchool PGDM</span>
+        <span class="nb-stamp nb-stamp--amber">Trimester IV</span>
+        <span class="nb-stamp nb-stamp--green">Faculty: Prof. Praful More</span>
+      </div>
+      <h1>Logistics & Supply Chain Management</h1>
+      <h2 class="mt">Quantitative Inventory Theory, Stochastic Models & Sourcing Strategy</h2>
+      <p style="color:var(--pencil); font-family:var(--hand2); font-size:1.15rem;">
+        Reconstructed consulting-grade master notebook covering EOQ/EPQ, quantity discount breakevens, safety stock uncertainty formulations, the Newsvendor critical ratio, Kraljic matrix, master quiz deck, and 100% solved end-term examination problems.
+      </p>
+
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">Prof. Praful More's Quantitative Doctrine</span>
+        <p><em>"Inventory is money sitting in another form. Every inventory model is an optimization balance between two competing costs: the cost of acquiring too little (stockouts, production halts) versus the cost of holding too much (capital lockup, obsolescence)."</em></p>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin:16px 0;">
+        <a href="#mod2" class="btn">EOQ & EPQ Models &rarr;</a>
+        <a href="#mod4" class="btn">Newsvendor Model &rarr;</a>
+        <a href="#pyq-section" class="btn">Jump to Solved PYQs &rarr;</a>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod1">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 1</span>
+      <span class="nb-stamp nb-stamp--green">CO1 Alignment</span>
+      <h2>Module 1: Inventory Fundamentals, Economics & Cost Topologies</h2>
+
+      <div class="research-box">
+        <span class="research-box__tag">The Three Operational Cost Buckets</span>
+        <ul>
+          <li><strong>1. Inventory Carrying (Holding) Cost ($H = I 	imes C$):</strong>
+            <ul>
+              <li><em>Capital Cost:</em> Opportunity cost of capital / WACC hurdle rate (10% to 18%).</li>
+              <li><em>Storage Space Cost:</em> Warehouse rent, utilities, material handling, racking (3% to 5%).</li>
+              <li><em>Inventory Service Cost:</em> Insurance premiums, local property taxes (1% to 2%).</li>
+              <li><em>Inventory Risk Cost:</em> Obsolescence, physical shrinkage, pilferage, product expiration (4% to 10%).</li>
+              <li><strong>Total Annual Holding Cost Rate ($I$):</strong> Typically ranges between <strong>18% to 35%</strong> of unit purchasing price per year.</li>
+            </ul>
+          </li>
+          <li><strong>2. Ordering / Setup Cost ($S$):</strong> Administrative procurement expenses, electronic PO transmission, supplier invoice auditing, machine changeover, calibration, and cleaning.</li>
+          <li><strong>3. Stockout / Shortage Cost ($C_s$):</strong> Lost gross margin, contractual SLA penalty fees, emergency air freight expediting costs, and long-term customer churn.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod2">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 7</span>
+      <span class="nb-stamp nb-stamp--green">CO1 Alignment</span>
+      <h2>Module 2: Deterministic Inventory Lot-Sizing Models</h2>
+
+      <div class="nb-fbox">
+        <span class="nb-fbox__label">1. Classical Economic Order Quantity (EOQ)</span>
+        <div class="nb-fbox__math">$$EOQ (Q^*) = \sqrt{rac{2DS}{H}}, \quad TC^* = \left(rac{D}{Q^*}ight)S + \left(rac{Q^*}{2}ight)H$$</div>
+        <div class="nb-fbox__dict">
+          <dt>D</dt><dd>Annual deterministic customer demand in units.</dd>
+          <dt>S</dt><dd>Fixed ordering cost incurred per replenishment purchase order.</dd>
+          <dt>H</dt><dd>Annual inventory carrying cost per unit ($H = I 	imes C$).</dd>
+          <dt>N*</dt><dd>Optimal order frequency: $N^* = D / Q^*$.</dd>
+          <dt>T*</dt><dd>Cycle time between orders: $T^* = (Q^* / D) 	imes 	ext{Working Days}$.</dd>
+        </div>
+      </div>
+
+      <div class="nb-fbox">
+        <span class="nb-fbox__label">2. Economic Production Quantity (EPQ / Non-Instantaneous Receipt)</span>
+        <div class="nb-fbox__math">$$EPQ (Q^*) = \sqrt{rac{2DS}{H\left(1 - rac{d}{p}ight)}}, \quad I_{\max} = Q^*\left(1 - rac{d}{p}ight)$$</div>
+        <div class="nb-fbox__dict">
+          <dt>p</dt><dd>Daily manufacturing production rate.</dd>
+          <dt>d</dt><dd>Daily consumption/sales rate ($p &gt; d$).</dd>
+          <dt>I_max</dt><dd>Peak inventory accumulated at the moment production ceases.</dd>
+          <dt>t_1</dt><dd>Length of production run: $t_1 = Q^* / p$.</dd>
+        </div>
+      </div>
+
+      <h3>Quantity Discount Breakeven Optimization</h3>
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">Algorithmic Decision Rules</span>
+        <ol>
+          <li>Compute standard EOQ for the lowest unit price tier ($C_{	ext{lowest}}$).</li>
+          <li>If feasible, it is optimal. If infeasible, step up to next price tier until a feasible EOQ is found.</li>
+          <li>Compute Total Annual Cost ($TC$) at feasible EOQ and at <strong>every quantity breakpoint above it</strong>:
+            $$TC(Q) = (D \cdot C) + \left(rac{D}{Q}ight)S + \left(rac{Q}{2}ight)(I \cdot C)$$
+          </li>
+          <li>Select the order quantity $Q$ minimizing total annual procurement plus holding and ordering costs.</li>
+        </ol>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod3">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 8</span>
+      <span class="nb-stamp nb-stamp--green">CO1 Alignment</span>
+      <h2>Module 3: Managing Uncertainty, Safety Stock & Stochastic Inventory</h2>
+
+      <div class="nb-fbox">
+        <span class="nb-fbox__label">Safety Stock Formulations Under Uncertainty</span>
+        <div class="nb-fbox__math">
+          $$	ext{Case A (Demand Variable, Lead Time Fixed): } SS = z \cdot \sigma_d \sqrt{L}$$
+          $$	ext{Case B (Lead Time Variable, Demand Fixed): } SS = z \cdot d \cdot \sigma_L$$
+          $$	ext{Case C (Both Variable - Dual Uncertainty): } SS = z \cdot \sqrt{L \cdot \sigma_d^2 + d^2 \cdot \sigma_L^2}$$
+          $$ROP = (d \cdot L) + SS$$
+        </div>
+        <div class="nb-fbox__dict">
+          <dt>z</dt><dd>Standard normal service factor corresponding to target Cycle Service Level ($CSL$).</dd>
+          <dt>\sigma_d</dt><dd>Standard deviation of daily consumer demand.</dd>
+          <dt>\sigma_L</dt><dd>Standard deviation of replenishment lead time in days.</dd>
+          <dt>d, L</dt><dd>Average daily demand ($d$) and average supplier lead time ($L$).</dd>
+        </div>
+      </div>
+
+      <h3>Normal Distribution $z$-Factor Lookup Reference</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Cycle Service Level (CSL)</th><th>Normal $z$-Factor</th><th>Managerial Stockout Risk</th></tr></thead>
+          <tbody>
+            <tr><td><strong>90.0%</strong></td><td>$z = 1.282$</td><td>10.0% probability of stockout during lead time</td></tr>
+            <tr><td><strong>95.0%</strong></td><td>$z = 1.645$</td><td>5.0% probability of stockout during lead time</td></tr>
+            <tr><td><strong>97.5%</strong></td><td>$z = 1.960$</td><td>2.5% probability of stockout during lead time</td></tr>
+            <tr><td><strong>99.0%</strong></td><td>$z = 2.326$</td><td>1.0% probability of stockout during lead time</td></tr>
+            <tr><td><strong>99.9%</strong></td><td>$z = 3.090$</td><td>0.1% probability of stockout (extreme critical items)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod4">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 8</span>
+      <span class="nb-stamp nb-stamp--green">CO1 Alignment</span>
+      <h2>Module 4: The Single-Period Stochastic (Newsvendor) Model</h2>
+
+      <div class="nb-fbox">
+        <span class="nb-fbox__label">The Newsvendor Model & Critical Fractile</span>
+        <div class="nb-fbox__math">
+          $$C_u = P - C, \quad C_o = C - S$$
+          $$CR = rac{C_u}{C_u + C_o}, \quad Q^* = \mu + z \cdot \sigma \quad [\Phi(z) = CR]$$
+        </div>
+        <div class="nb-fbox__dict">
+          <dt>C_u</dt><dd>Cost of Understocking: Profit margin forfeited per unit of unmet customer demand.</dd>
+          <dt>C_o</dt><dd>Cost of Overstocking: Net financial loss incurred per unsold unit salvaged.</dd>
+          <dt>CR</dt><dd>Critical Fractile / Service Level optimizing expected channel profitability.</dd>
+          <dt>\mu, \sigma</dt><dd>Mean ($\mu$) and standard deviation ($\sigma$) of normally distributed single-period demand.</dd>
+        </div>
+      </div>
+
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">The Double Marginalization Trap</span>
+        <p>In a decentralized supply chain, the retailer's critical fractile $CR_{	ext{retailer}} = rac{P - W}{(P - W) + (W - S)}$ is strictly lower than the integrated supply chain's fractile $CR_{	ext{chain}} = rac{P - C}{(P - C) + (C - S)}$. Consequently, individual store managers systematically under-order relative to the system optimum, destroying total channel profitability.</p>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod5">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 9 & 10</span>
+      <span class="nb-stamp nb-stamp--green">CO2 Alignment</span>
+      <h2>Module 5: Strategic Sourcing, Kraljic Matrix & Total Cost of Ownership</h2>
+
+      <h3>The Kraljic Portfolio Purchasing Matrix</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Quadrant</th>
+              <th>Characteristics</th>
+              <th>Recommended Sourcing Strategy</th>
+              <th>Supplier Preferencing Quadrant</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Strategic Items</strong></td>
+              <td>High Profit Impact, High Supply Risk; single-source critical components (microchips, custom engines).</td>
+              <td>Long-term partnerships, joint R&D, strategic alliances, transparent cost-plus contracts.</td>
+              <td><strong>Core:</strong> High spend, high supplier attractiveness; supplier prioritizes buyer.</td>
+            </tr>
+            <tr>
+              <td><strong>Leverage Items</strong></td>
+              <td>High Profit Impact, Low Supply Risk; standardized commodity materials available from multiple suppliers.</td>
+              <td>Exploit purchasing scale, aggregate orders, dynamic reverse auctions, short-term contracts.</td>
+              <td><strong>Exploitable:</strong> High buyer spend, low attractiveness; supplier extracts premium margin.</td>
+            </tr>
+            <tr>
+              <td><strong>Bottleneck Items</strong></td>
+              <td>Low Profit Impact, High Supply Risk; specialized chemical additives or spare parts with proprietary specs.</td>
+              <td>Secure volume commitments, maintain safety stock buffers, design out dependencies.</td>
+              <td><strong>Nuisance:</strong> Low spend, low attractiveness; supplier provides bare minimum service.</td>
+            </tr>
+            <tr>
+              <td><strong>Routine (Non-Critical)</strong></td>
+              <td>Low Profit Impact, Low Supply Risk; office supplies, MRO items, standard packaging materials.</td>
+              <td>Automate purchase-to-pay, corporate credit cards (P-Cards), standardized vendor catalogs.</td>
+              <td><strong>Development:</strong> Low current spend, high potential; supplier invests to grow account.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod6">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Master Quiz Deck</span>
+      <span class="nb-stamp nb-stamp--green">CO2 & CO3 Alignment</span>
+      <h2>Module 6: Smart Warehousing, ESG & Maritime Chokepoints</h2>
+
+      <h3>Global Strategic Maritime Chokepoints</h3>
+      <div class="research-box">
+        <span class="research-box__tag">Geopolitical Vulnerabilities</span>
+        <ul>
+          <li><strong>Bab el-Mandeb / Red Sea & Suez Canal:</strong> Disruptions forced container vessels to bypass the canal and circumnavigate Africa via the Cape of Good Hope, adding 10–14 sailing days, absorbing 10% of global container ship capacity, and tripling spot container rates.</li>
+          <li><strong>Panama Canal:</strong> Severe climate-induced freshwater droughts restricted daily vessel transit slots, causing massive ship queues and shifting bulk traffic to longer maritime lanes.</li>
+          <li><strong>Strait of Malacca & Hormuz:</strong> Critical narrow shipping bottlenecks connecting the Indian Ocean to East Asia and Middle Eastern petroleum hubs.</li>
+        </ul>
+      </div>
+
+      <h3>Decarbonization Levers across Emissions Scopes</h3>
+      <ul>
+        <li><strong>Scope 1 (Direct Operations):</strong> Fleet transition to battery-electric delivery vehicles (EVs); warehouse electrification.</li>
+        <li><strong>Scope 2 (Indirect Energy):</strong> On-site rooftop solar arrays; 100% renewable power purchase agreements (PPAs).</li>
+        <li><strong>Scope 3 (Extended Value Chain — 80%+ of impact):</strong> Intermodal modal shifts from road to rail; green shipping fuels (bio-LNG, green methanol); packaging cube optimization.</li>
+      </ul>
+    </article>
+
+    <article class="sheet" id="cases">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--amber">Classroom Cases</span>
+      <h2>Core Case Study Analyses</h2>
+
+      <div class="scenario-box">
+        <span class="scenario-box__tag">Case 1: Star Clinic Panadol / Clinical Triage</span>
+        <p><strong>Dilemma:</strong> Chief Nursing Officer demands 100% availability for all medical supplies; Financial Director wants minimal inventory.</p>
+        <p><strong>Resolution:</strong> Triage segmentation. Setting non-critical Panadol at 99% CSL ($z = 2.33$) requires holding only 28 more tablets than 97.5% CSL, adding just <strong>\$2.80 in annual holding cost</strong>. This minor expenditure satisfies clinical safety without working capital bloat.</p>
+      </div>
+
+      <div class="scenario-box">
+        <span class="scenario-box__tag">Case 2: Just Baked Cupcake Stocking</span>
+        <p>Corporate cost is \$1.20, wholesale price to franchisee is \$1.50, retail price is \$3.00. Unsold cupcakes have zero salvage value.</p>
+        <p>Franchisee $CR = (3.00 - 1.50) / 3.00 = 50\%$. Integrated Chain $CR = (3.00 - 1.20) / 3.00 = 60\%$. Franchisee under-stocks relative to the supply chain optimum; resolved via centralized allocations or revenue-sharing contracts.</p>
+      </div>
+    </article>
+
+    <article class="sheet" id="pyq-section">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--red">PYQ Repository</span>
+      <h2>Solved End-Term Examination Papers (2023–2025)</h2>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">End-Term 2025 · Question 1 (15 Marks)</span>
+        <h4>Three-Part Quantitative Inventory Mastery</h4>
+        <ul>
+          <li><strong>(a) Deterministic EOQ:</strong>
+            $$EOQ = \sqrt{rac{2 	imes 5,000 	imes 40}{2}} = \sqrt{200,000} pprox \mathbf{447.21 \implies 447 	ext{ units}}$$
+            $$TC^* = \left(rac{5,000}{447.21}ight)40 + \left(rac{447.21}{2}ight)2.00 = \$447.21 + \$447.21 = \mathbf{\$894.43/	ext{year}}$$
+          </li>
+          <li><strong>(b) Stochastic Newsvendor:</strong>
+            $$C_u = \$30 - \$15 = \$15, \quad C_o = \$15 - \$10 = \$5$$
+            $$CR = rac{15}{15 + 5} = rac{15}{20} = \mathbf{0.75 \implies 75\%}, \quad \Phi(z) = 0.75 \implies \mathbf{z = 0.674}$$
+          </li>
+          <li><strong>(c) Multi-Period Continuous Review:</strong>
+            $$s = 200, \quad S = 500, \quad \mu_{DL} = 150, \quad \sigma_{DL} = 30$$
+            $$SS = s - \mu_{DL} = 200 - 150 = \mathbf{50 	ext{ doses}}$$
+            $$z = rac{SS}{\sigma_{DL}} = rac{50}{30} = 1.667 pprox 1.67 \implies \mathbf{CSL = \Phi(1.67) = 95.25\%}$$
+          </li>
+        </ul>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">End-Term 2024 · Question 2 (15 Marks)</span>
+        <h4>ElectroTech Solutions Category A Inventory Math</h4>
+        <ul>
+          <li>$$D = 50,000, \quad S = \$100, \quad H = \$2.00$$</li>
+          <li>$$EOQ = \sqrt{rac{2 	imes 50,000 	imes 100}{2}} = \sqrt{5,000,000} pprox \mathbf{2,236.07 \implies 2,236 	ext{ units}}$$</li>
+          <li>$$N^* = rac{50,000}{2,236.07} = \mathbf{22.36 	ext{ orders per year}}$$</li>
+          <li>$$	ext{Annual Holding Cost} = \left(rac{2,236.07}{2}ight) 	imes 2.00 = \mathbf{\$2,236.07/	ext{year}}$$</li>
+        </ul>
+      </div>
+    </article>
+  </main>
+</div>
+
+<script>
+// Search logic
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+const contentNodes = document.querySelectorAll('article.sheet h2, article.sheet h3, article.sheet h4, article.sheet .research-box, article.sheet .launchpad-box, article.sheet .scenario-box');
+
+searchInput.addEventListener('input', function() {
+  const query = this.value.trim().toLowerCase();
+  if (query.length < 2) {
+    searchResults.style.display = 'none';
+    searchResults.innerHTML = '';
+    return;
+  }
+  
+  let matches = [];
+  contentNodes.forEach(node => {
+    const text = node.innerText;
+    if (text.toLowerCase().includes(query)) {
+      const parentSheet = node.closest('article.sheet');
+      const id = parentSheet ? parentSheet.id : '';
+      matches.push({
+        title: node.innerText.substring(0, 70),
+        id: id
+      });
+    }
+  });
+
+  if (matches.length > 0) {
+    searchResults.innerHTML = matches.slice(0, 7).map(m => 
+      `<a href="#${m.id}"><strong>${m.title}</strong><br><small style="color:var(--pencil)">Jump to section</small></a>`
+    ).join('');
+    searchResults.style.display = 'block';
+  } else {
+    searchResults.innerHTML = '<div style="padding:10px 14px; font-size:13px; color:var(--pencil)">No matches found</div>';
+    searchResults.style.display = 'block';
+  }
+});
+
+document.addEventListener('click', function(e) {
+  if (!searchResults.contains(e.target) && e.target !== searchInput) {
+    searchResults.style.display = 'none';
+  }
+});
+
+// Pomodoro Timer Logic
+const timerBtn = document.getElementById('timerBtn');
+const timerPanel = document.getElementById('timerPanel');
+const clockDisplay = document.getElementById('clockDisplay');
+const timerStart = document.getElementById('timerStart');
+const timerReset = document.getElementById('timerReset');
+let timerInterval = null;
+let timeLeft = 25 * 60;
+let isRunning = false;
+
+timerBtn.addEventListener('click', () => {
+  timerPanel.classList.toggle('open');
+});
+
+timerStart.addEventListener('click', () => {
+  if (isRunning) {
+    clearInterval(timerInterval);
+    timerStart.innerText = 'Start';
+    isRunning = false;
+  } else {
+    isRunning = true;
+    timerStart.innerText = 'Pause';
+    timerInterval = setInterval(() => {
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        alert('Pomodoro study interval completed! Take a 5-minute break.');
+        timeLeft = 25 * 60;
+        isRunning = false;
+        timerStart.innerText = 'Start';
+      } else {
+        timeLeft--;
+      }
+      updateClock();
+    }, 1000);
+  }
+});
+
+timerReset.addEventListener('click', () => {
+  clearInterval(timerInterval);
+  timeLeft = 25 * 60;
+  isRunning = false;
+  timerStart.innerText = 'Start';
+  updateClock();
+});
+
+function updateClock() {
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  clockDisplay.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+}
+
+// Theme Toggle
+const themeBtn = document.getElementById('themeBtn');
+themeBtn.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  const next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+});
+
+// Scroll Progress Bar
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  document.getElementById('progressBar').style.width = scrolled + '%';
+});
+</script>
+
+</body>
+</html>

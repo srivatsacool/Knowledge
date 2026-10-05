@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>LSCM Master Syllabus & Solved PYQ Repository (2023–2025) · WeSchool</title>
+  <meta name="description" content="Complete 15-Topic Master Syllabus Synthesis, Cross-Faculty Frameworks, and 100% Solved End-Term Examination Repository for WeSchool PGDM Trimester IV.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9A%3C/text%3E%3C/svg%3E">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({startOnLoad: true, theme: 'neutral'});</script>
+
+  <style>
+/* Paper Edition Design Tokens */
+:root {
+  --desk: #e9e1cf;
+  --bg: #e9e1cf;
+  --paper: #fcf8ee;
+  --paper2: #fffdf7;
+  --card: #fffdf7;
+  --rule: #d6e3ef;
+  --margin: #e28b8b;
+  --line: #c9bfa8;
+  
+  --ink: #1d3c8c;
+  --ink2: #2f5fc4;
+  --text: #25262b;
+  --pencil: #5a5d66;
+  
+  --shadow-sheet: 0 1px 2px rgba(60, 45, 20, 0.12), 0 8px 24px rgba(60, 45, 20, 0.14);
+  --shadow-card: 0 1px 3px rgba(60, 45, 20, 0.10), 0 4px 12px rgba(60, 45, 20, 0.08);
+  --shadow-sticky: 0 2px 4px rgba(0, 0, 0, 0.12), 0 10px 18px -6px rgba(0, 0, 0, 0.22);
+  
+  --hl-yellow: rgba(255, 224, 61, 0.68);
+  --hl-green: rgba(120, 228, 156, 0.62);
+  --hl-blue: rgba(110, 196, 255, 0.55);
+  --hl-pink: rgba(255, 138, 188, 0.52);
+
+  --sticky-y: #fff2a1;
+  --sticky-r: #ffd6d3;
+  --sticky-b: #d9ecff;
+  --sticky-g: #d8f5dc;
+  --sticky-text: #22252a;
+  
+  --red: #c2362f;
+  --green: #1d7a45;
+  --amber: #b86e00;
+  --blue: #1d3c8c;
+  
+  --serif: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --sans: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --hand: "Caveat", "Segoe Print", cursive;
+  --hand2: "Patrick Hand", "Segoe Print", cursive;
+  --math: "STIX Two Text", "Cambria Math", Georgia, serif;
+  --mono: "JetBrains Mono", monospace;
+  --ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  --bar: 52px;
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .4  0 0 0 0 .3  0 0 0 0 .1  0 0 0 .07 0'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>");
+}
+
+[data-theme="dark"] {
+  --desk: #0f141d;
+  --bg: #0f141d;
+  --paper: #18202e;
+  --paper2: #1d2636;
+  --card: #1d2636;
+  --rule: #243049;
+  --margin: #7c3d48;
+  --line: #344058;
+  
+  --ink: #9cc0ff;
+  --ink2: #7fb0ff;
+  --text: #e7e9ef;
+  --pencil: #aab3c5;
+  
+  --shadow-sheet: 0 2px 4px rgba(0, 0, 0, 0.45), 0 10px 28px rgba(0, 0, 0, 0.40);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.35), 0 6px 16px rgba(0, 0, 0, 0.30);
+  --shadow-sticky: 0 2px 6px rgba(0, 0, 0, 0.45), 0 12px 24px -6px rgba(0, 0, 0, 0.50);
+  
+  --hl-yellow: rgba(255, 214, 0, 0.32);
+  --hl-green: rgba(70, 220, 130, 0.30);
+  --hl-blue: rgba(80, 170, 255, 0.32);
+  --hl-pink: rgba(255, 105, 170, 0.32);
+
+  --sticky-y: #2d2a1b;
+  --sticky-r: #331f20;
+  --sticky-b: #1c2738;
+  --sticky-g: #1c2e22;
+  --sticky-text: #f0f3f8;
+  
+  --red: #ff8a80;
+  --green: #7be0a4;
+  --amber: #ffc266;
+  --blue: #8fb2f2;
+}
+
+/* Scrollbar Suppression */
+html, body, .side, .main, #searchResults, * {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+*::-webkit-scrollbar { display: none !important; width: 0 !important; }
+
+/* Base Reset */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--bar) + 14px); }
+body {
+  margin: 0; background: var(--desk) var(--grain); color: var(--text);
+  font-family: var(--serif); font-size: 16.5px; line-height: 1.7;
+}
+a { color: var(--ink2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Paper Components */
+.nb-card {
+  background: var(--paper2); border: 1.5px solid var(--line); border-radius: 8px;
+  box-shadow: var(--shadow-card); padding: 20px 22px; margin: 24px 0; position: relative;
+}
+.nb-tape {
+  position: absolute; width: 86px; height: 22px; top: -10px; left: 22px; transform: rotate(-3.5deg);
+  background: repeating-linear-gradient(-45deg, rgba(255,255,255,.45) 0 5px, rgba(255,255,255,0) 5px 10px), rgba(255,185,200,.75);
+  opacity: .92; pointer-events: none; z-index: 5;
+}
+.nb-tape--right { left: auto; right: 22px; transform: rotate(4deg); }
+
+.nb-sticky {
+  position: relative; background: var(--sticky-y); color: var(--sticky-text); font-family: var(--hand2);
+  font-size: 1.12rem; line-height: 1.55; padding: 18px 20px 16px; margin: 22px 0; border-radius: 2px 2px 14px 2px;
+  box-shadow: var(--shadow-sticky); transform: rotate(-0.8deg);
+}
+.nb-sticky::before {
+  content: ""; position: absolute; top: -11px; left: 50%; width: 90px; height: 22px; transform: translateX(-50%) rotate(-2deg);
+  background: repeating-linear-gradient(45deg, rgba(255,255,255,.55) 0 6px, rgba(255,255,255,.25) 6px 12px), rgba(160,200,230,.65);
+}
+.nb-sticky--pink { background: var(--sticky-r); transform: rotate(0.6deg); }
+.nb-sticky--blue { background: var(--sticky-b); transform: rotate(-0.5deg); }
+.nb-sticky--green { background: var(--sticky-g); transform: rotate(0.8deg); }
+.nb-sticky__title { font-family: var(--hand); font-weight: 700; font-size: 1.4rem; margin: 0 0 6px; color: var(--ink); line-height: 1.15; }
+.nb-sticky--pink .nb-sticky__title { color: var(--red); }
+
+.nb-stamp {
+  display: inline-block; padding: 2px 10px; font-family: var(--ui); font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em; border: 1.5px solid var(--ink); border-radius: 4px;
+  background: var(--paper); color: var(--ink); transform: rotate(-1.5deg); margin-right: 6px;
+}
+.nb-stamp--blue { border-color: var(--blue); color: var(--blue); }
+.nb-stamp--green { border-color: var(--green); color: var(--green); }
+.nb-stamp--amber { border-color: var(--amber); color: var(--amber); }
+.nb-stamp--red { border-color: var(--red); color: var(--red); }
+
+.nb-fbox {
+  position: relative; border: 2px solid var(--ink); border-radius: 6px; padding: 16px 20px;
+  margin: 20px 0 24px; background: var(--paper2); box-shadow: 5px 5px 0 var(--blue);
+}
+.nb-fbox__label { font-family: var(--hand); color: var(--pencil); font-size: 1.15rem; display: block; margin-bottom: 6px; font-weight: 700; }
+.nb-fbox__math { font-family: var(--math); font-size: 1.25rem; line-height: 1.8; color: var(--ink); overflow-x: auto; }
+.nb-fbox__dict { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; margin: 12px 0 0; font-size: .95rem; font-family: var(--ui); }
+.nb-fbox__dict dt { font-weight: 700; color: var(--blue); }
+.nb-fbox__dict dd { margin: 0; color: var(--pencil); }
+
+/* Pedagogical Separation Boxes */
+.launchpad-box {
+  margin: 18px 0; padding: 14px 18px; background: rgba(255, 248, 225, 0.65);
+  border: 1.5px solid #d4c19c; border-left: 6px solid #b86e00; border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(184, 110, 0, 0.08); position: relative;
+}
+[data-theme="dark"] .launchpad-box { background: rgba(45, 42, 27, 0.6); border-color: #554a2b; border-left-color: #ffc266; }
+.launchpad-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--amber); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+.research-box {
+  margin: 20px 0; padding: 16px 20px; background: rgba(240, 246, 255, 0.75);
+  border: 1.5px solid #b8cce6; border-left: 6px solid var(--ink); border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(29, 60, 140, 0.08); position: relative;
+}
+[data-theme="dark"] .research-box { background: rgba(28, 39, 56, 0.65); border-color: #2b3d5c; border-left-color: #9cc0ff; }
+.research-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--ink); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+.scenario-box {
+  margin: 18px 0; padding: 14px 18px; background: rgba(240, 252, 244, 0.75);
+  border: 1.5px solid #b5d9c2; border-left: 6px solid var(--green); border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(29, 122, 69, 0.08); position: relative;
+}
+[data-theme="dark"] .scenario-box { background: rgba(28, 46, 34, 0.65); border-color: #2e4a36; border-left-color: #7be0a4; }
+.scenario-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--green); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+.examprep-box {
+  margin: 18px 0; padding: 14px 18px; background: rgba(254, 242, 242, 0.75);
+  border: 1.5px solid #eec0bd; border-left: 6px solid var(--red); border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(194, 54, 47, 0.08); position: relative;
+}
+[data-theme="dark"] .examprep-box { background: rgba(51, 31, 32, 0.65); border-color: #593033; border-left-color: #ff8a80; }
+.examprep-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--red); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+/* Top Bar */
+.topbar {
+  position: sticky; top: 0; z-index: 60; height: var(--bar);
+  display: flex; align-items: center; gap: 8px; padding: 0 16px;
+  background: var(--paper); border-bottom: 2px solid var(--line);
+  font-family: var(--ui); font-size: 14px; box-shadow: 0 2px 0 var(--rule);
+}
+.topbar .ttl { font-family: var(--hand); font-weight: 700; font-size: 1.25rem; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 0 1 auto; }
+.topbar .sp { flex: 1; }
+.btn {
+  font: 600 13px var(--ui); background: var(--card); color: var(--text);
+  border: 1.5px solid var(--line); border-radius: 6px; padding: 6px 11px;
+  cursor: pointer; min-height: 34px; transition: background 0.15s ease;
+}
+.btn:hover { background: var(--hl-yellow); }
+.progressWrap { position: absolute; left: 0; right: 0; bottom: -4px; height: 4px; background: transparent; }
+#progressBar { height: 4px; width: 0; background: linear-gradient(90deg, var(--green), var(--ink2)); transition: width .3s; }
+
+.search { position: relative; }
+.search input {
+  font: 14px var(--ui); padding: 6px 12px; width: 220px;
+  background: var(--card); color: var(--text); border: 1.5px solid var(--line);
+  border-radius: 6px; min-height: 34px;
+}
+.search input:focus { border-color: var(--ink); outline: none; }
+#searchResults {
+  position: absolute; right: 0; top: 40px; width: min(480px, 92vw); max-height: 60vh;
+  overflow: auto; background: var(--paper2); border: 2px solid var(--line);
+  border-radius: 8px; box-shadow: var(--shadow-sheet); display: none; font-family: var(--ui); z-index: 100;
+}
+#searchResults.open { display: block; }
+#searchResults a { display: block; padding: 10px 14px; border-bottom: 1px solid var(--line); text-decoration: none; color: var(--text); font-size: 13.5px; }
+#searchResults a:hover { background: var(--hl-yellow); }
+
+.timerPanel {
+  position: absolute; right: 8px; top: calc(var(--bar) + 6px); width: 260px;
+  background: var(--paper2); border: 2px solid var(--line); border-radius: 10px;
+  padding: 14px; display: none; box-shadow: var(--shadow-sheet); z-index: 100;
+}
+.timerPanel.open { display: block; }
+.timerPanel .clock { font: 700 36px var(--hand); text-align: center; color: var(--ink); }
+.timerPanel .row { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+
+/* Layout Shell */
+.shell { display: grid; grid-template-columns: 290px minmax(0, 1fr); max-width: 1400px; margin: 0 auto; gap: 0; }
+.side {
+  position: sticky; top: var(--bar); height: calc(100vh - var(--bar));
+  overflow-y: auto; padding: 16px 12px 40px 16px; font-family: var(--ui); font-size: 13px;
+  background: var(--paper); border-right: 2px solid var(--line);
+  background-image: repeating-linear-gradient(transparent 0 29px, var(--rule) 29px 30px);
+}
+.side h2 { font: 700 11.5px var(--ui); letter-spacing: .12em; text-transform: uppercase; color: var(--pencil); margin: 16px 8px 6px; }
+.side a {
+  display: flex; gap: 8px; align-items: center; padding: 6px 9px; margin: 2px 0;
+  text-decoration: none; color: var(--text); border-radius: 6px; border-left: 3px solid transparent;
+}
+.side a:hover { background: var(--hl-yellow); }
+.side a.cur { background: var(--card); border-left-color: var(--ink); font-weight: 700; color: var(--ink); }
+.dot { flex: none; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--pencil); }
+.st-done { background: var(--green); border-color: var(--green); }
+
+/* Main Sheet */
+.main { padding: 22px 24px 80px; min-width: 0; }
+.sheet {
+  position: relative; background: var(--paper) var(--grain); border: 1px solid var(--line);
+  border-radius: 6px 14px 14px 6px; box-shadow: var(--shadow-sheet); margin: 0 0 34px;
+  padding: 34px 40px 36px 74px;
+  background-image: var(--grain), repeating-linear-gradient(to bottom, transparent 0 29px, var(--rule) 29px 30px);
+  background-position: 0 0, 0 14px;
+}
+.sheet::before { content: ""; position: absolute; left: 54px; top: 0; bottom: 0; width: 2px; background: var(--margin); opacity: .75; }
+.sheet::after {
+  content: ""; position: absolute; left: 14px; top: 34px; bottom: 34px; width: 14px;
+  background: radial-gradient(circle, var(--desk) 5px, transparent 6px) 0 0/14px 64px repeat-y; opacity: .9;
+}
+
+h1, h2, h3, h4 { font-family: var(--serif); line-height: 1.25; margin: 0; }
+h1 { font-family: var(--hand); font-size: clamp(2rem, 5vw, 2.8rem); color: var(--ink); margin-bottom: 6px; }
+h2.mt { font-size: clamp(22px, 3.5vw, 30px); margin: 6px 0 12px; color: var(--ink); font-weight: 700; }
+h3 { font-size: 20px; margin: 22px 0 8px; border-bottom: 2px solid var(--ink); padding-bottom: 4px; display: inline-block; color: var(--ink); }
+h4 { font-size: 16px; font-family: var(--hand); color: var(--blue); margin: 0 0 6px; font-weight: 700; }
+p { margin: 0 0 .9em; }
+ul { padding-left: 1.4em; margin-bottom: 1em; }
+li { margin-bottom: .35em; }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; border: 1.5px solid var(--line); border-radius: 6px; background: var(--paper2); }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; text-align: left; }
+th { background: rgba(0,0,0,0.04); color: var(--ink); font-weight: 700; padding: 10px 12px; border-bottom: 2px solid var(--line); }
+td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(0,0,0,0.02); }
+
+.mermaid { background: var(--paper2); border: 1.5px solid var(--line); border-radius: 6px; padding: 16px; margin: 20px 0; text-align: center; }
+pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6px; font-family: var(--mono); font-size: .84rem; overflow-x: auto; line-height: 1.45; }
+
+@media (max-width: 900px) {
+  .shell { grid-template-columns: 1fr; }
+  .side { display: none; }
+  .sheet { padding: 24px 20px 24px 34px; }
+  .sheet::before { left: 24px; }
+  .sheet::after { display: none; }
+}
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <span class="ttl">LSCM Master Repository · Complete Syllabus & Solved PYQs (2023–2025)</span>
+  <div class="sp"></div>
+  <div class="search">
+    <input type="text" id="searchInput" placeholder="Search Master Syllabus & PYQs...">
+    <div id="searchResults"></div>
+  </div>
+  <button class="btn" id="timerBtn" title="Pomodoro Study Timer">⏱ 25m</button>
+  <button class="btn" id="themeBtn">🌓 Theme</button>
+  <div class="progressWrap"><div id="progressBar"></div></div>
+</header>
+
+<div class="timerPanel" id="timerPanel">
+  <div class="clock" id="clockDisplay">25:00</div>
+  <div class="row">
+    <button class="btn sm" id="timerStart">Start</button>
+    <button class="btn sm" id="timerReset">Reset</button>
+  </div>
+</div>
+
+<div class="shell">
+  <aside class="side">
+    <h2>15 Syllabus Topics</h2>
+    <a href="#cover" class="cur"><span class="dot st-done"></span> Master Overview</a>
+    <a href="#topic1"><span class="dot"></span> 1.0 SC Analytics & Fit</a>
+    <a href="#topic2"><span class="dot"></span> 2.0 Demand & S&OP</a>
+    <a href="#topic3"><span class="dot"></span> 3.0 Network Design</a>
+    <a href="#topic4"><span class="dot"></span> 4.0 Smart Warehouses</a>
+    <a href="#topic5"><span class="dot"></span> 5.0 Transport & Unitising</a>
+    <a href="#topic6"><span class="dot"></span> 6.0 LIS, Reverse & 3PL</a>
+    <a href="#topic7"><span class="dot"></span> 7.0 Deterministic EOQ/EPQ</a>
+    <a href="#topic8"><span class="dot"></span> 8.0 Uncertainty & Safety Stock</a>
+    <a href="#topic9"><span class="dot"></span> 9.0 & 10.0 Trade & INCOTERMS</a>
+    <a href="#topic11"><span class="dot"></span> 11.0 & 12.0 Case Method & LP</a>
+    <a href="#topic13"><span class="dot"></span> 13.0 Digital Twin & CPFR</a>
+    <a href="#topic14"><span class="dot"></span> 14.0 Sustainability & ESG</a>
+    <a href="#topic15"><span class="dot"></span> 15.0 Agility & Risk Mgmt</a>
+    <h2>Solved PYQ Bank</h2>
+    <a href="#pyq-2023"><span class="dot"></span> 2023 Solved Paper (60M)</a>
+    <a href="#pyq-2024"><span class="dot"></span> 2024 Solved Paper (60M)</a>
+    <a href="#pyq-2025"><span class="dot"></span> 2025 Solved Paper (60M)</a>
+    <h2>Exam Tools & Revision</h2>
+    <a href="#pyq-intel"><span class="dot"></span> PYQ Intelligence Matrix</a>
+    <a href="#formula-master"><span class="dot"></span> Master Formula Sheet</a>
+    <a href="#revision-blitz"><span class="dot"></span> Last-Minute Revision</a>
+    <a href="#glossary"><span class="dot"></span> SCM Acronym Glossary</a>
+  </aside>
+
+  <main class="main">
+    <article class="sheet" id="cover">
+      <div class="nb-tape"></div>
+      <div style="margin-bottom:14px;">
+        <span class="nb-stamp nb-stamp--blue">WeSchool PGDM</span>
+        <span class="nb-stamp nb-stamp--amber">Trimester IV (2025–2027)</span>
+        <span class="nb-stamp nb-stamp--green">Course Codes: OPN40 / OPN405 / OPN417</span>
+      </div>
+      <h1>Logistics & Supply Chain Management</h1>
+      <h2 class="mt">Master Syllabus Synthesis & 100% Solved End-Term Examination Repository</h2>
+      <p style="color:var(--pencil); font-family:var(--hand2); font-size:1.15rem;">
+        The definitive consulting-grade examination guide synthesizing all 15 official syllabus sessions, integrated across Prof. Ajit Maurya, Prof. Manoj, and Prof. Praful More, featuring complete question-by-question solutions for 2023, 2024, and 2025 end-term papers.
+      </p>
+
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">Course Learning Outcomes (CO1–CO4)</span>
+        <ul>
+          <li><strong>CO1 (Demand & Stochastic Inventory):</strong> Apply demand planning frameworks, S&OP cycles, deterministic models (EOQ/EPQ), and stochastic inventory models (Safety Stock, Newsvendor) to minimize system costs while controlling stockout risks.</li>
+          <li><strong>CO2 (Global Trade & Sourcing):</strong> Analyze international trade regulations, INCOTERMS 2020 rules, documentary credits (LCs), and ESG/Scope 1–3 emissions to structure ethical and legally resilient global supply chains.</li>
+          <li><strong>CO3 (Strategic Drivers & Metrics):</strong> Evaluate supply chain drivers (facilities, inventory, transport, info, sourcing, pricing) and diagnostic metrics (ITR, DOS, C2C, OTIF) to align supply networks with product demand profiles.</li>
+          <li><strong>CO4 (Logistics Network & Warehousing):</strong> Design multi-echelon distribution topologies, center-of-gravity facility locations, and automated smart warehouse architectures (AMRs, ASRS, dynamic slotting) for optimal infrastructure performance.</li>
+        </ul>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin:16px 0;">
+        <a href="#topic1" class="btn">Start 15 Topics &rarr;</a>
+        <a href="#pyq-2023" class="btn">Jump to Solved PYQs &rarr;</a>
+        <a href="#formula-master" class="btn">Jump to Master Formulas &rarr;</a>
+        <a href="#revision-blitz" class="btn">Jump to Last-Minute Revision &rarr;</a>
+      </div>
+    </article>
+
+    <!-- TOPIC 1.0 -->
+    <article class="sheet" id="topic1">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Topic 1.0</span>
+      <span class="nb-stamp nb-stamp--green">CO3</span>
+      <span class="nb-stamp nb-stamp--amber">Prof. Ajit Maurya</span>
+      <span class="sig HIGHPRIORITY">🔥 MUST MASTER</span>
+      <h2>Topic 1.0: Supply Chain Analytics, Drivers, Value Chain & Strategic Fit</h2>
+
+      <div class="research-box">
+        <span class="research-box__tag">Strategic Evolution</span>
+        <p>1970s Operational Silos &rarr; 1990s Functional ERP Integration &rarr; 2020s Extended Value-Chain Ecosystems balancing the <strong>Strategic Triad</strong>: Cost Efficiency, Market Responsiveness, and Systemic Resilience.</p>
+      </div>
+
+      <h3>The Six Foundational Supply Chain Drivers</h3>
+      <ul>
+        <li><strong>Facilities:</strong> Transformation/storage nodes. Trade-off: Centralization (economies of scale) vs. Decentralization (customer responsiveness).</li>
+        <li><strong>Inventory:</strong> Buffers supply/demand mismatches. Trade-off: High availability vs. working capital cost and obsolescence risk.</li>
+        <li><strong>Transportation:</strong> Physical connections. Trade-off: Speed/responsiveness (Air/Road) vs. Unit cost efficiency (Rail/Ocean).</li>
+        <li><strong>Information:</strong> The nervous system; enables real-time demand sensing, dynamic routing, and bullwhip dampening.</li>
+        <li><strong>Sourcing:</strong> Make-vs-buy decisions and vendor contracts. Trade-off: Proprietary control vs. supplier scale flexibility.</li>
+        <li><strong>Pricing:</strong> Revenue management. Everyday Low Pricing (EDLP) stabilizes demand; promotional discounting triggers Bullwhip distortion.</li>
+      </ul>
+
+      <h3>Marshall Fisher’s Strategic Alignment Matrix</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Dimension</th><th>Functional Products</th><th>Innovative Products</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Demand Profile</strong></td><td>Predictable, stable demand</td><td>Unpredictable, volatile demand</td></tr>
+            <tr><td><strong>Product Life Cycle</strong></td><td>Long (&gt; 2 years)</td><td>Short (3 to 12 months)</td></tr>
+            <tr><td><strong>Contribution Margin</strong></td><td>Low (5% to 20%)</td><td>High (20% to 60%)</td></tr>
+            <tr><td><strong>Required Supply Chain</strong></td><td><span class="nb-hl nb-hl--blue">Physically Efficient</span></td><td><span class="nb-hl nb-hl--pink">Market-Responsive</span></td></tr>
+            <tr><td><strong>Primary Focus</strong></td><td>Supply demand at minimum cost; high asset utilization</td><td>Respond quickly to demand; buffer capacity & stock</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="nb-fbox">
+        <span class="nb-fbox__label">Financial Velocity Metrics</span>
+        <div class="nb-fbox__math">
+          $$ITR = rac{	ext{COGS}}{	ext{Average Inventory}}, \quad DOS = rac{365}{ITR}, \quad C2C = DIO + DSO - DPO$$
+        </div>
+      </div>
+    </article>
+
+    <!-- TOPIC 2.0 -->
+    <article class="sheet" id="topic2">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Topic 2.0</span>
+      <span class="nb-stamp nb-stamp--green">CO1</span>
+      <span class="nb-stamp nb-stamp--amber">Prof. Ajit Maurya</span>
+      <span class="sig HIGHPRIORITY">🔥 MUST MASTER</span>
+      <h2>Topic 2.0: Demand Management, Planning Dimensions & S&OP / S&OE Integration</h2>
+
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">Forecasting vs. Demand Management</span>
+        <p><strong>Forecasting</strong> projects unconstrained future marketplace demand; <strong>Demand Management</strong> orchestrates pricing, promotions, lead times, and allocations to balance demand with operational capacity.</p>
+      </div>
+
+      <h3>Three Dimensions of Demand Planning</h3>
+      <ul>
+        <li><strong>1. Time Horizon:</strong> Strategic (1–5 yrs; footprint) &rarr; Tactical (1–18 mos; aggregate S&OP) &rarr; Operational (daily to 12 wks; weekly MPS & S&OE).</li>
+        <li><strong>2. Geography:</strong> Global &rarr; National Hubs &rarr; Regional Warehouses &rarr; Hyperlocal Urban Dark Stores.</li>
+        <li><strong>3. Product Aggregation:</strong> Product Category &rarr; Modular Platform &rarr; Stock Keeping Unit (SKU).</li>
+      </ul>
+
+      <h3>The 5-Step Monthly S&OP Cadence vs. S&OE</h3>
+      <ol>
+        <li><strong>Step 1: Data Gathering (Days 1–3):</strong> Clean POS sales, compile order backlog.</li>
+        <li><strong>Step 2: Demand Planning (Days 4–7):</strong> Commercial consensus forecast from Sales and Marketing.</li>
+        <li><strong>Step 3: Supply Planning (Days 8–12):</strong> Operations and procurement evaluate capacity, tooling, and supplier lead times.</li>
+        <li><strong>Step 4: Pre-S&OP Meeting (Days 13–16):</strong> Financial reconciliation of demand-supply gaps and overtime budgets.</li>
+        <li><strong>Step 5: Executive S&OP (Days 17–20):</strong> C-suite signs off on the binding master operating plan.</li>
+      </ol>
+      <div class="nb-sticky nb-sticky--blue">
+        <div class="nb-sticky__title">S&OE (Sales & Operations Execution)</div>
+        <p>Operates on a daily to 12-week horizon to track execution against the monthly S&OP baseline, managing machine downtime, carrier delays, and demand surges.</p>
+      </div>
+    </article>
+
+    <!-- TOPIC 3.0 -->
+    <article class="sheet" id="topic3">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Topic 3.0</span>
+      <span class="nb-stamp nb-stamp--green">CO4</span>
+      <span class="nb-stamp nb-stamp--amber">Prof. Ajit Maurya & Prof. Manoj</span>
+      <h2>Topic 3.0: Logistics System Design, Infrastructure & Multi-Echelon Networks</h2>
+
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">The Fundamental Network Cost Curve</span>
+        <p>As the number of regional warehousing nodes increases across a geography:</p>
+        <ul>
+          <li><strong>Inbound Line-Haul Freight Costs</strong> increase due to fragmented shipments and lost FTL scale.</li>
+          <li><strong>Outbound Delivery Costs</strong> decrease substantially as delivery trucks operate closer to local delivery clusters.</li>
+          <li><strong>Facility Fixed Costs</strong> increase linearly with each new facility leased or staffed.</li>
+          <li><strong>Inventory Holding Costs</strong> increase steeply due to safety stock decentralization dictated by the <strong>Square Root Law</strong>:
+            $$SS_{	ext{total}} = SS_{	ext{central}} 	imes \sqrt{rac{N_{	ext{new}}}{N_{	ext{old}}}}$$
+          </li>
+        </ul>
+      </div>
+
+      <div class="nb-fbox">
+        <span class="nb-fbox__label">Center of Gravity (Gravity Location Model)</span>
+        <div class="nb-fbox__math">$$X^* = rac{\sum (X_i \cdot W_i \cdot R_i)}{\sum (W_i \cdot R_i)}, \quad Y^* = rac{\sum (Y_i \cdot W_i \cdot R_i)}{\sum (W_i \cdot R_i)}$$</div>
+      </div>
+    </article>
+
+    <!-- TOPIC 4.0 -->
+    <article class="sheet" id="topic4">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Topic 4.0</span>
+      <span class="nb-stamp nb-stamp--green">CO4</span>
+      <span class="nb-stamp nb-stamp--amber">Prof. Manoj & Prof. Praful More</span>
+      <span class="sig HIGHPRIORITY">🔥 MUST MASTER</span>
+      <h2>Topic 4.0: Smart Warehouses, 6-Step Implementation & Automation</h2>
+
+      <div class="research-box">
+        <span class="research-box__tag">Closed-Loop Architecture (Sense-Decide-Act-Learn)</span>
+        <ul>
+          <li><strong>Sense:</strong> IoT edge sensors, RFID scanning gates, LiDAR scanners monitor physical SKU flow.</li>
+          <li><strong>Decide:</strong> AI/ML dynamic slotting algorithms calculate optimal travel pick paths.</li>
+          <li><strong>Act:</strong> Autonomous Mobile Robots (AMRs), AGVs, and ASRS execute physical picking and put-away.</li>
+          <li><strong>Learn:</strong> Real-time cycle time data feeds back into predictive models to refine operations.</li>
+        </ul>
+      </div>
+
+      <h3>The 6-Step Implementation Roadmap</h3>
+      <ol>
+        <li><em>Assess & Baseline:</em> Audit labor hours, picking error rates, travel distances, and space utilization.</li>
+        <li><em>Business Case & Tech Selection:</em> Target ROI hurdle rates (18–36 month payback period).</li>
+        <li><em>Pilot in Contained Zone:</em> Deploy AMRs across a single high-velocity SKU zone to validate performance.</li>
+        <li><em>System Integration:</em> Build APIs linking PLC hardware, WMS, and corporate ERP.</li>
+        <li><em>Reskill Workforce:</em> Transition manual pickers into robotic fleet supervisors.</li>
+        <li><em>Scale & Continuous Improvement:</em> Expand automation to remaining nodes and optimize slotting rules.</li>
+      </ol>
+    </article>
+
+    <!-- TOPIC 5.0 -->
+    <article class="sheet" id="topic5">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Topic 5.0</span>
+      <span class="nb-stamp nb-stamp--green">CO3</span>
+      <span class="nb-stamp nb-stamp--amber">Prof. Ajit Maurya</span>
+      <h2>Topic 5.0: Primary & Secondary Transport, Unitising & Logistics Costing</h2>
+
+      <ul>
+        <li><strong>Primary vs. Secondary Transport:</strong> Primary (Line-haul bulk FTL/FCL from plant to hub; metric: Cost per Ton-km) vs. Secondary (Last-mile LTL milk-runs from DC to retail/consumer; metric: Cost per drop).</li>
+        <li><strong>Unitising & Standards:</strong> Consolidating packages into standardized handling units. Standard ISO Pallet ($1000	ext{mm} 	imes 1200	ext{mm}$), Euro Pallet ($800	ext{mm} 	imes 1200	ext{mm}$), 20ft TEU (~33 CBM), 40ft FEU (~67 CBM).</li>
+        <li><strong>Logistics Cost Ratios:</strong> $	ext{Logistics Cost \% of Sales} = (	ext{Total Logistics Spend} / 	ext{Revenue}) 	imes 100$.</li>
+      </ul>
+    </article>
+
+    <!-- TOPIC 6.0 -->
+    <article class="sheet" id="topic6">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Topic 6.0</span>
+      <span class="nb-stamp nb-stamp--green">CO3 & CO4</span>
+      <span class="nb-stamp nb-stamp--amber">Prof. Ajit Maurya</span>
+      <h2>Topic 6.0: Logistics Information Systems, Reverse Logistics & 3PL/4PL</h2>
+
+      <ul>
+        <li><strong>LIS Architecture:</strong> Integrates OMS (order entry), ERP (financial/manufacturing master data), WMS (put-away/picking), and TMS (routing/freight billing).</li>
+        <li><strong>Reverse Logistics & The 5 Rs:</strong> Return, Repair, Remanufacture, Recycle, Resell. <strong>Gatekeeping</strong> screens returns at the initial touchpoint to avoid wasteful reverse shipping.</li>
+        <li><strong>1PL to 4PL:</strong> 1PL (Shipper owned fleet) &rarr; 2PL (Asset-based carriers) &rarr; 3PL (Contract logistics) &rarr; 4PL (Lead Logistics Partner managing multiple 3PLs via a central Control Tower).</li>
+      </ul>
+    </article>
+
+    <!-- TOPIC 7.0 -->
+    <article class="sheet" id="topic7">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Topic 7.0</span>
+      <span class="nb-stamp nb-stamp--green">CO1</span>
+      <span class="nb-stamp nb-stamp--amber">Prof. Praful More</span>
+      <span class="sig APPLICATION">🧮 NUMERICAL PRACTICE</span>
+      <h2>Topic 7.0: Deterministic Inventory Models: EOQ, EPQ, DRP & JIT</h2>
+
+      <div class="nb-fbox">
+        <span class="nb-fbox__label">EOQ & EPQ Formulations</span>
+        <div class="nb-fbox__math">
+          $$EOQ = \sqrt{rac{2DS}{H}}, \quad EPQ = \sqrt{rac{2DS}{H\left(1 - rac{d}{p}ight)}}, \quad I_{\max} = Q^*\left(1 - rac{d}{p}ight)$$
+        </div>
+      </div>
+      <p>Balances annual ordering cost $(D/Q)S$ with annual carrying cost $(Q/2)H$. At EOQ, Annual Ordering Cost equals Annual Holding Cost.</p>
+    </article>
+
+    <!-- TOPIC 8.0 -->
+    <article class="sheet" id="topic8">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Topic 8.0</span>
+      <span class="nb-stamp nb-stamp--green">CO1</span>
+      <span class="nb-stamp nb-stamp--amber">Prof. Praful More</span>
+      <span class="sig APPLICATION">🧮 NUMERICAL PRACTICE</span>
+      <h2>Topic 8.0: Managing Uncertainty, Safety Stock & Stochastic Newsvendor Model</h2>
+
+      <div class="nb-fbox">
+        <span class="nb-fbox__label">Uncertainty Formulations</span>
+        <div class="nb-fbox__math">
+          $$SS_{	ext{dual}} = z \cdot \sqrt{L \cdot \sigma_d^2 + d^2 \cdot \sigma_L^2}, \quad ROP = (d \cdot L) + SS$$
+          $$CR = rac{C_u}{C_u + C_o} = rac{P - C}{(P - C) + (C - S)}, \quad Q^* = \mu + z \cdot \sigma$$
+        </div>
+      </div>
+    </article>
+
+    <!-- TOPICS 9.0 & 10.0 -->
+    <article class="sheet" id="topic9">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Topics 9.0 & 10.0</span>
+      <span class="nb-stamp nb-stamp--green">CO2</span>
+      <span class="nb-stamp nb-stamp--amber">Prof. Manoj & Prof. Praful More</span>
+      <span class="sig HIGHPRIORITY">🔥 MUST MASTER</span>
+      <h2>Topics 9.0 & 10.0: International Business, Sourcing, INCOTERMS 2020 & EXIM</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Incoterm</th><th>Mode</th><th>Freight Paid</th><th>Insurance</th><th>Risk Transfer Point</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>EXW</strong></td><td>Any</td><td>Buyer</td><td>None</td><td>Seller premises</td></tr>
+            <tr><td><strong>FCA</strong></td><td>Any</td><td>Buyer</td><td>None</td><td>Loaded on buyer carrier</td></tr>
+            <tr><td><strong>CPT</strong></td><td>Any</td><td>Seller (to dest.)</td><td>None</td><td>First carrier</td></tr>
+            <tr><td><strong>CIP</strong></td><td>Any</td><td>Seller (to dest.)</td><td>Seller (All-Risk Cl. A)</td><td>First carrier</td></tr>
+            <tr><td><strong>DAP</strong></td><td>Any</td><td>Seller (to dest.)</td><td>None (Seller covers)</td><td>Arrived vehicle (ready to unload)</td></tr>
+            <tr><td><strong>DPU</strong></td><td>Any</td><td>Seller (to dest.)</td><td>None (Seller covers)</td><td>Unloaded at destination</td></tr>
+            <tr><td><strong>DDP</strong></td><td>Any</td><td>Seller (to dest.)</td><td>None (Seller covers)</td><td>Cleared for import at buyer door</td></tr>
+            <tr><td><strong>FAS</strong></td><td>Sea</td><td>Buyer</td><td>None</td><td>Alongside vessel</td></tr>
+            <tr><td><strong>FOB</strong></td><td>Sea</td><td>Buyer</td><td>None</td><td>On board vessel at origin</td></tr>
+            <tr><td><strong>CFR</strong></td><td>Sea</td><td>Seller (to port)</td><td>None</td><td>On board vessel at origin</td></tr>
+            <tr><td><strong>CIF</strong></td><td>Sea</td><td>Seller (to port)</td><td>Seller (Basic Cl. C)</td><td>On board vessel at origin</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">Key EXIM & Regulatory Concepts</span>
+        <ul>
+          <li><strong>Documentary Letters of Credit (LC):</strong> Irrevocable bank payment guarantee governed by UCP 600 strict documentary compliance. Confirmed LCs shield exporters against foreign bank default.</li>
+          <li><strong>CVD vs. ADD:</strong> Countervailing Duty (CVD) neutralizes foreign state subsidies; Anti-Dumping Duty (ADD) penalizes predatory below-cost pricing.</li>
+          <li><strong>Bonded Warehouses:</strong> Customs-controlled storage allowing duty deferral until goods enter domestic commerce.</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- TOPICS 11.0 & 12.0 -->
+    <article class="sheet" id="topic11">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Topics 11.0 & 12.0</span>
+      <span class="nb-stamp nb-stamp--green">CO1 & CO3</span>
+      <span class="nb-stamp nb-stamp--amber">Prof. Manoj</span>
+      <h2>Topics 11.0 & 12.0: The SCM Case Study Method & Optimization Modeling</h2>
+
+      <p><strong>The 6-Step Case Framework:</strong> Problem Definition &rarr; Stakeholders & Constraints &rarr; Quantitative Baseline &rarr; Alternative Formulation &rarr; Trade-Off Evaluation &rarr; Implementation Roadmap.</p>
+    </article>
+
+    <!-- TOPIC 13.0 -->
+    <article class="sheet" id="topic13">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Topic 13.0</span>
+      <span class="nb-stamp nb-stamp--green">CO1 & CO4</span>
+      <span class="nb-stamp nb-stamp--amber">Prof. Manoj</span>
+      <h2>Topic 13.0: Digital Twins, 9-Step CPFR & Emerging Technologies</h2>
+
+      <ul>
+        <li><strong>Digital Twins:</strong> Real-time IoT closed-loop simulation model of physical assets (Sense-Decide-Act-Learn).</li>
+        <li><strong>9-Step CPFR Framework:</strong> Front-End Agreement &rarr; Joint Business Plan &rarr; Sales Forecast &rarr; Sales Exceptions &rarr; Exception Resolution &rarr; Order Forecast &rarr; Order Exceptions &rarr; Order Generation &rarr; Fulfillment Assessment.</li>
+      </ul>
+    </article>
+
+    <!-- TOPIC 14.0 -->
+    <article class="sheet" id="topic14">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Topic 14.0</span>
+      <span class="nb-stamp nb-stamp--green">CO2</span>
+      <span class="nb-stamp nb-stamp--amber">Prof. Praful More & Prof. Ajit Maurya</span>
+      <h2>Topic 14.0: Sustainability in SCM, ESG Overview (Scope 1–3) & Circular SC</h2>
+
+      <div class="research-box">
+        <span class="research-box__tag">The GHG Protocol Emissions Scopes</span>
+        <ul>
+          <li><strong>Scope 1:</strong> Direct emissions from company-owned delivery fleets and warehouse boilers.</li>
+          <li><strong>Scope 2:</strong> Indirect emissions from purchased electricity and HVAC utilities.</li>
+          <li><strong>Scope 3 (80%+ of total emissions):</strong> Upstream supplier factories, contract ocean freight, and product disposal.</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- TOPIC 15.0 -->
+    <article class="sheet" id="topic15">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Topic 15.0</span>
+      <span class="nb-stamp nb-stamp--green">CO3</span>
+      <span class="nb-stamp nb-stamp--amber">Prof. Praful More & Prof. Ajit Maurya</span>
+      <h2>Topic 15.0: Agility, Digital Transformation & Geopolitical Risk Management</h2>
+
+      <ul>
+        <li><strong>Maritime Chokepoints:</strong> Bab el-Mandeb / Red Sea & Suez Canal, Panama Canal, Strait of Malacca, Strait of Hormuz.</li>
+        <li><strong>Resilience Framework:</strong> Time to Survive ($TTS$) vs. Time to Recover ($TTR$). If $TTR > TTS$, severe supply breakdown occurs.</li>
+      </ul>
+    </article>
+
+    <!-- 2023 SOLVED PAPER -->
+    <article class="sheet" id="pyq-2023">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--red">2023 End-Term Exam</span>
+      <span class="nb-stamp nb-stamp--blue">Course Code: OPN40</span>
+      <span class="nb-stamp nb-stamp--green">Total: 60 Marks</span>
+      <h2>2023 End-Term Examination — 100% Fully Solved Paper</h2>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">Question 1: Objective Fill-in-the-Blanks (20 Marks | 10 &times; 2M)</span>
+        <ol style="line-height:2;">
+          <li>"Perfect order fulfillment is a <strong><u>customer-facing</u></strong> metric that measures the percentage of orders delivered complete, on time, undamaged, and with accurate documentation."</li>
+          <li>"In supply chain disruption management, a systemic disruption occurs when <strong><u>Time to Recover (TTR)</u></strong> exceeds <strong><u>Time to Survive (TTS)</u></strong>."</li>
+          <li>"The two primary physical operational activities of logistics are <strong><u>Transportation</u></strong> and <strong><u>Warehousing (Inventory Management)</u></strong>."</li>
+          <li>"According to Marshall Fisher, responsive supply chains are primarily designed for <strong><u>Innovative</u></strong> products with unpredictable demand patterns and high profit margins."</li>
+          <li>"The Bullwhip Effect was famously illustrated and popularized through the <strong><u>Beer Distribution Game</u></strong> developed at MIT by Jay Forrester."</li>
+          <li>"In sustainable supply chain management, the rate of consumption of renewable resources should not exceed their rate of <strong><u>Regeneration (Replenishment)</u></strong>."</li>
+          <li>"When an enterprise increases its total number of decentralized warehouses, the required total safety stock increases according to the <strong><u>Square Root Law</u></strong> ($SS \propto \sqrt{N}$)."</li>
+          <li>"In the Supplier Preferencing Model, suppliers classify purchasing accounts into four quadrants: <strong><u>Core</u></strong>, <strong><u>Development</u></strong>, <strong><u>Exploitable</u></strong>, and <strong><u>Nuisance</u></strong>."</li>
+          <li>"The four primary components of inventory carrying cost are <strong><u>Capital Cost</u></strong>, <strong><u>Storage Space Cost</u></strong>, <strong><u>Inventory Service Cost (Taxes & Insurance)</u></strong>, and <strong><u>Inventory Risk Cost (Obsolescence & Damage)</u></strong>."</li>
+          <li>"The time-series forecasting method that assigns exponentially decreasing weights to older historical observations is known as <strong><u>Exponential Smoothing</u></strong> (or <strong><u>Weighted Moving Average</u></strong>)."</li>
+        </ol>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">Question 2: Inventory vs. Transport Trade-Off & EOQ Math (10 Marks)</span>
+        <p><strong>Problem:</strong> $D = 10,000 	ext{ units/yr}, S = \$10/	ext{order}, C = \$10, H = \$5.00/	ext{unit/yr}, 	ext{Freight} = \$10.00/	ext{unit}$. Calculate EOQ, optimal frequency, and total annual logistics cost.</p>
+        <div class="nb-fbox">
+          <span class="nb-fbox__label">Model Mathematical Solution</span>
+          <div class="nb-fbox__math">
+            $$EOQ = \sqrt{rac{2 	imes 10,000 	imes 10}{5}} = \sqrt{40,000} = \mathbf{200 	ext{ units}}$$
+            $$N^* = rac{10,000}{200} = \mathbf{50 	ext{ orders per year}}$$
+            $$	ext{Annual Ordering Cost} = 50 	imes \$10 = \$500.00, \quad 	ext{Annual Holding Cost} = \left(rac{200}{2}ight) 	imes 5 = \$500.00$$
+            $$	ext{Total Annual Inventory Cost} = \$500 + \$500 = \mathbf{\$1,000.00}$$
+            $$	ext{Total Annual Transportation Cost} = 10,000 	imes \$10.00 = \mathbf{\$100,000.00}$$
+            $$TC_{	ext{total}} = \$1,000.00 + \$100,000.00 = \mathbf{\$101,000.00 	ext{ per year}}$$
+          </div>
+        </div>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">Question 3: ABC Pharma Resiliency Case (10 Marks)</span>
+        <ul>
+          <li><strong>Diagnostic:</strong> Sole-source reliance on Wuhan for critical API created $TTS pprox 25 	ext{ days}$ while $TTR pprox 120 	ext{ days}$. Because $TTR \gg TTS$, production halted.</li>
+          <li><strong>Resiliency Strategy:</strong> Dual-sourcing architecture (70/30 rule with a domestic manufacturer), 60-day strategic safety buffer in bonded warehouse, and pre-cleared regulatory filings.</li>
+        </ul>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">Question 4: Short Notes (20 Marks | 5 &times; 4M)</span>
+        <ul>
+          <li><strong>(a) Byproduct Synergy:</strong> Industrial waste converted into feedstock for another industry (e.g., slag in cement).</li>
+          <li><strong>(b) CPFR vs. Traditional:</strong> CPFR shares POS data and synchronizes joint plans, dampening the Bullwhip Effect.</li>
+          <li><strong>(c) SCOR Model:</strong> Plan, Source, Make, Deliver, Return, Enable.</li>
+          <li><strong>(d) ITR & DOS:</strong> $ITR = 	ext{COGS} / 	ext{Avg Inventory}, DOS = 365 / ITR$.</li>
+          <li><strong>(e) Multimodal Transport:</strong> Single Through B/L across multiple modes using ISO standard containers.</li>
+          <li><strong>(f) Kraljic Matrix:</strong> Strategic, Leverage, Bottleneck, Routine items based on Profit Impact vs Supply Risk.</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- 2024 SOLVED PAPER -->
+    <article class="sheet" id="pyq-2024">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--red">2024 End-Term Exam</span>
+      <span class="nb-stamp nb-stamp--blue">Course Code: OPN405</span>
+      <span class="nb-stamp nb-stamp--green">Total: 60 Marks</span>
+      <h2>2024 End-Term Examination — 100% Fully Solved Paper</h2>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">Question 1: Demand Planning & Inputs (10 Marks)</span>
+        <ul>
+          <li><strong>Strategic Role:</strong> Drives all downstream operations, dampens Bullwhip, optimizes working capital.</li>
+          <li><strong>Four Core Inputs:</strong> Real-time POS scanner data, promotional calendars, downstream pipeline visibility, macroeconomic indicators.</li>
+        </ul>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">Question 2: ElectroTech Solutions ABC Inventory Redesign (15 Marks)</span>
+        <ul>
+          <li><strong>Policies:</strong> Cat A (Continuous review $(r, Q)$, daily cycle counts), Cat B (Periodic review $(R, S)$, bi-weekly), Cat C (Two-bin / VMI).</li>
+          <li><strong>Cat A Math:</strong> $D = 50,000, S = \$100, H = \$2.00 \implies EOQ = \sqrt{(2 	imes 50,000 	imes 100)/2} = \mathbf{2,236 	ext{ units}}$. $N^* = \mathbf{22.36 	ext{ orders/yr}}$, Annual Holding Cost $= \mathbf{\$2,236.07/	ext{year}}$.</li>
+          <li><strong>Continuous Review:</strong> Pros: Reorders immediately at ROP, lowers safety stock. Cons: Expensive IT scanning overhead.</li>
+        </ul>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">Question 3: OptiFresh Route Optimization (15 Marks)</span>
+        <p><strong>Solution:</strong> Hybrid cluster routing. Tier 1 (35 high-volume stores) gets twice-daily replenishment via peripheral micro-cross-docks; Tier 2 (85 neighborhood stores) maintains once-daily VRP morning delivery. Eradicates 95% of stockouts with only a 14% logistics cost increase.</p>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">Question 4: Short Notes (20 Marks | 4 &times; 5M)</span>
+        <ul>
+          <li><strong>(a) SCRM 4-Step Framework:</strong> Identification &rarr; Assessment &rarr; Mitigation &rarr; Monitoring.</li>
+          <li><strong>(b) Goods-to-Person Automation:</strong> AMRs/ASRS eliminate walking travel, tripling pick rates.</li>
+          <li><strong>(c) Supplier Preferencing:</strong> Core, Development, Exploitable, Nuisance.</li>
+          <li><strong>(d) Cross-Docking vs. Traditional:</strong> Cross-docking moves goods across docks in under 24 hours with zero intermediate storage.</li>
+          <li><strong>(e) Logistics Cost Elements:</strong> Freight, warehousing, inventory capital, packaging, IT.</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- 2025 SOLVED PAPER -->
+    <article class="sheet" id="pyq-2025">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--red">2025 End-Term Exam</span>
+      <span class="nb-stamp nb-stamp--blue">Course Code: OPN417</span>
+      <span class="nb-stamp nb-stamp--green">Total: 60 Marks</span>
+      <h2>2025 End-Term Examination — 100% Fully Solved Paper</h2>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">Question 1: Three-Part Quantitative Inventory Mastery (15 Marks | 3 &times; 5M)</span>
+        <div class="nb-fbox">
+          <span class="nb-fbox__label">1. Deterministic EOQ</span>
+          <div class="nb-fbox__math">
+            $$D = 5,000, S = \$40, H = \$2.00 \implies EOQ = \sqrt{rac{2 	imes 5,000 	imes 40}{2}} = \mathbf{447.21 \implies 447 	ext{ units}}$$
+            $$TC^* = \left(rac{5,000}{447.21}ight)40 + \left(rac{447.21}{2}ight)2.00 = \$447.21 + \$447.21 = \mathbf{\$894.43/	ext{year}}$$
+          </div>
+        </div>
+        <div class="nb-fbox">
+          <span class="nb-fbox__label">2. Stochastic Newsvendor Umbrella</span>
+          <div class="nb-fbox__math">
+            $$P = \$30, C = \$15, S = \$10 \implies C_u = \$15, C_o = \$5$$
+            $$CR = rac{15}{15 + 5} = rac{15}{20} = \mathbf{0.75 \implies 75\%}, \quad \Phi(z) = 0.75 \implies \mathbf{z = 0.674}$$
+          </div>
+        </div>
+        <div class="nb-fbox">
+          <span class="nb-fbox__label">3. Continuous Review Pharma Vaccine</span>
+          <div class="nb-fbox__math">
+            $$s = 200, S = 500, \mu_{DL} = 150, \sigma_{DL} = 30$$
+            $$SS = s - \mu_{DL} = 200 - 150 = \mathbf{50 	ext{ doses}}$$
+            $$z = rac{50}{30} = 1.667 pprox 1.67 \implies \mathbf{CSL = \Phi(1.67) = 95.25\%}$$
+          </div>
+        </div>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">Question 2: INCOTERMS Matching & Global Entry (10 Marks)</span>
+        <ul>
+          <li><strong>Matching:</strong> 1-CFR to d, 2-CIF to e, 3-CPT to f, 4-CIP to g, 5-DAP to h, 6-DPU to i, 7-DDP to j, 8-EXW to a, 9-FCA to b, 10-FOB to c.</li>
+          <li><strong>Entry Modes:</strong> Exporting (low risk/control), Licensing (fast scale, IP risk), Joint Ventures (shared risk, friction), Wholly Owned Subsidiaries (full control, maximum capital).</li>
+        </ul>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">Question 3: Sustainability & ESG Alignment (10 Marks)</span>
+        <p>Decarbonizing across Scope 1 (EV delivery fleets), Scope 2 (Rooftop solar PV arrays), and Scope 3 (Road-to-rail shifts, green marine fuels, packaging cube optimization).</p>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">Question 4: S&OP & Automotive Chip Shortage (10 Marks)</span>
+        <p>Chip shortage caused by 2020 automaker order cancellations and 26-week foundry lead times. 5-step monthly S&OP balances seasonal demand via Level (constant output) or Chase (matching output) strategies.</p>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">Question 5: Multi-Channel Distribution & Unitising (10 Marks)</span>
+        <p>Omni-channel fulfillment pools safety stock; Center of Gravity optimizes facility locations minimizing transportation ton-mileage.</p>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">Question 6: Smart Warehouse Case (10 Marks)</span>
+        <p>Sense-Decide-Act-Learn closed loop using AMRs and AI dynamic slotting deployed across 4 structured rollout phases.</p>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">Question 7: EXIM Concepts & INCOTERMS Role (10 Marks)</span>
+        <p>Tariffs, Warehousing economic role, Trading blocs, CVD vs ADD, Bonded warehouses, Digital risks, and INCOTERMS 2020 legal risk allocation.</p>
+      </div>
+    </article>
+
+    <!-- PYQ INTELLIGENCE -->
+    <article class="sheet" id="pyq-intel">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--amber">Exam Intelligence</span>
+      <h2>PYQ Intelligence & Frequency Priority Matrix</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Priority Level</th><th>Concepts & Frameworks</th><th>Exam Frequency</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>🔥 MUST MASTER</strong></td>
+              <td>Classical EOQ Math, INCOTERMS 2020 Matrix, Smart Warehousing 6-Steps, 5-Step S&OP Cadence</td>
+              <td><strong>100% Recurrence (Appeared in all 3 papers)</strong></td>
+            </tr>
+            <tr>
+              <td><strong>⚡ HIGH PRIORITY</strong></td>
+              <td>Safety Stock Uncertainty, Fisher Strategic Alignment, Kraljic Matrix, ESG Scope 1–3, EXIM LCs</td>
+              <td><strong>85% Recurrence</strong></td>
+            </tr>
+            <tr>
+              <td><strong>🧮 NUMERICAL</strong></td>
+              <td>EOQ & Total Cost, EPQ, Quantity Discount Breakeven, Newsvendor Critical Fractile, (s, S) CSL</td>
+              <td><strong>15–20 Marks per paper guaranteed</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <!-- FORMULA MASTER -->
+    <article class="sheet" id="formula-master">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Reference</span>
+      <h2>Master SCM Formula Directory</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Model</th><th>Formula</th><th>Key Variables</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Classical EOQ</strong></td><td>$$Q^* = \sqrt{rac{2DS}{H}}$$</td><td>$D$: Annual Demand, $S$: Order Cost, $H$: Annual Holding Cost.</td></tr>
+            <tr><td><strong>EPQ</strong></td><td>$$Q^* = \sqrt{rac{2DS}{H(1 - d/p)}}$$</td><td>$p$: Production rate, $d$: Demand rate ($p > d$).</td></tr>
+            <tr><td><strong>Total Cost</strong></td><td>$$TC = \left(rac{D}{Q}ight)S + \left(rac{Q}{2}ight)H$$</td><td>Holding equals Ordering cost at EOQ.</td></tr>
+            <tr><td><strong>Safety Stock (Dual)</strong></td><td>$$SS = z \cdot \sqrt{L \sigma_d^2 + d^2 \sigma_L^2}$$</td><td>Combined demand and lead-time uncertainty.</td></tr>
+            <tr><td><strong>Newsvendor CR</strong></td><td>$$CR = rac{C_u}{C_u + C_o}$$</td><td>$C_u = P - C, C_o = C - S$. Optimal stock $Q^* = \mu + z \cdot \sigma$.</td></tr>
+            <tr><td><strong>Square Root Law</strong></td><td>$$SS_{	ext{central}} = SS_{	ext{decentral}} 	imes \sqrt{rac{N_{	ext{new}}}{N_{	ext{old}}}}$$</td><td>Quantifies warehouse consolidation inventory savings.</td></tr>
+            <tr><td><strong>Center of Gravity</strong></td><td>$$X^* = rac{\sum (X_i W_i R_i)}{\sum (W_i R_i)}$$</td><td>Minimizes total transportation ton-mileage.</td></tr>
+            <tr><td><strong>Cash-to-Cash</strong></td><td>$$C2C = DIO + DSO - DPO$$</td><td>Working capital velocity indicator.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <!-- REVISION BLITZ -->
+    <article class="sheet" id="revision-blitz">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--green">Last-Minute Prep</span>
+      <h2>Last-Minute Exam Revision Blitz</h2>
+
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">1-Hour Quick Blitz</span>
+        <ul>
+          <li><strong>INCOTERMS:</strong> DPU is the <em>only</em> rule requiring seller to unload. CIP requires All-Risk Cl. A insurance. FOB risk transfers onboard at origin.</li>
+          <li><strong>EOQ:</strong> $Q^* = \sqrt{2DS/H}$. Total cost at EOQ: $TC^* = \sqrt{2DSH}$.</li>
+          <li><strong>Fisher Alignment:</strong> Functional &rarr; Physically Efficient; Innovative &rarr; Market-Responsive.</li>
+          <li><strong>S&OP Cadence:</strong> Data &rarr; Demand &rarr; Supply &rarr; Pre-S&OP &rarr; Executive S&OP.</li>
+        </ul>
+      </div>
+
+      <div class="research-box">
+        <span class="research-box__tag">30-Second Rapid Definitions</span>
+        <ul>
+          <li><strong>Bullwhip Effect:</strong> Amplification of demand variance moving upstream from retailer to manufacturer.</li>
+          <li><strong>Cross-Docking:</strong> Direct transfer of inbound goods across docks into outbound trucks in &lt;24 hours with zero storage.</li>
+          <li><strong>Gatekeeping:</strong> Screening returns at initial customer touchpoints to prevent unauthorized reverse freight.</li>
+          <li><strong>Countervailing Duty:</strong> Tariff neutralizing foreign government export subsidies.</li>
+          <li><strong>Bonded Warehouse:</strong> Customs-secured facility allowing duty deferral until domestic release.</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- GLOSSARY -->
+    <article class="sheet" id="glossary">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Glossary</span>
+      <h2>SCM Acronym Directory</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Acronym</th><th>Full Technical Name</th><th>Operational Definition</th></tr></thead>
+          <tbody>
+            <tr><td><strong>3PL / 4PL</strong></td><td>Third- / Fourth-Party Logistics</td><td>Contract logistics executor vs. Non-asset Control Tower integrator.</td></tr>
+            <tr><td><strong>AMR / AGV</strong></td><td>Autonomous Mobile Robot / Auto Guided Vehicle</td><td>LiDAR-guided flexible robot vs. magnetic track-guided cart.</td></tr>
+            <tr><td><strong>ASN</strong></td><td>Advanced Shipping Notice</td><td>EDI 856 message detailing package contents prior to arrival.</td></tr>
+            <tr><td><strong>ASRS</strong></td><td>Automated Storage & Retrieval System</td><td>Computer-controlled high-bay vertical rack storage.</td></tr>
+            <tr><td><strong>BOPIS</strong></td><td>Buy Online, Pick Up In Store</td><td>Omni-channel retail fulfillment utilizing stores as pickup nodes.</td></tr>
+            <tr><td><strong>C2C</strong></td><td>Cash-to-Cash Cycle Time</td><td>$DIO + DSO - DPO$. Working capital metric.</td></tr>
+            <tr><td><strong>CPFR</strong></td><td>Collaborative Planning, Forecasting & Replenishment</td><td>9-step VICS industry standard synchronizing POS demand with production.</td></tr>
+            <tr><td><strong>CSL</strong></td><td>Cycle Service Level</td><td>Probability of zero stockouts during lead time ($\Phi(z)$).</td></tr>
+            <tr><td><strong>DRP</strong></td><td>Distribution Resource Planning</td><td>Time-phased gross-to-net multi-echelon replenishment scheduling.</td></tr>
+            <tr><td><strong>EOQ / EPQ</strong></td><td>Economic Order / Production Quantity</td><td>Deterministic lot-sizing formulas balancing ordering with holding costs.</td></tr>
+            <tr><td><strong>INCOTERMS</strong></td><td>International Commercial Terms</td><td>ICC standard 11 rules defining cross-border buyer/seller risk and cost allocation.</td></tr>
+            <tr><td><strong>ITR / DOS</strong></td><td>Inventory Turnover Ratio / Days of Supply</td><td>$ITR = 	ext{COGS} / 	ext{Avg Inv}, DOS = 365 / ITR$. Inventory velocity metrics.</td></tr>
+            <tr><td><strong>LC</strong></td><td>Letter of Credit</td><td>Irrevocable bank payment guarantee under ICC UCP 600 rules.</td></tr>
+            <tr><td><strong>OTIF</strong></td><td>On-Time In-Full</td><td>Delivery service metric evaluating perfect order fulfillment punctuality.</td></tr>
+            <tr><td><strong>S&OP / S&OE</strong></td><td>Sales & Operations Planning / Execution</td><td>Monthly executive alignment vs. daily to 12-week operational tracking.</td></tr>
+            <tr><td><strong>VRP</strong></td><td>Vehicle Routing Problem</td><td>Mathematical fleet routing optimization algorithms.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </main>
+</div>
+
+<script>
+// Search logic
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+const contentNodes = document.querySelectorAll('article.sheet h2, article.sheet h3, article.sheet h4, article.sheet .research-box, article.sheet .launchpad-box, article.sheet .examprep-box');
+
+searchInput.addEventListener('input', function() {
+  const query = this.value.trim().toLowerCase();
+  if (query.length < 2) {
+    searchResults.style.display = 'none';
+    searchResults.innerHTML = '';
+    return;
+  }
+  
+  let matches = [];
+  contentNodes.forEach(node => {
+    const text = node.innerText;
+    if (text.toLowerCase().includes(query)) {
+      const parentSheet = node.closest('article.sheet');
+      const id = parentSheet ? parentSheet.id : '';
+      matches.push({
+        title: node.innerText.substring(0, 70),
+        id: id
+      });
+    }
+  });
+
+  if (matches.length > 0) {
+    searchResults.innerHTML = matches.slice(0, 7).map(m => 
+      `<a href="#${m.id}"><strong>${m.title}</strong><br><small style="color:var(--pencil)">Jump to section</small></a>`
+    ).join('');
+    searchResults.style.display = 'block';
+  } else {
+    searchResults.innerHTML = '<div style="padding:10px 14px; font-size:13px; color:var(--pencil)">No matches found</div>';
+    searchResults.style.display = 'block';
+  }
+});
+
+document.addEventListener('click', function(e) {
+  if (!searchResults.contains(e.target) && e.target !== searchInput) {
+    searchResults.style.display = 'none';
+  }
+});
+
+// Pomodoro Timer Logic
+const timerBtn = document.getElementById('timerBtn');
+const timerPanel = document.getElementById('timerPanel');
+const clockDisplay = document.getElementById('clockDisplay');
+const timerStart = document.getElementById('timerStart');
+const timerReset = document.getElementById('timerReset');
+let timerInterval = null;
+let timeLeft = 25 * 60;
+let isRunning = false;
+
+timerBtn.addEventListener('click', () => {
+  timerPanel.classList.toggle('open');
+});
+
+timerStart.addEventListener('click', () => {
+  if (isRunning) {
+    clearInterval(timerInterval);
+    timerStart.innerText = 'Start';
+    isRunning = false;
+  } else {
+    isRunning = true;
+    timerStart.innerText = 'Pause';
+    timerInterval = setInterval(() => {
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        alert('Pomodoro study interval completed! Take a 5-minute break.');
+        timeLeft = 25 * 60;
+        isRunning = false;
+        timerStart.innerText = 'Start';
+      } else {
+        timeLeft--;
+      }
+      updateClock();
+    }, 1000);
+  }
+});
+
+timerReset.addEventListener('click', () => {
+  clearInterval(timerInterval);
+  timeLeft = 25 * 60;
+  isRunning = false;
+  timerStart.innerText = 'Start';
+  updateClock();
+});
+
+function updateClock() {
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  clockDisplay.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+}
+
+// Theme Toggle
+const themeBtn = document.getElementById('themeBtn');
+themeBtn.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  const next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+});
+
+// Scroll Progress Bar
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  document.getElementById('progressBar').style.width = scrolled + '%';
+});
+</script>
+
+</body>
+</html>

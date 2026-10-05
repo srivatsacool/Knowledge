@@ -1,0 +1,40 @@
+{
+  "title": "LSCM \u00b7 Architecture, Drivers & Strategic Fit (Prof. Ajit Maurya)",
+  "slug": "lscm-ajit-maurya-notebook",
+  "subject": "Operations",
+  "category": "Supply Chain Strategy",
+  "description": "Comprehensive study notebook covering supply chain evolution, 6 foundational drivers, Fisher alignment, S&OP monthly cadence, network cost curves, unitising, reverse logistics, and 5 industry cases.",
+  "file": "01_Ajit_Sir_LSCM_Notebook.html",
+  "tags": [
+    "LSCM",
+    "Supply Chain",
+    "Operations",
+    "WeSchool",
+    "Trimester IV",
+    "PYQ",
+    "Incoterms",
+    "EOQ"
+  ],
+  "status": "published",
+  "source": "curriculum/weschool-term4-lscm",
+  "version": "2.0.0",
+  "templateVersion": "erp-notebook-2.0",
+  "updated": "2026-10-05",
+  "featured": false,
+  "readTimeMinutes": 60,
+  "courseContext": {
+    "course": "Logistics & Supply Chain Management",
+    "code": "OPN40 / OPN405 / OPN417",
+    "instructors": [
+      "Prof. Ajit M. Maurya",
+      "Prof. Manoj",
+      "Prof. Praful More"
+    ],
+    "outcomes": [
+      "CO1",
+      "CO2",
+      "CO3",
+      "CO4"
+    ]
+  }
+}

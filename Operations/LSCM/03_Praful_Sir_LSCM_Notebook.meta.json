@@ -1,0 +1,40 @@
+{
+  "title": "LSCM \u00b7 Quantitative Inventory Theory & Sourcing (Prof. Praful More)",
+  "slug": "lscm-praful-more-notebook",
+  "subject": "Operations",
+  "category": "Inventory Analytics",
+  "description": "Comprehensive study notebook covering deterministic EOQ/EPQ, quantity discount breakevens, safety stock uncertainty formulations, the Newsvendor critical ratio, double marginalization, Kraljic matrix, and quiz deck.",
+  "file": "03_Praful_Sir_LSCM_Notebook.html",
+  "tags": [
+    "LSCM",
+    "Supply Chain",
+    "Operations",
+    "WeSchool",
+    "Trimester IV",
+    "PYQ",
+    "Incoterms",
+    "EOQ"
+  ],
+  "status": "published",
+  "source": "curriculum/weschool-term4-lscm",
+  "version": "2.0.0",
+  "templateVersion": "erp-notebook-2.0",
+  "updated": "2026-10-05",
+  "featured": false,
+  "readTimeMinutes": 60,
+  "courseContext": {
+    "course": "Logistics & Supply Chain Management",
+    "code": "OPN40 / OPN405 / OPN417",
+    "instructors": [
+      "Prof. Ajit M. Maurya",
+      "Prof. Manoj",
+      "Prof. Praful More"
+    ],
+    "outcomes": [
+      "CO1",
+      "CO2",
+      "CO3",
+      "CO4"
+    ]
+  }
+}

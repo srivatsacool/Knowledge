@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>LSCM Study Notebook · Prof. Ajit M. Maurya (WeSchool Trimester IV)</title>
+  <meta name="description" content="Master Study Notebook covering SCM Architecture, 6 Drivers, Fisher Alignment, S&OP Cadence, Logistics Network Design, Unitising, Reverse Logistics, 5 Enterprise Cases, and Solved PYQs.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({startOnLoad: true, theme: 'neutral'});</script>
+
+  <style>
+/* Paper Edition Design Tokens */
+:root {
+  --desk: #e9e1cf;
+  --bg: #e9e1cf;
+  --paper: #fcf8ee;
+  --paper2: #fffdf7;
+  --card: #fffdf7;
+  --rule: #d6e3ef;
+  --margin: #e28b8b;
+  --line: #c9bfa8;
+  
+  --ink: #1d3c8c;
+  --ink2: #2f5fc4;
+  --text: #25262b;
+  --pencil: #5a5d66;
+  
+  --shadow-sheet: 0 1px 2px rgba(60, 45, 20, 0.12), 0 8px 24px rgba(60, 45, 20, 0.14);
+  --shadow-card: 0 1px 3px rgba(60, 45, 20, 0.10), 0 4px 12px rgba(60, 45, 20, 0.08);
+  --shadow-sticky: 0 2px 4px rgba(0, 0, 0, 0.12), 0 10px 18px -6px rgba(0, 0, 0, 0.22);
+  
+  --hl-yellow: rgba(255, 224, 61, 0.68);
+  --hl-green: rgba(120, 228, 156, 0.62);
+  --hl-blue: rgba(110, 196, 255, 0.55);
+  --hl-pink: rgba(255, 138, 188, 0.52);
+
+  --sticky-y: #fff2a1;
+  --sticky-r: #ffd6d3;
+  --sticky-b: #d9ecff;
+  --sticky-g: #d8f5dc;
+  --sticky-text: #22252a;
+  
+  --red: #c2362f;
+  --green: #1d7a45;
+  --amber: #b86e00;
+  --blue: #1d3c8c;
+  
+  --serif: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --sans: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --hand: "Caveat", "Segoe Print", cursive;
+  --hand2: "Patrick Hand", "Segoe Print", cursive;
+  --math: "STIX Two Text", "Cambria Math", Georgia, serif;
+  --mono: "JetBrains Mono", monospace;
+  --ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  --bar: 52px;
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .4  0 0 0 0 .3  0 0 0 0 .1  0 0 0 .07 0'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>");
+}
+
+[data-theme="dark"] {
+  --desk: #0f141d;
+  --bg: #0f141d;
+  --paper: #18202e;
+  --paper2: #1d2636;
+  --card: #1d2636;
+  --rule: #243049;
+  --margin: #7c3d48;
+  --line: #344058;
+  
+  --ink: #9cc0ff;
+  --ink2: #7fb0ff;
+  --text: #e7e9ef;
+  --pencil: #aab3c5;
+  
+  --shadow-sheet: 0 2px 4px rgba(0, 0, 0, 0.45), 0 10px 28px rgba(0, 0, 0, 0.40);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.35), 0 6px 16px rgba(0, 0, 0, 0.30);
+  --shadow-sticky: 0 2px 6px rgba(0, 0, 0, 0.45), 0 12px 24px -6px rgba(0, 0, 0, 0.50);
+  
+  --hl-yellow: rgba(255, 214, 0, 0.32);
+  --hl-green: rgba(70, 220, 130, 0.30);
+  --hl-blue: rgba(80, 170, 255, 0.32);
+  --hl-pink: rgba(255, 105, 170, 0.32);
+
+  --sticky-y: #2d2a1b;
+  --sticky-r: #331f20;
+  --sticky-b: #1c2738;
+  --sticky-g: #1c2e22;
+  --sticky-text: #f0f3f8;
+  
+  --red: #ff8a80;
+  --green: #7be0a4;
+  --amber: #ffc266;
+  --blue: #8fb2f2;
+}
+
+/* Scrollbar Suppression */
+html, body, .side, .main, #searchResults, * {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+*::-webkit-scrollbar { display: none !important; width: 0 !important; }
+
+/* Base Reset */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--bar) + 14px); }
+body {
+  margin: 0; background: var(--desk) var(--grain); color: var(--text);
+  font-family: var(--serif); font-size: 16.5px; line-height: 1.7;
+}
+a { color: var(--ink2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Paper Components */
+.nb-card {
+  background: var(--paper2); border: 1.5px solid var(--line); border-radius: 8px;
+  box-shadow: var(--shadow-card); padding: 20px 22px; margin: 24px 0; position: relative;
+}
+.nb-tape {
+  position: absolute; width: 86px; height: 22px; top: -10px; left: 22px; transform: rotate(-3.5deg);
+  background: repeating-linear-gradient(-45deg, rgba(255,255,255,.45) 0 5px, rgba(255,255,255,0) 5px 10px), rgba(255,185,200,.75);
+  opacity: .92; pointer-events: none; z-index: 5;
+}
+.nb-tape--right { left: auto; right: 22px; transform: rotate(4deg); }
+.nb-card__title { font-family: var(--hand); font-size: 1.45rem; color: var(--blue); margin-top: 0; margin-bottom: 8px; font-weight: 700; }
+
+.nb-sticky {
+  position: relative; background: var(--sticky-y); color: var(--sticky-text); font-family: var(--hand2);
+  font-size: 1.12rem; line-height: 1.55; padding: 18px 20px 16px; margin: 22px 0; border-radius: 2px 2px 14px 2px;
+  box-shadow: var(--shadow-sticky); transform: rotate(-0.8deg);
+}
+.nb-sticky::before {
+  content: ""; position: absolute; top: -11px; left: 50%; width: 90px; height: 22px; transform: translateX(-50%) rotate(-2deg);
+  background: repeating-linear-gradient(45deg, rgba(255,255,255,.55) 0 6px, rgba(255,255,255,.25) 6px 12px), rgba(160,200,230,.65);
+}
+.nb-sticky--pink { background: var(--sticky-r); transform: rotate(0.6deg); }
+.nb-sticky--blue { background: var(--sticky-b); transform: rotate(-0.5deg); }
+.nb-sticky--green { background: var(--sticky-g); transform: rotate(0.8deg); }
+.nb-sticky__title { font-family: var(--hand); font-weight: 700; font-size: 1.4rem; margin: 0 0 6px; color: var(--ink); line-height: 1.15; }
+.nb-sticky--pink .nb-sticky__title { color: var(--red); }
+
+.nb-stamp {
+  display: inline-block; padding: 2px 10px; font-family: var(--ui); font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em; border: 1.5px solid var(--ink); border-radius: 4px;
+  background: var(--paper); color: var(--ink); transform: rotate(-1.5deg); margin-right: 6px;
+}
+.nb-stamp--blue { border-color: var(--blue); color: var(--blue); }
+.nb-stamp--green { border-color: var(--green); color: var(--green); }
+.nb-stamp--amber { border-color: var(--amber); color: var(--amber); }
+.nb-stamp--red { border-color: var(--red); color: var(--red); }
+
+.nb-fbox {
+  position: relative; border: 2px solid var(--ink); border-radius: 6px; padding: 16px 20px;
+  margin: 20px 0 24px; background: var(--paper2); box-shadow: 5px 5px 0 var(--blue);
+}
+.nb-fbox__label { font-family: var(--hand); color: var(--pencil); font-size: 1.15rem; display: block; margin-bottom: 6px; font-weight: 700; }
+.nb-fbox__math { font-family: var(--math); font-size: 1.25rem; line-height: 1.8; color: var(--ink); overflow-x: auto; }
+.nb-fbox__dict { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; margin: 12px 0 0; font-size: .95rem; font-family: var(--ui); }
+.nb-fbox__dict dt { font-weight: 700; color: var(--blue); }
+.nb-fbox__dict dd { margin: 0; color: var(--pencil); }
+
+/* Pedagogical Separation Boxes */
+.launchpad-box {
+  margin: 18px 0; padding: 14px 18px; background: rgba(255, 248, 225, 0.65);
+  border: 1.5px solid #d4c19c; border-left: 6px solid #b86e00; border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(184, 110, 0, 0.08); position: relative;
+}
+[data-theme="dark"] .launchpad-box { background: rgba(45, 42, 27, 0.6); border-color: #554a2b; border-left-color: #ffc266; }
+.launchpad-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--amber); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+.research-box {
+  margin: 20px 0; padding: 16px 20px; background: rgba(240, 246, 255, 0.75);
+  border: 1.5px solid #b8cce6; border-left: 6px solid var(--ink); border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(29, 60, 140, 0.08); position: relative;
+}
+[data-theme="dark"] .research-box { background: rgba(28, 39, 56, 0.65); border-color: #2b3d5c; border-left-color: #9cc0ff; }
+.research-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--ink); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+.scenario-box {
+  margin: 18px 0; padding: 14px 18px; background: rgba(240, 252, 244, 0.75);
+  border: 1.5px solid #b5d9c2; border-left: 6px solid var(--green); border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(29, 122, 69, 0.08); position: relative;
+}
+[data-theme="dark"] .scenario-box { background: rgba(28, 46, 34, 0.65); border-color: #2e4a36; border-left-color: #7be0a4; }
+.scenario-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--green); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+.examprep-box {
+  margin: 18px 0; padding: 14px 18px; background: rgba(254, 242, 242, 0.75);
+  border: 1.5px solid #eec0bd; border-left: 6px solid var(--red); border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(194, 54, 47, 0.08); position: relative;
+}
+[data-theme="dark"] .examprep-box { background: rgba(51, 31, 32, 0.65); border-color: #593033; border-left-color: #ff8a80; }
+.examprep-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--red); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+/* Top Bar */
+.topbar {
+  position: sticky; top: 0; z-index: 60; height: var(--bar);
+  display: flex; align-items: center; gap: 8px; padding: 0 16px;
+  background: var(--paper); border-bottom: 2px solid var(--line);
+  font-family: var(--ui); font-size: 14px; box-shadow: 0 2px 0 var(--rule);
+}
+.topbar .ttl { font-family: var(--hand); font-weight: 700; font-size: 1.25rem; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 0 1 auto; }
+.topbar .sp { flex: 1; }
+.btn {
+  font: 600 13px var(--ui); background: var(--card); color: var(--text);
+  border: 1.5px solid var(--line); border-radius: 6px; padding: 6px 11px;
+  cursor: pointer; min-height: 34px; transition: background 0.15s ease;
+}
+.btn:hover { background: var(--hl-yellow); }
+.btn[aria-pressed=true], .btn.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.progressWrap { position: absolute; left: 0; right: 0; bottom: -4px; height: 4px; background: transparent; }
+#progressBar { height: 4px; width: 0; background: linear-gradient(90deg, var(--green), var(--ink2)); transition: width .3s; }
+
+.search { position: relative; }
+.search input {
+  font: 14px var(--ui); padding: 6px 12px; width: 200px;
+  background: var(--card); color: var(--text); border: 1.5px solid var(--line);
+  border-radius: 6px; min-height: 34px;
+}
+.search input:focus { border-color: var(--ink); outline: none; }
+#searchResults {
+  position: absolute; right: 0; top: 40px; width: min(480px, 92vw); max-height: 60vh;
+  overflow: auto; background: var(--paper2); border: 2px solid var(--line);
+  border-radius: 8px; box-shadow: var(--shadow-sheet); display: none; font-family: var(--ui); z-index: 100;
+}
+#searchResults.open { display: block; }
+#searchResults a { display: block; padding: 10px 14px; border-bottom: 1px solid var(--line); text-decoration: none; color: var(--text); font-size: 13.5px; }
+#searchResults a:hover { background: var(--hl-yellow); }
+
+.timerPanel {
+  position: absolute; right: 8px; top: calc(var(--bar) + 6px); width: 260px;
+  background: var(--paper2); border: 2px solid var(--line); border-radius: 10px;
+  padding: 14px; display: none; box-shadow: var(--shadow-sheet); z-index: 100;
+}
+.timerPanel.open { display: block; }
+.timerPanel .clock { font: 700 36px var(--hand); text-align: center; color: var(--ink); }
+.timerPanel .row { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+
+/* Layout Shell */
+.shell { display: grid; grid-template-columns: 280px minmax(0, 1fr); max-width: 1360px; margin: 0 auto; gap: 0; }
+.side {
+  position: sticky; top: var(--bar); height: calc(100vh - var(--bar));
+  overflow-y: auto; padding: 16px 12px 40px 16px; font-family: var(--ui); font-size: 13px;
+  background: var(--paper); border-right: 2px solid var(--line);
+  background-image: repeating-linear-gradient(transparent 0 29px, var(--rule) 29px 30px);
+}
+.side h2 { font: 700 11.5px var(--ui); letter-spacing: .12em; text-transform: uppercase; color: var(--pencil); margin: 16px 8px 6px; }
+.side a {
+  display: flex; gap: 8px; align-items: center; padding: 6px 9px; margin: 2px 0;
+  text-decoration: none; color: var(--text); border-radius: 6px; border-left: 3px solid transparent;
+}
+.side a:hover { background: var(--hl-yellow); }
+.side a.cur { background: var(--card); border-left-color: var(--ink); font-weight: 700; color: var(--ink); }
+.dot { flex: none; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--pencil); }
+.st-done { background: var(--green); border-color: var(--green); }
+
+/* Main Sheet */
+.main { padding: 22px 24px 80px; min-width: 0; }
+.sheet {
+  position: relative; background: var(--paper) var(--grain); border: 1px solid var(--line);
+  border-radius: 6px 14px 14px 6px; box-shadow: var(--shadow-sheet); margin: 0 0 34px;
+  padding: 34px 40px 36px 74px;
+  background-image: var(--grain), repeating-linear-gradient(to bottom, transparent 0 29px, var(--rule) 29px 30px);
+  background-position: 0 0, 0 14px;
+}
+.sheet::before { content: ""; position: absolute; left: 54px; top: 0; bottom: 0; width: 2px; background: var(--margin); opacity: .75; }
+.sheet::after {
+  content: ""; position: absolute; left: 14px; top: 34px; bottom: 34px; width: 14px;
+  background: radial-gradient(circle, var(--desk) 5px, transparent 6px) 0 0/14px 64px repeat-y; opacity: .9;
+}
+
+/* Typography */
+h1, h2, h3, h4 { font-family: var(--serif); line-height: 1.25; margin: 0; }
+h1 { font-family: var(--hand); font-size: clamp(2rem, 5vw, 2.8rem); color: var(--ink); margin-bottom: 6px; }
+h2.mt { font-size: clamp(22px, 3.5vw, 30px); margin: 6px 0 12px; color: var(--ink); font-weight: 700; }
+h3 { font-size: 20px; margin: 22px 0 8px; border-bottom: 2px solid var(--ink); padding-bottom: 4px; display: inline-block; color: var(--ink); }
+h4 { font-size: 16px; font-family: var(--hand); color: var(--blue); margin: 0 0 6px; font-weight: 700; }
+p { margin: 0 0 .9em; }
+ul { padding-left: 1.4em; margin-bottom: 1em; }
+li { margin-bottom: .35em; }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; border: 1.5px solid var(--line); border-radius: 6px; background: var(--paper2); }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; text-align: left; }
+th { background: rgba(0,0,0,0.04); color: var(--ink); font-weight: 700; padding: 10px 12px; border-bottom: 2px solid var(--line); }
+td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(0,0,0,0.02); }
+
+.mermaid { background: var(--paper2); border: 1.5px solid var(--line); border-radius: 6px; padding: 16px; margin: 20px 0; text-align: center; }
+pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6px; font-family: var(--mono); font-size: .84rem; overflow-x: auto; line-height: 1.45; }
+
+@media (max-width: 900px) {
+  .shell { grid-template-columns: 1fr; }
+  .side { display: none; }
+  .sheet { padding: 24px 20px 24px 34px; }
+  .sheet::before { left: 24px; }
+  .sheet::after { display: none; }
+}
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <span class="ttl">LSCM Study Notebook · Prof. Ajit Maurya</span>
+  <div class="sp"></div>
+  <div class="search">
+    <input type="text" id="searchInput" placeholder="Search Ajit Sir's notes...">
+    <div id="searchResults"></div>
+  </div>
+  <button class="btn" id="timerBtn" title="Pomodoro Study Timer">⏱ 25m</button>
+  <button class="btn" id="themeBtn">🌓 Theme</button>
+  <div class="progressWrap"><div id="progressBar"></div></div>
+</header>
+
+<div class="timerPanel" id="timerPanel">
+  <div class="clock" id="clockDisplay">25:00</div>
+  <div class="row">
+    <button class="btn sm" id="timerStart">Start</button>
+    <button class="btn sm" id="timerReset">Reset</button>
+  </div>
+</div>
+
+<div class="shell">
+  <aside class="side">
+    <h2>Sessions & Modules</h2>
+    <a href="#cover" class="cur"><span class="dot st-done"></span> Overview & Meta</a>
+    <a href="#mod1"><span class="dot"></span> 1. SCM Architecture & Fit</a>
+    <a href="#mod2"><span class="dot"></span> 2. Demand Planning & S&OP</a>
+    <a href="#mod3"><span class="dot"></span> 3. Network Design & Topologies</a>
+    <a href="#mod4"><span class="dot"></span> 4. Transport & Unitising</a>
+    <a href="#mod5"><span class="dot"></span> 5. LIS, Reverse Logistics & 3PL</a>
+    <h2>Enterprise Cases</h2>
+    <a href="#case-amazon"><span class="dot"></span> Case 1: Amazon Prime</a>
+    <a href="#case-apple"><span class="dot"></span> Case 2: Apple Air Freight</a>
+    <a href="#case-mcdonalds"><span class="dot"></span> Case 3: McDonald's Cold Chain</a>
+    <a href="#case-toyota"><span class="dot"></span> Case 4: Toyota Lean Pull</a>
+    <a href="#case-solar"><span class="dot"></span> Case 5: US Solar Onshoring</a>
+    <h2>Exam Mastery</h2>
+    <a href="#pyq-section"><span class="dot"></span> Solved PYQs (2023–2025)</a>
+    <a href="#exam-tips"><span class="dot"></span> Master Exam Engine</a>
+  </aside>
+
+  <main class="main">
+    <article class="sheet" id="cover">
+      <div class="nb-tape"></div>
+      <div style="margin-bottom:14px;">
+        <span class="nb-stamp nb-stamp--blue">WeSchool PGDM</span>
+        <span class="nb-stamp nb-stamp--amber">Trimester IV</span>
+        <span class="nb-stamp nb-stamp--green">Faculty: Prof. Ajit M. Maurya</span>
+      </div>
+      <h1>Logistics & Supply Chain Management</h1>
+      <h2 class="mt">Architecture, Value Chains, Demand Synchronization & Network Design</h2>
+      <p style="color:var(--pencil); font-family:var(--hand2); font-size:1.15rem;">
+        Reconstructed consulting-grade master notebook based on Ajit Sir's classroom presentations, 5 foundational corporate cases, and verbatim solved end-term examination papers (2023–2025).
+      </p>
+
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">Ajit Sir's Core Thesis</span>
+        <p><em>"Supply chain is no longer a cost center; it is the ultimate engine of enterprise value creation. The winning supply chain harmonizes the Strategic Triad: <strong>Cost Efficiency</strong>, <strong>Market Responsiveness</strong>, and <strong>Resilience</strong>."</em></p>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin:16px 0;">
+        <a href="#mod1" class="btn">Start Module 1 &rarr;</a>
+        <a href="#case-amazon" class="btn">Jump to Cases &rarr;</a>
+        <a href="#pyq-section" class="btn">Jump to Solved PYQs &rarr;</a>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod1">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 1</span>
+      <span class="nb-stamp nb-stamp--green">CO3 Alignment</span>
+      <h2>Module 1: Supply Chain Architecture, Drivers & Strategic Fit</h2>
+
+      <div class="research-box">
+        <span class="research-box__tag">Evolutionary Continuum (1970s &rarr; 1990s &rarr; 2020s)</span>
+        <ul>
+          <li><strong>1970s Operational Silos:</strong> Fragmented purchasing, transportation, and warehousing operating in complete isolation with conflicting KPIs.</li>
+          <li><strong>1990s Internal Functional Integration:</strong> ERP deployment connects internal departments; focus on lean manufacturing and local cost minimization.</li>
+          <li><strong>2020s End-to-End Value Ecosystems:</strong> Synchronized enterprise networks balancing the <strong>Strategic Triad</strong>: Cost Efficiency, Market Responsiveness, and Systemic Resilience.</li>
+        </ul>
+      </div>
+
+      <h3>The Six Foundational Supply Chain Drivers</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Driver Type</th>
+              <th>Supply Chain Driver</th>
+              <th>Operational Function</th>
+              <th>Core Managerial Trade-Off</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="3"><strong>Logistical Drivers</strong></td>
+              <td><strong>Facilities</strong></td>
+              <td>Sites where inventory is transformed or staged.</td>
+              <td><strong>Centralization (Economies of Scale) vs. Proximity (Customer Responsiveness)</strong>.</td>
+            </tr>
+            <tr>
+              <td><strong>Inventory</strong></td>
+              <td>Buffers mismatches between supply and demand.</td>
+              <td><strong>Availability / High Fill Rates vs. Working Capital & Obsolescence Risk</strong>.</td>
+            </tr>
+            <tr>
+              <td><strong>Transportation</strong></td>
+              <td>Moves products between physical nodes.</td>
+              <td><strong>Speed & Responsiveness (Air/Road) vs. Unit Cost Efficiency (Rail/Ocean)</strong>.</td>
+            </tr>
+            <tr>
+              <td rowspan="3"><strong>Cross-Functional Drivers</strong></td>
+              <td><strong>Information</strong></td>
+              <td>The nervous system; enables real-time visibility.</td>
+              <td><strong>Telematics Investment vs. Operational Fog & Bullwhip Amplification</strong>.</td>
+            </tr>
+            <tr>
+              <td><strong>Sourcing</strong></td>
+              <td>Make-vs-buy decisions and vendor selection.</td>
+              <td><strong>Proprietary Control vs. Supplier Scale & Variable Cost Flexibility</strong>.</td>
+            </tr>
+            <tr>
+              <td><strong>Pricing</strong></td>
+              <td>Shapes customer demand patterns.</td>
+              <td><strong>Everyday Low Pricing (Stable Demand) vs. High-Low Promotions (Demand Spikes)</strong>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Marshall Fisher’s Strategic Alignment Matrix</h3>
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">Fisher's Golden Rule</span>
+        <p><em>"Mismatching product demand profiles with supply chain operating configurations is the primary cause of supply chain failure."</em></p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Strategic Dimension</th>
+              <th>Functional Products</th>
+              <th>Innovative Products</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Demand Profile</strong></td><td>Predictable, stable demand</td><td>Unpredictable, highly volatile demand</td></tr>
+            <tr><td><strong>Product Life Cycle</strong></td><td>Long (&gt; 2 years)</td><td>Short (3 to 12 months)</td></tr>
+            <tr><td><strong>Contribution Margin</strong></td><td>Low (5% to 20%)</td><td>High (20% to 60%)</td></tr>
+            <tr><td><strong>Forecast Error Rate</strong></td><td>Low (&lt; 10%)</td><td>High (40% to 100%)</td></tr>
+            <tr><td><strong>Stockout Rate</strong></td><td>Low (1% to 2%)</td><td>High (10% to 40%)</td></tr>
+            <tr><td><strong>End-of-Season Markdown</strong></td><td>Virtually 0%</td><td>High (10% to 30%)</td></tr>
+            <tr><td><strong>Required Supply Chain</strong></td><td><span class="nb-hl nb-hl--blue">Physically Efficient</span></td><td><span class="nb-hl nb-hl--pink">Market-Responsive</span></td></tr>
+            <tr><td><strong>Primary Objective</strong></td><td>Supply predictable demand at minimum cost</td><td>Respond rapidly to unpredictable demand</td></tr>
+            <tr><td><strong>Manufacturing Strategy</strong></td><td>Maintain high factory capacity utilization</td><td>Deploy flexible buffer capacity</td></tr>
+            <tr><td><strong>Inventory Strategy</strong></td><td>Minimize inventory; high turnover; JIT</td><td>Deploy buffer safety stock close to demand</td></tr>
+            <tr><td><strong>Supplier Selection</strong></td><td>Focus on low unit purchase price and scale</td><td>Focus on speed, agility, and modularity</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mermaid">
+      graph TD
+        subgraph Fisher_Matrix ["Fisher's Alignment Decision Tree"]
+          Prod["Evaluate Product Demand Profile"] -->|Predictable / Long Lifecycle| FP["Functional Product"]
+          Prod -->|Volatile / Short Lifecycle| IP["Innovative Product"]
+          FP -->|Aligns With| Eff["Physically Efficient Supply Chain<br/>(Walmart, Campbell Soup)"]
+          IP -->|Aligns With| Resp["Market-Responsive Supply Chain<br/>(Zara, Apple)"]
+          FP -.->|MISMATCH: Margin Drain| Resp
+          IP -.->|MISMATCH: Heavy Stockouts| Eff
+        end
+        style Eff fill:#E3F2FD,stroke:#1565C0,stroke-width:2px;
+        style Resp fill:#FCE4EC,stroke:#C2185B,stroke-width:2px;
+      </div>
+
+      <h3>Diagnostic SCM Financial Velocity Metrics</h3>
+      <div class="nb-fbox">
+        <span class="nb-fbox__label">1. Inventory Turnover Ratio (ITR) & Days of Supply (DOS)</span>
+        <div class="nb-fbox__math">$$ITR = rac{	ext{COGS}}{	ext{Average Inventory Investment}}, \quad DOS = rac{365}{ITR}$$</div>
+        <div class="nb-fbox__dict">
+          <dt>COGS</dt><dd>Annual Cost of Goods Sold reported on income statement.</dd>
+          <dt>Average Inventory</dt><dd>Mean capital tied in raw materials, WIP, and finished stock.</dd>
+          <dt>DOS</dt><dd>Calendar days of demand that existing inventory can satisfy.</dd>
+        </div>
+      </div>
+
+      <div class="nb-fbox">
+        <span class="nb-fbox__label">2. Cash-to-Cash (C2C) Cycle Time</span>
+        <div class="nb-fbox__math">$$C2C = DIO + DSO - DPO$$</div>
+        <div class="nb-fbox__dict">
+          <dt>DIO</dt><dd>Days Inventory Outstanding: $(	ext{Avg Inventory} / 	ext{COGS}) 	imes 365$.</dd>
+          <dt>DSO</dt><dd>Days Sales Outstanding: $(	ext{Accounts Receivable} / 	ext{Revenue}) 	imes 365$.</dd>
+          <dt>DPO</dt><dd>Days Payables Outstanding: $(	ext{Accounts Payable} / 	ext{COGS}) 	imes 365$.</dd>
+        </div>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod2">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 2</span>
+      <span class="nb-stamp nb-stamp--green">CO1 Alignment</span>
+      <h2>Module 2: Demand Planning, S&OP Cadence & S&OE Synchronization</h2>
+
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">Core Distinction</span>
+        <p><strong>Demand Forecasting</strong> estimates what the market might buy; <strong>Demand Management</strong> orchestrates pricing, promotions, and lead times to shape demand to match operational capacity.</p>
+      </div>
+
+      <h3>The Three Dimensions of Demand Planning</h3>
+      <ul>
+        <li><strong>1. Time Horizon:</strong> Strategic (1–5 years; plant footprint, capital expenditure) &rarr; Tactical (1–18 months; aggregate production planning, S&OP) &rarr; Operational (daily to 12 weeks; machine dispatch, S&OE).</li>
+        <li><strong>2. Geographic Hierarchy:</strong> Global / Continental Allocations &rarr; National Central Hubs &rarr; Regional Warehouses &rarr; Hyperlocal Urban Dark Stores / Retail Stores.</li>
+        <li><strong>3. Product Aggregation Level:</strong> Product Family &rarr; Modular Platform &rarr; Stock Keeping Unit (SKU).</li>
+      </ul>
+
+      <h3>The 5-Step Monthly S&OP Cadence</h3>
+      <div class="research-box">
+        <span class="research-box__tag">Cross-Functional Governance</span>
+        <ol>
+          <li><strong>Step 1: Data Gathering (Days 1–3):</strong> Extract POS sales, clean promotional outliers, compile order backlog and pipeline visibility.</li>
+          <li><strong>Step 2: Demand Planning (Days 4–7):</strong> Commercial sales and marketing construct an unconstrained consensus forecast.</li>
+          <li><strong>Step 3: Supply Planning (Days 8–12):</strong> Operations and procurement assess plant capacity, machine tooling, and raw material availability.</li>
+          <li><strong>Step 4: Pre-S&OP Meeting (Days 13–16):</strong> Financial reconciliation of demand-supply gaps, inventory build costs, and overtime budgets.</li>
+          <li><strong>Step 5: Executive S&OP (Days 17–20):</strong> C-suite approves the single binding Operating Plan that commits enterprise capital.</li>
+        </ol>
+      </div>
+
+      <div class="nb-sticky nb-sticky--blue">
+        <div class="nb-sticky__title">S&OE vs. S&OP in Real Operations</div>
+        <p>While monthly S&OP sets the strategic baseline, <strong>S&OE (Sales & Operations Execution)</strong> operates on a daily to 12-week horizon to track execution against that baseline, managing daily factory downtime, carrier delays, and short-term demand surges.</p>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod3">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 3</span>
+      <span class="nb-stamp nb-stamp--green">CO4 Alignment</span>
+      <h2>Module 3: Logistics System Design & Multi-Echelon Networks</h2>
+
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">The Fundamental Network Cost Curve</span>
+        <p>As an organization expands its regional warehousing footprint ($N$ increases):</p>
+        <ul>
+          <li><strong>Inbound Line-Haul Freight Costs</strong> increase due to fragmented loads and lost full truckload (FTL) scale.</li>
+          <li><strong>Outbound Delivery Costs</strong> decrease substantially because delivery vehicles operate closer to local customer clusters.</li>
+          <li><strong>Facility Fixed Costs</strong> increase linearly with each new facility leased or staffed.</li>
+          <li><strong>Inventory Holding Costs</strong> increase steeply due to decentralized safety stock dictated by the <strong>Square Root Law</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="nb-fbox">
+        <span class="nb-fbox__label">Square Root Law of Inventory Centralization</span>
+        <div class="nb-fbox__math">$$SS_{	ext{new}} = SS_{	ext{old}} 	imes \sqrt{rac{N_{	ext{new}}}{N_{	ext{old}}}}$$</div>
+        <div class="nb-fbox__dict">
+          <dt>SS_new</dt><dd>Total required safety stock across newly reconfigured network.</dd>
+          <dt>SS_old</dt><dd>Total baseline safety stock across existing network.</dd>
+          <dt>N_new / N_old</dt><dd>Ratio of new facility count to old facility count.</dd>
+        </div>
+      </div>
+
+      <div class="nb-fbox">
+        <span class="nb-fbox__label">Center of Gravity (Gravity Location Model)</span>
+        <div class="nb-fbox__math">$$X^* = rac{\sum (X_i \cdot W_i \cdot R_i)}{\sum (W_i \cdot R_i)}, \quad Y^* = rac{\sum (Y_i \cdot W_i \cdot R_i)}{\sum (W_i \cdot R_i)}$$</div>
+        <div class="nb-fbox__dict">
+          <dt>(X_i, Y_i)</dt><dd>Spatial coordinates of demand market or supply origin $i$.</dd>
+          <dt>W_i</dt><dd>Tonnage or shipment volume shipped to or from node $i$.</dd>
+          <dt>R_i</dt><dd>Freight rate per ton-kilometer for transport leg $i$.</dd>
+        </div>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod4">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 4</span>
+      <span class="nb-stamp nb-stamp--green">CO3 Alignment</span>
+      <h2>Module 4: Transportation Economics, Unitising & Logistics Costing</h2>
+
+      <h3>Primary vs. Secondary Transportation</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Primary Transport (Line-Haul)</th>
+              <th>Secondary Transport (Last-Mile)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Flow</strong></td><td>Plant &rarr; Mother DC / Regional Hub</td><td>Regional DC &rarr; Retail Store / End Doorstep</td></tr>
+            <tr><td><strong>Load Profile</strong></td><td>Full Truckload (FTL) / Full Container Load (FCL)</td><td>Less-Than-Truckload (LTL) / Multi-Stop Milk Runs</td></tr>
+            <tr><td><strong>Vehicle Class</strong></td><td>Heavy Multi-Axle Trucks (32–40 Tonnes)</td><td>Light Commercial Vehicles / Vans / Cargo EVs</td></tr>
+            <tr><td><strong>Primary Metric</strong></td><td><strong>Cost per Ton-Kilometer</strong></td><td><strong>Cost per Drop / Delivery</strong></td></tr>
+            <tr><td><strong>Optimization Focus</strong></td><td>Maximized vehicle fill rate & return backhauls</td><td>Vehicle Routing Problem (VRP) & drop density</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Unitising & Standards</h3>
+      <div class="research-box">
+        <span class="research-box__tag">The Unit Load Principle</span>
+        <p>Consolidating individual cartons onto standardized handling units enables mechanized forklift handling, optimizes warehouse cube utilization, and reduces cargo damage.</p>
+        <ul>
+          <li><strong>ISO Pallet Standard (UK / India):</strong> $1000	ext{mm} 	imes 1200	ext{mm}$ ($40	ext{ in} 	imes 48	ext{ in}$).</li>
+          <li><strong>Euro Pallet (EUR 1):</strong> $800	ext{mm} 	imes 1200	ext{mm}$ ($31.5	ext{ in} 	imes 47.2	ext{ in}$).</li>
+          <li><strong>Intermodal Ocean Containers:</strong> 20ft TEU (~33 CBM capacity) and 40ft FEU (~67 CBM capacity).</li>
+        </ul>
+      </div>
+
+      <div class="nb-fbox">
+        <span class="nb-fbox__label">Logistics Cost Performance Ratios</span>
+        <div class="nb-fbox__math">
+          $$	ext{Logistics Cost \% of Sales} = \left(rac{	ext{Total Logistics Cost}}{	ext{Gross Revenue}}ight) 	imes 100$$
+          $$	ext{Logistics Cost \% of Value Added} = \left(rac{	ext{Total Logistics Cost}}{	ext{Gross Revenue} - 	ext{Direct Materials Spend}}ight) 	imes 100$$
+        </div>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod5">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 5</span>
+      <span class="nb-stamp nb-stamp--green">CO3 & CO4 Alignment</span>
+      <h2>Module 5: Logistics Information Systems, Reverse Logistics & 3PL/4PL</h2>
+
+      <h3>Integrated LIS Software Stack</h3>
+      <div class="research-box">
+        <span class="research-box__tag">Enterprise Software Synchronization</span>
+        <ul>
+          <li><strong>Order Management System (OMS):</strong> Captures orders across digital channels, validates credit, checks Available-to-Promise (ATP) stock.</li>
+          <li><strong>Enterprise Resource Planning (ERP):</strong> Manages bills of material, general ledgers, financial accounts, and purchasing contracts.</li>
+          <li><strong>Warehouse Management System (WMS):</strong> Directs put-away slotting, batch/wave picking, dock door scheduling, and labor productivity.</li>
+          <li><strong>Transportation Management System (TMS):</strong> Optimizes carrier selection, multi-stop route sequencing, freight billing, and electronic Proof of Delivery (e-POD).</li>
+        </ul>
+      </div>
+
+      <h3>Reverse Logistics & The 5 Rs Framework</h3>
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">The Gatekeeping Doctrine</span>
+        <p>Reverse logistics manages backward product flows: <strong>Return</strong>, <strong>Repair</strong>, <strong>Remanufacture</strong>, <strong>Recycle</strong>, and <strong>Resell</strong>. Gatekeeping is the screening performed at the initial return point to verify return eligibility and prevent fraudulent returns before incurring costly reverse freight.</p>
+      </div>
+
+      <h3>Outsourced Logistics Continuum (1PL to 4PL)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Asset Base</th>
+              <th>Operational Scope</th>
+              <th>Strategic Focus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>1PL</strong></td><td>100% Owned Fleets & DCs</td><td>Shipper conducts all logistics operations in-house</td><td>Full operational control; heavy capital lockup</td></tr>
+            <tr><td><strong>2PL</strong></td><td>Asset-Based Carriers</td><td>Point-to-point transportation or specialized cold storage</td><td>Spot capacity procurement; transactional</td></tr>
+            <tr><td><strong>3PL</strong></td><td>Asset/Leased Infrastructure</td><td>Bundled warehousing, line-haul freight, and custom clearance</td><td>Operational cost reduction & flexible capacity</td></tr>
+            <tr><td><strong>4PL</strong></td><td>Non-Asset (Knowledge & Tech)</td><td>Lead Logistics Partner (LLP) managing multiple 3PLs via a Control Tower</td><td>End-to-end network optimization & transformation</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="sheet" id="case-amazon">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--amber">Enterprise Case 1</span>
+      <h2>Amazon: Multi-Tier Fulfillment & Last-Mile Delivery Density</h2>
+      <div class="scenario-box">
+        <span class="scenario-box__tag">Operational Architecture</span>
+        <ul>
+          <li><strong>Tiered Facility Network:</strong> Inbound Cross-Dock Facilities (IXDs) &rarr; Massive Fulfillment Centers (FCs, 1M+ sq. ft.) &rarr; Regional Sortation Centers (sorting by zip code) &rarr; Urban Delivery Stations &rarr; End Consumers.</li>
+          <li><strong>Goods-to-Person AMRs:</strong> Kiva robotic drive units transport mobile inventory pods directly to stationary pickers, slashing travel walking time by 75% and tripling pick throughput.</li>
+          <li><strong>Delivery Density Economics:</strong> Launching Amazon Logistics (DSP delivery vans) captured high drop density in urban zip codes, dropping last-mile cost per parcel below commercial UPS/FedEx rates.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="sheet" id="case-apple">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--amber">Enterprise Case 2</span>
+      <h2>Apple: Cash Conversion Supremacy & Component Exclusivity</h2>
+      <div class="scenario-box">
+        <span class="scenario-box__tag">Operational Architecture</span>
+        <ul>
+          <li><strong>Air Freight Launch Strategy:</strong> Airfreights new iPhones directly from contract manufacturing hubs in China to global regional hubs, compressing lead times to 3 days and eliminating post-launch inventory obsolescence.</li>
+          <li><strong>Negative Cash Conversion Cycle:</strong> Apple collects customer revenue in 3–5 days ($DSO$), turns inventory rapidly in 5–8 days ($DIO$), but negotiates 90–120 day payment terms with suppliers ($DPO$). The resulting negative $C2C$ cycle (-80 days) provides billions in free working capital.</li>
+          <li><strong>Proprietary Capital Pre-Payment:</strong> Uses massive cash reserves to prepay suppliers for custom tooling and high-precision CNC machines, locking up specialized manufacturing capacity and excluding competitors.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="sheet" id="case-mcdonalds">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--amber">Enterprise Case 3</span>
+      <h2>McDonald's: Dedicated 3PL Cold Chain Infrastructure</h2>
+      <div class="scenario-box">
+        <span class="scenario-box__tag">Operational Architecture</span>
+        <ul>
+          <li><strong>Dedicated 3PL Partnership:</strong> Formed a long-term dedicated relationship with Radhakrishna Foodland in India.</li>
+          <li><strong>Multi-Temperature Fleet:</strong> Specialized reefer trucks maintain three strict temperature compartments: Frozen (-18°C), Chilled (+1°C to +4°C), and Ambient.</li>
+          <li><strong>Cold Chain Integrity:</strong> Digital temperature loggers continuously monitor transit temperatures; any thermal excursion results in immediate dock rejection at the restaurant door.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="sheet" id="case-toyota">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--amber">Enterprise Case 4</span>
+      <h2>Toyota: Lean Pull Replenishment & Waste Elimination (*TPS*)</h2>
+      <div class="scenario-box">
+        <span class="scenario-box__tag">Operational Architecture</span>
+        <ul>
+          <li><strong>Pull Replenishment via Kanban:</strong> Components are produced and shipped only when downstream assembly stations trigger physical or electronic Kanban cards.</li>
+          <li><strong>Supplier Milk-Runs:</strong> Toyota-operated trucks make scheduled multi-stop milk runs to tier-1 suppliers located within a 2-hour radius, picking up small, frequent lot sizes multiple times per day.</li>
+          <li><strong>Jidoka & Poka-Yoke:</strong> Built-in mistake-proofing and autonomous machine shutoffs stop lines immediately upon detecting an anomaly, preventing defective WIP from accumulating.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="sheet" id="case-solar">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--amber">Enterprise Case 5</span>
+      <h2>US Solar: Geopolitical Onshoring & Wafer Chokepoints</h2>
+      <div class="scenario-box">
+        <span class="scenario-box__tag">Operational Architecture</span>
+        <ul>
+          <li><strong>Upstream Polysilicon Bottleneck:</strong> While module assembly can be established in the US, over 95% of global solar ingots and polysilicon wafers remain concentrated in China and Southeast Asia.</li>
+          <li><strong>IRA Subsidies vs. Tariffs:</strong> The US Inflation Reduction Act provides domestic production tax credits; however, domestic wafer manufacturing requires massive capital and 3–5 years of regulatory permitting.</li>
+          <li><strong>Resilience Trade-Off:</strong> Balancing the short-term cost penalty of importing tariffed solar cells against the long-term capital risk of building domestic silicon processing plants.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="sheet" id="pyq-section">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--red">PYQ Repository</span>
+      <h2>Solved End-Term Examination Papers (2023–2025)</h2>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">End-Term 2023 · Question 2 (10 Marks)</span>
+        <h4>Trade-Off between Inventory Holding Costs & Transport Costs in High-Tech Electronics</h4>
+        <p><strong>Verbatim Problem:</strong> High-tech electronics manufacturer faces annual demand $D = 10,000$ units. Ordering cost $S = \$10/	ext{order}$, unit purchase cost $C = \$10$, annual holding cost $H = \$5.00/	ext{unit/year}$. Transport cost is $\$10.00$ per unit regardless of order size. Calculate EOQ, optimal order frequency, and total annual inventory plus transport cost.</p>
+        <div class="nb-fbox">
+          <span class="nb-fbox__label">Step-by-Step Model Solution</span>
+          <div class="nb-fbox__math">
+            $$EOQ = \sqrt{rac{2DS}{H}} = \sqrt{rac{2 	imes 10,000 	imes 10}{5}} = \sqrt{40,000} = \mathbf{200 	ext{ units}}$$
+            $$N^* = rac{D}{Q^*} = rac{10,000}{200} = \mathbf{50 	ext{ orders per year}}$$
+            $$	ext{Annual Ordering Cost} = \left(rac{10,000}{200}ight) 	imes 10 = \$500.00$$
+            $$	ext{Annual Holding Cost} = \left(rac{200}{2}ight) 	imes 5.00 = \$500.00$$
+            $$	ext{Total Annual Inventory Cost} = \$500 + \$500 = \mathbf{\$1,000.00}$$
+            $$	ext{Annual Transportation Cost} = 10,000 	imes \$10.00 = \mathbf{\$100,000.00}$$
+            $$TC_{	ext{total}} = \$1,000.00 + \$100,000.00 = \mathbf{\$101,000.00 	ext{ per year}}$$
+          </div>
+        </div>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">End-Term 2024 · Question 1 (10 Marks)</span>
+        <h4>Demand Planning Importance & Four Core Inputs</h4>
+        <ul>
+          <li><strong>Strategic Importance:</strong> Drives all downstream manufacturing, procurement, and logistics schedules; prevents Bullwhip amplification; optimizes working capital.</li>
+          <li><strong>Four Core Inputs:</strong>
+            <ol>
+              <li><em>Point-of-Sale (POS) Scanner Telemetry:</em> Unfiltered real-time consumer consumption.</li>
+              <li><em>Trade & Promotional Calendars:</em> Planned marketing discounts and advertising campaigns.</li>
+              <li><em>Downstream Channel Inventory Visibility:</em> Distributor stock-on-hand and CRM sales pipeline.</li>
+              <li><em>Macroeconomic & Category Intelligence:</em> Inflation, seasonal weather, tariffs, competitor moves.</li>
+            </ol>
+          </li>
+        </ul>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">End-Term 2025 · Question 4 (10 Marks)</span>
+        <h4>Demand vs. Supply Management & Automotive Chip Crisis</h4>
+        <ul>
+          <li><strong>Demand vs. Supply Management:</strong> Demand Management proactively influences market demand via pricing and promotions; Supply Management manages capacity and procurement to fulfill that demand.</li>
+          <li><strong>Automotive Chip Shortage Analysis:</strong> In early 2020, automakers canceled chip orders anticipating recession. Foundries shifted capacity to consumer electronics. When auto demand rebounded, foundries could not restart 26-week chip fabrication cycles, halting assembly lines and causing \$210B in lost global automotive revenue.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="sheet" id="exam-tips">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--green">Exam Engine</span>
+      <h2>Master Exam Answering Engine</h2>
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">Scoring Rubric</span>
+        <ul>
+          <li><strong>5-Mark Questions:</strong> Definition &rarr; Core Concept &rarr; 3 Bullet Points &rarr; Quick Diagram &rarr; Example &rarr; Conclusion.</li>
+          <li><strong>10-Mark Questions:</strong> Introduction &rarr; Formal Definition &rarr; Comprehensive Table / Framework &rarr; Mermaid/ASCII Diagram &rarr; Enterprise Case Example &rarr; Strategic Trade-Off Analysis &rarr; Executive Summary.</li>
+          <li><strong>Always State Formulas with Units:</strong> State the formula, define every variable, compute intermediate values, and double-underline the final answer.</li>
+        </ul>
+      </div>
+    </article>
+  </main>
+</div>
+
+<script>
+// Search Logic
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+const contentNodes = document.querySelectorAll('article.sheet h2, article.sheet h3, article.sheet h4, article.sheet .research-box, article.sheet .launchpad-box, article.sheet .scenario-box');
+
+searchInput.addEventListener('input', function() {
+  const query = this.value.trim().toLowerCase();
+  if (query.length < 2) {
+    searchResults.style.display = 'none';
+    searchResults.innerHTML = '';
+    return;
+  }
+  
+  let matches = [];
+  contentNodes.forEach(node => {
+    const text = node.innerText;
+    if (text.toLowerCase().includes(query)) {
+      const parentSheet = node.closest('article.sheet');
+      const id = parentSheet ? parentSheet.id : '';
+      matches.push({
+        title: node.innerText.substring(0, 70),
+        id: id
+      });
+    }
+  });
+
+  if (matches.length > 0) {
+    searchResults.innerHTML = matches.slice(0, 7).map(m => 
+      `<a href="#${m.id}"><strong>${m.title}</strong><br><small style="color:var(--pencil)">Jump to section</small></a>`
+    ).join('');
+    searchResults.style.display = 'block';
+  } else {
+    searchResults.innerHTML = '<div style="padding:10px 14px; font-size:13px; color:var(--pencil)">No matches found</div>';
+    searchResults.style.display = 'block';
+  }
+});
+
+document.addEventListener('click', function(e) {
+  if (!searchResults.contains(e.target) && e.target !== searchInput) {
+    searchResults.style.display = 'none';
+  }
+});
+
+// Pomodoro Timer Logic
+const timerBtn = document.getElementById('timerBtn');
+const timerPanel = document.getElementById('timerPanel');
+const clockDisplay = document.getElementById('clockDisplay');
+const timerStart = document.getElementById('timerStart');
+const timerReset = document.getElementById('timerReset');
+let timerInterval = null;
+let timeLeft = 25 * 60;
+let isRunning = false;
+
+timerBtn.addEventListener('click', () => {
+  timerPanel.classList.toggle('open');
+});
+
+timerStart.addEventListener('click', () => {
+  if (isRunning) {
+    clearInterval(timerInterval);
+    timerStart.innerText = 'Start';
+    isRunning = false;
+  } else {
+    isRunning = true;
+    timerStart.innerText = 'Pause';
+    timerInterval = setInterval(() => {
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        alert('Pomodoro study interval completed! Take a 5-minute break.');
+        timeLeft = 25 * 60;
+        isRunning = false;
+        timerStart.innerText = 'Start';
+      } else {
+        timeLeft--;
+      }
+      updateClock();
+    }, 1000);
+  }
+});
+
+timerReset.addEventListener('click', () => {
+  clearInterval(timerInterval);
+  timeLeft = 25 * 60;
+  isRunning = false;
+  timerStart.innerText = 'Start';
+  updateClock();
+});
+
+function updateClock() {
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  clockDisplay.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+}
+
+// Theme Toggle
+const themeBtn = document.getElementById('themeBtn');
+themeBtn.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  const next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+});
+
+// Scroll Progress Bar
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  document.getElementById('progressBar').style.width = scrolled + '%';
+});
+</script>
+
+</body>
+</html>

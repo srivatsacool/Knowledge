@@ -1,0 +1,40 @@
+{
+  "title": "LSCM \u00b7 Warehousing, International Trade & EXIM (Prof. Manoj)",
+  "slug": "lscm-manoj-sir-notebook",
+  "subject": "Operations",
+  "category": "International Logistics",
+  "description": "Comprehensive study notebook covering warehouse layouts, picking strategies, ASRS/AMRs, INCOTERMS 2020 matrix, EXIM 8-step workflow, documentary letters of credit (UCP 600), case method, and 9-step CPFR.",
+  "file": "02_Manoj_Sir_LSCM_Notebook.html",
+  "tags": [
+    "LSCM",
+    "Supply Chain",
+    "Operations",
+    "WeSchool",
+    "Trimester IV",
+    "PYQ",
+    "Incoterms",
+    "EOQ"
+  ],
+  "status": "published",
+  "source": "curriculum/weschool-term4-lscm",
+  "version": "2.0.0",
+  "templateVersion": "erp-notebook-2.0",
+  "updated": "2026-10-05",
+  "featured": false,
+  "readTimeMinutes": 60,
+  "courseContext": {
+    "course": "Logistics & Supply Chain Management",
+    "code": "OPN40 / OPN405 / OPN417",
+    "instructors": [
+      "Prof. Ajit M. Maurya",
+      "Prof. Manoj",
+      "Prof. Praful More"
+    ],
+    "outcomes": [
+      "CO1",
+      "CO2",
+      "CO3",
+      "CO4"
+    ]
+  }
+}
