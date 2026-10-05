@@ -1,42 +1,83 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Libre+Bodoni:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Libre+Bodoni:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Patrick+Hand&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --bg-paper: #FAF7F0;
-  --bg-paper-muted: #F4EEDD;
-  --bg-paper-card: #FFFFFF;
-  --text-ink: #1C1917;
-  --text-ink-muted: #78716C;
-  --border-editorial: #E7E5E4;
-  --border-editorial-subtle: #F0ECE1;
-  --accent-navy: #1E3A8A;
-  --accent-amber: #B45309;
-  --accent-emerald: #047857;
-  --accent-rose: #BE123C;
+  /* Physical Template 2.0 Paper & Desk Tokens */
+  --paper: #fcf8ee;
+  --desk: #e9e1cf;
+  --rule: #d6e3ef;
+  --margin: #e28b8b;
+  --ink: #1d3c8c;
+  --ink2: #2f5fc4;
+  --text: #25262b;
+  --pencil: #5a5d66;
+  --line: #c9bfa8;
+  --card: #fffdf7;
+  --shadow-sheet: 0 1px 2px rgba(60,45,20,.12), 0 8px 24px rgba(60,45,20,.14);
+  --shadow-card: 0 1px 3px rgba(60,45,20,.10), 0 4px 12px rgba(60,45,20,.08);
+  
+  /* Highlighter Markers */
+  --hy: rgba(255,224,61,.70);
+  --hg: rgba(120,228,156,.62);
+  --hp: rgba(255,138,188,.52);
+  --hb: rgba(110,196,255,.55);
+  
+  /* Physical Sticky Notes */
+  --st-y: #fff2a1;
+  --st-r: #ffd6d3;
+  --st-b: #d9ecff;
+  --st-g: #d8f5dc;
+  --st-text: #2a2a2a;
+  
+  /* Rubber Stamps */
+  --red: #c2362f;
+  --green: #1d7a45;
+  --amber: #b86e00;
+
+  /* Font Families */
+  --font-hand: 'Caveat', 'Segoe Print', cursive;
+  --font-hand2: 'Patrick Hand', cursive;
+  --lh: 30px;
 }
 
 [data-theme="dark"] {
-  --bg-paper: #0C0A09;
-  --bg-paper-muted: #171412;
-  --bg-paper-card: #1C1917;
-  --text-ink: #F5F5F4;
-  --text-ink-muted: #A8A29E;
-  --border-editorial: #292524;
-  --border-editorial-subtle: #1F1C1A;
-  --accent-navy: #60A5FA;
-  --accent-amber: #F59E0B;
-  --accent-emerald: #10B981;
-  --accent-rose: #FB7185;
+  --paper: #18202e;
+  --desk: #0f141d;
+  --rule: #243049;
+  --margin: #7c3d48;
+  --ink: #9cc0ff;
+  --ink2: #7fb0ff;
+  --text: #e7e9ef;
+  --pencil: #aab3c5;
+  --line: #344058;
+  --card: #1d2636;
+  --shadow-sheet: 0 2px 4px rgba(0,0,0,.45), 0 10px 28px rgba(0,0,0,.40);
+  --shadow-card: 0 1px 3px rgba(0,0,0,.35), 0 6px 16px rgba(0,0,0,.30);
+  
+  --hy: rgba(255,214,0,.30);
+  --hg: rgba(70,220,130,.28);
+  --hp: rgba(255,105,170,.30);
+  --hb: rgba(80,170,255,.30);
+  
+  --st-y: #efe2a0;
+  --st-r: #f1c9c6;
+  --st-b: #cfe0f5;
+  --st-g: #cdebd2;
+  --st-text: #1d1d1d;
+  
+  --red: #ff8a80;
+  --green: #7be0a4;
+  --amber: #ffc266;
 }
 
 body {
-  background-color: var(--bg-paper);
-  color: var(--text-ink);
+  background-color: var(--desk);
+  color: var(--text);
   font-family: 'Public Sans', system-ui, -apple-system, sans-serif;
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -50,55 +91,191 @@ code, pre, .font-mono {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Paper Edition Subtle Ruling */
-.paper-rule {
-  border-bottom: 1px solid var(--border-editorial);
+.font-hand {
+  font-family: var(--font-hand);
 }
 
+.font-hand2 {
+  font-family: var(--font-hand2);
+}
+
+/* ==========================================================
+   PHYSICAL NOTEBOOK 2.0 SHEET WITH BINDER RINGS & MARGIN
+   ========================================================== */
+.notebook-sheet {
+  position: relative;
+  background-color: var(--paper);
+  border-radius: 6px 14px 14px 6px;
+  box-shadow: var(--shadow-sheet);
+  padding: 24px 20px 32px 36px;
+  background-image: 
+    linear-gradient(90deg, transparent 24px, var(--margin) 24px, var(--margin) 26px, transparent 26px),
+    repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh));
+  background-position: 0 0, 0 58px;
+}
+
+@media (min-width: 768px) {
+  .notebook-sheet {
+    padding: 34px 56px 44px 96px;
+    background-image: 
+      linear-gradient(90deg, transparent 66px, var(--margin) 66px, var(--margin) 68px, transparent 68px),
+      repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh));
+  }
+  
+  /* 3-Hole Binder Punches */
+  .notebook-sheet::before {
+    content: "";
+    position: absolute;
+    left: -15px;
+    top: 18px;
+    bottom: 18px;
+    width: 34px;
+    background: radial-gradient(circle at 17px 15px, var(--desk) 0 6.5px, transparent 7.5px) 0 0/34px 34px repeat-y;
+  }
+  
+  /* Metal Wire Spiral Rings */
+  .notebook-sheet::after {
+    content: "";
+    position: absolute;
+    left: -22px;
+    top: 18px;
+    bottom: 18px;
+    width: 22px;
+    background: repeating-linear-gradient(transparent 0 8px, #8d8f96 8px 11px, #c8cad0 11px 13px, transparent 13px 34px);
+    opacity: 0.85;
+    border-radius: 4px;
+  }
+  
+  [data-theme="dark"] .notebook-sheet::after {
+    background: repeating-linear-gradient(transparent 0 8px, #59606e 8px 11px, #8a93a6 11px 13px, transparent 13px 34px);
+  }
+}
+
+/* ==========================================================
+   PHYSICAL TAB FLAGS (STICKING OUT ON RIGHT EDGE)
+   ========================================================== */
+.tabflag {
+  position: absolute;
+  right: -12px;
+  top: 36px;
+  background: var(--ink);
+  color: #FFFFFF;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 1.15rem;
+  padding: 6px 14px 6px 12px;
+  border-radius: 0 10px 10px 0;
+  box-shadow: 2px 2px 0 rgba(0,0,0,.15);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: .02em;
+  z-index: 10;
+}
+
+@media (max-width: 767px) {
+  .tabflag {
+    right: 10px;
+    top: -12px;
+    writing-mode: horizontal-tb;
+    transform: none;
+    border-radius: 8px 8px 4px 4px;
+    font-size: 0.95rem;
+    padding: 2px 10px;
+  }
+}
+
+/* ==========================================================
+   POST-IT STICKY NOTES WITH WASHI TAPE
+   ========================================================== */
+.sticky-note {
+  position: relative;
+  padding: 20px 18px 18px;
+  border-radius: 2px 2px 8px 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.10), 0 8px 18px rgba(0,0,0,.08);
+  font-family: var(--font-hand2);
+  font-size: 1.05rem;
+  line-height: 1.45;
+  color: var(--st-text);
+  margin: 1.5rem 0;
+}
+
+.sticky-note::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px dashed rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 2px rgba(0,0,0,.08);
+  backdrop-filter: blur(1px);
+}
+
+.sticky-yellow { background: var(--st-y); transform: rotate(-1.2deg); }
+.sticky-pink { background: var(--st-r); transform: rotate(1.4deg); }
+.sticky-blue { background: var(--st-b); transform: rotate(-0.8deg); }
+.sticky-green { background: var(--st-g); transform: rotate(1.1deg); }
+
+/* ==========================================================
+   AUTHENTIC RUBBER STAMPS
+   ========================================================== */
+.rubber-stamp {
+  display: inline-block;
+  padding: 4px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 4px;
+  border: 2px solid currentColor;
+  box-shadow: 0 0 0 1px currentColor inset;
+  opacity: 0.92;
+  transform: rotate(-3deg);
+  user-select: none;
+}
+
+.stamp-red { color: var(--red); border-color: var(--red); }
+.stamp-green { color: var(--green); border-color: var(--green); }
+.stamp-amber { color: var(--amber); border-color: var(--amber); }
+
+/* ==========================================================
+   CHISEL HIGHLIGHTER MARKS
+   ========================================================== */
+mark.hy { background: var(--hy); padding: 0.1em 0.3em; border-radius: 2px; }
+mark.hg { background: var(--hg); padding: 0.1em 0.3em; border-radius: 2px; }
+mark.hp { background: var(--hp); padding: 0.1em 0.3em; border-radius: 2px; }
+mark.hb { background: var(--hb); padding: 0.1em 0.3em; border-radius: 2px; }
+
+/* ==========================================================
+   ELEVATED STUDY CARDS & FORMULAS
+   ========================================================== */
 .paper-card {
-  background-color: var(--bg-paper-card);
-  border: 1px solid var(--border-editorial);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  background-color: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
 }
 
-/* Custom Scrollbar for Editorial Feel */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-paper);
-}
-::-webkit-scrollbar-thumb {
-  background: #D6D3D1;
-  border-radius: 3px;
-}
-[data-theme="dark"] ::-webkit-scrollbar-thumb {
-  background: #44403C;
-}
-
-/* KaTeX formula box */
 .formula-box {
-  background: #FAFAF9;
-  border-left: 3px solid var(--accent-navy);
+  background: var(--card);
+  border-left: 4px solid var(--ink);
+  border-top: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
   border-radius: 4px;
 }
-[data-theme="dark"] .formula-box {
-  background: #171412;
-}
 
-/* 1600x900 Responsive Stage Container */
+/* 1600x900 Responsive Stage */
 .stage-aspect-ratio {
   position: relative;
   width: 100%;
-  padding-top: 56.25%; /* 16:9 ratio */
+  padding-top: 56.25%;
   overflow: hidden;
-  background-color: #FAF7F0;
-  border: 1px solid var(--border-editorial);
+  background-color: var(--paper);
+  border: 1px solid var(--line);
   border-radius: 8px;
-}
-[data-theme="dark"] .stage-aspect-ratio {
-  background-color: #141210;
 }
 
 .stage-viewport {
@@ -109,18 +286,135 @@ code, pre, .font-mono {
   height: 100%;
 }
 
-/* Print Optimization */
-@media print {
-  body {
-    background-color: #FFFFFF !important;
-    color: #000000 !important;
-  }
-  .no-print {
-    display: none !important;
-  }
-  .paper-card {
-    border: 1px solid #CCCCCC !important;
-    box-shadow: none !important;
-    break-inside: avoid;
-  }
+/* Custom Scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--desk); }
+::-webkit-scrollbar-thumb { background: #b0a794; border-radius: 3px; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #3c4961; }
+
+/* ==========================================================
+   ACADEMIC STUDY DESK & COURSE BINDERS (TEMPLATE 2.0)
+   ========================================================== */
+.desk-blotter {
+  background-color: var(--paper);
+  border: 2px solid var(--line);
+  box-shadow: 0 4px 24px rgba(60, 45, 20, 0.12), 0 1px 3px rgba(60, 45, 20, 0.08);
+  border-radius: 12px;
+  position: relative;
 }
+
+[data-theme="dark"] .desk-blotter {
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Stitched Leather Inset Border on Blotter */
+.desk-blotter::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+/* Course Binder Spines */
+.binder-card {
+  position: relative;
+  border-radius: 8px 12px 12px 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.binder-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.24), 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.binder-spine-navy {
+  background: linear-gradient(135deg, #0f1e36 0%, #1d3354 50%, #0f1e36 100%);
+  border-left: 12px solid #091322;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  border-bottom: 2px solid #060d17;
+  color: #f7f9fc;
+}
+
+.binder-spine-burgundy {
+  background: linear-gradient(135deg, #3d0c13 0%, #59161f 50%, #3d0c13 100%);
+  border-left: 12px solid #28070c;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  border-bottom: 2px solid #1a0407;
+  color: #fff6f6;
+}
+
+/* Gold Embossed Foil Text */
+.gold-foil {
+  color: #f3d078;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.8), 0 0 1px rgba(243, 208, 120, 0.4);
+  letter-spacing: 0.06em;
+}
+
+/* Silk Ribbon Bookmark Hanging from Binder */
+.ribbon-bookmark {
+  position: absolute;
+  top: -6px;
+  right: 28px;
+  width: 22px;
+  height: 52px;
+  background: #c2362f;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 10px), 0 100%);
+  z-index: 20;
+}
+
+.ribbon-bookmark-gold {
+  background: #b8860b;
+}
+
+/* Brass Desk Telemetry Plate */
+.brass-plate {
+  background: linear-gradient(135deg, #eed88b 0%, #d4af37 40%, #f6e6ab 70%, #aa8c2c 100%);
+  border: 1.5px solid #8c7324;
+  border-radius: 6px;
+  color: #2b2207;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.6), 0 4px 12px rgba(0,0,0,0.15);
+  position: relative;
+}
+
+[data-theme="dark"] .brass-plate {
+  background: linear-gradient(135deg, #9e812d 0%, #7d651e 40%, #b89c42 70%, #574511 100%);
+  border-color: #4a3b11;
+  color: #f7ecd2;
+}
+
+/* Screw Rivets on Brass Plate */
+.brass-screw {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6e591c;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.6), 0 1px 1px rgba(255,255,255,0.4);
+  position: absolute;
+}
+.screw-tl { top: 6px; left: 6px; }
+.screw-tr { top: 6px; right: 6px; }
+.screw-bl { bottom: 6px; left: 6px; }
+.screw-br { bottom: 6px; right: 6px; }
+
+/* Archival Catalog Index Card */
+.catalog-card {
+  background-color: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
+  border-radius: 6px;
+  position: relative;
+  transition: all 0.15s ease;
+}
+
+.catalog-card:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+

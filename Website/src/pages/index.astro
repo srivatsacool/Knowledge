@@ -3,198 +3,450 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { DIVISIONS } from '../data/divisions';
 import { PROJECTS } from '../data/projects';
 
-const featuredProjects = PROJECTS.filter(p => p.featured);
+const lscmProject = PROJECTS.find(p => p.slug === 'lscm') || PROJECTS[0];
+const erpProject = PROJECTS.find(p => p.slug === 'erp') || PROJECTS[1];
 ---
 
 <BaseLayout 
   title="Personal Knowledge & Project Archive" 
-  description="BRAIN is a personal knowledge operating system transforming academic materials into editorial exam notebooks, Papermorph interactive visual books, and verified PYQ intelligence banks."
+  description="BRAIN is a personal knowledge operating system transforming academic materials into Paper Edition 2.0 notebooks, Papermorph interactive visual books, and verified PYQ intelligence banks."
 >
-  <!-- Hero Section -->
-  <section class="border-b border-[#E7E5E4] dark:border-[#292524] py-16 sm:py-24 bg-[#FAF7F0] dark:bg-[#0C0A09]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="max-w-3xl">
-        <div class="inline-flex items-center space-x-2 px-2.5 py-1 rounded bg-[#F4EEDD] dark:bg-[#1C1917] border border-[#E7E5E4] dark:border-[#292524] text-xs font-mono uppercase tracking-wider text-[#78716C] dark:text-[#A8A29E] mb-6">
-          <span class="w-2 h-2 rounded-full bg-[#047857] animate-pulse"></span>
-          <span>Knowledge Operating System • Trimester IV Archive</span>
-        </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-16">
 
-        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1C1917] dark:text-[#F5F5F4] leading-[1.15]">
+    <!-- =========================================================
+         1. HERO SECTION: ACADEMIC STUDY DESK & LEATHER BLOTTER
+         ========================================================= -->
+    <section class="desk-blotter p-6 sm:p-12 relative overflow-hidden">
+      
+      <!-- Top Archival Registry Header -->
+      <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[var(--line)]">
+        <div class="flex items-center space-x-3">
+          <span class="w-3 h-3 rounded-full bg-[var(--green)] animate-pulse"></span>
+          <span class="font-mono text-xs uppercase tracking-widest text-[var(--pencil)]">
+            BRAIN KNOWLEDGE OS • TRIMESTER IV RESEARCH ARCHIVE
+          </span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="rubber-stamp stamp-green text-[10px]">VERIFIED 100%</span>
+          <span class="rubber-stamp stamp-amber text-[10px]">PAPER EDITION 2.0</span>
+        </div>
+      </div>
+
+      <!-- Main Headline & Scholar Motto -->
+      <div class="my-8 max-w-4xl">
+        <h1 class="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[var(--ink)] leading-[1.12]">
           A rigorous personal archive for study, simulation, and exam mastery.
         </h1>
-
-        <p class="text-base sm:text-lg text-[#57534E] dark:text-[#A8A29E] mt-6 leading-relaxed">
-          Turning raw lecture transcripts, faculty presentations, and university examination papers into synthesized editorial notebooks, 1600×900 interactive visual chapters, and 100% verified solved question banks.
+        <p class="font-hand2 text-lg sm:text-2xl text-[var(--pencil)] mt-4 leading-relaxed max-w-3xl">
+          Turning raw lecture transcripts, faculty presentations, and university examination papers into synthesized physical 2.0 notebooks, 1600×900 interactive visual chapters, and 100% verified solved question banks.
         </p>
 
-        <!-- Global Search CTA -->
-        <div class="mt-8 flex flex-wrap items-center gap-4">
+        <!-- Vintage Library Catalog Search Bar -->
+        <div class="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <button 
             onclick="document.getElementById('global-search-trigger').click()"
-            class="px-5 py-3 rounded-lg bg-[#1C1917] text-white dark:bg-[#F5F5F4] dark:text-[#1C1917] hover:bg-[#1E3A8A] dark:hover:bg-[#60A5FA] font-medium text-xs sm:text-sm flex items-center space-x-3 shadow-paper-md transition-all cursor-pointer"
+            class="px-5 py-3.5 rounded-lg bg-[var(--ink)] text-white hover:bg-[var(--ink2)] font-medium text-xs sm:text-sm flex items-center justify-between space-x-4 shadow-md transition-all cursor-pointer group"
           >
-            <svg width="16" height="16" class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <span>Search All Topics, Formulas & PYQs</span>
-            <kbd class="px-2 py-0.5 text-[11px] font-mono bg-white/20 dark:bg-black/20 rounded">⌘K</kbd>
+            <div class="flex items-center space-x-3">
+              <svg width="18" height="18" class="w-4 h-4 shrink-0 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <span>Search All Topics, Formulas & Solved PYQs...</span>
+            </div>
+            <kbd class="px-2 py-0.5 text-[11px] font-mono bg-white/20 rounded font-bold">⌘K</kbd>
           </button>
-          
+
           <a 
             href="/operations/lscm/" 
-            class="px-5 py-3 rounded-lg bg-white dark:bg-[#1C1917] border border-[#E7E5E4] dark:border-[#292524] text-[#1C1917] dark:text-[#F5F5F4] hover:border-[#1E3A8A] dark:hover:border-[#60A5FA] font-medium text-xs sm:text-sm transition-colors"
+            class="px-5 py-3.5 rounded-lg bg-[var(--paper)] border-2 border-[var(--ink)] text-[var(--ink)] hover:bg-[var(--hy)] font-bold text-xs sm:text-sm text-center transition-colors shadow-xs"
           >
-            Open Premier Project: LSCM →
+            Open Flagship Suite: LSCM →
           </a>
         </div>
-      </div>
 
-      <!-- Live Archive Telemetry / Stats -->
-      <div class="mt-16 pt-8 border-t border-[#E7E5E4] dark:border-[#292524] grid grid-cols-2 md:grid-cols-4 gap-6">
-        <div>
-          <span class="block font-serif text-3xl sm:text-4xl font-bold text-[#1C1917] dark:text-[#F5F5F4]">
-            18
-          </span>
-          <span class="text-xs uppercase font-mono tracking-wider text-[#78716C] dark:text-[#A8A29E]">
-            Curated Projects
-          </span>
-        </div>
-        <div>
-          <span class="block font-serif text-3xl sm:text-4xl font-bold text-[#1E3A8A] dark:text-[#60A5FA]">
-            42
-          </span>
-          <span class="text-xs uppercase font-mono tracking-wider text-[#78716C] dark:text-[#A8A29E]">
-            Editorial Notebooks
-          </span>
-        </div>
-        <div>
-          <span class="block font-serif text-3xl sm:text-4xl font-bold text-[#B45309] dark:text-[#F59E0B]">
-            9
-          </span>
-          <span class="text-xs uppercase font-mono tracking-wider text-[#78716C] dark:text-[#A8A29E]">
-            Interactive Books
-          </span>
-        </div>
-        <div>
-          <span class="block font-serif text-3xl sm:text-4xl font-bold text-[#047857] dark:text-[#10B981]">
-            127
-          </span>
-          <span class="text-xs uppercase font-mono tracking-wider text-[#78716C] dark:text-[#A8A29E]">
-            Solved PYQs Mapped
-          </span>
+        <!-- Quick Query Hotkey Pills -->
+        <div class="mt-4 flex flex-wrap items-center gap-2 text-xs font-mono text-[var(--pencil)]">
+          <span class="text-[11px] uppercase tracking-wider font-bold">Quick Inquiries:</span>
+          <button onclick="window.triggerSearch('Fisher Strategic Fit')" class="px-2 py-0.5 rounded bg-[var(--card)] border border-[var(--line)] hover:bg-[var(--hy)] transition-colors">Fisher Strategic Fit</button>
+          <button onclick="window.triggerSearch('EOQ Derivation')" class="px-2 py-0.5 rounded bg-[var(--card)] border border-[var(--line)] hover:bg-[var(--hy)] transition-colors">EOQ Derivation</button>
+          <button onclick="window.triggerSearch('U-Shaped Layout')" class="px-2 py-0.5 rounded bg-[var(--card)] border border-[var(--line)] hover:bg-[var(--hy)] transition-colors">U-Shaped Layout</button>
+          <button onclick="window.triggerSearch('INCOTERMS 2020')" class="px-2 py-0.5 rounded bg-[var(--card)] border border-[var(--line)] hover:bg-[var(--hy)] transition-colors">INCOTERMS 2020</button>
+          <button onclick="window.triggerSearch('Newsvendor')" class="px-2 py-0.5 rounded bg-[var(--card)] border border-[var(--line)] hover:bg-[var(--hy)] transition-colors">Newsvendor</button>
         </div>
       </div>
 
-    </div>
-  </section>
+      <!-- Brass Telemetry Plate (Counters set into desk) -->
+      <div class="brass-plate p-5 sm:p-6 mt-8">
+        <div class="brass-screw screw-tl"></div>
+        <div class="brass-screw screw-tr"></div>
+        <div class="brass-screw screw-bl"></div>
+        <div class="brass-screw screw-br"></div>
 
-  <!-- Featured Projects Section -->
-  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between mb-8 pb-3 border-b border-[#E7E5E4] dark:border-[#292524]">
-      <div>
-        <h2 class="font-serif text-2xl font-bold text-[#1C1917] dark:text-[#F5F5F4]">
-          Featured Master Projects
-        </h2>
-        <p class="text-xs text-[#78716C] dark:text-[#A8A29E]">
-          Active course suites with integrated notebooks, interactive visual books, and solved past examinations.
-        </p>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
+          <div class="border-r border-[#8c7324]/30 last:border-none">
+            <span class="block font-serif text-2xl sm:text-4xl font-extrabold tracking-tight">18</span>
+            <span class="text-[10px] sm:text-xs uppercase font-mono tracking-widest font-bold opacity-80">Curated Projects</span>
+          </div>
+          <div class="border-r border-[#8c7324]/30 last:border-none">
+            <span class="block font-serif text-2xl sm:text-4xl font-extrabold tracking-tight">42</span>
+            <span class="text-[10px] sm:text-xs uppercase font-mono tracking-widest font-bold opacity-80">Notebook Editions</span>
+          </div>
+          <div class="border-r border-[#8c7324]/30 last:border-none">
+            <span class="block font-serif text-2xl sm:text-4xl font-extrabold tracking-tight">9</span>
+            <span class="text-[10px] sm:text-xs uppercase font-mono tracking-widest font-bold opacity-80">1600×900 Simulators</span>
+          </div>
+          <div class="border-r border-[#8c7324]/30 last:border-none">
+            <span class="block font-serif text-2xl sm:text-4xl font-extrabold tracking-tight">127</span>
+            <span class="text-[10px] sm:text-xs uppercase font-mono tracking-widest font-bold opacity-80">Solved PYQs Mapped</span>
+          </div>
+          <div class="col-span-2 md:col-span-1">
+            <span class="block font-serif text-2xl sm:text-4xl font-extrabold tracking-tight">100%</span>
+            <span class="text-[10px] sm:text-xs uppercase font-mono tracking-widest font-bold opacity-80">Past-Paper Fidelity</span>
+          </div>
+        </div>
       </div>
-      <span class="text-xs font-mono text-[#78716C] dark:text-[#A8A29E] hidden sm:inline">
-        Operations Division
-      </span>
-    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {featuredProjects.map(proj => (
-        <div class="paper-card rounded-xl p-6 flex flex-col justify-between hover:shadow-paper-lg transition-all group">
+      <!-- Real Washi-Pinned Desk Sticky Notes Scattered Across Desk -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+        
+        <!-- Yellow Post-It -->
+        <div class="sticky-note sticky-yellow">
+          <h4 class="font-hand font-bold text-xl text-[var(--ink)] mb-1">
+            📌 Exam Scoring Protocol
+          </h4>
+          <p class="text-sm">
+            In quantitative problems (EOQ/EPQ/Newsvendor), never jump straight to arithmetic. State the operational trade-off first, write the generalized formulation, define all variables with units, and state assumptions!
+          </p>
+        </div>
+
+        <!-- Pink Post-It -->
+        <div class="sticky-note sticky-pink">
+          <h4 class="font-hand font-bold text-xl text-[var(--red)] mb-1">
+            ⚠️ Verified PYQ Intel
+          </h4>
+          <p class="text-sm">
+            Fisher's Strategic Fit matrix (2023, 2024), EOQ with Quantity Discounts (2024, 2025), and U-Shaped Cross-Docking layouts appear in 100% of Trimester IV end-term papers. All 10 solutions in the PYQ Bank are verified!
+          </p>
+        </div>
+
+        <!-- Green Post-It -->
+        <div class="sticky-note sticky-green">
+          <h4 class="font-hand font-bold text-xl text-[var(--green)] mb-1">
+            🎬 Papermorph Sandbox
+          </h4>
+          <p class="text-sm">
+            Every concept features an interactive 1600×900 responsive vector stage. Adjust parameters in real time to visually prove why holding cost equals ordering cost at the optimal lot size minimum!
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         2. FLAGSHIP ACADEMIC COURSE BINDERS (CORE SHOWCASE)
+         ========================================================= -->
+    <section class="space-y-6">
+      
+      <div class="flex items-center justify-between pb-3 border-b-2 border-[var(--ink)]">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-widest text-[var(--red)] font-bold">
+            MASTER HARDCOVER BINDERS
+          </span>
+          <h2 class="font-serif text-3xl font-bold text-[var(--ink)]">
+            Flagship MBA Course Suites
+          </h2>
+        </div>
+        <span class="font-mono text-xs text-[var(--pencil)] hidden sm:inline">
+          Operations Division • Trimester IV
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- BINDER 1: LSCM (NAVY BUCKRAM LEATHER) -->
+        <div class="binder-card binder-spine-navy p-6 sm:p-8 flex flex-col justify-between">
+          <div class="ribbon-bookmark"></div>
+
           <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-[11px] font-mono uppercase tracking-wider text-[#1E3A8A] dark:text-[#60A5FA] font-semibold">
-                {proj.division} • {proj.type}
-              </span>
-              <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-[#047857]/10 text-[#047857] dark:text-[#10B981]">
-                {proj.status}
-              </span>
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+              <span class="rubber-stamp stamp-green text-[10px] bg-black/40">MBA CORE</span>
+              <span class="rubber-stamp stamp-red text-[10px] bg-black/40">3 YRS SOLVED PYQS</span>
+              <span class="rubber-stamp stamp-amber text-[10px] bg-black/40">EDITION 2.0</span>
             </div>
 
-            <h3 class="font-serif text-2xl font-bold text-[#1C1917] dark:text-[#F5F5F4] group-hover:text-[#1E3A8A] dark:group-hover:text-[#60A5FA] transition-colors">
-              <a href={`/${proj.division}/${proj.slug}/`}>
-                {proj.title}
+            <h3 class="font-serif text-2xl sm:text-3xl font-extrabold gold-foil mb-2">
+              <a href="/operations/lscm/" class="hover:underline">
+                Logistics & Supply Chain Management
               </a>
             </h3>
 
-            <p class="text-xs text-[#57534E] dark:text-[#A8A29E] mt-2.5 leading-relaxed">
-              {proj.description}
+            <p class="font-hand2 text-base text-gray-300 mb-4 leading-relaxed">
+              Value Creation, Adaptability & Sustainability · Prof. Ajit Maurya, Prof. Manoj Dagaonkar & Prof. Praful More
             </p>
 
-            <!-- Tags -->
-            <div class="flex flex-wrap gap-1.5 mt-4">
-              {proj.tags.slice(0, 4).map(tag => (
-                <span class="px-2 py-0.5 rounded text-[10px] bg-[#FAF7F0] dark:bg-[#24211E] border border-[#E7E5E4] dark:border-[#44403C] text-[#57534E] dark:text-[#A8A29E] font-mono">
-                  {tag}
-                </span>
-              ))}
+            <p class="text-xs text-gray-300 leading-relaxed mb-6">
+              Complete 15-session consulting and exam master textbook. Includes Fisher strategic fit alignment, deterministic EOQ/EPQ arithmetic models, stochastic safety stock calculations, warehouse cross-docking workflows, and 100% verified solved past examinations.
+            </p>
+
+            <!-- Quick Jump Tab Grid (Template 2.0 Artifacts) -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs font-mono mb-6">
+              <a href="/operations/lscm/notebook/" class="p-2 rounded bg-white/10 hover:bg-white/20 border border-white/15 flex items-center space-x-1.5 transition-colors">
+                <span>📘</span>
+                <span class="font-bold text-white">Notebook 2.0</span>
+              </a>
+              <a href="/operations/lscm/book/" class="p-2 rounded bg-white/10 hover:bg-white/20 border border-white/15 flex items-center space-x-1.5 transition-colors">
+                <span>🎬</span>
+                <span class="font-bold text-yellow-300">Visual Stage</span>
+              </a>
+              <a href="/operations/lscm/pyq/" class="p-2 rounded bg-white/10 hover:bg-white/20 border border-white/15 flex items-center space-x-1.5 transition-colors">
+                <span>📝</span>
+                <span class="font-bold text-red-300">PYQ Bank</span>
+              </a>
+              <a href="/operations/lscm/formulas/" class="p-2 rounded bg-white/10 hover:bg-white/20 border border-white/15 flex items-center space-x-1.5 transition-colors">
+                <span>🧮</span>
+                <span class="font-bold text-green-300">Formula Book</span>
+              </a>
+              <a href="/operations/lscm/revision/" class="p-2 rounded bg-white/10 hover:bg-white/20 border border-white/15 flex items-center space-x-1.5 transition-colors">
+                <span>⚡</span>
+                <span class="font-bold text-cyan-300">Revision Blitz</span>
+              </a>
+              <a href="/operations/lscm/" class="p-2 rounded bg-white/10 hover:bg-white/20 border border-white/15 flex items-center space-x-1.5 transition-colors">
+                <span>🏛️</span>
+                <span class="font-bold text-amber-300">Overview</span>
+              </a>
+            </div>
+
+            <!-- Dedicated Faculty Standalone Notebook Portfolios -->
+            <div class="p-3 rounded bg-black/30 border border-white/10 text-xs">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-amber-300 font-bold block mb-2">
+                Dedicated Faculty Notebook Portfolios (Paper Edition 2.0):
+              </span>
+              <div class="flex flex-wrap gap-2">
+                <a href="/operations/lscm-archive/01_Ajit_Sir_LSCM_Notebook.html" target="_blank" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/25 text-white flex items-center space-x-1">
+                  <span>🏛️</span>
+                  <span>Ajit Sir (Architecture & Drivers)</span>
+                  <span class="text-[10px] opacity-75">↗</span>
+                </a>
+                <a href="/operations/lscm-archive/02_Manoj_Sir_LSCM_Notebook.html" target="_blank" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/25 text-white flex items-center space-x-1">
+                  <span>📦</span>
+                  <span>Manoj Sir (Warehousing & EXIM)</span>
+                  <span class="text-[10px] opacity-75">↗</span>
+                </a>
+                <a href="/operations/lscm-archive/03_Praful_Sir_LSCM_Notebook.html" target="_blank" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/25 text-white flex items-center space-x-1">
+                  <span>🧮</span>
+                  <span>Praful Sir (Inventory Theory)</span>
+                  <span class="text-[10px] opacity-75">↗</span>
+                </a>
+              </div>
             </div>
           </div>
 
-          <!-- Stats & Artifact Suite Links -->
-          <div class="mt-6 pt-4 border-t border-[#E7E5E4] dark:border-[#292524] flex items-center justify-between text-xs">
-            <div class="flex items-center space-x-3 font-mono text-[11px] text-[#78716C] dark:text-[#A8A29E]">
-              <span>{proj.stats.topics} Topics</span>
-              <span>•</span>
-              <span>{proj.stats.chapters} Visual Beats</span>
-              <span>•</span>
-              <span>{proj.stats.pyqYears} Yrs PYQs</span>
-            </div>
-
-            <a 
-              href={`/${proj.division}/${proj.slug}/`}
-              class="font-semibold text-[#1E3A8A] dark:text-[#60A5FA] flex items-center space-x-1 group-hover:translate-x-0.5 transition-transform"
-            >
-              <span>Explore Suite</span>
+          <!-- Bottom Footer Bar -->
+          <div class="mt-6 pt-4 border-t border-white/15 flex items-center justify-between text-xs font-mono">
+            <span class="text-gray-300">15 Sessions • 6 Chapters • 3 Yrs PYQs</span>
+            <a href="/operations/lscm/" class="font-bold gold-foil hover:underline flex items-center space-x-1">
+              <span>Open Master Suite</span>
               <span>→</span>
             </a>
           </div>
         </div>
-      ))}
-    </div>
-  </section>
 
-  <!-- Knowledge Divisions Grid -->
-  <section class="py-16 bg-[#FAF7F0] dark:bg-[#0C0A09] border-t border-[#E7E5E4] dark:border-[#292524]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- BINDER 2: ERP (BURGUNDY LEATHER) -->
+        <div class="binder-card binder-spine-burgundy p-6 sm:p-8 flex flex-col justify-between">
+          <div class="ribbon-bookmark ribbon-bookmark-gold"></div>
+
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+              <span class="rubber-stamp stamp-green text-[10px] bg-black/40">ENTERPRISE SYSTEMS</span>
+              <span class="rubber-stamp stamp-red text-[10px] bg-black/40">18 QUESTIONS SOLVED</span>
+              <span class="rubber-stamp stamp-amber text-[10px] bg-black/40">EXAM MASTER</span>
+            </div>
+
+            <h3 class="font-serif text-2xl sm:text-3xl font-extrabold gold-foil mb-2">
+              <a href="/operations/erp/notebook/" class="hover:underline">
+                Enterprise Resource Planning & Architecture
+              </a>
+            </h3>
+
+            <p class="font-hand2 text-base text-gray-300 mb-4 leading-relaxed">
+              Business Applications & Systems Engineering · Complete 18 Core Examination Question Frameworks
+            </p>
+
+            <p class="text-xs text-gray-300 leading-relaxed mb-6">
+              High-scoring MBA revision textbook covering SAP S/4HANA module integration (MM, SD, PP, FI/CO), Business Process Re-engineering (BPR), two-tier cloud topologies, master data management, and legacy ERP migration risk mitigation blueprints.
+            </p>
+
+            <!-- Quick Jump Tab Grid -->
+            <div class="grid grid-cols-2 gap-2 text-xs font-mono mb-6">
+              <a href="/operations/erp/notebook/" class="p-3 rounded bg-white/10 hover:bg-white/20 border border-white/15 flex items-center space-x-2 transition-colors">
+                <span>📕</span>
+                <div>
+                  <div class="font-bold text-white">ERP Master Notebook</div>
+                  <div class="text-[10px] text-gray-300">18 Questions & Blueprints</div>
+                </div>
+              </a>
+              <a href="/operations/erp/" class="p-3 rounded bg-white/10 hover:bg-white/20 border border-white/15 flex items-center space-x-2 transition-colors">
+                <span>⚡</span>
+                <div>
+                  <div class="font-bold text-amber-300">Project Overview</div>
+                  <div class="text-[10px] text-gray-300">Taxonomy & Architecture</div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Features Highlights Box -->
+            <div class="p-3 rounded bg-black/30 border border-white/10 text-xs text-gray-300 space-y-1.5">
+              <div class="flex items-center space-x-2">
+                <span class="text-amber-400 font-bold">✔</span>
+                <span>Complete 16-chapter cohesive master exam textbook</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="text-amber-400 font-bold">✔</span>
+                <span>Full SAP module relationship diagrams & BPR workflow models</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="text-amber-400 font-bold">✔</span>
+                <span>Total Cost of Ownership (TCO) & NPV calculation walkthroughs</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Footer Bar -->
+          <div class="mt-6 pt-4 border-t border-white/15 flex items-center justify-between text-xs font-mono">
+            <span class="text-gray-300">16 Chapters • 18 Blueprints</span>
+            <a href="/operations/erp/notebook/" class="font-bold gold-foil hover:underline flex items-center space-x-1">
+              <span>Open ERP Notebook</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         3. ARCHIVAL CARD INDEX CABINET: KNOWLEDGE DIVISIONS
+         ========================================================= -->
+    <section class="space-y-6">
       
-      <div class="mb-8 pb-3 border-b border-[#E7E5E4] dark:border-[#292524]">
-        <h2 class="font-serif text-2xl font-bold text-[#1C1917] dark:text-[#F5F5F4]">
-          Knowledge Divisions
-        </h2>
-        <p class="text-xs text-[#78716C] dark:text-[#A8A29E]">
-          The structured taxonomy governing the BRAIN knowledge base.
-        </p>
+      <div class="flex items-center justify-between pb-3 border-b-2 border-[var(--ink)]">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-widest text-[var(--pencil)] font-bold">
+            CLASSIFICATION TAXONOMY
+          </span>
+          <h2 class="font-serif text-3xl font-bold text-[var(--ink)]">
+            Archival Library Card Index
+          </h2>
+        </div>
+        <span class="font-mono text-xs text-[var(--pencil)] hidden sm:inline">
+          Dewey-Decimal Inspired Knowledge Tree
+        </span>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {DIVISIONS.map(div => (
           <a 
             href={`/${div.slug}/`}
-            class="paper-card rounded-lg p-5 hover:border-[#1E3A8A] dark:hover:border-[#60A5FA] transition-all group block"
+            class="catalog-card p-6 block group"
           >
-            <div class="flex items-center justify-between mb-2">
-              <h3 class="font-serif text-lg font-bold text-[#1C1917] dark:text-[#F5F5F4] group-hover:text-[#1E3A8A] dark:group-hover:text-[#60A5FA]">
-                {div.title}
-              </h3>
-              <span class="font-mono text-xs text-[#78716C] dark:text-[#A8A29E] bg-[#FAF7F0] dark:bg-[#24211E] px-2 py-0.5 rounded border border-[#E7E5E4] dark:border-[#44403C]">
+            <!-- Card Tab Flag -->
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-mono text-[10px] uppercase tracking-wider text-[var(--ink)] font-bold px-2 py-0.5 rounded bg-[var(--paper)] border border-[var(--line)]">
+                Division #{div.slug.slice(0, 3).toUpperCase()}
+              </span>
+              <span class="font-mono text-xs text-[var(--pencil)] font-bold">
                 {div.count} Units
               </span>
             </div>
-            <p class="text-xs text-[#78716C] dark:text-[#A8A29E] leading-relaxed line-clamp-2">
+
+            <h3 class="font-serif text-xl font-bold text-[var(--ink)] group-hover:text-[var(--red)] transition-colors mb-2">
+              {div.title}
+            </h3>
+
+            <p class="text-xs text-[var(--pencil)] leading-relaxed">
               {div.description}
             </p>
+
+            <div class="mt-4 pt-3 border-t border-[var(--rule)] flex items-center justify-between text-xs font-mono text-[var(--ink2)] group-hover:translate-x-0.5 transition-transform">
+              <span>Browse Catalog</span>
+              <span>→</span>
+            </div>
           </a>
         ))}
       </div>
 
-    </div>
-  </section>
+    </section>
+
+
+    <!-- =========================================================
+         4. KNOWLEDGE OPERATING ENGINE: THE PIPELINE ARCHITECTURE
+         ========================================================= -->
+    <section class="paper-card rounded-xl p-8 space-y-6 border-2 border-[var(--line)]">
+      
+      <div>
+        <span class="font-mono text-xs uppercase tracking-widest text-[var(--green)] font-bold">
+          PEDAGOGICAL METHODOLOGY
+        </span>
+        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-[var(--ink)]">
+          The Brain Knowledge Production Pipeline
+        </h2>
+        <p class="text-xs sm:text-sm text-[var(--pencil)] mt-1">
+          Adapting Papermorph architectural principles: Turning raw syllabi into living, interactive, exam-ready intelligence.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+        
+        <div class="p-4 rounded bg-[var(--paper)] border border-[var(--line)]">
+          <div class="font-mono text-base text-[var(--ink)] font-bold mb-1">01. Ingest & Audit</div>
+          <p class="text-[var(--pencil)] leading-relaxed">
+            Ingest raw university course outlines, professor slide decks, and scanned past examination papers. Strict hierarchy check prevents hallucinations.
+          </p>
+        </div>
+
+        <div class="p-4 rounded bg-[var(--paper)] border border-[var(--line)]">
+          <div class="font-mono text-base text-[var(--amber)] font-bold mb-1">02. Topic Extraction</div>
+          <p class="text-[var(--pencil)] leading-relaxed">
+            Deconstruct each session into 12 rigorous dimensions: definitions, strategic why, execution mechanics, KaTeX formulas, corporate cases, and model exam formats.
+          </p>
+        </div>
+
+        <div class="p-4 rounded bg-[var(--paper)] border border-[var(--line)]">
+          <div class="font-mono text-base text-[var(--red)] font-bold mb-1">03. PYQ Verification</div>
+          <p class="text-[var(--pencil)] leading-relaxed">
+            Extract every past question verbatim with marks, recurrence frequency, step-by-step arithmetic solutions, and specific exam trap warnings.
+          </p>
+        </div>
+
+        <div class="p-4 rounded bg-[var(--paper)] border border-[var(--line)]">
+          <div class="font-mono text-base text-[var(--green)] font-bold mb-1">04. Visual Synthesis</div>
+          <p class="text-[var(--pencil)] leading-relaxed">
+            Build reactive 1600×900 responsive vector stages with live sliders, alongside physical Paper Edition 2.0 notebooks on Cloudflare static edge.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
 </BaseLayout>
+
+<script is:inline>
+  window.triggerSearch = function(query) {
+    const trigger = document.getElementById('global-search-trigger');
+    if (trigger) trigger.click();
+    setTimeout(() => {
+      const input = document.getElementById('search-input');
+      if (input) {
+        input.value = query;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    }, 50);
+  };
+</script>

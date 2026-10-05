@@ -46,17 +46,54 @@ const { project } = Astro.props;
         <div class="flex flex-wrap items-center gap-3">
           <a 
             href={`/${project.division}/${project.slug}/notebook/`}
-            class="px-5 py-2.5 rounded-lg bg-[#1E3A8A] text-white dark:bg-[#60A5FA] dark:text-[#0C0A09] hover:bg-[#1E3A8A]/90 font-medium text-xs sm:text-sm shadow-sm transition-all"
+            class="px-5 py-2.5 rounded-lg bg-[var(--ink)] text-white hover:bg-[var(--ink2)] font-medium text-xs sm:text-sm shadow-sm transition-all"
           >
-            Open Master Notebook →
-          </a>
-          <a 
-            href={`/${project.division}/${project.slug}/notebook/#faculty`}
-            class="px-4 py-2.5 rounded-lg bg-white dark:bg-[#292524] border border-[#E7E5E4] dark:border-[#44403C] text-[#1C1917] dark:text-[#F5F5F4] hover:bg-[#FAF7F0] dark:hover:bg-[#1F1C1A] text-xs font-medium transition-colors"
-          >
-            Faculty Portfolios
+            Open Unified Master Notebook (15 Topics) →
           </a>
         </div>
+
+        {project.slug === 'lscm' && (
+          <div class="mt-6 pt-5 border-t border-[var(--line)]">
+            <span class="font-mono text-[10px] uppercase tracking-wider text-[var(--ink)] font-bold block mb-2">
+              Individual Faculty Portfolios (Paper Edition 2.0 Standalone):
+            </span>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <a 
+                href="/operations/lscm-archive/01_Ajit_Sir_LSCM_Notebook.html" 
+                target="_blank" 
+                class="p-2.5 rounded bg-[var(--card)] border border-[var(--line)] hover:border-[var(--ink)] block transition-colors group"
+              >
+                <div class="font-serif text-xs font-bold text-[var(--ink)] group-hover:text-[var(--ink2)] flex items-center justify-between">
+                  <span>🏛️ Prof. Ajit Maurya</span>
+                  <span class="font-mono text-[10px] opacity-60">↗</span>
+                </div>
+                <div class="text-[10px] text-[var(--pencil)] mt-0.5">SCM Architecture & 6 Drivers</div>
+              </a>
+              <a 
+                href="/operations/lscm-archive/02_Manoj_Sir_LSCM_Notebook.html" 
+                target="_blank" 
+                class="p-2.5 rounded bg-[var(--card)] border border-[var(--line)] hover:border-[var(--ink)] block transition-colors group"
+              >
+                <div class="font-serif text-xs font-bold text-[var(--ink)] group-hover:text-[var(--ink2)] flex items-center justify-between">
+                  <span>📦 Prof. Manoj Dagaonkar</span>
+                  <span class="font-mono text-[10px] opacity-60">↗</span>
+                </div>
+                <div class="text-[10px] text-[var(--pencil)] mt-0.5">Warehousing Layout & EXIM</div>
+              </a>
+              <a 
+                href="/operations/lscm-archive/03_Praful_Sir_LSCM_Notebook.html" 
+                target="_blank" 
+                class="p-2.5 rounded bg-[var(--card)] border border-[var(--line)] hover:border-[var(--ink)] block transition-colors group"
+              >
+                <div class="font-serif text-xs font-bold text-[var(--ink)] group-hover:text-[var(--ink2)] flex items-center justify-between">
+                  <span>🧮 Prof. Praful More</span>
+                  <span class="font-mono text-[10px] opacity-60">↗</span>
+                </div>
+                <div class="text-[10px] text-[var(--pencil)] mt-0.5">Inventory Theory & Kraljic</div>
+              </a>
+            </div>
+          </div>
+        )}
       </div>
 
       <!-- SECONDARY ARTIFACTS Grid -->
