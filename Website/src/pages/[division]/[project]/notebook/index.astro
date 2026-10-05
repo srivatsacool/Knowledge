@@ -1,0 +1,275 @@
+---
+import ProjectLayout from '../../../../layouts/ProjectLayout.astro';
+import { PROJECTS } from '../../../../data/projects';
+import { LSCM_TOPICS } from '../../../../data/lscmData';
+
+export function getStaticPaths() {
+  return PROJECTS.map(p => ({
+    params: { division: p.division, project: p.slug },
+    props: { project: p },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<ProjectLayout project={project} activeArtifact="notebook" pageSubtitle="Master Exam Notebook">
+  
+  <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+    
+    <!-- Table of Contents Sidebar -->
+    <aside class="lg:col-span-1 hidden lg:block">
+      <div class="sticky top-32 paper-card rounded-lg p-4 max-h-[80vh] overflow-y-auto">
+        <h3 class="font-serif text-sm font-bold text-[#1C1917] dark:text-[#F5F5F4] uppercase tracking-wider mb-3 pb-2 border-b border-[#E7E5E4] dark:border-[#292524]">
+          Syllabus Index (15)
+        </h3>
+        
+        <!-- Faculty Filter Buttons -->
+        <div class="flex flex-wrap gap-1 mb-4 pb-3 border-b border-[#E7E5E4] dark:border-[#292524]">
+          <button onclick="filterFaculty('all')" class="faculty-btn active px-2 py-0.5 rounded text-[10px] font-mono bg-[#1E3A8A] text-white">All (15)</button>
+          <button onclick="filterFaculty('Ajit Sir')" class="faculty-btn px-2 py-0.5 rounded text-[10px] font-mono bg-[#FAF7F0] dark:bg-[#24211E] border border-[#E7E5E4] dark:border-[#44403C]">Ajit Sir</button>
+          <button onclick="filterFaculty('Manoj Sir')" class="faculty-btn px-2 py-0.5 rounded text-[10px] font-mono bg-[#FAF7F0] dark:bg-[#24211E] border border-[#E7E5E4] dark:border-[#44403C]">Manoj Sir</button>
+          <button onclick="filterFaculty('Praful Sir')" class="faculty-btn px-2 py-0.5 rounded text-[10px] font-mono bg-[#FAF7F0] dark:bg-[#24211E] border border-[#E7E5E4] dark:border-[#44403C]">Praful Sir</button>
+        </div>
+
+        <nav class="space-y-1 text-xs">
+          {LSCM_TOPICS.map(t => (
+            <a 
+              href={`#topic-${t.id}`}
+              class="topic-nav-link block p-1.5 rounded hover:bg-[#FAF7F0] dark:hover:bg-[#24211E] text-[#57534E] dark:text-[#A8A29E] hover:text-[#1E3A8A] dark:hover:text-[#60A5FA] truncate transition-colors"
+              data-faculty={t.faculty}
+            >
+              <span class="font-mono text-[10px] text-[#A8A29E] mr-1">{t.id.toString().padStart(2, '0')}.</span>
+              {t.title}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Main Notebook Stream -->
+    <div class="lg:col-span-3 space-y-12">
+      
+      <!-- Faculty Synthesis Introduction Banner -->
+      <div id="faculty" class="paper-card rounded-xl p-6 bg-gradient-to-r from-white via-[#FAF7F0] to-white dark:from-[#1C1917] dark:via-[#171412] dark:to-[#1C1917]">
+        <div class="flex items-center space-x-2 text-[11px] font-mono uppercase tracking-wider text-[#1E3A8A] dark:text-[#60A5FA] font-bold mb-2">
+          <span>Tri-Faculty Pedagogical Synthesis</span>
+        </div>
+        <h2 class="font-serif text-2xl font-bold text-[#1C1917] dark:text-[#F5F5F4] mb-2">
+          Master Examination Textbook
+        </h2>
+        <p class="text-xs sm:text-sm text-[#57534E] dark:text-[#A8A29E] leading-relaxed">
+          Reconstructed strictly from official syllabus learning objectives (Tier 1), faculty-specific presentations (Tier 2), and verified university examination papers (Tier 3). Every topic provides definition, strategic rationale, mechanics, frameworks, business examples, KaTeX mathematical proofs, and model exam answers.
+        </p>
+
+        <div class="mt-4 pt-3 border-t border-[#E7E5E4] dark:border-[#292524] grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+          <div class="p-2.5 rounded bg-white dark:bg-[#24211E] border border-[#E7E5E4] dark:border-[#44403C]">
+            <strong class="font-semibold text-[#1C1917] dark:text-[#F5F5F4] block">Prof. Ajit Maurya</strong>
+            <span class="text-[11px] text-[#78716C] dark:text-[#A8A29E]">Strategy, Drivers, S&OP, Logistics Costing & INCOTERMS</span>
+          </div>
+          <div class="p-2.5 rounded bg-white dark:bg-[#24211E] border border-[#E7E5E4] dark:border-[#44403C]">
+            <strong class="font-semibold text-[#1C1917] dark:text-[#F5F5F4] block">Prof. Manoj</strong>
+            <span class="text-[11px] text-[#78716C] dark:text-[#A8A29E]">DC vs FC, Cross-Docking, Layouts, MHE & Picking Topologies</span>
+          </div>
+          <div class="p-2.5 rounded bg-white dark:bg-[#24211E] border border-[#E7E5E4] dark:border-[#44403C]">
+            <strong class="font-semibold text-[#1C1917] dark:text-[#F5F5F4] block">Prof. Praful More</strong>
+            <span class="text-[11px] text-[#78716C] dark:text-[#A8A29E]">Deterministic EOQ/EPQ, Stochastic Safety Stock & Service Levels</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topics Rendered Consecutively -->
+      {LSCM_TOPICS.map(topic => (
+        <article id={`topic-${topic.id}`} class="topic-article paper-card rounded-xl p-8 scroll-mt-32" data-faculty={topic.faculty}>
+          
+          <!-- Topic Header -->
+          <div class="flex flex-wrap items-center justify-between pb-4 mb-6 border-b border-[#E7E5E4] dark:border-[#292524] gap-2">
+            <div>
+              <div class="flex items-center space-x-2 mb-1">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-[#1E3A8A]/10 text-[#1E3A8A] dark:text-[#60A5FA] font-bold">
+                  Session {topic.session.toString().padStart(2, '0')}
+                </span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-[#B45309]/10 text-[#B45309] dark:text-[#F59E0B] font-medium">
+                  {topic.faculty}
+                </span>
+                <span class="text-xs text-[#78716C] dark:text-[#A8A29E] font-mono">
+                  • {topic.category}
+                </span>
+              </div>
+              <h2 class="font-serif text-2xl font-bold text-[#1C1917] dark:text-[#F5F5F4]">
+                {topic.id}. {topic.title}
+              </h2>
+            </div>
+
+            <!-- PYQ Indicator Badge -->
+            <a 
+              href="/operations/lscm/pyq/"
+              class="px-2.5 py-1 rounded text-xs font-mono bg-[#BE123C]/10 text-[#BE123C] dark:text-[#FB7185] border border-[#BE123C]/30 hover:bg-[#BE123C]/20 transition-colors"
+            >
+              PYQ Verified
+            </a>
+          </div>
+
+          <!-- 12-Point Concept Breakdown -->
+          <div class="space-y-6 text-sm text-[#44403C] dark:text-[#D6D3D1]">
+            
+            <!-- What is it? -->
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-[#1E3A8A] dark:text-[#60A5FA] font-bold mb-1.5 flex items-center space-x-2">
+                <span>01. DEFINITION (WHAT IS IT?)</span>
+              </h3>
+              <p class="leading-relaxed bg-[#FAF7F0] dark:bg-[#141210] p-4 rounded border-l-2 border-[#1E3A8A] dark:border-[#60A5FA]">
+                {topic.what}
+              </p>
+            </div>
+
+            <!-- Why does it matter? -->
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-[#1E3A8A] dark:text-[#60A5FA] font-bold mb-1.5">
+                02. STRATEGIC RATIONALE (WHY DOES IT MATTER?)
+              </h3>
+              <p class="leading-relaxed">
+                {topic.why}
+              </p>
+            </div>
+
+            <!-- How does it work? -->
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-[#1E3A8A] dark:text-[#60A5FA] font-bold mb-1.5">
+                03. OPERATIONAL MECHANICS (HOW DOES IT WORK?)
+              </h3>
+              <p class="leading-relaxed">
+                {topic.how}
+              </p>
+            </div>
+
+            <!-- Framework & Model -->
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-[#B45309] dark:text-[#F59E0B] font-bold mb-1.5">
+                04. THEORETICAL FRAMEWORK & MODEL
+              </h3>
+              <div class="p-3 bg-white dark:bg-[#1C1917] rounded border border-[#E7E5E4] dark:border-[#292524] font-medium text-[#1C1917] dark:text-[#F5F5F4]">
+                {topic.framework}
+              </div>
+            </div>
+
+            <!-- Formula Box (If applicable) -->
+            {topic.formulaKatex && (
+              <div>
+                <h3 class="font-mono text-xs uppercase tracking-wider text-[#047857] dark:text-[#10B981] font-bold mb-1.5">
+                  05. MATHEMATICAL FORMULATION
+                </h3>
+                <div class="formula-box p-4 my-2 text-center text-lg overflow-x-auto">
+                  $${topic.formulaKatex}$$
+                </div>
+
+                {topic.arithmeticExample && (
+                  <div class="p-3 bg-[#FAF7F0] dark:bg-[#141210] rounded border border-[#E7E5E4] dark:border-[#292524] text-xs font-mono space-y-1 mt-2">
+                    <span class="text-[#B45309] dark:text-[#F59E0B] font-bold block mb-1">
+                      Example: {topic.arithmeticExample.problem}
+                    </span>
+                    {topic.arithmeticExample.steps.map(s => (
+                      <div class="text-[#57534E] dark:text-[#A8A29E]">• {s}</div>
+                    ))}
+                    <div class="pt-2 text-[#047857] dark:text-[#10B981] font-bold">
+                      Result: {topic.arithmeticExample.result}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            <!-- Business Example -->
+            <div>
+              <h3 class="font-mono text-xs uppercase tracking-wider text-[#1C1917] dark:text-[#F5F5F4] font-bold mb-1.5">
+                06. CORPORATE BENCHMARK EXAMPLE
+              </h3>
+              <p class="leading-relaxed italic bg-white dark:bg-[#1C1917] p-3 rounded border border-[#E7E5E4] dark:border-[#292524]">
+                {topic.businessExample}
+              </p>
+            </div>
+
+            <!-- Faculty Emphasis -->
+            <div class="p-3 bg-[#FAF7F0] dark:bg-[#141210] rounded border-l-3 border-[#B45309] dark:border-[#F59E0B]">
+              <h3 class="font-mono text-[11px] uppercase tracking-wider text-[#B45309] dark:text-[#F59E0B] font-bold mb-1">
+                Faculty Focus & Slide Emphasis ({topic.faculty})
+              </h3>
+              <p class="text-xs text-[#57534E] dark:text-[#A8A29E]">
+                {topic.facultyEmphasis}
+              </p>
+            </div>
+
+            <!-- PYQ Linkage -->
+            <div class="p-3 bg-white dark:bg-[#1C1917] rounded border border-[#E7E5E4] dark:border-[#292524]">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-mono text-[11px] uppercase tracking-wider text-[#BE123C] dark:text-[#FB7185] font-bold">
+                  Past Examination Recurrence
+                </span>
+                <span class="text-[10px] font-mono text-[#78716C] dark:text-[#A8A29E]">Verified OCR</span>
+              </div>
+              <p class="text-xs text-[#57534E] dark:text-[#A8A29E]">
+                {topic.pyqReference}
+              </p>
+            </div>
+
+            <!-- Exam Answer Blueprint -->
+            <div class="pt-4 border-t border-[#E7E5E4] dark:border-[#292524]">
+              <h3 class="font-mono text-xs uppercase tracking-wider text-[#1E3A8A] dark:text-[#60A5FA] font-bold mb-2">
+                High-Scoring Exam Answer Blueprint
+              </h3>
+              <ul class="space-y-1.5 text-xs text-[#57534E] dark:text-[#A8A29E] bg-[#FAFAF9] dark:bg-[#141210] p-4 rounded border border-[#E7E5E4] dark:border-[#292524]">
+                {topic.examAnswerFormat.map(item => (
+                  <li class="flex items-start space-x-2">
+                    <span class="text-[#1E3A8A] dark:text-[#60A5FA] font-bold">▶</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+
+        </article>
+      ))}
+
+    </div>
+
+  </div>
+
+</ProjectLayout>
+
+<script is:inline>
+  function filterFaculty(faculty) {
+    const articles = document.querySelectorAll('.topic-article');
+    const navLinks = document.querySelectorAll('.topic-nav-link');
+    const buttons = document.querySelectorAll('.faculty-btn');
+
+    buttons.forEach(btn => {
+      if (btn.innerText.includes(faculty) || (faculty === 'all' && btn.innerText.includes('All'))) {
+        btn.classList.add('bg-[#1E3A8A]', 'text-white');
+        btn.classList.remove('bg-[#FAF7F0]', 'dark:bg-[#24211E]');
+      } else {
+        btn.classList.remove('bg-[#1E3A8A]', 'text-white');
+        btn.classList.add('bg-[#FAF7F0]', 'dark:bg-[#24211E]');
+      }
+    });
+
+    articles.forEach(art => {
+      const artFaculty = art.getAttribute('data-faculty');
+      if (faculty === 'all' || artFaculty === faculty || artFaculty === 'Consensus') {
+        art.classList.remove('hidden');
+      } else {
+        art.classList.add('hidden');
+      }
+    });
+
+    navLinks.forEach(link => {
+      const linkFaculty = link.getAttribute('data-faculty');
+      if (faculty === 'all' || linkFaculty === faculty || linkFaculty === 'Consensus') {
+        link.classList.remove('hidden');
+      } else {
+        link.classList.add('hidden');
+      }
+    });
+  }
+</script>

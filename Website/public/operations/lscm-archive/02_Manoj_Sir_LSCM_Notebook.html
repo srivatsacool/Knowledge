@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>LSCM Study Notebook · Prof. Manoj (WeSchool Trimester IV)</title>
+  <meta name="description" content="Master Study Notebook covering Warehousing Architecture, Layouts, Picking Strategies, INCOTERMS 2020, EXIM Processes, Trade Finance, Digital Twins, CPFR, and Solved PYQs.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%AD%3C/text%3E%3C/svg%3E">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({startOnLoad: true, theme: 'neutral'});</script>
+
+  <style>
+/* Paper Edition Design Tokens */
+:root {
+  --desk: #e9e1cf;
+  --bg: #e9e1cf;
+  --paper: #fcf8ee;
+  --paper2: #fffdf7;
+  --card: #fffdf7;
+  --rule: #d6e3ef;
+  --margin: #e28b8b;
+  --line: #c9bfa8;
+  
+  --ink: #1d3c8c;
+  --ink2: #2f5fc4;
+  --text: #25262b;
+  --pencil: #5a5d66;
+  
+  --shadow-sheet: 0 1px 2px rgba(60, 45, 20, 0.12), 0 8px 24px rgba(60, 45, 20, 0.14);
+  --shadow-card: 0 1px 3px rgba(60, 45, 20, 0.10), 0 4px 12px rgba(60, 45, 20, 0.08);
+  --shadow-sticky: 0 2px 4px rgba(0, 0, 0, 0.12), 0 10px 18px -6px rgba(0, 0, 0, 0.22);
+  
+  --hl-yellow: rgba(255, 224, 61, 0.68);
+  --hl-green: rgba(120, 228, 156, 0.62);
+  --hl-blue: rgba(110, 196, 255, 0.55);
+  --hl-pink: rgba(255, 138, 188, 0.52);
+
+  --sticky-y: #fff2a1;
+  --sticky-r: #ffd6d3;
+  --sticky-b: #d9ecff;
+  --sticky-g: #d8f5dc;
+  --sticky-text: #22252a;
+  
+  --red: #c2362f;
+  --green: #1d7a45;
+  --amber: #b86e00;
+  --blue: #1d3c8c;
+  
+  --serif: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --sans: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --hand: "Caveat", "Segoe Print", cursive;
+  --hand2: "Patrick Hand", "Segoe Print", cursive;
+  --math: "STIX Two Text", "Cambria Math", Georgia, serif;
+  --mono: "JetBrains Mono", monospace;
+  --ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  --bar: 52px;
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .4  0 0 0 0 .3  0 0 0 0 .1  0 0 0 .07 0'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>");
+}
+
+[data-theme="dark"] {
+  --desk: #0f141d;
+  --bg: #0f141d;
+  --paper: #18202e;
+  --paper2: #1d2636;
+  --card: #1d2636;
+  --rule: #243049;
+  --margin: #7c3d48;
+  --line: #344058;
+  
+  --ink: #9cc0ff;
+  --ink2: #7fb0ff;
+  --text: #e7e9ef;
+  --pencil: #aab3c5;
+  
+  --shadow-sheet: 0 2px 4px rgba(0, 0, 0, 0.45), 0 10px 28px rgba(0, 0, 0, 0.40);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.35), 0 6px 16px rgba(0, 0, 0, 0.30);
+  --shadow-sticky: 0 2px 6px rgba(0, 0, 0, 0.45), 0 12px 24px -6px rgba(0, 0, 0, 0.50);
+  
+  --hl-yellow: rgba(255, 214, 0, 0.32);
+  --hl-green: rgba(70, 220, 130, 0.30);
+  --hl-blue: rgba(80, 170, 255, 0.32);
+  --hl-pink: rgba(255, 105, 170, 0.32);
+
+  --sticky-y: #2d2a1b;
+  --sticky-r: #331f20;
+  --sticky-b: #1c2738;
+  --sticky-g: #1c2e22;
+  --sticky-text: #f0f3f8;
+  
+  --red: #ff8a80;
+  --green: #7be0a4;
+  --amber: #ffc266;
+  --blue: #8fb2f2;
+}
+
+/* Scrollbar Suppression */
+html, body, .side, .main, #searchResults, * {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+*::-webkit-scrollbar { display: none !important; width: 0 !important; }
+
+/* Base Reset */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--bar) + 14px); }
+body {
+  margin: 0; background: var(--desk) var(--grain); color: var(--text);
+  font-family: var(--serif); font-size: 16.5px; line-height: 1.7;
+}
+a { color: var(--ink2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Paper Components */
+.nb-card {
+  background: var(--paper2); border: 1.5px solid var(--line); border-radius: 8px;
+  box-shadow: var(--shadow-card); padding: 20px 22px; margin: 24px 0; position: relative;
+}
+.nb-tape {
+  position: absolute; width: 86px; height: 22px; top: -10px; left: 22px; transform: rotate(-3.5deg);
+  background: repeating-linear-gradient(-45deg, rgba(255,255,255,.45) 0 5px, rgba(255,255,255,0) 5px 10px), rgba(255,185,200,.75);
+  opacity: .92; pointer-events: none; z-index: 5;
+}
+.nb-tape--right { left: auto; right: 22px; transform: rotate(4deg); }
+
+.nb-sticky {
+  position: relative; background: var(--sticky-y); color: var(--sticky-text); font-family: var(--hand2);
+  font-size: 1.12rem; line-height: 1.55; padding: 18px 20px 16px; margin: 22px 0; border-radius: 2px 2px 14px 2px;
+  box-shadow: var(--shadow-sticky); transform: rotate(-0.8deg);
+}
+.nb-sticky::before {
+  content: ""; position: absolute; top: -11px; left: 50%; width: 90px; height: 22px; transform: translateX(-50%) rotate(-2deg);
+  background: repeating-linear-gradient(45deg, rgba(255,255,255,.55) 0 6px, rgba(255,255,255,.25) 6px 12px), rgba(160,200,230,.65);
+}
+.nb-sticky--pink { background: var(--sticky-r); transform: rotate(0.6deg); }
+.nb-sticky--blue { background: var(--sticky-b); transform: rotate(-0.5deg); }
+.nb-sticky--green { background: var(--sticky-g); transform: rotate(0.8deg); }
+.nb-sticky__title { font-family: var(--hand); font-weight: 700; font-size: 1.4rem; margin: 0 0 6px; color: var(--ink); line-height: 1.15; }
+.nb-sticky--pink .nb-sticky__title { color: var(--red); }
+
+.nb-stamp {
+  display: inline-block; padding: 2px 10px; font-family: var(--ui); font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em; border: 1.5px solid var(--ink); border-radius: 4px;
+  background: var(--paper); color: var(--ink); transform: rotate(-1.5deg); margin-right: 6px;
+}
+.nb-stamp--blue { border-color: var(--blue); color: var(--blue); }
+.nb-stamp--green { border-color: var(--green); color: var(--green); }
+.nb-stamp--amber { border-color: var(--amber); color: var(--amber); }
+.nb-stamp--red { border-color: var(--red); color: var(--red); }
+
+/* Pedagogical Separation Boxes */
+.launchpad-box {
+  margin: 18px 0; padding: 14px 18px; background: rgba(255, 248, 225, 0.65);
+  border: 1.5px solid #d4c19c; border-left: 6px solid #b86e00; border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(184, 110, 0, 0.08); position: relative;
+}
+[data-theme="dark"] .launchpad-box { background: rgba(45, 42, 27, 0.6); border-color: #554a2b; border-left-color: #ffc266; }
+.launchpad-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--amber); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+.research-box {
+  margin: 20px 0; padding: 16px 20px; background: rgba(240, 246, 255, 0.75);
+  border: 1.5px solid #b8cce6; border-left: 6px solid var(--ink); border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(29, 60, 140, 0.08); position: relative;
+}
+[data-theme="dark"] .research-box { background: rgba(28, 39, 56, 0.65); border-color: #2b3d5c; border-left-color: #9cc0ff; }
+.research-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--ink); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+.scenario-box {
+  margin: 18px 0; padding: 14px 18px; background: rgba(240, 252, 244, 0.75);
+  border: 1.5px solid #b5d9c2; border-left: 6px solid var(--green); border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(29, 122, 69, 0.08); position: relative;
+}
+[data-theme="dark"] .scenario-box { background: rgba(28, 46, 34, 0.65); border-color: #2e4a36; border-left-color: #7be0a4; }
+.scenario-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--green); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+.examprep-box {
+  margin: 18px 0; padding: 14px 18px; background: rgba(254, 242, 242, 0.75);
+  border: 1.5px solid #eec0bd; border-left: 6px solid var(--red); border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(194, 54, 47, 0.08); position: relative;
+}
+[data-theme="dark"] .examprep-box { background: rgba(51, 31, 32, 0.65); border-color: #593033; border-left-color: #ff8a80; }
+.examprep-box__tag {
+  display: inline-block; font: 800 11px var(--ui); text-transform: uppercase; letter-spacing: .08em;
+  background: var(--red); color: #fff; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+
+/* Top Bar */
+.topbar {
+  position: sticky; top: 0; z-index: 60; height: var(--bar);
+  display: flex; align-items: center; gap: 8px; padding: 0 16px;
+  background: var(--paper); border-bottom: 2px solid var(--line);
+  font-family: var(--ui); font-size: 14px; box-shadow: 0 2px 0 var(--rule);
+}
+.topbar .ttl { font-family: var(--hand); font-weight: 700; font-size: 1.25rem; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 0 1 auto; }
+.topbar .sp { flex: 1; }
+.btn {
+  font: 600 13px var(--ui); background: var(--card); color: var(--text);
+  border: 1.5px solid var(--line); border-radius: 6px; padding: 6px 11px;
+  cursor: pointer; min-height: 34px; transition: background 0.15s ease;
+}
+.btn:hover { background: var(--hl-yellow); }
+.progressWrap { position: absolute; left: 0; right: 0; bottom: -4px; height: 4px; background: transparent; }
+#progressBar { height: 4px; width: 0; background: linear-gradient(90deg, var(--green), var(--ink2)); transition: width .3s; }
+
+.search { position: relative; }
+.search input {
+  font: 14px var(--ui); padding: 6px 12px; width: 200px;
+  background: var(--card); color: var(--text); border: 1.5px solid var(--line);
+  border-radius: 6px; min-height: 34px;
+}
+.search input:focus { border-color: var(--ink); outline: none; }
+#searchResults {
+  position: absolute; right: 0; top: 40px; width: min(480px, 92vw); max-height: 60vh;
+  overflow: auto; background: var(--paper2); border: 2px solid var(--line);
+  border-radius: 8px; box-shadow: var(--shadow-sheet); display: none; font-family: var(--ui); z-index: 100;
+}
+#searchResults.open { display: block; }
+#searchResults a { display: block; padding: 10px 14px; border-bottom: 1px solid var(--line); text-decoration: none; color: var(--text); font-size: 13.5px; }
+#searchResults a:hover { background: var(--hl-yellow); }
+
+.timerPanel {
+  position: absolute; right: 8px; top: calc(var(--bar) + 6px); width: 260px;
+  background: var(--paper2); border: 2px solid var(--line); border-radius: 10px;
+  padding: 14px; display: none; box-shadow: var(--shadow-sheet); z-index: 100;
+}
+.timerPanel.open { display: block; }
+.timerPanel .clock { font: 700 36px var(--hand); text-align: center; color: var(--ink); }
+.timerPanel .row { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+
+/* Layout Shell */
+.shell { display: grid; grid-template-columns: 280px minmax(0, 1fr); max-width: 1360px; margin: 0 auto; gap: 0; }
+.side {
+  position: sticky; top: var(--bar); height: calc(100vh - var(--bar));
+  overflow-y: auto; padding: 16px 12px 40px 16px; font-family: var(--ui); font-size: 13px;
+  background: var(--paper); border-right: 2px solid var(--line);
+  background-image: repeating-linear-gradient(transparent 0 29px, var(--rule) 29px 30px);
+}
+.side h2 { font: 700 11.5px var(--ui); letter-spacing: .12em; text-transform: uppercase; color: var(--pencil); margin: 16px 8px 6px; }
+.side a {
+  display: flex; gap: 8px; align-items: center; padding: 6px 9px; margin: 2px 0;
+  text-decoration: none; color: var(--text); border-radius: 6px; border-left: 3px solid transparent;
+}
+.side a:hover { background: var(--hl-yellow); }
+.side a.cur { background: var(--card); border-left-color: var(--ink); font-weight: 700; color: var(--ink); }
+.dot { flex: none; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--pencil); }
+.st-done { background: var(--green); border-color: var(--green); }
+
+/* Main Sheet */
+.main { padding: 22px 24px 80px; min-width: 0; }
+.sheet {
+  position: relative; background: var(--paper) var(--grain); border: 1px solid var(--line);
+  border-radius: 6px 14px 14px 6px; box-shadow: var(--shadow-sheet); margin: 0 0 34px;
+  padding: 34px 40px 36px 74px;
+  background-image: var(--grain), repeating-linear-gradient(to bottom, transparent 0 29px, var(--rule) 29px 30px);
+  background-position: 0 0, 0 14px;
+}
+.sheet::before { content: ""; position: absolute; left: 54px; top: 0; bottom: 0; width: 2px; background: var(--margin); opacity: .75; }
+.sheet::after {
+  content: ""; position: absolute; left: 14px; top: 34px; bottom: 34px; width: 14px;
+  background: radial-gradient(circle, var(--desk) 5px, transparent 6px) 0 0/14px 64px repeat-y; opacity: .9;
+}
+
+h1, h2, h3, h4 { font-family: var(--serif); line-height: 1.25; margin: 0; }
+h1 { font-family: var(--hand); font-size: clamp(2rem, 5vw, 2.8rem); color: var(--ink); margin-bottom: 6px; }
+h2.mt { font-size: clamp(22px, 3.5vw, 30px); margin: 6px 0 12px; color: var(--ink); font-weight: 700; }
+h3 { font-size: 20px; margin: 22px 0 8px; border-bottom: 2px solid var(--ink); padding-bottom: 4px; display: inline-block; color: var(--ink); }
+h4 { font-size: 16px; font-family: var(--hand); color: var(--blue); margin: 0 0 6px; font-weight: 700; }
+p { margin: 0 0 .9em; }
+ul { padding-left: 1.4em; margin-bottom: 1em; }
+li { margin-bottom: .35em; }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; border: 1.5px solid var(--line); border-radius: 6px; background: var(--paper2); }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; text-align: left; }
+th { background: rgba(0,0,0,0.04); color: var(--ink); font-weight: 700; padding: 10px 12px; border-bottom: 2px solid var(--line); }
+td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(0,0,0,0.02); }
+
+.mermaid { background: var(--paper2); border: 1.5px solid var(--line); border-radius: 6px; padding: 16px; margin: 20px 0; text-align: center; }
+pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6px; font-family: var(--mono); font-size: .84rem; overflow-x: auto; line-height: 1.45; }
+
+@media (max-width: 900px) {
+  .shell { grid-template-columns: 1fr; }
+  .side { display: none; }
+  .sheet { padding: 24px 20px 24px 34px; }
+  .sheet::before { left: 24px; }
+  .sheet::after { display: none; }
+}
+  
+/* Master Paper Edition Formula Box Component */
+.nb-fbox {
+  position: relative; border: 2px solid var(--ink); border-radius: 8px; padding: 22px 24px;
+  margin: 26px 0 30px; background: var(--paper2); box-shadow: 6px 6px 0 var(--blue);
+}
+.nb-fbox__header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;
+  flex-wrap: wrap; gap: 8px; border-bottom: 1.5px dashed var(--line); padding-bottom: 10px;
+}
+.nb-fbox__label { font-family: var(--hand); color: var(--blue); font-size: 1.35rem; font-weight: 700; margin: 0; }
+.nb-fbox__badges { display: flex; gap: 6px; }
+.nb-fbox__math {
+  font-size: 1.3rem; line-height: 2; color: var(--ink); overflow-x: auto;
+  text-align: center; padding: 16px 20px; background: var(--paper); border-radius: 6px;
+  border: 1.5px solid var(--line); margin: 14px 0; box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+}
+.nb-fbox__dict { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 14px 0 12px; font-size: 0.95rem; font-family: var(--ui); }
+.nb-fbox__dict dt { font-weight: 700; color: var(--blue); font-family: var(--mono); font-size: 0.92rem; }
+.nb-fbox__dict dd { margin: 0; color: var(--text); line-height: 1.5; }
+.nb-fbox__insight {
+  background: rgba(26,75,140,0.06); border-left: 3.5px solid var(--blue); padding: 12px 16px;
+  border-radius: 0 6px 6px 0; margin: 14px 0; font-size: 0.93rem; font-family: var(--ui); line-height: 1.55;
+}
+.nb-fbox__insight strong { color: var(--blue); }
+.nb-fbox__example {
+  background: rgba(46,125,50,0.07); border-left: 3.5px solid var(--green); padding: 14px 18px;
+  border-radius: 0 6px 6px 0; margin: 14px 0; font-size: 0.93rem; font-family: var(--ui); line-height: 1.55;
+}
+.nb-fbox__example h5 {
+  margin: 0 0 8px; color: var(--green); font-size: 1rem; font-family: var(--ui); font-weight: 700;
+  display: flex; align-items: center; gap: 6px;
+}
+.nb-fbox__example .calc-step {
+  font-family: var(--mono); font-size: 0.88rem; background: rgba(0,0,0,0.04);
+  padding: 4px 8px; border-radius: 4px; display: inline-block; margin: 3px 0;
+}
+.nb-fbox__trap {
+  background: rgba(198,40,40,0.06); border-left: 3.5px solid var(--red); padding: 12px 16px;
+  border-radius: 0 6px 6px 0; margin: 14px 0 0; font-size: 0.9rem; font-family: var(--ui); line-height: 1.5; color: var(--text);
+}
+.nb-fbox__trap strong { color: var(--red); }
+
+/* LSCM Course Suite Navigation Bar */
+.lscm-suite-bar {
+  background: var(--paper2); border-bottom: 2px solid var(--line);
+  padding: 8px 18px; display: flex; align-items: center; gap: 10px;
+  overflow-x: auto; white-space: nowrap; font-family: var(--ui);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03); position: sticky; top: var(--bar); z-index: 50;
+}
+.lscm-suite-bar::-webkit-scrollbar { height: 4px; }
+.lscm-suite-bar::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+.lscm-suite-bar__label { font-weight: 700; color: var(--pencil); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+.lscm-suite-link {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
+  border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;
+  color: var(--text); border: 1.5px solid var(--line); background: var(--paper);
+  transition: all 0.15s ease; flex-shrink: 0;
+}
+.lscm-suite-link:hover { background: var(--hl-yellow); border-color: var(--ink); color: var(--ink); }
+.lscm-suite-link.active {
+  background: var(--ink); color: var(--paper); border-color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15); pointer-events: none;
+}
+.lscm-suite-link .tag {
+  font-size: 10.5px; opacity: 0.85; font-weight: normal; margin-left: 2px;
+}
+
+</style>
+  <!-- KaTeX for High-Fidelity Mathematical Typography -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+
+</head>
+<body>
+
+<header class="topbar">
+  <span class="ttl">LSCM Study Notebook · Prof. Manoj</span>
+  <div class="sp"></div>
+  <div class="search">
+    <input type="text" id="searchInput" placeholder="Search Manoj Sir's notes...">
+    <div id="searchResults"></div>
+  </div>
+  <button class="btn" id="timerBtn" title="Pomodoro Study Timer">⏱ 25m</button>
+  <button class="btn" id="themeBtn">🌓 Theme</button>
+  <div class="progressWrap"><div id="progressBar"></div></div>
+</header>
+
+<nav class="lscm-suite-bar">
+  <span class="lscm-suite-bar__label">📚 LSCM Suite:</span>
+  <a href="04_LSCM_Complete_Syllabus_PYQ_Master_Notebook.html" data-web="/operations/lscm-master-syllabus-pyq-notebook/" class="lscm-suite-link">
+    <span>📘 Master 15-Topic &amp; Solved PYQ Bank</span>
+  </a>
+  <a href="01_Ajit_Sir_LSCM_Notebook.html" data-web="/operations/lscm-ajit-maurya-notebook/" class="lscm-suite-link">
+    <span>🏛️ Prof. Ajit Maurya</span>
+    <span class="tag">SCM Arch &amp; Drivers</span>
+  </a>
+  <a href="02_Manoj_Sir_LSCM_Notebook.html" data-web="/operations/lscm-manoj-sir-notebook/" class="lscm-suite-link active">
+    <span>📦 Prof. Manoj</span>
+    <span class="tag">Warehousing &amp; EXIM</span>
+  </a>
+  <a href="03_Praful_Sir_LSCM_Notebook.html" data-web="/operations/lscm-praful-more-notebook/" class="lscm-suite-link">
+    <span>🧮 Prof. Praful More</span>
+    <span class="tag">Inventory &amp; Sourcing</span>
+  </a>
+</nav>
+
+
+<div class="timerPanel" id="timerPanel">
+  <div class="clock" id="clockDisplay">25:00</div>
+  <div class="row">
+    <button class="btn sm" id="timerStart">Start</button>
+    <button class="btn sm" id="timerReset">Reset</button>
+  </div>
+</div>
+
+<div class="shell">
+  <aside class="side">
+    
+    <h2>LSCM Course Hub</h2>
+    <a href="04_LSCM_Complete_Syllabus_PYQ_Master_Notebook.html" data-web="/operations/lscm-master-syllabus-pyq-notebook/"><span class="dot"></span> 📘 Master Syllabus &amp; PYQs</a>
+    <a href="01_Ajit_Sir_LSCM_Notebook.html" data-web="/operations/lscm-ajit-maurya-notebook/"><span class="dot"></span> 🏛️ Prof. Ajit Maurya</a>
+    <a href="02_Manoj_Sir_LSCM_Notebook.html" data-web="/operations/lscm-manoj-sir-notebook/" class="cur"><span class="dot st-done"></span> 📦 Prof. Manoj</a>
+    <a href="03_Praful_Sir_LSCM_Notebook.html" data-web="/operations/lscm-praful-more-notebook/"><span class="dot"></span> 🧮 Prof. Praful More</a>
+
+<h2>Sessions & Modules</h2>
+    <a href="#cover" class="cur"><span class="dot st-done"></span> Overview & Meta</a>
+    <a href="#mod1"><span class="dot"></span> 1. Warehouse Architecture</a>
+    <a href="#mod2"><span class="dot"></span> 2. Global Sourcing & Blocs</a>
+    <a href="#mod3"><span class="dot"></span> 3. INCOTERMS 2020 Matrix</a>
+    <a href="#mod4"><span class="dot"></span> 4. EXIM Process & LCs</a>
+    <a href="#mod5"><span class="dot"></span> 5. SCM Case Method & LP</a>
+    <a href="#mod6"><span class="dot"></span> 6. Digital Twin & CPFR</a>
+    <h2>Exam Mastery</h2>
+    <a href="#pyq-section"><span class="dot"></span> Solved PYQs (2023–2025)</a>
+  </aside>
+
+  <main class="main">
+    <article class="sheet" id="cover">
+      <div class="nb-tape"></div>
+      <div style="margin-bottom:14px;">
+        <span class="nb-stamp nb-stamp--blue">WeSchool PGDM</span>
+        <span class="nb-stamp nb-stamp--amber">Trimester IV</span>
+        <span class="nb-stamp nb-stamp--green">Faculty: Prof. Manoj</span>
+      </div>
+      <h1>Logistics & Supply Chain Management</h1>
+      <h2 class="mt">Warehousing, International Trade, INCOTERMS 2020, EXIM & Digital Twins</h2>
+      <p style="color:var(--pencil); font-family:var(--hand2); font-size:1.15rem;">
+        Reconstructed consulting-grade master notebook based on Prof. Manoj's curriculum, warehouse layout engineering, 11 INCOTERMS rules, 8-step EXIM workflow, 9-step CPFR, and solved end-term examination papers.
+      </p>
+
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">Prof. Manoj's Core Thesis</span>
+        <p><em>"International supply chains bridge geographical boundaries through contractual rigor (INCOTERMS & LCs) and physical precision (Smart Warehouses & Digital Twins). Operational friction occurs wherever legal risk and physical handling are misaligned."</em></p>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin:16px 0;">
+        <a href="#mod1" class="btn">Warehouse Operations &rarr;</a>
+        <a href="#mod3" class="btn">INCOTERMS 2020 Matrix &rarr;</a>
+        <a href="#pyq-section" class="btn">Jump to Solved PYQs &rarr;</a>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod1">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 1</span>
+      <span class="nb-stamp nb-stamp--green">CO4 Alignment</span>
+      <h2>Module 1: Warehouse Management Systems & Physical Layouts</h2>
+
+      <div class="research-box">
+        <span class="research-box__tag">Core Operational Flow</span>
+        <p>Inbound Receiving &rarr; Put-Away Logic &rarr; Storage & Reserve &rarr; <strong>Order Picking (Accounts for 55% of all warehouse labor)</strong> &rarr; Packing & VAS &rarr; Outbound Staging & Dispatch.</p>
+      </div>
+
+      <h3>Order Picking Strategies</h3>
+      <ul>
+        <li><strong>Single-Order Picking (Discrete):</strong> Picker walks through aisles collecting items for one order at a time. High walking travel; suitable only for low-volume operations.</li>
+        <li><strong>Batch Picking:</strong> Picker collects quantities for multiple orders simultaneously in a single travel pass, then sorts them at a packing station. Reduces travel time by up to 50%.</li>
+        <li><strong>Zone Picking:</strong> Warehouse is divided into distinct zones; pickers are dedicated to specific zones, picking items for orders passing through their zone (pick-and-pass).</li>
+        <li><strong>Wave Picking:</strong> Orders are released in scheduled time windows ("waves") aligned with outbound truck departure schedules or carrier cutoffs.</li>
+        <li><strong>Goods-to-Person (G2P):</strong> Automated Mobile Robots (AMRs) or ASRS shuttles bring mobile shelving or storage totes directly to stationary human pickers, completely eliminating travel time and tripling pick rates (from 60 to 200+ units/hr).</li>
+      </ul>
+
+      <h3>Warehouse Physical Layout Engineering</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Layout Type</th>
+              <th>Dock Configuration</th>
+              <th>Operational Strengths</th>
+              <th>Optimal Application</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>U-Shaped Layout</strong></td>
+              <td>Inbound and outbound docks adjacent on same wall.</td>
+              <td>Shared dock doors and forklift equipment; excellent security; fast-movers stored near curve.</td>
+              <td>General distribution centers, standard retail warehouses.</td>
+            </tr>
+            <tr>
+              <td><strong>I-Shaped / Flow-Through</strong></td>
+              <td>Inbound and outbound docks on opposite walls.</td>
+              <td>Eliminates cross-traffic congestion; pure straight-line flow.</td>
+              <td>High-throughput <strong>Cross-Docking</strong> and rapid e-commerce sorting.</td>
+            </tr>
+            <tr>
+              <td><strong>L-Shaped Layout</strong></td>
+              <td>Docks positioned on adjacent perpendicular walls.</td>
+              <td>Accommodates irregular rectangular land plots.</td>
+              <td>Constrained urban industrial parks.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">Facility Classification</span>
+        <ul>
+          <li><strong>Distribution Center (DC) vs. Fulfillment Center (FC):</strong> DCs handle pallet-in, pallet-out bulk shipments to retail stores; FCs handle pallet-in, each-out parcel picking for individual e-commerce consumers.</li>
+          <li><strong>Public vs. Private vs. Bonded Warehouses:</strong> Public warehouses charge flexible per-pallet storage fees; private facilities require long-term capital leases; <strong>Bonded warehouses</strong> allow imported goods to be stored, repacked, or processed duty-free until entered into the domestic market.</li>
+          <li><strong>Cold Chain Storage:</strong> Multi-zone temperature control (Frozen at -18°C, Chilled at +2°C to +8°C, Ambient at +15°C to +25°C) with sealed dock shelters and backup power.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod2">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 9 & 10</span>
+      <span class="nb-stamp nb-stamp--green">CO2 Alignment</span>
+      <h2>Module 2: International Trade, Global Sourcing & Regulatory Environment</h2>
+
+      <h3>Trade Barriers & Regulatory Defense</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Regulatory Tool</th>
+              <th>Legal Definition</th>
+              <th>Operational Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Tariffs</strong></td>
+              <td>Customs duties imposed by sovereign governments on imported merchandise.</td>
+              <td>Generates state revenue and protects domestic manufacturers from foreign price competition.</td>
+            </tr>
+            <tr>
+              <td><strong>Countervailing Duty (CVD)</strong></td>
+              <td>Specific import tariff levied to neutralize foreign government subsidies.</td>
+              <td>Levels the competitive playing field against subsidized foreign exporters.</td>
+            </tr>
+            <tr>
+              <td><strong>Anti-Dumping Duty (ADD)</strong></td>
+              <td>Tariff imposed when foreign exporters dump goods below their domestic market price.</td>
+              <td>Prevents predatory undercutting that causes material injury to domestic producers.</td>
+            </tr>
+            <tr>
+              <td><strong>Trading Blocs & Rules of Origin</strong></td>
+              <td>Free trade agreements (USMCA, EU, ASEAN) eliminating internal customs barriers.</td>
+              <td>Rules of Origin prevent non-member nations from transshipping goods through low-tariff members.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod3">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 9 & 10</span>
+      <span class="nb-stamp nb-stamp--green">CO2 Alignment</span>
+      <h2>Module 3: The INCOTERMS 2020 Decision Framework</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Incoterm</th>
+              <th>Transport Mode</th>
+              <th>Freight Paid By</th>
+              <th>Insurance Mandate</th>
+              <th>Risk Transfer Point</th>
+              <th>Seller Customs Export</th>
+              <th>Buyer Customs Import</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>EXW (Ex Works)</strong></td><td>Any Mode</td><td>Buyer</td><td>None (Buyer optional)</td><td>Seller's premises / factory floor</td><td>No (Buyer bears)</td><td>Yes</td></tr>
+            <tr><td><strong>FCA (Free Carrier)</strong></td><td>Any Mode</td><td>Buyer</td><td>None (Buyer optional)</td><td>Loaded on buyer's nominated carrier</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td><strong>CPT (Carriage Paid To)</strong></td><td>Any Mode</td><td>Seller (to destination)</td><td>None (Buyer optional)</td><td>When handed to the first carrier</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td><strong>CIP (Carriage & Ins. Paid)</strong></td><td>Any Mode</td><td>Seller (to destination)</td><td>Seller (Institute Cargo Cl. A All-Risk)</td><td>When handed to the first carrier</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td><strong>DAP (Delivered at Place)</strong></td><td>Any Mode</td><td>Seller (to destination)</td><td>None (Seller covers own risk)</td><td>Ready for unloading on arrival vehicle</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td><strong>DPU (Delivered Place Unloaded)</strong></td><td>Any Mode</td><td>Seller (to destination)</td><td>None (Seller covers own risk)</td><td>Unloaded from vehicle at destination</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td><strong>DDP (Delivered Duty Paid)</strong></td><td>Any Mode</td><td>Seller (to destination)</td><td>None (Seller covers own risk)</td><td>Cleared for import at buyer's facility</td><td>Yes</td><td>No (Seller clears)</td></tr>
+            <tr><td><strong>FAS (Free Alongside Ship)</strong></td><td>Sea / Waterway</td><td>Buyer</td><td>None (Buyer optional)</td><td>Alongside ship on quay / barge at origin</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td><strong>FOB (Free On Board)</strong></td><td>Sea / Waterway</td><td>Buyer</td><td>None (Buyer optional)</td><td>On board the vessel at port of origin</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td><strong>CFR (Cost and Freight)</strong></td><td>Sea / Waterway</td><td>Seller (to dest. port)</td><td>None (Buyer optional)</td><td>On board the vessel at port of origin</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td><strong>CIF (Cost, Ins. & Freight)</strong></td><td>Sea / Waterway</td><td>Seller (to dest. port)</td><td>Seller (Institute Cargo Cl. C Basic)</td><td>On board the vessel at port of origin</td><td>Yes</td><td>Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">Major Updates in INCOTERMS 2020</span>
+        <ul>
+          <li><strong>DAT Renamed to DPU (Delivered at Place Unloaded):</strong> Clarifies that the seller is obligated to unload goods at destination. DPU is the <em>only</em> Incoterm requiring the seller to unload.</li>
+          <li><strong>Differentiated Insurance for CIP vs. CIF:</strong> CIF maintains basic Clauses (C) insurance; CIP mandates maximum Institute Cargo Clauses (A) "All-Risk" insurance.</li>
+          <li><strong>FCA with Onboard Bill of Lading Provision:</strong> Enables buyer's carrier to issue an onboard B/L directly to the seller for Letter of Credit bank compliance.</li>
+        </ul>
+      </div>
+
+      <div class="nb-sticky nb-sticky--blue">
+        <div class="nb-sticky__title">Why Quoting FOB Protects an MSME Exporter</div>
+        <p>Under FOB, physical risk transfers the instant goods are on board the ship at the exporter's home port. The buyer pays ocean freight and marine insurance. This shields first-time exporters from volatile international freight rate spikes, port congestion fees, and cross-border container demurrage disputes.</p>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod4">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 9 & 10</span>
+      <span class="nb-stamp nb-stamp--green">CO2 Alignment</span>
+      <h2>Module 4: EXIM Processes, Documentation & Trade Finance</h2>
+
+      <div class="research-box">
+        <span class="research-box__tag">The 8-Stage EXIM Workflow</span>
+        <ol>
+          <li><strong>Commercial Contract & Proforma Invoice:</strong> Agreeing on item specs, price, currency, and Incoterm.</li>
+          <li><strong>Letter of Credit Opening:</strong> Importer's bank issues an irrevocable LC to the exporter's advising bank.</li>
+          <li><strong>Export Production & Pre-Shipment Inspection:</strong> Factory quality control and packaging verification.</li>
+          <li><strong>Customs Export Clearance:</strong> Filing Shipping Bill via ICEGATE and passing port dock inspection.</li>
+          <li><strong>Vessel Loading & Bill of Lading:</strong> Carrier takes custody and issues a Clean On-Board Bill of Lading.</li>
+          <li><strong>Document Presentation:</strong> Exporter presents shipping documents to the bank within the 21-day LC window.</li>
+          <li><strong>Bank Negotiation & Payment:</strong> Issuing bank verifies document compliance under UCP 600 rules and releases funds.</li>
+          <li><strong>Customs Import Clearance:</strong> Importer retires original documents from bank, pays import tariffs, and collects cargo.</li>
+        </ol>
+
+      <div class="nb-fbox">
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">1. Storage Cube Utilization &amp; Honeycomb Loss Factor</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--blue">Warehouse KPI</span>
+            <span class="nb-stamp nb-stamp--amber">Layout Optimization</span>
+          </div>
+        </div>
+
+      <div class="nb-fbox">
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">3. Total Landed Cost (TLC) Architecture in Global Sourcing</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--blue">International Trade</span>
+            <span class="nb-stamp nb-stamp--amber">Global Sourcing</span>
+          </div>
+        </div>
+        <div class="nb-fbox__math">
+          $$\text{TLC} = P_{\text{EXW}} + C_{\text{inland}} + C_{\text{export}} + C_{\text{freight}} + C_{\text{ins}} + \text{Customs BCD} + \text{SWS} + \text{IGST} + C_{\text{port}} + C_{\text{dest\_inland}}$$
+        </div>
+        <div class="nb-fbox__dict">
+          <dt>P_EXW</dt><dd>Ex Works purchase price paid to overseas supplier at their factory gate.</dd>
+          <dt>C_freight &amp; C_ins</dt><dd>International ocean or air freight charges + marine cargo insurance premium.</dd>
+          <dt>BCD + SWS + IGST</dt><dd>Basic Customs Duty + Social Welfare Surcharge (10% of BCD) + Integrated GST assessed at port of entry.</dd>
+          <dt>C_port &amp; C_dest</dt><dd>Port terminal handling charges (THC), container demurrage, customs clearance broker fees, and destination inland delivery.</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>Strategic Sourcing Lesson:</strong><br>
+          Low nominal factory purchase prices in overseas origins frequently mask severe landed cost inflation (freight, duties, financing pipeline inventory, container detention). Overseas sourcing is often 25–40% more expensive than the purchase order price!
+        </div>
+      </div>
+        <div class="nb-fbox__math">
+          $$\text{Cube Space Utilization} = \left(\frac{\text{Total Cargo Stored Volume (CBM)}}{\text{Total Usable Internal Building Volume (CBM)}}\right) \times 100\%$$
+          $$\text{Honeycomb Loss Factor} = 1 - \left(\frac{\text{Occupied Pallet Positions}}{\text{Total Storage Locations Available}}\right)$$
+        </div>
+        <div class="nb-fbox__dict">
+          <dt>Cube Utilization</dt><dd>Measures 3D space efficiency. Typical conventional flat warehouses achieve only 20–30% cube utilization; automated high-bay ASRS achieve 60–75%.</dd>
+          <dt>Honeycomb Loss</dt><dd>Lost storage capacity caused by inability to utilize empty rack spaces because stored SKUs cannot be co-mingled or blocked.</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>Engineering Principle:</strong><br>
+          Storing cargo in standard ISO pallets ($1000\text{mm} \times 1200\text{mm}$) on 12-meter high vertical selective racking doubles effective storage capacity without expanding building ground footprint.
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Warehouse Space Planning Numerical</h5>
+          A DC has 10,000 pallet rack locations. Due to SKU segregation and lot-number integrity rules, 1,800 pallet slots remain unusable across partial aisles.<br>
+          • <strong>Honeycomb Loss:</strong> <span class="calc-step">\text{Loss} = \frac{1,800}{10,000} = 18.0\%</span><br>
+          • <strong>Corrective Action:</strong> Implementing dynamic WMS slotting algorithms reduces honeycomb loss to &lt;6%, freeing up 1,200 pallet positions without expanding warehouse square footage.
+        </div>
+      </div>
+
+      <div class="nb-fbox">
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">2. Order Picking Productivity &amp; Fulfillment Lead Time</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--green">Labor Productivity</span>
+            <span class="nb-stamp nb-stamp--blue">Fulfillment Velocity</span>
+          </div>
+        </div>
+        <div class="nb-fbox__math">
+          $$\text{Pick Lines Per Labor Hour (LPH)} = \frac{\text{Total Order Lines Picked}}{\text{Direct Picker Labor Hours}}$$
+          $$\text{Total Fulfillment Lead Time} = T_{\text{Release}} + T_{\text{Travel}} + T_{\text{Pick}} + T_{\text{Sort/Pack}} + T_{\text{Dispatch}}$$
+        </div>
+        <div class="nb-fbox__dict">
+          <dt>Lines Per Hour (LPH)</dt><dd>Industry standard measure of picking labor throughput. Travel time consumes up to 55% of manual picker hours.</dd>
+          <dt>Fulfillment Lead Time</dt><dd>Elapsed time from ERP order induction to carrier departure dock loading.</dd>
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Order Picking Optimization Numerical</h5>
+          A fulfillment center processes 12,000 daily order lines using 30 warehouse operators working 8-hour shifts.<br>
+          • <strong>Current Throughput:</strong> <span class="calc-step">\text{LPH} = \frac{12,000}{30 \times 8} = \frac{12,000}{240} = 50\text{ lines/hour}</span><br>
+          • <strong>Automation Impact:</strong> Migrating from single-order paper picking to Batch Picking with Zone Sorting and Pick-to-Light accelerates throughput to 125 LPH, cutting required direct labor from 30 operators to 12 operators!
+        </div>
+      </div>
+      </div>
+
+      <h3>Documentary Letters of Credit (LC) & UCP 600</h3>
+      <ul>
+        <li><strong>Confirmed Letter of Credit:</strong> A domestic confirming bank in the exporter's country adds its independent payment guarantee, shielding the seller from foreign issuing bank default and political country risk.</li>
+        <li><strong>Doctrine of Strict Compliance:</strong> Under ICC UCP 600 rules, banks deal strictly in documents, not goods. Any minor typographical error or late presentation allows the bank to reject the documents.</li>
+      </ul>
+    </article>
+
+    <article class="sheet" id="mod5">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 11 & 12</span>
+      <span class="nb-stamp nb-stamp--green">CO1 & CO3 Alignment</span>
+      <h2>Module 5: The SCM Case Study Method & Quantitative Optimization</h2>
+
+      <div class="launchpad-box">
+        <span class="launchpad-box__tag">The 6-Step Case Study Method</span>
+        <ol>
+          <li><strong>Define Core Problem:</strong> Differentiate root causes from operational symptoms.</li>
+          <li><strong>Map Stakeholders & Constraints:</strong> Balance conflicting goals between Sales, Finance, and Operations.</li>
+          <li><strong>Quantitative Baselines:</strong> Compute landed costs, ITR, DOS, Cash-to-Cash cycle, and OTIF metrics.</li>
+          <li><strong>Formulate Alternatives:</strong> Develop viable strategic options (e.g., Insource vs. 3PL).</li>
+          <li><strong>Evaluate Trade-Offs:</strong> Score options using a weighted Multi-Criteria Decision Matrix.</li>
+          <li><strong>Implementation Roadmap:</strong> Outline 30-60-90 day quick wins, governance, and contingency plans.</li>
+        </ol>
+      </div>
+    </article>
+
+    <article class="sheet" id="mod6">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--blue">Session 13</span>
+      <span class="nb-stamp nb-stamp--green">CO1 & CO4 Alignment</span>
+      <h2>Module 6: Digital Twins, 9-Step CPFR & Emerging Technologies</h2>
+
+      <h3>Supply Chain Digital Twin Architecture</h3>
+      <div class="research-box">
+        <span class="research-box__tag">Sense-Decide-Act-Learn Feedback Loop</span>
+        <p>A digital twin is a dynamic, software simulation model of the physical supply chain updated continuously via IoT sensors, RFID gates, and telematics. It enables "what-if" disruption simulations, dynamic warehouse slotting, and automated freight rerouting.</p>
+      </div>
+
+      <h3>The 9-Step VICS CPFR Framework</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>CPFR Phase</th>
+              <th>Step Number & Name</th>
+              <th>Key Operational Deliverables</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td rowspan="2"><strong>I. Strategy & Planning</strong></td><td>1. Collaboration Agreement</td><td>Executive charter, data-sharing protocols, confidentiality, shared KPIs.</td></tr>
+            <tr><td>2. Joint Business Plan</td><td>Category strategies, promotional event calendars, store expansion targets.</td></tr>
+            <tr><td rowspan="5"><strong>II. Demand & Supply Management</strong></td><td>3. Sales Forecast Creation</td><td>Baseline point-of-sale (POS) consumption forecast generated jointly.</td></tr>
+            <tr><td>4. Sales Forecast Exceptions</td><td>Flag items where retailer and manufacturer projections diverge beyond agreed tolerances.</td></tr>
+            <tr><td>5. Exception Resolution</td><td>Cross-company planners reconcile promotional assumptions into consensus plan.</td></tr>
+            <tr><td>6. Order Forecast Creation</td><td>Translate consensus sales plan into time-phased replenishment orders.</td></tr>
+            <tr><td>7. Order Forecast Exceptions</td><td>Flag order spikes exceeding factory production capacity or warehouse limits.</td></tr>
+            <tr><td><strong>III. Execution</strong></td><td>8. Order Generation</td><td>Automated conversion of reconciled order forecasts into purchase orders (EDI 850).</td></tr>
+            <tr><td><strong>IV. Analysis</strong></td><td>9. Order Fulfillment Assessment</td><td>Evaluate OTIF, forecast accuracy, inventory turns, and joint value creation.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="sheet" id="pyq-section">
+      <div class="nb-tape"></div>
+      <span class="nb-stamp nb-stamp--red">PYQ Repository</span>
+      <h2>Solved End-Term Examination Papers (2023–2025)</h2>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">End-Term 2025 · Question 2 (10 Marks)</span>
+        <h4>Matching 10 INCOTERMS 2020 Definitions</h4>
+        <ol>
+          <li><strong>CFR &rarr; (d):</strong> Cost and Freight (Seller pays freight to destination port; risk transfers onboard ship at origin port).</li>
+          <li><strong>CIF &rarr; (e):</strong> Cost, Insurance and Freight (Seller pays freight + basic marine insurance; risk transfers onboard ship).</li>
+          <li><strong>CPT &rarr; (f):</strong> Carriage Paid To (Seller pays freight to destination; risk transfers when handed to first carrier).</li>
+          <li><strong>CIP &rarr; (g):</strong> Carriage and Insurance Paid To (Seller pays freight + all-risk insurance; risk transfers to first carrier).</li>
+          <li><strong>DAP &rarr; (h):</strong> Delivered at Place (Seller delivers ready for unloading at named destination point).</li>
+          <li><strong>DPU &rarr; (i):</strong> Delivered at Place Unloaded (Seller delivers and assumes unloading liability at destination).</li>
+          <li><strong>DDP &rarr; (j):</strong> Delivered Duty Paid (Seller assumes maximum obligation: freight, insurance, and import duties).</li>
+          <li><strong>EXW &rarr; (a):</strong> Ex Works (Buyer assumes maximum obligation, collecting cargo directly at seller's premises).</li>
+          <li><strong>FCA &rarr; (b):</strong> Free Carrier (Seller delivers export-cleared cargo to buyer's nominated carrier).</li>
+          <li><strong>FOB &rarr; (c):</strong> Free On Board (Seller delivers goods on board nominated vessel at port of origin).</li>
+        </ol>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">End-Term 2024 · Question 4.d (5 Marks)</span>
+        <h4>Cross-Docking vs. Traditional Warehousing</h4>
+        <ul>
+          <li><strong>Traditional Warehousing:</strong> Inbound goods are unloaded, inspected, stored on racks for days/weeks, and later picked, packed, and shipped; involves heavy holding costs and labor.</li>
+          <li><strong>Cross-Docking:</strong> Inbound shipments from factories are directly transferred across the warehouse staging dock into outbound delivery trucks in under 24 hours with zero intermediate storage; maximizes inventory velocity and eliminates storage footprint.</li>
+        </ul>
+      </div>
+
+      <div class="examprep-box">
+        <span class="examprep-box__tag">End-Term 2023 · Question 4.b (4 Marks)</span>
+        <h4>CPFR vs. Traditional Forecasting</h4>
+        <ul>
+          <li><strong>Traditional Forecasting:</strong> Siloed, sequential forecasts based on lagging order history; causes severe Bullwhip effect amplification and inventory distortion.</li>
+          <li><strong>CPFR:</strong> Shared point-of-sale (POS) data, joint business plans, and synchronized exception resolution between retailer and manufacturer; creates a single consensus forecast and eliminates artificial order spikes.</li>
+        </ul>
+      </div>
+    </article>
+  </main>
+</div>
+
+<script>
+// In-page search logic
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+const contentNodes = document.querySelectorAll('article.sheet h2, article.sheet h3, article.sheet h4, article.sheet .research-box, article.sheet .launchpad-box, article.sheet .table-wrap');
+
+searchInput.addEventListener('input', function() {
+  const query = this.value.trim().toLowerCase();
+  if (query.length < 2) {
+    searchResults.style.display = 'none';
+    searchResults.innerHTML = '';
+    return;
+  }
+  
+  let matches = [];
+  contentNodes.forEach(node => {
+    const text = node.innerText;
+    if (text.toLowerCase().includes(query)) {
+      const parentSheet = node.closest('article.sheet');
+      const id = parentSheet ? parentSheet.id : '';
+      matches.push({
+        title: node.innerText.substring(0, 70),
+        id: id
+      });
+    }
+  });
+
+  if (matches.length > 0) {
+    searchResults.innerHTML = matches.slice(0, 7).map(m => 
+      `<a href="#${m.id}"><strong>${m.title}</strong><br><small style="color:var(--pencil)">Jump to section</small></a>`
+    ).join('');
+    searchResults.style.display = 'block';
+  } else {
+    searchResults.innerHTML = '<div style="padding:10px 14px; font-size:13px; color:var(--pencil)">No matches found</div>';
+    searchResults.style.display = 'block';
+  }
+});
+
+document.addEventListener('click', function(e) {
+  if (!searchResults.contains(e.target) && e.target !== searchInput) {
+    searchResults.style.display = 'none';
+  }
+});
+
+// Pomodoro Timer Logic
+const timerBtn = document.getElementById('timerBtn');
+const timerPanel = document.getElementById('timerPanel');
+const clockDisplay = document.getElementById('clockDisplay');
+const timerStart = document.getElementById('timerStart');
+const timerReset = document.getElementById('timerReset');
+let timerInterval = null;
+let timeLeft = 25 * 60;
+let isRunning = false;
+
+timerBtn.addEventListener('click', () => {
+  timerPanel.classList.toggle('open');
+});
+
+timerStart.addEventListener('click', () => {
+  if (isRunning) {
+    clearInterval(timerInterval);
+    timerStart.innerText = 'Start';
+    isRunning = false;
+  } else {
+    isRunning = true;
+    timerStart.innerText = 'Pause';
+    timerInterval = setInterval(() => {
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        alert('Pomodoro study interval completed! Take a 5-minute break.');
+        timeLeft = 25 * 60;
+        isRunning = false;
+        timerStart.innerText = 'Start';
+      } else {
+        timeLeft--;
+      }
+      updateClock();
+    }, 1000);
+  }
+});
+
+timerReset.addEventListener('click', () => {
+  clearInterval(timerInterval);
+  timeLeft = 25 * 60;
+  isRunning = false;
+  timerStart.innerText = 'Start';
+  updateClock();
+});
+
+function updateClock() {
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  clockDisplay.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+}
+
+// Theme Toggle
+const themeBtn = document.getElementById('themeBtn');
+themeBtn.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  const next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+});
+
+// Scroll Progress Bar
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  document.getElementById('progressBar').style.width = scrolled + '%';
+});
+</script>
+
+
+<script>
+// Dual-mode router for LSCM Suite navigation (works across file:// and web /operations/ paths)
+(function() {
+  if (window.location.protocol.startsWith('http')) {
+    document.querySelectorAll('a[data-web]').forEach(function(el) {
+      el.setAttribute('href', el.getAttribute('data-web'));
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

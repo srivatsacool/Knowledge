@@ -1,0 +1,87 @@
+---
+import type { SolvedPyq } from '../data/lscmData';
+
+interface Props {
+  pyq: SolvedPyq;
+}
+
+const { pyq } = Astro.props;
+
+const freqColors = {
+  High: 'bg-[#BE123C]/10 text-[#BE123C] dark:text-[#FB7185] border-[#BE123C]/30',
+  Medium: 'bg-[#B45309]/10 text-[#B45309] dark:text-[#F59E0B] border-[#B45309]/30',
+  Low: 'bg-[#78716C]/10 text-[#78716C] dark:text-[#A8A29E] border-[#78716C]/30',
+};
+---
+
+<div id={pyq.id} class="paper-card rounded-lg p-6 mb-8 scroll-mt-28">
+  
+  <!-- Header: Metadata, Badges, Marks -->
+  <div class="flex flex-wrap items-center justify-between pb-3 mb-4 border-b border-[#E7E5E4] dark:border-[#292524] gap-2">
+    <div class="flex items-center space-x-3">
+      <span class="font-mono text-sm font-bold text-[#1E3A8A] dark:text-[#60A5FA]">
+        {pyq.year} — {pyq.questionNumber}
+      </span>
+      <span class="text-xs text-[#78716C] dark:text-[#A8A29E]">
+        • {pyq.topicTitle}
+      </span>
+    </div>
+
+    <div class="flex items-center space-x-2">
+      <span class={`px-2 py-0.5 rounded text-[11px] font-mono border ${freqColors[pyq.frequency]}`}>
+        {pyq.frequency} Recurrence
+      </span>
+      <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-[#FAF7F0] dark:bg-[#292524] text-[#1C1917] dark:text-[#F5F5F4] border border-[#E7E5E4] dark:border-[#44403C] font-semibold">
+        {pyq.marks} Marks
+      </span>
+    </div>
+  </div>
+
+  <!-- Verbatim Question Statement -->
+  <div class="p-4 bg-[#FAF7F0] dark:bg-[#141210] border-l-3 border-[#1E3A8A] dark:border-[#60A5FA] rounded-r-md mb-6">
+    <span class="text-[10px] font-mono uppercase tracking-wider text-[#78716C] dark:text-[#A8A29E] block mb-1">
+      Official Verbatim Question
+    </span>
+    <p class="text-xs sm:text-sm font-serif italic text-[#1C1917] dark:text-[#F5F5F4] leading-relaxed">
+      "{pyq.questionText}"
+    </p>
+  </div>
+
+  <!-- Step-by-Step Model Solution -->
+  <div class="space-y-4">
+    
+    <div>
+      <h4 class="text-xs font-mono uppercase tracking-wider text-[#78716C] dark:text-[#A8A29E] mb-1 font-semibold">
+        Core Theoretical Anchor
+      </h4>
+      <p class="text-xs text-[#44403C] dark:text-[#D6D3D1] font-medium">
+        {pyq.modelAnswer.coreConcept}
+      </p>
+    </div>
+
+    <div>
+      <h4 class="text-xs font-mono uppercase tracking-wider text-[#78716C] dark:text-[#A8A29E] mb-2 font-semibold">
+        Structured Examination Solution
+      </h4>
+      <div class="space-y-2 bg-[#FAFAF9] dark:bg-[#1C1917] p-4 rounded border border-[#E7E5E4] dark:border-[#292524]">
+        {pyq.modelAnswer.stepByStepSolution.map(step => (
+          <div class="text-xs text-[#292524] dark:text-[#E7E5E4] flex items-start space-x-2.5">
+            <span class="text-[#1E3A8A] dark:text-[#60A5FA] font-bold font-mono shrink-0">§</span>
+            <span class="leading-relaxed">{step}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="pt-2 border-t border-[#E7E5E4] dark:border-[#292524]">
+      <h4 class="text-xs font-mono uppercase tracking-wider text-[#047857] dark:text-[#10B981] mb-1 font-semibold">
+        Executive / Exam Synthesis
+      </h4>
+      <p class="text-xs text-[#57534E] dark:text-[#A8A29E] italic">
+        {pyq.modelAnswer.finalRecommendation}
+      </p>
+    </div>
+
+  </div>
+
+</div>

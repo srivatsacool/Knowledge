@@ -1,0 +1,43 @@
+---
+interface Props {
+  projectSlug: string;
+  activeArtifact: 'overview' | 'notebook' | 'book' | 'pyq' | 'formulas' | 'revision';
+}
+
+const { projectSlug, activeArtifact } = Astro.props;
+const baseUrl = `/operations/${projectSlug}`;
+
+const tabs = [
+  { id: 'overview', label: 'Overview', url: `${baseUrl}/` },
+  { id: 'notebook', label: 'Master Notebook', url: `${baseUrl}/notebook/` },
+  { id: 'book', label: 'Interactive Book', url: `${baseUrl}/book/` },
+  { id: 'pyq', label: 'PYQ Bank', url: `${baseUrl}/pyq/` },
+  { id: 'formulas', label: 'Formula Book', url: `${baseUrl}/formulas/` },
+  { id: 'revision', label: 'Revision Blitz', url: `${baseUrl}/revision/` },
+];
+---
+
+<nav aria-label="Project Artifact Suite" class="bg-white dark:bg-[#141210] border-b border-[#E7E5E4] dark:border-[#292524] sticky top-16 z-30 shadow-xs">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center space-x-1 sm:space-x-4 overflow-x-auto py-2 scrollbar-none">
+      <span class="text-xs uppercase font-mono tracking-wider text-[#A8A29E] dark:text-[#78716C] mr-2 shrink-0 hidden md:inline">
+        Artifacts:
+      </span>
+      {tabs.map(tab => {
+        const isActive = activeArtifact === tab.id;
+        return (
+          <a
+            href={tab.url}
+            class={`px-3 py-1.5 text-xs font-medium rounded-md whitespace-nowrap transition-all ${
+              isActive
+                ? 'bg-[#1E3A8A] text-white dark:bg-[#60A5FA] dark:text-[#0C0A09] shadow-xs'
+                : 'text-[#57534E] dark:text-[#A8A29E] hover:text-[#1C1917] dark:hover:text-[#F5F5F4] hover:bg-[#FAF7F0] dark:hover:bg-[#1C1917]'
+            }`}
+          >
+            {tab.label}
+          </a>
+        );
+      })}
+    </div>
+  </div>
+</nav>

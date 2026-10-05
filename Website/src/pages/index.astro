@@ -1,0 +1,200 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { DIVISIONS } from '../data/divisions';
+import { PROJECTS } from '../data/projects';
+
+const featuredProjects = PROJECTS.filter(p => p.featured);
+---
+
+<BaseLayout 
+  title="Personal Knowledge & Project Archive" 
+  description="BRAIN is a personal knowledge operating system transforming academic materials into editorial exam notebooks, Papermorph interactive visual books, and verified PYQ intelligence banks."
+>
+  <!-- Hero Section -->
+  <section class="border-b border-[#E7E5E4] dark:border-[#292524] py-16 sm:py-24 bg-[#FAF7F0] dark:bg-[#0C0A09]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center space-x-2 px-2.5 py-1 rounded bg-[#F4EEDD] dark:bg-[#1C1917] border border-[#E7E5E4] dark:border-[#292524] text-xs font-mono uppercase tracking-wider text-[#78716C] dark:text-[#A8A29E] mb-6">
+          <span class="w-2 h-2 rounded-full bg-[#047857] animate-pulse"></span>
+          <span>Knowledge Operating System • Trimester IV Archive</span>
+        </div>
+
+        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1C1917] dark:text-[#F5F5F4] leading-[1.15]">
+          A rigorous personal archive for study, simulation, and exam mastery.
+        </h1>
+
+        <p class="text-base sm:text-lg text-[#57534E] dark:text-[#A8A29E] mt-6 leading-relaxed">
+          Turning raw lecture transcripts, faculty presentations, and university examination papers into synthesized editorial notebooks, 1600×900 interactive visual chapters, and 100% verified solved question banks.
+        </p>
+
+        <!-- Global Search CTA -->
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <button 
+            onclick="document.getElementById('global-search-trigger').click()"
+            class="px-5 py-3 rounded-lg bg-[#1C1917] text-white dark:bg-[#F5F5F4] dark:text-[#1C1917] hover:bg-[#1E3A8A] dark:hover:bg-[#60A5FA] font-medium text-xs sm:text-sm flex items-center space-x-3 shadow-paper-md transition-all cursor-pointer"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <span>Search All Topics, Formulas & PYQs</span>
+            <kbd class="px-2 py-0.5 text-[11px] font-mono bg-white/20 dark:bg-black/20 rounded">⌘K</kbd>
+          </button>
+          
+          <a 
+            href="/operations/lscm/" 
+            class="px-5 py-3 rounded-lg bg-white dark:bg-[#1C1917] border border-[#E7E5E4] dark:border-[#292524] text-[#1C1917] dark:text-[#F5F5F4] hover:border-[#1E3A8A] dark:hover:border-[#60A5FA] font-medium text-xs sm:text-sm transition-colors"
+          >
+            Open Premier Project: LSCM →
+          </a>
+        </div>
+      </div>
+
+      <!-- Live Archive Telemetry / Stats -->
+      <div class="mt-16 pt-8 border-t border-[#E7E5E4] dark:border-[#292524] grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div>
+          <span class="block font-serif text-3xl sm:text-4xl font-bold text-[#1C1917] dark:text-[#F5F5F4]">
+            18
+          </span>
+          <span class="text-xs uppercase font-mono tracking-wider text-[#78716C] dark:text-[#A8A29E]">
+            Curated Projects
+          </span>
+        </div>
+        <div>
+          <span class="block font-serif text-3xl sm:text-4xl font-bold text-[#1E3A8A] dark:text-[#60A5FA]">
+            42
+          </span>
+          <span class="text-xs uppercase font-mono tracking-wider text-[#78716C] dark:text-[#A8A29E]">
+            Editorial Notebooks
+          </span>
+        </div>
+        <div>
+          <span class="block font-serif text-3xl sm:text-4xl font-bold text-[#B45309] dark:text-[#F59E0B]">
+            9
+          </span>
+          <span class="text-xs uppercase font-mono tracking-wider text-[#78716C] dark:text-[#A8A29E]">
+            Interactive Books
+          </span>
+        </div>
+        <div>
+          <span class="block font-serif text-3xl sm:text-4xl font-bold text-[#047857] dark:text-[#10B981]">
+            127
+          </span>
+          <span class="text-xs uppercase font-mono tracking-wider text-[#78716C] dark:text-[#A8A29E]">
+            Solved PYQs Mapped
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Featured Projects Section -->
+  <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between mb-8 pb-3 border-b border-[#E7E5E4] dark:border-[#292524]">
+      <div>
+        <h2 class="font-serif text-2xl font-bold text-[#1C1917] dark:text-[#F5F5F4]">
+          Featured Master Projects
+        </h2>
+        <p class="text-xs text-[#78716C] dark:text-[#A8A29E]">
+          Active course suites with integrated notebooks, interactive visual books, and solved past examinations.
+        </p>
+      </div>
+      <span class="text-xs font-mono text-[#78716C] dark:text-[#A8A29E] hidden sm:inline">
+        Operations Division
+      </span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {featuredProjects.map(proj => (
+        <div class="paper-card rounded-xl p-6 flex flex-col justify-between hover:shadow-paper-lg transition-all group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[11px] font-mono uppercase tracking-wider text-[#1E3A8A] dark:text-[#60A5FA] font-semibold">
+                {proj.division} • {proj.type}
+              </span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-[#047857]/10 text-[#047857] dark:text-[#10B981]">
+                {proj.status}
+              </span>
+            </div>
+
+            <h3 class="font-serif text-2xl font-bold text-[#1C1917] dark:text-[#F5F5F4] group-hover:text-[#1E3A8A] dark:group-hover:text-[#60A5FA] transition-colors">
+              <a href={`/${proj.division}/${proj.slug}/`}>
+                {proj.title}
+              </a>
+            </h3>
+
+            <p class="text-xs text-[#57534E] dark:text-[#A8A29E] mt-2.5 leading-relaxed">
+              {proj.description}
+            </p>
+
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-1.5 mt-4">
+              {proj.tags.slice(0, 4).map(tag => (
+                <span class="px-2 py-0.5 rounded text-[10px] bg-[#FAF7F0] dark:bg-[#24211E] border border-[#E7E5E4] dark:border-[#44403C] text-[#57534E] dark:text-[#A8A29E] font-mono">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Stats & Artifact Suite Links -->
+          <div class="mt-6 pt-4 border-t border-[#E7E5E4] dark:border-[#292524] flex items-center justify-between text-xs">
+            <div class="flex items-center space-x-3 font-mono text-[11px] text-[#78716C] dark:text-[#A8A29E]">
+              <span>{proj.stats.topics} Topics</span>
+              <span>•</span>
+              <span>{proj.stats.chapters} Visual Beats</span>
+              <span>•</span>
+              <span>{proj.stats.pyqYears} Yrs PYQs</span>
+            </div>
+
+            <a 
+              href={`/${proj.division}/${proj.slug}/`}
+              class="font-semibold text-[#1E3A8A] dark:text-[#60A5FA] flex items-center space-x-1 group-hover:translate-x-0.5 transition-transform"
+            >
+              <span>Explore Suite</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Knowledge Divisions Grid -->
+  <section class="py-16 bg-[#FAF7F0] dark:bg-[#0C0A09] border-t border-[#E7E5E4] dark:border-[#292524]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="mb-8 pb-3 border-b border-[#E7E5E4] dark:border-[#292524]">
+        <h2 class="font-serif text-2xl font-bold text-[#1C1917] dark:text-[#F5F5F4]">
+          Knowledge Divisions
+        </h2>
+        <p class="text-xs text-[#78716C] dark:text-[#A8A29E]">
+          The structured taxonomy governing the BRAIN knowledge base.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {DIVISIONS.map(div => (
+          <a 
+            href={`/${div.slug}/`}
+            class="paper-card rounded-lg p-5 hover:border-[#1E3A8A] dark:hover:border-[#60A5FA] transition-all group block"
+          >
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-serif text-lg font-bold text-[#1C1917] dark:text-[#F5F5F4] group-hover:text-[#1E3A8A] dark:group-hover:text-[#60A5FA]">
+                {div.title}
+              </h3>
+              <span class="font-mono text-xs text-[#78716C] dark:text-[#A8A29E] bg-[#FAF7F0] dark:bg-[#24211E] px-2 py-0.5 rounded border border-[#E7E5E4] dark:border-[#44403C]">
+                {div.count} Units
+              </span>
+            </div>
+            <p class="text-xs text-[#78716C] dark:text-[#A8A29E] leading-relaxed line-clamp-2">
+              {div.description}
+            </p>
+          </a>
+        ))}
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

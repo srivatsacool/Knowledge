@@ -2,6 +2,8 @@
 Website/dist/
 dist/
 _source_cache/
+.astro/
+Website/.astro/
 
 # Dependencies
 node_modules/

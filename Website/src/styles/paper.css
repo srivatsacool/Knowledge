@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Libre+Bodoni:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+
+:root {
+  --bg-paper: #FAF7F0;
+  --bg-paper-muted: #F4EEDD;
+  --bg-paper-card: #FFFFFF;
+  --text-ink: #1C1917;
+  --text-ink-muted: #78716C;
+  --border-editorial: #E7E5E4;
+  --border-editorial-subtle: #F0ECE1;
+  --accent-navy: #1E3A8A;
+  --accent-amber: #B45309;
+  --accent-emerald: #047857;
+  --accent-rose: #BE123C;
+}
+
+[data-theme="dark"] {
+  --bg-paper: #0C0A09;
+  --bg-paper-muted: #171412;
+  --bg-paper-card: #1C1917;
+  --text-ink: #F5F5F4;
+  --text-ink-muted: #A8A29E;
+  --border-editorial: #292524;
+  --border-editorial-subtle: #1F1C1A;
+  --accent-navy: #60A5FA;
+  --accent-amber: #F59E0B;
+  --accent-emerald: #10B981;
+  --accent-rose: #FB7185;
+}
+
+body {
+  background-color: var(--bg-paper);
+  color: var(--text-ink);
+  font-family: 'Public Sans', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, .font-serif {
+  font-family: 'Libre Bodoni', 'Playfair Display', Georgia, serif;
+  letter-spacing: -0.015em;
+}
+
+code, pre, .font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Paper Edition Subtle Ruling */
+.paper-rule {
+  border-bottom: 1px solid var(--border-editorial);
+}
+
+.paper-card {
+  background-color: var(--bg-paper-card);
+  border: 1px solid var(--border-editorial);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+/* Custom Scrollbar for Editorial Feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-paper);
+}
+::-webkit-scrollbar-thumb {
+  background: #D6D3D1;
+  border-radius: 3px;
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #44403C;
+}
+
+/* KaTeX formula box */
+.formula-box {
+  background: #FAFAF9;
+  border-left: 3px solid var(--accent-navy);
+  border-radius: 4px;
+}
+[data-theme="dark"] .formula-box {
+  background: #171412;
+}
+
+/* 1600x900 Responsive Stage Container */
+.stage-aspect-ratio {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 ratio */
+  overflow: hidden;
+  background-color: #FAF7F0;
+  border: 1px solid var(--border-editorial);
+  border-radius: 8px;
+}
+[data-theme="dark"] .stage-aspect-ratio {
+  background-color: #141210;
+}
+
+.stage-viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Print Optimization */
+@media print {
+  body {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .paper-card {
+    border: 1px solid #CCCCCC !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+}

@@ -1,0 +1,199 @@
+---
+import { buildSearchIndex } from '../data/searchIndex';
+const searchItems = buildSearchIndex();
+---
+
+<div 
+  id="search-dialog" 
+  class="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-start justify-center pt-20 px-4 hidden transition-opacity"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="search-dialog-title"
+>
+  <div class="bg-white dark:bg-[#1C1917] border border-[#E7E5E4] dark:border-[#292524] rounded-xl shadow-2xl max-w-2xl w-full overflow-hidden flex flex-col max-h-[80vh]">
+    
+    <!-- Input Field -->
+    <div class="p-3 border-b border-[#E7E5E4] dark:border-[#292524] flex items-center space-x-3 bg-[#FAF7F0] dark:bg-[#141210]">
+      <svg class="w-5 h-5 text-[#78716C] dark:text-[#A8A29E] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+      <input 
+        id="search-input"
+        type="text" 
+        placeholder="Search projects, topics, formulas, or solved PYQs... (e.g. EOQ, Fisher, SCOR, 2024)"
+        class="w-full bg-transparent border-none outline-none text-sm text-[#1C1917] dark:text-[#F5F5F4] placeholder-[#A8A29E] dark:placeholder-[#78716C]"
+        autocomplete="off"
+      />
+      <kbd class="px-1.5 py-0.5 text-[10px] font-mono bg-white dark:bg-[#292524] border border-[#E7E5E4] dark:border-[#44403C] rounded text-[#57534E] dark:text-[#D6D3D1] shrink-0">
+        ESC
+      </kbd>
+    </div>
+
+    <!-- Live Results Container -->
+    <div id="search-results" class="overflow-y-auto p-2 space-y-1 divide-y divide-[#F5F5F4] dark:divide-[#24211E]">
+      <!-- Populated dynamically via JS -->
+    </div>
+
+    <!-- Footer Help Bar -->
+    <div class="p-2.5 bg-[#FAF7F0] dark:bg-[#141210] border-t border-[#E7E5E4] dark:border-[#292524] text-[11px] text-[#78716C] dark:text-[#A8A29E] flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <span><kbd class="font-mono bg-white dark:bg-[#292524] px-1 py-0.5 rounded border border-[#E7E5E4] dark:border-[#44403C]">↑</kbd> <kbd class="font-mono bg-white dark:bg-[#292524] px-1 py-0.5 rounded border border-[#E7E5E4] dark:border-[#44403C]">↓</kbd> to navigate</span>
+        <span><kbd class="font-mono bg-white dark:bg-[#292524] px-1 py-0.5 rounded border border-[#E7E5E4] dark:border-[#44403C]">↵</kbd> to select</span>
+      </div>
+      <span class="font-mono">{searchItems.length} indexed records</span>
+    </div>
+
+  </div>
+</div>
+
+<script is:inline define:vars={{ searchItems }}>
+  const dialog = document.getElementById('search-dialog');
+  const input = document.getElementById('search-input');
+  const resultsContainer = document.getElementById('search-results');
+  const triggerBtn = document.getElementById('global-search-trigger');
+
+  let activeIndex = -1;
+  let currentResults = [];
+
+  function openSearch() {
+    if (!dialog) return;
+    dialog.classList.remove('hidden');
+    input.value = '';
+    renderResults(searchItems.slice(0, 8));
+    input.focus();
+  }
+
+  function closeSearch() {
+    if (!dialog) return;
+    dialog.classList.add('hidden');
+    activeIndex = -1;
+  }
+
+  function renderResults(items) {
+    currentResults = items;
+    activeIndex = items.length > 0 ? 0 : -1;
+    if (!resultsContainer) return;
+
+    if (items.length === 0) {
+      resultsContainer.innerHTML = `
+        <div class="p-6 text-center text-xs text-[#78716C] dark:text-[#A8A29E]">
+          No matching records found. Try searching for "EOQ", "Fisher", "Safety Stock", or "2024".
+        </div>
+      `;
+      return;
+    }
+
+    resultsContainer.innerHTML = items.map((item, idx) => `
+      <a 
+        href="${item.url}" 
+        data-index="${idx}"
+        class="search-item block p-3 rounded-lg hover:bg-[#FAF7F0] dark:hover:bg-[#24211E] transition-colors ${idx === 0 ? 'bg-[#FAF7F0] dark:bg-[#24211E]' : ''}"
+      >
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-[11px] font-mono uppercase tracking-wider text-[#1E3A8A] dark:text-[#60A5FA] font-semibold">
+            ${item.project} • ${item.artifact}
+          </span>
+          <span class="text-[10px] font-mono text-[#A8A29E] dark:text-[#78716C]">
+            ${item.topic}
+          </span>
+        </div>
+        <div class="text-xs font-semibold text-[#1C1917] dark:text-[#F5F5F4] mb-1">
+          ${item.title}
+        </div>
+        <p class="text-[11px] text-[#78716C] dark:text-[#A8A29E] line-clamp-1">
+          ${item.excerpt}
+        </p>
+      </a>
+    `).join('');
+
+    attachResultClicks();
+  }
+
+  function attachResultClicks() {
+    const renderedItems = document.querySelectorAll('.search-item');
+    renderedItems.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        renderedItems.forEach(r => r.classList.remove('bg-[#FAF7F0]', 'dark:bg-[#24211E]'));
+        el.classList.add('bg-[#FAF7F0]', 'dark:bg-[#24211E]');
+        activeIndex = parseInt(el.getAttribute('data-index') || '0', 10);
+      });
+    });
+  }
+
+  function handleFilter() {
+    const q = input.value.trim().toLowerCase();
+    if (!q) {
+      renderResults(searchItems.slice(0, 8));
+      return;
+    }
+
+    const filtered = searchItems.filter(item => {
+      const matchTitle = item.title.toLowerCase().includes(q);
+      const matchTopic = item.topic.toLowerCase().includes(q);
+      const matchExcerpt = item.excerpt.toLowerCase().includes(q);
+      const matchKeywords = item.keywords.some(k => k.toLowerCase().includes(q));
+      return matchTitle || matchTopic || matchExcerpt || matchKeywords;
+    });
+
+    renderResults(filtered.slice(0, 15));
+  }
+
+  // Keyboard Navigation
+  window.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (dialog && !dialog.classList.contains('hidden')) {
+        closeSearch();
+      } else {
+        openSearch();
+      }
+    }
+
+    if (!dialog || dialog.classList.contains('hidden')) return;
+
+    if (e.key === 'Escape') {
+      closeSearch();
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (currentResults.length === 0) return;
+      activeIndex = (activeIndex + 1) % currentResults.length;
+      updateActiveVisual();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (currentResults.length === 0) return;
+      activeIndex = (activeIndex - 1 + currentResults.length) % currentResults.length;
+      updateActiveVisual();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (activeIndex >= 0 && activeIndex < currentResults.length) {
+        window.location.href = currentResults[activeIndex].url;
+      }
+    }
+  });
+
+  function updateActiveVisual() {
+    const rendered = document.querySelectorAll('.search-item');
+    rendered.forEach((el, idx) => {
+      if (idx === activeIndex) {
+        el.classList.add('bg-[#FAF7F0]', 'dark:bg-[#24211E]');
+        el.scrollIntoView({ block: 'nearest' });
+      } else {
+        el.classList.remove('bg-[#FAF7F0]', 'dark:bg-[#24211E]');
+      }
+    });
+  }
+
+  if (input) {
+    input.addEventListener('input', handleFilter);
+  }
+
+  if (triggerBtn) {
+    triggerBtn.addEventListener('click', openSearch);
+  }
+
+  if (dialog) {
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) closeSearch();
+    });
+  }
+</script>

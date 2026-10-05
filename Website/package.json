@@ -4,14 +4,16 @@
   "description": "Personal knowledge hub & academic study notebook publishing portal",
   "main": "scripts/build.js",
   "scripts": {
-    "build": "node scripts/build.js",
+    "build": "astro build",
+    "build:legacy": "node scripts/build.js",
+    "dev": "astro dev",
+    "check": "astro check",
     "test": "node scripts/test.js",
     "test:pipeline": "node scripts/test-pipeline.js",
     "test:agent": "node scripts/test-agent-integration.js",
     "test:orca": "node scripts/test-orca-orchestration.js",
     "test:all": "node scripts/test.js && node scripts/test-pipeline.js && node scripts/test-agent-integration.js && node scripts/test-orca-orchestration.js",
     "orca": "node scripts/pipeline/orca-agent.js",
-    "dev": "node scripts/dev.js",
     "pipeline": "node scripts/pipeline/index.js",
     "notebook:create": "node scripts/pipeline/index.js create",
     "notebook:validate": "node scripts/pipeline/index.js validate",
@@ -26,5 +28,12 @@
     "static-site"
   ],
   "author": "Srivatsa",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^7.3.5",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^6.0.3"
+  }
 }

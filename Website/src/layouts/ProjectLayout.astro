@@ -1,0 +1,84 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import SuiteBar from '../components/SuiteBar.astro';
+import type { ProjectMetadata } from '../data/projects';
+
+interface Props {
+  project: ProjectMetadata;
+  activeArtifact: 'overview' | 'notebook' | 'book' | 'pyq' | 'formulas' | 'revision';
+  pageSubtitle?: string;
+}
+
+const { project, activeArtifact, pageSubtitle } = Astro.props;
+---
+
+<BaseLayout 
+  title={`${project.title}${pageSubtitle ? ` — ${pageSubtitle}` : ''}`} 
+  description={project.description}
+>
+  <!-- Project Masthead -->
+  <div class="border-b border-[#E7E5E4] dark:border-[#292524] bg-[#FAF7F0] dark:bg-[#0C0A09] py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Breadcrumb Navigation -->
+      <nav class="flex items-center space-x-2 text-xs font-mono text-[#78716C] dark:text-[#A8A29E] mb-3">
+        <a href="/" class="hover:text-[#1E3A8A] dark:hover:text-[#60A5FA]">BRAIN</a>
+        <span>/</span>
+        <a href={`/${project.division}/`} class="capitalize hover:text-[#1E3A8A] dark:hover:text-[#60A5FA]">{project.division}</a>
+        <span>/</span>
+        <span class="text-[#1C1917] dark:text-[#F5F5F4] font-semibold uppercase">{project.slug}</span>
+      </nav>
+
+      <!-- Title & Badges -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center space-x-2.5 mb-1.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider bg-[#1E3A8A]/10 text-[#1E3A8A] dark:text-[#60A5FA] border border-[#1E3A8A]/20">
+              {project.type}
+            </span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider bg-[#047857]/10 text-[#047857] dark:text-[#10B981] border border-[#047857]/20">
+              {project.status}
+            </span>
+            {project.stats.pyqYears > 0 && (
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-[#B45309]/10 text-[#B45309] dark:text-[#F59E0B] border border-[#B45309]/20">
+                {project.stats.pyqYears} Yrs Solved PYQs
+              </span>
+            )}
+          </div>
+          <h1 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1C1917] dark:text-[#F5F5F4] tracking-tight">
+            {project.title}
+          </h1>
+          <p class="text-xs sm:text-sm text-[#78716C] dark:text-[#A8A29E] mt-2 max-w-3xl leading-relaxed">
+            {project.description}
+          </p>
+        </div>
+
+        <!-- Faculty Badges -->
+        {project.faculty && (
+          <div class="shrink-0 bg-white dark:bg-[#1C1917] p-3 rounded-lg border border-[#E7E5E4] dark:border-[#292524] shadow-xs text-xs">
+            <span class="text-[10px] font-mono uppercase tracking-wider text-[#78716C] dark:text-[#A8A29E] block mb-1">
+              Curriculum Faculty
+            </span>
+            <div class="flex flex-col space-y-1 font-medium text-[#1C1917] dark:text-[#F5F5F4]">
+              {project.faculty.map(f => (
+                <span class="flex items-center space-x-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-[#1E3A8A] dark:bg-[#60A5FA]"></span>
+                  <span>{f}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Suite Bar Navigation -->
+  <SuiteBar projectSlug={project.slug} activeArtifact={activeArtifact} />
+
+  <!-- Page Slot -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <slot />
+  </div>
+</BaseLayout>
