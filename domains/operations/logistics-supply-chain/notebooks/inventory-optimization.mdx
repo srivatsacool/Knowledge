@@ -28,7 +28,7 @@ pdf:
   available: true
 ---
 
-# 01 — Notebook Information & Scope
+# 01 — START: Scope, Course Metadata & Foundational Thesis
 
 <StickyNote color="blue" title="The Inventory Duality Thesis">
   "Inventory is working capital in physical form. It shields an enterprise against demand volatility and supplier unreliability, but carries holding costs that bleed cash if left uncalibrated. The science of inventory optimization is identifying the exact mathematical equilibrium between ordering friction and carrying cost." — Prof. Manoj Dagaonkar.
@@ -41,7 +41,7 @@ pdf:
 
 ---
 
-# 02 — Learning Map
+# 02 — FOUNDATIONS: The Inventory Duality & Decision Frontier
 
 <ProcessDiagram
   figureId="Figure 2.1"
@@ -84,7 +84,7 @@ pdf:
 
 ---
 
-# 03 — The Classical Economic Order Quantity (EOQ)
+# 03 — CORE CONCEPTS: Classical EOQ & The Total Cost Equilibrium
 
 The Ford W. Harris (1913) model identifies the optimal purchase batch size ($Q^*$) that minimizes total annual variable inventory costs by finding the exact intersection between ordering costs and holding costs.
 
@@ -165,7 +165,55 @@ $$
 
 ---
 
-# 04 — 12-Step Worked Numerical Problem: Comprehensive EOQ & Cost Optimization
+# 04 — FRAMEWORKS & MODELS: EPQ, Quantity Discounts & Stochastic Safety Stock
+
+The classical EOQ model assumes instantaneous replenishment and deterministic demand. In production environments and global distribution networks, these premises must be extended across three core frameworks:
+
+### 1. Economic Production Quantity (EPQ)
+When replenishment occurs gradually at a daily production rate $p$ while consumption continues at daily demand rate $d$ ($p > d$), inventory builds at rate $(p - d)$. The maximum inventory level never reaches batch size $Q$, reducing carrying charges:
+
+$$
+Q^*_{EPQ} = \sqrt{\frac{2 D S}{H \left(1 - \frac{d}{p}\right)}}
+$$
+
+Because $(1 - d/p) < 1$, the EPQ batch size is strictly larger than the purchase EOQ ($Q^*_{EPQ} > Q^*_{EOQ}$), compensating for continuous production consumption.
+
+### 2. All-Units vs. Incremental Quantity Discount Tiers
+Suppliers incentivize larger lot sizes via price schedules. To evaluate an all-units discount:
+1. Compute standard $EOQ$ at base price $C_0$.
+2. If $EOQ$ falls below the discount threshold $Q_{min}$, calculate total annual cost $TC(Q)$ at $EOQ$ versus $TC(Q_{min})$ using the discounted purchase price $C_{disc}$ and recalculated holding cost $H_{disc} = i \times C_{disc}$.
+3. Choose the lot size with the minimum absolute Total Annual Cost.
+
+### 3. Stochastic Demand & Continuous Review Policy $(s, Q)$
+Under stochastic market conditions where daily demand $d$ and supplier lead time $L$ fluctuate, maintaining zero safety stock leads to frequent customer delivery stockouts.
+
+<FormulaCard
+  title="Safety Stock under Combined Demand & Lead-Time Uncertainty"
+  formula="SS = Z \cdot \sqrt{L \cdot \sigma_D^2 + D^2 \cdot \sigma_L^2}"
+  meaning="Calculates the buffer inventory required to satisfy a target customer service level (Cycle Service Level) when both customer daily demand and supplier replenishment lead times are independent normal random variables."
+  variables={[
+    { symbol: "SS", description: "Required safety stock buffer", unit: "Units" },
+    { symbol: "Z", description: "Standard normal distribution score corresponding to cycle service level", unit: "Dimensionless" },
+    { symbol: "L", description: "Average replenishment lead time", unit: "Days or Weeks" },
+    { symbol: "\\sigma_D", description: "Standard deviation of customer demand per period", unit: "Units / period" },
+    { symbol: "D", description: "Average customer demand rate per period", unit: "Units / period" },
+    { symbol: "\\sigma_L", description: "Standard deviation of supplier replenishment lead time", unit: "Periods" }
+  ]}
+  assumptions={[
+    "Customer demand per period is normally distributed and independent across time.",
+    "Supplier replenishment lead time is normally distributed and independent of demand.",
+    "Stockouts are backordered or lost without cross-period demand pooling."
+  ]}
+  substitution="SS = 1.645 \cdot \sqrt{4 \cdot (10)^2 + (100)^2 \cdot (1)^2} = 1.645 \cdot \sqrt{400 + 10{,}000} = 1.645 \cdot \sqrt{10{,}400} \approx 167.76 \text{ units}"
+  result="SS \approx 168 \text{ units (for 95% CSL, Z = 1.645)}"
+  interpretation="Notice that lead time variance (\sigma_L^2) is amplified by squared demand (D^2 = 10,000), contributing 96% of total variance. Stabilizing supplier lead times is mathematically 25 times more effective in reducing buffer stock than forecasting customer demand."
+  sanityCheck="If lead time is deterministic (sigma_L = 0), formula collapses to standard SS = Z * sigma_D * sqrt(L)."
+  provenance="Silver, Pyke, and Peterson, Inventory Management and Production Planning and Scheduling (Wiley)"
+/>
+
+---
+
+# 05 — WORKED EXAMPLES: 12-Step EOQ & Discount Sensitivity Drills
 
 <WorkedExample
   problemNumber="1"
@@ -252,37 +300,48 @@ $$
 
 ---
 
-# 05 — Stochastic Inventory Control: Safety Stock & Reorder Point
+# 06 — CASES & APPLICATIONS: Multi-Echelon Spare Parts Optimization
 
-Under stochastic market conditions where daily demand $d$ and supplier lead time $L$ fluctuate, maintaining zero safety stock leads to frequent customer delivery stockouts.
+### Case Background: Apex Precision Electronics Systems
+Apex Precision operates 3 high-volume surface-mount technology (SMT) fabrication plants in Western India. The assembly lines utilize specialized cryogenic turbomolecular vacuum pumps. An unscheduled line shutdown incurs an downtime penalty of **₹500,000 per hour** in lost production yield and contractual SLA penalties.
 
-<FormulaCard
-  title="Safety Stock under Combined Demand & Lead-Time Uncertainty"
-  formula="SS = Z \cdot \sqrt{L \cdot \sigma_D^2 + D^2 \cdot \sigma_L^2}"
-  meaning="Calculates the buffer inventory required to satisfy a target customer service level (Cycle Service Level) when both customer daily demand and supplier replenishment lead times are independent normal random variables."
-  variables={[
-    { symbol: "SS", description: "Required safety stock buffer", unit: "Units" },
-    { symbol: "Z", description: "Standard normal distribution score corresponding to cycle service level", unit: "Dimensionless" },
-    { symbol: "L", description: "Average replenishment lead time", unit: "Days or Weeks" },
-    { symbol: "\\sigma_D", description: "Standard deviation of customer demand per period", unit: "Units / period" },
-    { symbol: "D", description: "Average customer demand rate per period", unit: "Units / period" },
-    { symbol: "\\sigma_L", description: "Standard deviation of supplier replenishment lead time", unit: "Periods" }
+<ComparisonCard
+  title="Inventory Operating Model Architecture"
+  labelA="Legacy Decentralized Policy"
+  labelB="Optimized Centralized (s, Q) Policy"
+  rows={[
+    {
+      dimension: "Replenishment Trigger",
+      itemA: "Ad-hoc local plant requisition upon visual low-stock alert",
+      itemB: "Continuous ERP (s, Q) automated inventory monitoring"
+    },
+    {
+      dimension: "Safety Stock Buffering",
+      itemA: "Uncoordinated safety stock held at each of 3 regional plants",
+      itemB: "Centralized hub pooling with Square Root Law safety stock sizing"
+    },
+    {
+      dimension: "Annual Holding Expense",
+      itemA: "₹14,200,000 tied up across duplicate maintenance buffers",
+      itemB: "₹9,400,000 (34% working capital reduction)"
+    },
+    {
+      dimension: "Cycle Service Level (CSL)",
+      itemA: "91.2% (3 catastrophic production stockouts in FY2025)",
+      itemB: "99.4% (Zero critical line-stoppage incidents)"
+    }
   ]}
-  assumptions={[
-    "Customer demand per period is normally distributed and independent across time.",
-    "Supplier replenishment lead time is normally distributed and independent of demand.",
-    "Stockouts are backordered or lost without cross-period demand pooling."
-  ]}
-  substitution="SS = 1.645 \cdot \sqrt{4 \cdot (10)^2 + (100)^2 \cdot (1)^2} = 1.645 \cdot \sqrt{400 + 10{,}000} = 1.645 \cdot \sqrt{10{,}400} \approx 167.76 \text{ units}"
-  result="SS \approx 168 \text{ units (for 95% CSL, Z = 1.645)}"
-  interpretation="Notice that lead time variance (\sigma_L^2) is amplified by squared demand (D^2 = 10,000), contributing 96% of total variance. Stabilizing supplier lead times is mathematically 25 times more effective in reducing buffer stock than forecasting customer demand."
-  sanityCheck="If lead time is deterministic (sigma_L = 0), formula collapses to standard SS = Z * sigma_D * sqrt(L)."
-  provenance="Silver, Pyke, and Peterson, Inventory Management and Production Planning and Scheduling (Wiley)"
 />
+
+<Callout type="insight" title="Operational Impact & Mathematical Mechanism">
+  By consolidating spare parts safety stock from 3 local stockrooms into a centralized hub with overnight express feeder logistics, Apex exploited the **Portfolio Effect (Square Root Law of Inventory)**:
+  $$SS_{\text{centralized}} = \sqrt{\sum \sigma_i^2} \ll \sum SS_i$$
+  Total required buffer inventory dropped by $1 - 1/\sqrt{3} \approx 42.3\%$, releasing ₹4.8M in liquid working capital while simultaneously elevating service reliability to 99.4%.
+</Callout>
 
 ---
 
-# 06 — Past Examination Questions (PYQs) & Model Solutions
+# 07 — PYQs & EXAMINATION MASTERY: Solved Past Examination Questions
 
 <PYQSection
   subject="Logistics & Supply Chain Management"
@@ -302,7 +361,7 @@ Under stochastic market conditions where daily demand $d$ and supplier lead time
     type="numerical"
     topic="EOQ Derivation & Holding Cost Equality"
     source="Operations Examination Board 2024"
-    conceptLink="#03--the-classical-economic-order-quantity-eoq"
+    conceptLink="#03--core-concepts-classical-eoq--the-total-cost-equilibrium"
     frequency="Annual Core Problem"
     question="Derive the Economic Order Quantity (EOQ) formula mathematically from the Total Cost equation. Prove that at the optimal batch size, annual holding cost equals annual ordering cost."
     answerSummary="Set dTC/dQ = -DS/Q^2 + H/2 = 0 to solve Q* = sqrt(2DS/H). Equating holding cost (Q*/2)*H with ordering cost (D/Q*)*S yields identical terms sqrt(DSH/2)."
@@ -334,7 +393,7 @@ Under stochastic market conditions where daily demand $d$ and supplier lead time
     type="numerical"
     topic="Safety Stock Sizing with Service Level"
     source="Operations Examination Board 2025"
-    conceptLink="#05--stochastic-inventory-control-safety-stock--reorder-point"
+    conceptLink="#04--frameworks--models-epq-quantity-discounts--stochastic-safety-stock"
     frequency="Frequently Repeated"
     question="A retailer experiences average daily demand of D = 80 units with a standard deviation of 12 units. The supplier replenishment lead time is constant at L = 9 days. If the company targets a 98% cycle service level (Z = 2.05), calculate: (a) Safety Stock, (b) Reorder Point (ROP)."
     answerSummary="Safety Stock SS = 2.05 * 12 * sqrt(9) = 73.8 ≈ 74 units. Reorder Point ROP = (80 * 9) + 74 = 794 units."
@@ -357,7 +416,7 @@ Under stochastic market conditions where daily demand $d$ and supplier lead time
 
 ---
 
-# 07 — Active Recall Quiz & Conceptual Check
+# 08 — QUIZ & REVISION: Active Recall & Decision Checks
 
 <Flashcard
   front="Why does the EOQ Total Cost curve exhibit high robustness against order quantity estimation errors?"
@@ -385,7 +444,7 @@ Under stochastic market conditions where daily demand $d$ and supplier lead time
 
 ---
 
-# 08 — Appendix & Verification Registers
+# 09 — APPENDIX & SCHOLARLY APPARATUS: Comprehensive Scholarly Registers
 
 <AppendixRegister
   sources={[
@@ -443,9 +502,7 @@ Under stochastic market conditions where daily demand $d$ and supplier lead time
   ]}
 />
 
----
-
-# 09 — Knowledge Graph & Cross-References
+### Cross-Disciplinary Knowledge Links
 
 <RelatedKnowledge
   domain="operations"

@@ -40,111 +40,153 @@ const {
   subjectSlug,
 } = Astro.props;
 
-// Group headings into the canonical 9 pedagogical divisions
-const SECTIONS = [
-  { id: 'sec-start', title: '1. START', pattern: /01|scope|information|learning map|overview|start/i },
-  { id: 'sec-foundations', title: '2. FOUNDATIONS', pattern: /02|03|foundation|genesis|history|what is|evolution|background|silo/i },
-  { id: 'sec-concepts', title: '3. CORE CONCEPTS', pattern: /04|concept|principle|axiom|demand|classification|taxonomy|definition/i },
-  { id: 'sec-frameworks', title: '4. FRAMEWORKS & MODELS', pattern: /05|architecture|framework|tier|model|pillar|matrix|topology|structure|closed-loop|mrp ii/i },
-  { id: 'sec-examples', title: '5. WORKED EXAMPLES', pattern: /06|example|calculation|numerical|drill|arithmetic|proof|derivation|netting/i },
-  { id: 'sec-cases', title: '6. CASES & APPLICATIONS', pattern: /07|08|case|application|industry|real-world|corporate|sector|subway|precision/i },
-  { id: 'sec-pyqs', title: '7. PYQs & EXAM BLUEPRINTS', pattern: /09|pyq|examination|past year|exam|blueprint|scoring|question/i },
-  { id: 'sec-quiz', title: '8. QUIZ & REVISION', pattern: /10|quiz|flashcard|recall|revision|self-test|cheat sheet/i },
-  { id: 'sec-appendix', title: '9. APPENDIX & REGISTERS', pattern: /11|12|appendix|source register|citation|glossary|formula register|change history|register/i },
+// Canonical 9 Divisions
+const CANONICAL_SECTIONS = [
+  { id: 'sec-start', title: 'START', num: '1', icon: '✦', pattern: /^(01\b|1\b|start)/i },
+  { id: 'sec-foundations', title: 'FOUNDATIONS', num: '2', icon: '🏛', pattern: /^(02\b|2\b|foundation)/i },
+  { id: 'sec-concepts', title: 'CORE CONCEPTS', num: '3', icon: '⚖', pattern: /^(03\b|3\b|core concept)/i },
+  { id: 'sec-frameworks', title: 'FRAMEWORKS & MODELS', num: '4', icon: '📐', pattern: /^(04\b|4\b|framework|model)/i },
+  { id: 'sec-examples', title: 'WORKED EXAMPLES', num: '5', icon: '✏', pattern: /^(05\b|5\b|worked example|numerical|calculation)/i },
+  { id: 'sec-cases', title: 'CASES & APPLICATIONS', num: '6', icon: '🏢', pattern: /^(06\b|6\b|case|application)/i },
+  { id: 'sec-pyqs', title: 'PYQs & EXAM BLUEPRINTS', num: '7', icon: '🎓', pattern: /^(07\b|7\b|pyq|examination|past year)/i },
+  { id: 'sec-quiz', title: 'QUIZ & REVISION', num: '8', icon: '💡', pattern: /^(08\b|8\b|quiz|revision|recall)/i },
+  { id: 'sec-appendix', title: 'APPENDIX & REGISTERS', num: '9', icon: '📚', pattern: /^(09\b|9\b|appendix|register)/i },
 ];
 
-// Bucket headings into sections
-const groupedSections = SECTIONS.map(sec => {
-  const matched = headings.filter(h => h.depth <= 3 && sec.pattern.test(h.text));
-  return {
-    ...sec,
-    headings: matched,
-  };
-});
+// Deterministic 1-to-1 heading assignment
+const sectionBuckets: Array<{
+  id: string;
+  title: string;
+  num: string;
+  icon: string;
+  headings: Heading[];
+}> = CANONICAL_SECTIONS.map(s => ({ ...s, headings: [] }));
 
-// Any headings that didn't match canonical patterns are captured as supplemental
-const matchedSlugs = new Set(groupedSections.flatMap(s => s.headings.map(h => h.slug)));
-const supplementalHeadings = headings.filter(h => h.depth <= 3 && !matchedSlugs.has(h.slug));
+const unassignedHeadings: Heading[] = [];
+let currentSectionIdx = -1;
+
+for (const h of headings) {
+  // Only consider level 1, 2, 3
+  if (h.depth > 3) continue;
+
+  const cleanText = h.text.trim();
+
+  if (h.depth === 1) {
+    let matchedIdx = -1;
+    for (let i = 0; i < CANONICAL_SECTIONS.length; i++) {
+      const sec = CANONICAL_SECTIONS[i];
+      if (sec.pattern.test(cleanText)) {
+        matchedIdx = i;
+        break;
+      }
+    }
+
+    if (matchedIdx !== -1) {
+      currentSectionIdx = matchedIdx;
+      sectionBuckets[matchedIdx].headings.push(h);
+    } else {
+      // If an unnumbered depth 1 heading occurs, assign by keyword or fallback
+      if (/overview|scope|metadata|start/i.test(cleanText)) { currentSectionIdx = 0; sectionBuckets[0].headings.push(h); }
+      else if (/genesis|history|foundation/i.test(cleanText)) { currentSectionIdx = 1; sectionBuckets[1].headings.push(h); }
+      else if (/concept|principle/i.test(cleanText)) { currentSectionIdx = 2; sectionBuckets[2].headings.push(h); }
+      else if (/matrix|model|framework/i.test(cleanText)) { currentSectionIdx = 3; sectionBuckets[3].headings.push(h); }
+      else if (/drill|worked|example|numerical/i.test(cleanText)) { currentSectionIdx = 4; sectionBuckets[4].headings.push(h); }
+      else if (/case|application/i.test(cleanText)) { currentSectionIdx = 5; sectionBuckets[5].headings.push(h); }
+      else if (/pyq|exam/i.test(cleanText)) { currentSectionIdx = 6; sectionBuckets[6].headings.push(h); }
+      else if (/quiz|recall/i.test(cleanText)) { currentSectionIdx = 7; sectionBuckets[7].headings.push(h); }
+      else if (/appendix|register/i.test(cleanText)) { currentSectionIdx = 8; sectionBuckets[8].headings.push(h); }
+      else unassignedHeadings.push(h);
+    }
+  } else if (currentSectionIdx !== -1) {
+    // Sub-headings (depth 2 or 3) strictly belong to the current active section
+    sectionBuckets[currentSectionIdx].headings.push(h);
+  } else {
+    unassignedHeadings.push(h);
+  }
+}
+
+// Helper to clean heading labels in the sidebar
+function formatHeadingText(text: string): string {
+  return text.replace(/^[0-9]{1,2}\s*[—\-:]\s*/, '').trim();
+}
 ---
 
-<aside id="notebook-sidebar" class="notebook-sidebar space-y-6">
+<aside id="notebook-sidebar" class="notebook-sidebar space-y-5">
   
-  <!-- Notebook Archival Passport Card -->
-  <div class="paper-card p-5 rounded-xl border border-[var(--line)] bg-[var(--card)] space-y-3 shadow-xs">
-    <div class="flex items-center justify-between">
-      <span class="rubber-stamp stamp-green text-[9px]">v{notebook.version}</span>
-      <span class="font-mono text-[10px] uppercase font-bold text-[var(--pencil)]">{notebook.status}</span>
-    </div>
-
-    <div class="text-xs space-y-1.5 font-mono text-[var(--pencil)]">
-      <div><span class="text-[var(--text)] font-semibold">Updated:</span> {notebook.updated}</div>
-      {notebook.professor && (
-        <div><span class="text-[var(--text)] font-semibold">Faculty Reference:</span> {notebook.professor}</div>
-      )}
-      {notebook.readingTimeMinutes && (
-        <div><span class="text-[var(--text)] font-semibold">Reading Time:</span> ~{notebook.readingTimeMinutes} min</div>
-      )}
-    </div>
-
-    {notebook.tags && notebook.tags.length > 0 && (
-      <div class="pt-2.5 border-t border-[var(--rule)] flex flex-wrap gap-1">
-        {notebook.tags.map(t => (
-          <span class="text-[9px] font-mono text-[var(--pencil)] bg-[var(--paper)] px-1.5 py-0.5 rounded border border-[var(--line)]">
-            #{t}
-          </span>
-        ))}
+  <!-- HERO NAVIGATION: Structured 9-Section Table of Contents -->
+  <nav class="paper-card rounded-xl border border-[var(--line)] bg-[var(--card)] shadow-xs overflow-hidden">
+    
+    <!-- Index Header -->
+    <div class="px-4 py-3 bg-[var(--paper)] border-b-2 border-[var(--rule)] flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <span class="font-mono text-xs font-bold text-[var(--ink)]">📑 NOTEBOOK INDEX</span>
       </div>
-    )}
-  </div>
-
-  <!-- Structured 9-Section Table of Contents -->
-  <nav class="paper-card p-5 rounded-xl border border-[var(--line)] bg-[var(--card)] max-h-[70vh] overflow-y-auto space-y-4 shadow-xs">
-    <div class="flex items-center justify-between pb-2 border-b-2 border-[var(--rule)]">
-      <span class="font-mono text-[10px] uppercase tracking-wider text-[var(--ink)] font-bold">
-        9-Section Index
+      <span class="font-mono text-[10px] text-[var(--pencil)] bg-[var(--card)] px-2 py-0.5 rounded border border-[var(--line)]">
+        9 Divisions
       </span>
-      <span class="font-mono text-[10px] text-[var(--pencil)]">{headings.length} Topics</span>
     </div>
 
-    <div class="space-y-3.5 text-xs font-sans">
-      {groupedSections.map(sec => {
+    <!-- Scrollable Section List -->
+    <div class="p-3 max-h-[72vh] overflow-y-auto space-y-3 divide-y divide-[var(--rule)]">
+      {sectionBuckets.map((sec) => {
         if (sec.headings.length === 0) return null;
+        
+        // Find main section title (the depth 1 heading, if any)
+        const mainHeading = sec.headings.find(h => h.depth === 1) || sec.headings[0];
+        const subHeadings = sec.headings.filter(h => h !== mainHeading && h.depth <= 3);
+
         return (
-          <div class="index-section space-y-1">
-            <!-- Section Division Heading -->
-            <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--ink)] font-bold flex items-center justify-between py-0.5 border-b border-[var(--rule)]">
-              <span>{sec.title}</span>
-              <span class="text-[var(--pencil)] font-normal font-mono text-[9px]">{sec.headings.length}</span>
+          <div class="index-section pt-2.5 first:pt-0 space-y-1">
+            
+            <!-- Canonical Group Header Anchor -->
+            <div class="flex items-center justify-between group">
+              <a 
+                href={`#${mainHeading.slug}`}
+                class="font-mono text-[11px] uppercase tracking-wider text-[var(--ink)] font-bold hover:text-[var(--ink2)] flex items-center space-x-1.5 transition-colors py-0.5"
+              >
+                <span class="text-[var(--ink2)]">{sec.num}.</span>
+                <span>{sec.title}</span>
+              </a>
+              <span class="text-[9px] font-mono text-[var(--pencil)] bg-[var(--paper)] px-1.5 py-0.2 rounded border border-[var(--rule)]">
+                {sec.headings.length}
+              </span>
             </div>
 
-            <!-- List of Topic Anchors -->
-            <ul class="space-y-1 pl-1">
-              {sec.headings.map(h => (
-                <li class={`leading-snug ${h.depth === 1 ? 'font-semibold text-[var(--text)]' : h.depth === 2 ? 'pl-2 text-[var(--pencil)]' : 'pl-4 text-[var(--pencil)] text-[11px]'}`}>
-                  <a 
-                    href={`#${h.slug}`} 
-                    class="block py-0.5 hover:text-[var(--ink)] hover:underline truncate transition-colors"
-                  >
-                    {h.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <!-- Subtopic Links -->
+            {subHeadings.length > 0 && (
+              <ul class="space-y-0.5 pl-3 border-l-2 border-[var(--rule)] ml-1.5 mt-1">
+                {subHeadings.map(h => (
+                  <li class="leading-snug">
+                    <a 
+                      href={`#${h.slug}`} 
+                      class={`block py-0.5 truncate transition-colors hover:text-[var(--ink)] hover:underline ${
+                        h.depth === 2 
+                          ? 'text-xs text-[var(--text)] font-medium' 
+                          : 'text-[11px] text-[var(--pencil)] pl-2'
+                      }`}
+                      title={h.text}
+                    >
+                      {formatHeadingText(h.text)}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         );
       })}
 
-      <!-- Supplemental Headings (if any) -->
-      {supplementalHeadings.length > 0 && (
-        <div class="index-section space-y-1 pt-2 border-t border-[var(--rule)]">
+      <!-- Unassigned Supplemental Topics (if any) -->
+      {unassignedHeadings.length > 0 && (
+        <div class="index-section pt-2.5 space-y-1">
           <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold">
-            Additional Topics
+            Additional Sections
           </div>
-          <ul class="space-y-1 pl-1">
-            {supplementalHeadings.map(h => (
-              <li class="text-[var(--pencil)] text-[11px] leading-snug">
-                <a href={`#${h.slug}`} class="block py-0.5 hover:text-[var(--ink)] hover:underline truncate">
-                  • {h.text}
+          <ul class="space-y-0.5 pl-2">
+            {unassignedHeadings.map(h => (
+              <li>
+                <a href={`#${h.slug}`} class="block py-0.5 text-xs text-[var(--pencil)] hover:text-[var(--ink)] hover:underline truncate">
+                  • {formatHeadingText(h.text)}
                 </a>
               </li>
             ))}
@@ -156,16 +198,18 @@ const supplementalHeadings = headings.filter(h => h.depth <= 3 && !matchedSlugs.
 
   <!-- Sister Notebooks Navigation -->
   {sisterNotebooks.length > 1 && (
-    <div class="paper-card p-4 rounded-xl border border-[var(--line)] bg-[var(--paper)] space-y-2.5 shadow-2xs">
-      <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold">
-        Subject Portfolio:
+    <div class="paper-card p-3.5 rounded-xl border border-[var(--line)] bg-[var(--paper)] space-y-2 shadow-2xs">
+      <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold flex items-center justify-between">
+        <span>Subject Notebooks:</span>
+        <span class="text-[9px]">{sisterNotebooks.length}</span>
       </div>
-      <ul class="space-y-1 text-xs">
+      <ul class="space-y-1 text-xs font-sans">
         {sisterNotebooks.map(nb => (
           <li>
             <a 
               href={`/${domainSlug}/${subjectSlug}/notebooks/${nb.data.slug}/`}
-              class={`block truncate hover:underline py-0.5 ${nb.data.slug === currentSlug ? 'font-bold text-[var(--ink)]' : 'text-[var(--pencil)]'}`}
+              class={`block truncate hover:underline py-0.5 ${nb.data.slug === currentSlug ? 'font-bold text-[var(--ink)] bg-[var(--card)] px-2 py-1 rounded border border-[var(--line)]' : 'text-[var(--pencil)] hover:text-[var(--ink)]'}`}
+              title={nb.data.title}
             >
               • {nb.data.title}
             </a>
@@ -174,5 +218,30 @@ const supplementalHeadings = headings.filter(h => h.depth <= 3 && !matchedSlugs.
       </ul>
     </div>
   )}
+
+  <!-- Compact Archival Passport Strip (Bottom of Sidebar) -->
+  <div class="p-3 rounded-lg border border-[var(--line)] bg-[var(--card)] font-mono text-[11px] text-[var(--pencil)] space-y-1.5">
+    <div class="flex items-center justify-between">
+      <span class="rubber-stamp stamp-green text-[9px]">v{notebook.version}</span>
+      <span class="text-[10px] uppercase font-bold text-[var(--ink)]">{notebook.status}</span>
+    </div>
+    {notebook.professor && (
+      <div class="truncate text-[10px]">
+        <span class="text-[var(--text)] font-semibold">Faculty:</span> {notebook.professor}
+      </div>
+    )}
+    <div class="text-[10px]">
+      <span class="text-[var(--text)] font-semibold">Updated:</span> {notebook.updated}
+    </div>
+    {notebook.tags && notebook.tags.length > 0 && (
+      <div class="pt-1.5 border-t border-[var(--rule)] flex flex-wrap gap-1">
+        {notebook.tags.slice(0, 4).map(t => (
+          <span class="text-[8px] bg-[var(--paper)] px-1 py-0.2 rounded border border-[var(--line)]">
+            #{t}
+          </span>
+        ))}
+      </div>
+    )}
+  </div>
 
 </aside>

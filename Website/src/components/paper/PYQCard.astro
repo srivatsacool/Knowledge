@@ -1,4 +1,6 @@
 ---
+import { renderMath } from '../../utils/math';
+
 interface Props {
   year?: string | number;
   session?: string;
@@ -28,6 +30,10 @@ const {
   answerSummary,
   commonTraps,
 } = Astro.props;
+
+const renderedQuestion = renderMath(question);
+const renderedAnswerSummary = answerSummary ? renderMath(answerSummary) : '';
+const renderedCommonTraps = commonTraps ? renderMath(commonTraps) : '';
 ---
 
 <div class="pyq-card paper-card p-5 sm:p-6 my-5 rounded-xl border border-[var(--line)] bg-[var(--card)] shadow-xs">
@@ -59,7 +65,7 @@ const {
       Examination Question Wording:
     </div>
     <div class="font-serif text-base sm:text-lg font-bold text-[var(--ink)] leading-snug">
-      "{question}"
+      "<span set:html={renderedQuestion} />"
     </div>
   </div>
 
@@ -98,10 +104,10 @@ const {
     </summary>
 
     <div class="p-4 sm:p-5 mt-2 rounded-lg bg-[var(--paper)] border border-[var(--line)] text-xs sm:text-sm text-[var(--text)] leading-relaxed space-y-4">
-      {answerSummary && (
+      {renderedAnswerSummary && (
         <div class="p-3 rounded bg-[var(--card)] border-l-3 border-[var(--green)]">
           <strong class="font-mono text-xs uppercase tracking-wider text-[var(--green)] block mb-1">Executive Answer Thesis:</strong>
-          <p class="text-xs text-[var(--pencil)] leading-relaxed">{answerSummary}</p>
+          <p class="text-xs text-[var(--pencil)] leading-relaxed" set:html={renderedAnswerSummary} />
         </div>
       )}
 
@@ -111,10 +117,10 @@ const {
       </div>
 
       <!-- Common Traps -->
-      {commonTraps && (
+      {renderedCommonTraps && (
         <div class="p-3 rounded bg-[var(--st-r)] text-[var(--st-text)] border border-[var(--red)]/30 mt-3">
           <span class="font-mono font-bold text-xs uppercase text-[var(--red)] block mb-0.5">⚠ Common Examination Pitfalls:</span>
-          <p class="text-xs leading-relaxed">{commonTraps}</p>
+          <p class="text-xs leading-relaxed" set:html={renderedCommonTraps} />
         </div>
       )}
     </div>

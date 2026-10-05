@@ -88,6 +88,7 @@ const nextNotebook = currentIndex < sisterNotebooks.length - 1 ? sisterNotebooks
 <BaseLayout 
   title={`${notebook.data.title} · ${subject.title} · Brain Knowledge Library`}
   description={notebook.data.description}
+  stickyHeader={false}
 >
   <!-- Standard Top Notebook Controls: [ Index ] [ Search 🔍 ] [ Focus ] [ Light/Dark ] [ Progress ] [ Print ] -->
   <NotebookToolbar 

@@ -1,4 +1,6 @@
 ---
+import { renderInlineFormula } from '../../utils/math';
+
 interface SourceItem {
   id: string;
   title: string;
@@ -128,7 +130,7 @@ const {
         {citations.map(c => (
           <div class="p-2.5 rounded bg-[var(--paper)] border border-[var(--rule)]">
             <span class="font-bold text-[var(--ink)]">{c.key}</span>
-            <span class="text-[var(--pencil)]"> $\to$ [{c.sourceId}], {c.location}</span>
+            <span class="text-[var(--pencil)]"> &rarr; [{c.sourceId}], {c.location}</span>
             {c.notes && <div class="text-[11px] text-[var(--pencil)] mt-1 font-sans">{c.notes}</div>}
           </div>
         ))}
@@ -244,9 +246,9 @@ const {
               <span class="text-[var(--pencil)]">{f.purpose}</span>
             </div>
             <div class="text-right">
-              <code class="font-mono font-bold text-xs sm:text-sm text-[var(--ink2)] bg-[var(--card)] px-2 py-1 rounded border border-[var(--rule)]">
-                $${f.formula}$$
-              </code>
+              <div class="font-mono font-bold text-xs sm:text-sm text-[var(--ink2)] bg-[var(--card)] px-3 py-1.5 rounded border border-[var(--rule)] inline-block overflow-x-auto max-w-full">
+                <span set:html={renderInlineFormula(f.formula)} />
+              </div>
               <span class="text-[10px] font-mono text-[var(--pencil)] block mt-1">Units: {f.units}</span>
             </div>
           </div>

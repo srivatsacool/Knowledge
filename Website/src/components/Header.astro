@@ -1,12 +1,18 @@
 ---
 import { getCollection } from 'astro:content';
 
+interface Props {
+  sticky?: boolean;
+}
+
+const { sticky = true } = Astro.props;
+
 const allDomains = await getCollection('domains');
 const topDomains = allDomains.slice(0, 5);
 const moreDomains = allDomains.slice(5);
 ---
 
-<header class="main-header border-b border-[#E7E5E4] dark:border-[#292524] bg-[#FAF7F0] dark:bg-[#0C0A09] sticky top-0 z-40 transition-colors">
+<header class={`main-header border-b border-[#E7E5E4] dark:border-[#292524] bg-[#FAF7F0] dark:bg-[#0C0A09] ${sticky ? 'sticky top-0 z-40' : 'relative z-30'} transition-colors`}>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       

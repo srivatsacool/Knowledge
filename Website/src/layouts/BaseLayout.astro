@@ -8,9 +8,10 @@ import '../styles/paper.css';
 interface Props {
   title: string;
   description: string;
+  stickyHeader?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, stickyHeader = true } = Astro.props;
 ---
 
 <!doctype html>
@@ -19,7 +20,7 @@ const { title, description } = Astro.props;
     <BaseHead title={title} description={description} />
   </head>
   <body class="min-h-screen flex flex-col bg-[var(--desk)] text-[var(--text)] transition-colors selection:bg-[var(--hy)] selection:text-[var(--text)]">
-    <Header />
+    <Header sticky={stickyHeader} />
     <main class="flex-1">
       <slot />
     </main>

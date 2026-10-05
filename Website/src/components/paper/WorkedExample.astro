@@ -1,4 +1,6 @@
 ---
+import { renderDisplayFormula, renderMath, renderInlineFormula } from '../../utils/math';
+
 interface Step {
   stepNumber?: number | string;
   action: string;
@@ -10,12 +12,17 @@ interface Props {
   problemNumber?: string | number;
   title: string;
   problem: string;
-  givenData: Array<{ label: string; symbol: string; value: string; unit?: string }>;
-  required: string;
+  givenData?: Array<{ label: string; symbol: string; value: string; unit?: string }>;
+  given?: string[];
+  required: string | string[];
   formula: string;
-  whyFormula: string;
-  variables?: Array<{ symbol: string; meaning: string; value: string }>;
-  steps: Step[];
+  whyFormula?: string;
+  whyModel?: string;
+  model?: string;
+  variables?: Array<{ symbol: string; meaning: string; value?: string }>;
+  substitution?: string;
+  steps?: Step[];
+  calculationSteps?: Step[];
   answer: string;
   interpretation: string;
   sanityCheck: string;
@@ -27,16 +34,56 @@ const {
   title,
   problem,
   givenData = [],
+  given = [],
   required,
   formula,
-  whyFormula,
+  whyFormula = Astro.props.whyModel || '',
+  model = formula,
   variables = [],
-  steps = [],
+  steps = Astro.props.calculationSteps || [],
+  substitution,
   answer,
   interpretation,
   sanityCheck,
   commonMistake,
 } = Astro.props;
+
+// Pre-compile all math to KaTeX HTML/MathML at build time
+const renderedFormulaHtml = renderDisplayFormula(formula || model);
+const renderedWhyFormula = renderMath(whyFormula);
+const renderedProblem = renderMath(problem);
+
+const renderedGivenData = givenData.map(d => ({
+  ...d,
+  renderedSymbol: renderInlineFormula(d.symbol),
+  renderedValue: renderMath(d.value),
+}));
+
+const renderedGivenList = given.map(g => renderMath(g));
+
+const renderedRequired = Array.isArray(required)
+  ? required.map(r => renderMath(r))
+  : [renderMath(required)];
+
+const renderedVariables = variables.map(v => ({
+  ...v,
+  renderedSymbol: renderInlineFormula(v.symbol),
+  renderedMeaning: renderMath(v.meaning),
+  renderedValue: v.value ? renderMath(v.value) : '',
+}));
+
+const renderedSteps = steps.map((st, idx) => ({
+  stepNumber: st.stepNumber || (idx + 1),
+  action: st.action,
+  renderedCalculation: st.calculation ? renderDisplayFormula(st.calculation) : '',
+  renderedExplanation: renderMath(st.explanation),
+}));
+
+const renderedSubstitution = substitution ? renderMath(substitution) : '';
+const renderedAnswer = renderMath(answer);
+const renderedInterpretation = renderMath(interpretation);
+const renderedSanityCheck = renderMath(sanityCheck);
+const renderedCommonMistake = renderMath(commonMistake);
 ---
 
 <div class="worked-example paper-card p-6 sm:p-8 my-8 rounded-xl border-2 border-[var(--line)] bg-[var(--paper)] shadow-paper-md relative overflow-hidden">
@@ -59,9 +106,7 @@ const {
     <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold mb-1">
       01. Problem Statement
     </div>
-    <p class="text-xs sm:text-sm text-[var(--text)] leading-relaxed font-sans">
-      {problem}
-    </p>
+    <div class="text-xs sm:text-sm text-[var(--text)] leading-relaxed font-sans" set:html={renderedProblem} />
   </div>
 
   <!-- 2 & 3: GIVEN DATA & WHAT IS REQUIRED -->
@@ -71,14 +116,23 @@ const {
       <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold mb-2">
         02. Given Data (Knowns)
       </div>
-      <div class="space-y-1.5 text-xs font-mono">
-        {givenData.map(d => (
-          <div class="flex items-center justify-between py-1 border-b border-[var(--rule)] last:border-none">
-            <span class="text-[var(--pencil)]">{d.label} (<code class="font-bold text-[var(--ink)]">${d.symbol}$</code>):</span>
-            <span class="font-bold text-[var(--text)]">{d.value} {d.unit || ''}</span>
-          </div>
-        ))}
-      </div>
+      {renderedGivenData.length > 0 && (
+        <div class="space-y-1.5 text-xs font-mono">
+          {renderedGivenData.map(d => (
+            <div class="flex items-center justify-between py-1 border-b border-[var(--rule)] last:border-none">
+              <span class="text-[var(--pencil)]">{d.label} (<span class="font-bold text-[var(--ink)]" set:html={d.renderedSymbol} />):</span>
+              <span class="font-bold text-[var(--text)]"><span set:html={d.renderedValue} /> {d.unit || ''}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      {renderedGivenList.length > 0 && (
+        <ul class="space-y-1 text-xs font-mono list-disc list-inside text-[var(--pencil)]">
+          {renderedGivenList.map(g => (
+            <li><span class="text-[var(--text)]" set:html={g} /></li>
+          ))}
+        </ul>
+      )}
     </div>
 
     <!-- 03. What is Required -->
@@ -87,9 +141,11 @@ const {
         <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold mb-2">
           03. What is Required? (Objective)
         </div>
-        <p class="text-xs sm:text-sm text-[var(--text)] font-sans leading-relaxed">
-          {required}
-        </p>
+        <div class="text-xs sm:text-sm text-[var(--text)] font-sans leading-relaxed space-y-1">
+          {renderedRequired.map(r => (
+            <div set:html={r} />
+          ))}
+        </div>
       </div>
       <div class="mt-3 p-2 rounded bg-[var(--paper)] border border-[var(--rule)] font-mono text-[11px] text-[var(--ink2)] font-bold">
         Target: Exact numerical calculation with dimensionally consistent units.
@@ -101,33 +157,33 @@ const {
   <div class="p-4 rounded-lg bg-[var(--card)] border border-[var(--line)] mb-5 space-y-3">
     <div class="flex flex-wrap items-baseline justify-between gap-2">
       <span class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold">04. Mathematical Model / Equation</span>
-      <span class="font-mono text-[10px] text-[var(--ink2)]">KaTeX Proof</span>
+      <span class="font-mono text-[10px] text-[var(--ink2)]">Pre-Compiled KaTeX</span>
     </div>
     
     <div class="p-3 bg-[var(--paper)] rounded text-center text-lg sm:text-xl border border-[var(--line)] overflow-x-auto">
-      $${formula}$$
+      <div set:html={renderedFormulaHtml} />
     </div>
 
-    <div>
-      <span class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold block mb-1">05. Why This Formula? (Model Justification)</span>
-      <p class="text-xs text-[var(--pencil)] leading-relaxed">
-        {whyFormula}
-      </p>
-    </div>
+    {renderedWhyFormula && (
+      <div>
+        <span class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold block mb-1">05. Why This Formula? (Model Justification)</span>
+        <div class="text-xs text-[var(--pencil)] leading-relaxed" set:html={renderedWhyFormula} />
+      </div>
+    )}
   </div>
 
   <!-- 6. VARIABLE DEFINITIONS -->
-  {variables.length > 0 && (
+  {renderedVariables.length > 0 && (
     <div class="p-4 rounded-lg bg-[var(--card)] border border-[var(--line)] mb-5">
       <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold mb-2">
         06. Variable Definitions & Parameter Mapping
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 text-xs font-mono">
-        {variables.map(v => (
+        {renderedVariables.map(v => (
           <div class="p-2 rounded bg-[var(--paper)] border border-[var(--rule)]">
-            <div class="font-bold text-[var(--ink)]">${v.symbol}$</div>
-            <div class="text-[11px] text-[var(--pencil)]">{v.meaning}</div>
-            <div class="text-xs font-bold text-[var(--text)] mt-1">= {v.value}</div>
+            <div class="font-bold text-[var(--ink)]" set:html={v.renderedSymbol} />
+            <div class="text-[11px] text-[var(--pencil)]" set:html={v.renderedMeaning} />
+            {v.renderedValue && <div class="text-xs font-bold text-[var(--text)] mt-1">= <span set:html={v.renderedValue} /></div>}
           </div>
         ))}
       </div>
@@ -139,23 +195,29 @@ const {
     <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold">
       07 & 08. Step-by-Step Substitution & Arithmetic Trace
     </div>
+    
+    {renderedSubstitution && (
+      <div class="p-3 rounded bg-[var(--paper)] border border-[var(--rule)] text-xs text-[var(--pencil)] leading-relaxed mb-3">
+        <strong class="font-mono uppercase text-[10px] text-[var(--ink)] block mb-1">Initial Parameter Substitution:</strong>
+        <span set:html={renderedSubstitution} />
+      </div>
+    )}
+
     <div class="space-y-3 font-sans text-xs">
-      {steps.map((st, idx) => (
+      {renderedSteps.map((st) => (
         <div class="p-3.5 rounded bg-[var(--paper)] border border-[var(--line)] space-y-1.5">
           <div class="flex items-center space-x-2">
             <span class="w-5 h-5 rounded-full bg-[var(--ink)] text-white font-mono text-[11px] font-bold flex items-center justify-center shrink-0">
-              {st.stepNumber || (idx + 1)}
+              {st.stepNumber}
             </span>
             <span class="font-serif font-bold text-xs sm:text-sm text-[var(--ink)]">{st.action}</span>
           </div>
-          {st.calculation && (
+          {st.renderedCalculation && (
             <div class="pl-7 font-mono text-xs sm:text-sm text-[var(--text)] bg-[var(--card)] p-2 rounded border border-[var(--rule)] overflow-x-auto">
-              $${st.calculation}$$
+              <div set:html={st.renderedCalculation} />
             </div>
           )}
-          <p class="pl-7 text-[var(--pencil)] text-xs leading-relaxed">
-            {st.explanation}
-          </p>
+          <div class="pl-7 text-[var(--pencil)] text-xs leading-relaxed" set:html={st.renderedExplanation} />
         </div>
       ))}
     </div>
@@ -167,9 +229,7 @@ const {
       <span class="font-mono text-[10px] uppercase tracking-wider text-[var(--green)] font-bold block">
         09. Final Calculated Answer
       </span>
-      <div class="font-serif text-2xl sm:text-3xl font-extrabold text-[var(--text)] mt-1">
-        {answer}
-      </div>
+      <div class="font-serif text-2xl sm:text-3xl font-extrabold text-[var(--text)] mt-1" set:html={renderedAnswer} />
     </div>
     <span class="rubber-stamp stamp-green text-xs shrink-0">VERIFIED ANSWER</span>
   </div>
@@ -179,9 +239,7 @@ const {
     <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--ink)] font-bold mb-1">
       10. Managerial & Operational Interpretation
     </div>
-    <p class="text-xs sm:text-sm text-[var(--text)] leading-relaxed">
-      {interpretation}
-    </p>
+    <div class="text-xs sm:text-sm text-[var(--text)] leading-relaxed" set:html={renderedInterpretation} />
   </div>
 
   <!-- 11 & 12: SANITY TEST & COMMON MISTAKE -->
@@ -191,9 +249,7 @@ const {
       <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--green)] font-bold mb-1">
         11. Sanity Test & Boundary Check
       </div>
-      <p class="text-xs text-[var(--pencil)] leading-relaxed font-mono">
-        ✓ {sanityCheck}
-      </p>
+      <div class="text-xs text-[var(--pencil)] leading-relaxed font-mono" set:html={renderedSanityCheck} />
     </div>
 
     <!-- 12. Common Exam Mistake -->
@@ -202,9 +258,7 @@ const {
         <span>⚠</span>
         <span>12. Common Mistake / Exam Trap</span>
       </div>
-      <p class="text-xs leading-relaxed font-sans">
-        {commonMistake}
-      </p>
+      <div class="text-xs leading-relaxed font-sans" set:html={renderedCommonMistake} />
     </div>
   </div>
 
