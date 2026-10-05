@@ -5,16 +5,9 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   output: 'static',
   integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
+    tailwind(),
   ],
   build: {
     format: 'directory',
-  },
-  vite: {
-    ssr: {
-      noExternal: ['lucide-astro'],
-    },
   },
 });
