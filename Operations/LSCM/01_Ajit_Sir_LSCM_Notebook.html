@@ -313,7 +313,87 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
   .sheet::before { left: 24px; }
   .sheet::after { display: none; }
 }
-  </style>
+  
+/* Master Paper Edition Formula Box Component */
+.nb-fbox {
+  position: relative; border: 2px solid var(--ink); border-radius: 8px; padding: 22px 24px;
+  margin: 26px 0 30px; background: var(--paper2); box-shadow: 6px 6px 0 var(--blue);
+}
+.nb-fbox__header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;
+  flex-wrap: wrap; gap: 8px; border-bottom: 1.5px dashed var(--line); padding-bottom: 10px;
+}
+.nb-fbox__label { font-family: var(--hand); color: var(--blue); font-size: 1.35rem; font-weight: 700; margin: 0; }
+.nb-fbox__badges { display: flex; gap: 6px; }
+.nb-fbox__math {
+  font-size: 1.3rem; line-height: 2; color: var(--ink); overflow-x: auto;
+  text-align: center; padding: 16px 20px; background: var(--paper); border-radius: 6px;
+  border: 1.5px solid var(--line); margin: 14px 0; box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+}
+.nb-fbox__dict { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 14px 0 12px; font-size: 0.95rem; font-family: var(--ui); }
+.nb-fbox__dict dt { font-weight: 700; color: var(--blue); font-family: var(--mono); font-size: 0.92rem; }
+.nb-fbox__dict dd { margin: 0; color: var(--text); line-height: 1.5; }
+.nb-fbox__insight {
+  background: rgba(26,75,140,0.06); border-left: 3.5px solid var(--blue); padding: 12px 16px;
+  border-radius: 0 6px 6px 0; margin: 14px 0; font-size: 0.93rem; font-family: var(--ui); line-height: 1.55;
+}
+.nb-fbox__insight strong { color: var(--blue); }
+.nb-fbox__example {
+  background: rgba(46,125,50,0.07); border-left: 3.5px solid var(--green); padding: 14px 18px;
+  border-radius: 0 6px 6px 0; margin: 14px 0; font-size: 0.93rem; font-family: var(--ui); line-height: 1.55;
+}
+.nb-fbox__example h5 {
+  margin: 0 0 8px; color: var(--green); font-size: 1rem; font-family: var(--ui); font-weight: 700;
+  display: flex; align-items: center; gap: 6px;
+}
+.nb-fbox__example .calc-step {
+  font-family: var(--mono); font-size: 0.88rem; background: rgba(0,0,0,0.04);
+  padding: 4px 8px; border-radius: 4px; display: inline-block; margin: 3px 0;
+}
+.nb-fbox__trap {
+  background: rgba(198,40,40,0.06); border-left: 3.5px solid var(--red); padding: 12px 16px;
+  border-radius: 0 6px 6px 0; margin: 14px 0 0; font-size: 0.9rem; font-family: var(--ui); line-height: 1.5; color: var(--text);
+}
+.nb-fbox__trap strong { color: var(--red); }
+
+/* LSCM Course Suite Navigation Bar */
+.lscm-suite-bar {
+  background: var(--paper2); border-bottom: 2px solid var(--line);
+  padding: 8px 18px; display: flex; align-items: center; gap: 10px;
+  overflow-x: auto; white-space: nowrap; font-family: var(--ui);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03); position: sticky; top: var(--bar); z-index: 50;
+}
+.lscm-suite-bar::-webkit-scrollbar { height: 4px; }
+.lscm-suite-bar::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+.lscm-suite-bar__label { font-weight: 700; color: var(--pencil); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+.lscm-suite-link {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
+  border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;
+  color: var(--text); border: 1.5px solid var(--line); background: var(--paper);
+  transition: all 0.15s ease; flex-shrink: 0;
+}
+.lscm-suite-link:hover { background: var(--hl-yellow); border-color: var(--ink); color: var(--ink); }
+.lscm-suite-link.active {
+  background: var(--ink); color: var(--paper); border-color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15); pointer-events: none;
+}
+.lscm-suite-link .tag {
+  font-size: 10.5px; opacity: 0.85; font-weight: normal; margin-left: 2px;
+}
+
+</style>
+  <!-- KaTeX for High-Fidelity Mathematical Typography -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+
 </head>
 <body>
 
@@ -329,6 +409,26 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
   <div class="progressWrap"><div id="progressBar"></div></div>
 </header>
 
+<nav class="lscm-suite-bar">
+  <span class="lscm-suite-bar__label">📚 LSCM Suite:</span>
+  <a href="04_LSCM_Complete_Syllabus_PYQ_Master_Notebook.html" data-web="/operations/lscm-master-syllabus-pyq-notebook/" class="lscm-suite-link">
+    <span>📘 Master 15-Topic &amp; Solved PYQ Bank</span>
+  </a>
+  <a href="01_Ajit_Sir_LSCM_Notebook.html" data-web="/operations/lscm-ajit-maurya-notebook/" class="lscm-suite-link active">
+    <span>🏛️ Prof. Ajit Maurya</span>
+    <span class="tag">SCM Arch &amp; Drivers</span>
+  </a>
+  <a href="02_Manoj_Sir_LSCM_Notebook.html" data-web="/operations/lscm-manoj-sir-notebook/" class="lscm-suite-link">
+    <span>📦 Prof. Manoj</span>
+    <span class="tag">Warehousing &amp; EXIM</span>
+  </a>
+  <a href="03_Praful_Sir_LSCM_Notebook.html" data-web="/operations/lscm-praful-more-notebook/" class="lscm-suite-link">
+    <span>🧮 Prof. Praful More</span>
+    <span class="tag">Inventory &amp; Sourcing</span>
+  </a>
+</nav>
+
+
 <div class="timerPanel" id="timerPanel">
   <div class="clock" id="clockDisplay">25:00</div>
   <div class="row">
@@ -339,7 +439,14 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
 
 <div class="shell">
   <aside class="side">
-    <h2>Sessions & Modules</h2>
+    
+    <h2>LSCM Course Hub</h2>
+    <a href="04_LSCM_Complete_Syllabus_PYQ_Master_Notebook.html" data-web="/operations/lscm-master-syllabus-pyq-notebook/"><span class="dot"></span> 📘 Master Syllabus &amp; PYQs</a>
+    <a href="01_Ajit_Sir_LSCM_Notebook.html" data-web="/operations/lscm-ajit-maurya-notebook/" class="cur"><span class="dot st-done"></span> 🏛️ Prof. Ajit Maurya</a>
+    <a href="02_Manoj_Sir_LSCM_Notebook.html" data-web="/operations/lscm-manoj-sir-notebook/"><span class="dot"></span> 📦 Prof. Manoj</a>
+    <a href="03_Praful_Sir_LSCM_Notebook.html" data-web="/operations/lscm-praful-more-notebook/"><span class="dot"></span> 🧮 Prof. Praful More</a>
+
+<h2>Sessions & Modules</h2>
     <a href="#cover" class="cur"><span class="dot st-done"></span> Overview & Meta</a>
     <a href="#mod1"><span class="dot"></span> 1. SCM Architecture & Fit</a>
     <a href="#mod2"><span class="dot"></span> 2. Demand Planning & S&OP</a>
@@ -491,24 +598,115 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
         style Resp fill:#FCE4EC,stroke:#C2185B,stroke-width:2px;
       </div>
 
-      <h3>Diagnostic SCM Financial Velocity Metrics</h3>
+                        <h3>Diagnostic SCM Financial Velocity Metrics</h3>
       <div class="nb-fbox">
-        <span class="nb-fbox__label">1. Inventory Turnover Ratio (ITR) & Days of Supply (DOS)</span>
-        <div class="nb-fbox__math">$$ITR = rac{	ext{COGS}}{	ext{Average Inventory Investment}}, \quad DOS = rac{365}{ITR}$$</div>
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">1. Inventory Turnover Ratio (ITR) &amp; Days of Supply (DOS)</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--blue">Core Financial Metric</span>
+            <span class="nb-stamp nb-stamp--amber">Exam High Frequency</span>
+          </div>
+        </div>
+        <div class="nb-fbox__math">
+          $$ITR = \frac{\text{Cost of Goods Sold (COGS)}}{\text{Average Inventory Value}}, \qquad DOS = \frac{365}{ITR} = \left(\frac{\text{Average Inventory Value}}{\text{COGS}}\right) \times 365$$
+        </div>
         <div class="nb-fbox__dict">
-          <dt>COGS</dt><dd>Annual Cost of Goods Sold reported on income statement.</dd>
-          <dt>Average Inventory</dt><dd>Mean capital tied in raw materials, WIP, and finished stock.</dd>
-          <dt>DOS</dt><dd>Calendar days of demand that existing inventory can satisfy.</dd>
+          <dt>COGS</dt><dd>Annual Cost of Goods Sold from the Income Statement (valued at manufacturing/procurement cost, NOT consumer retail sales price).</dd>
+          <dt>Average Inventory</dt><dd>Mean capital tied up across Raw Materials, WIP, and Finished Goods over the fiscal period: $\frac{\text{Beginning Inventory} + \text{Ending Inventory}}{2}$ or 12-month average.</dd>
+          <dt>DOS</dt><dd>Days of Supply (also termed Days Inventory Outstanding, DIO): The average number of days demand can be supported by existing inventory without replenishment.</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>Strategic Consulting Interpretation:</strong><br>
+          • <em>High ITR (&gt;8–12x in Grocery, &gt;20x in Fast Fashion):</em> Reflects rapid capital velocity, minimal trapped working capital, and low obsolescence write-downs. However, an artificially inflated ITR achieved by starving safety stock causes lost sales and delivery failures.<br>
+          • <em>Low ITR (&lt;3–4x):</em> Diagnoses bloated warehouse stock, forecast inaccuracies, uncoordinated batching, and heavy capital lock-up penalties.
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Real-World Numerical Application (WeSchool Exam Standard)</h5>
+          A national retail chain records Annual Sales Revenue = ₹150 Crore with Gross Margin = 33.33% ($\implies \text{COGS} = ₹100\text{ Crore}$), and holds Average Inventory = ₹12.5 Crore.<br>
+          • <strong>Step 1 (Calculate ITR):</strong> <span class="calc-step">ITR = \frac{100}{12.5} = 8.0\text{ turns/year}</span><br>
+          • <strong>Step 2 (Calculate DOS):</strong> <span class="calc-step">DOS = \frac{365}{8.0} = 45.6\text{ days of supply}</span><br>
+          • <strong>Executive Takeaway:</strong> If logistics re-engineering improves ITR to 10.0x, required average inventory drops to ₹10 Crore, immediately unlocking <strong>₹2.5 Crore of free cash flow</strong>!
+        </div>
+        <div class="nb-fbox__trap">
+          ⚠️ <strong>Exam Trap:</strong> Never put Sales Revenue in the numerator! Revenue includes profit margins and retail markups. Dividing Sales by Inventory distorts inventory velocity. Always use COGS.
         </div>
       </div>
 
       <div class="nb-fbox">
-        <span class="nb-fbox__label">2. Cash-to-Cash (C2C) Cycle Time</span>
-        <div class="nb-fbox__math">$$C2C = DIO + DSO - DPO$$</div>
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">2. Cash-to-Cash (C2C) Operating Conversion Cycle</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--green">Working Capital</span>
+            <span class="nb-stamp nb-stamp--blue">C-Suite KPI</span>
+          </div>
+        </div>
+        <div class="nb-fbox__math">
+          $$C2C = DIO + DSO - DPO$$
+        </div>
         <div class="nb-fbox__dict">
-          <dt>DIO</dt><dd>Days Inventory Outstanding: $(	ext{Avg Inventory} / 	ext{COGS}) 	imes 365$.</dd>
-          <dt>DSO</dt><dd>Days Sales Outstanding: $(	ext{Accounts Receivable} / 	ext{Revenue}) 	imes 365$.</dd>
-          <dt>DPO</dt><dd>Days Payables Outstanding: $(	ext{Accounts Payable} / 	ext{COGS}) 	imes 365$.</dd>
+          <dt>DIO</dt><dd>Days Inventory Outstanding: $\left(\frac{\text{Average Inventory}}{\text{COGS}}\right) \times 365$. Days cash is tied up in physical inventory.</dd>
+          <dt>DSO</dt><dd>Days Sales Outstanding: $\left(\frac{\text{Accounts Receivable}}{\text{Gross Revenue}}\right) \times 365$. Days taken to collect payments from customers.</dd>
+          <dt>DPO</dt><dd>Days Payables Outstanding: $\left(\frac{\text{Accounts Payable}}{\text{COGS or Annual Purchases}}\right) \times 365$. Days the firm takes to pay supplier invoices.</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>Strategic Consulting Interpretation:</strong><br>
+          • C2C quantifies the net number of days an enterprise requires external working capital to finance operations between paying suppliers and receiving payment from customers.<br>
+          • <strong>Negative C2C (The Market Leader Advantage):</strong> Powerhouses like Apple ($-50$ days), Amazon ($-28$ days), and Dell ($-35$ days) run on negative C2C cycles. They collect customer cash immediately via card or online checkout, while holding supplier payables for 60 to 90 days. Suppliers effectively fund their operations for free!
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Real-World Numerical Application</h5>
+          An automotive components tier-1 supplier has $DIO = 55\text{ days}$, $DSO = 60\text{ days}$, and negotiates supplier payment terms of $DPO = 45\text{ days}$.<br>
+          • <strong>Step 1:</strong> <span class="calc-step">C2C = 55 + 60 - 45 = +70\text{ days}</span>. The company requires 70 days of bank working capital financing.<br>
+          • <strong>Supply Chain Optimization:</strong> Implementing VMI to cut $DIO$ to 35 days and renegotiating vendor terms to $DPO = 75\text{ days}$ yields: <span class="calc-step">C2C = 35 + 60 - 75 = +20\text{ days}</span>, compressing borrowing needs by 50 days!
+        </div>
+        <div class="nb-fbox__trap">
+          ⚠️ <strong>Exam Trap:</strong> Remember that $DPO$ is SUBTRACTED, while $DIO$ and $DSO$ are ADDED!
+        </div>
+      </div>
+        <div class="nb-fbox__math">
+          $$C2C = DIO + DSO - DPO$$
+        </div>
+        <div class="nb-fbox__dict">
+          <dt>DIO</dt><dd>Days Inventory Outstanding: $\left(\frac{\text{Average Inventory}}{\text{COGS}}\right) \times 365$. Days cash is tied up in physical inventory.</dd>
+          <dt>DSO</dt><dd>Days Sales Outstanding: $\left(\frac{\text{Accounts Receivable}}{\text{Gross Revenue}}\right) \times 365$. Days taken to collect payments from customers.</dd>
+          <dt>DPO</dt><dd>Days Payables Outstanding: $\left(\frac{\text{Accounts Payable}}{\text{COGS or Annual Purchases}}\right) \times 365$. Days the firm takes to pay supplier invoices.</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>Strategic Consulting Interpretation:</strong><br>
+          • C2C quantifies the net number of days an enterprise requires external working capital to finance operations between paying suppliers and receiving payment from customers.<br>
+          • <strong>Negative C2C (The Market Leader Advantage):</strong> Powerhouses like Apple ($-50$ days), Amazon ($-28$ days), and Dell ($-35$ days) run on negative C2C cycles. They collect customer cash immediately via card or online checkout, while holding supplier payables for 60 to 90 days. Suppliers effectively fund their operations for free!
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Real-World Numerical Application</h5>
+          An automotive components tier-1 supplier has $DIO = 55\text{ days}$, $DSO = 60\text{ days}$, and negotiates supplier payment terms of $DPO = 45\text{ days}$.<br>
+          • <strong>Step 1:</strong> <span class="calc-step">C2C = 55 + 60 - 45 = +70\text{ days}</span>. The company requires 70 days of bank working capital financing.<br>
+          • <strong>Supply Chain Optimization:</strong> Implementing VMI to cut $DIO$ to 35 days and renegotiating vendor terms to $DPO = 75\text{ days}$ yields: <span class="calc-step">C2C = 35 + 60 - 75 = +20\text{ days}</span>, compressing borrowing needs by 50 days!
+        </div>
+        <div class="nb-fbox__trap">
+          ⚠️ <strong>Exam Trap:</strong> Remember that $DPO$ is SUBTRACTED, while $DIO$ and $DSO$ are ADDED!
+        </div>
+      </div>
+        <div class="nb-fbox__math">
+          $$C2C = DIO + DSO - DPO$$
+        </div>
+        <div class="nb-fbox__dict">
+          <dt>DIO</dt><dd>Days Inventory Outstanding: $\left(\frac{\text{Average Inventory}}{\text{COGS}}\right) \times 365$. Days cash is tied up in physical inventory.</dd>
+          <dt>DSO</dt><dd>Days Sales Outstanding: $\left(\frac{\text{Accounts Receivable}}{\text{Gross Revenue}}\right) \times 365$. Days taken to collect payments from customers.</dd>
+          <dt>DPO</dt><dd>Days Payables Outstanding: $\left(\frac{\text{Accounts Payable}}{\text{COGS or Annual Purchases}}\right) \times 365$. Days the firm takes to pay supplier invoices.</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>Strategic Consulting Interpretation:</strong><br>
+          • C2C quantifies the net number of days an enterprise requires external working capital to finance operations between paying suppliers and receiving payment from customers.<br>
+          • <strong>Negative C2C (The Market Leader Advantage):</strong> Powerhouses like Apple ($-50$ days), Amazon ($-28$ days), and Dell ($-35$ days) run on negative C2C cycles. They collect customer cash immediately via card or online checkout, while holding supplier payables for 60 to 90 days. Suppliers effectively fund their operations for free!
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Real-World Numerical Application</h5>
+          An automotive components tier-1 supplier has $DIO = 55\text{ days}$, $DSO = 60\text{ days}$, and negotiates supplier payment terms of $DPO = 45\text{ days}$.<br>
+          • <strong>Step 1:</strong> <span class="calc-step">C2C = 55 + 60 - 45 = +70\text{ days}</span>. The company requires 70 days of bank working capital financing.<br>
+          • <strong>Supply Chain Optimization:</strong> Implementing VMI to cut $DIO$ to 35 days and renegotiating vendor terms to $DPO = 75\text{ days}$ yields: <span class="calc-step">C2C = 35 + 60 - 75 = +20\text{ days}</span>, compressing borrowing needs by 50 days!
+        </div>
+        <div class="nb-fbox__trap">
+          ⚠️ <strong>Exam Trap:</strong> Remember that $DPO$ is SUBTRACTED, while $DIO$ and $DSO$ are ADDED!
         </div>
       </div>
     </article>
@@ -566,23 +764,72 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
         </ul>
       </div>
 
-      <div class="nb-fbox">
-        <span class="nb-fbox__label">Square Root Law of Inventory Centralization</span>
-        <div class="nb-fbox__math">$$SS_{	ext{new}} = SS_{	ext{old}} 	imes \sqrt{rac{N_{	ext{new}}}{N_{	ext{old}}}}$$</div>
+            <div class="nb-fbox">
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">3. Square Root Law of Inventory Centralization (Maister's Rule)</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--blue">Network Design</span>
+            <span class="nb-stamp nb-stamp--amber">Risk Pooling</span>
+          </div>
+        </div>
+        <div class="nb-fbox__math">
+          $$SS_{\text{new}} = SS_{\text{old}} \times \sqrt{\frac{N_{\text{new}}}{N_{\text{old}}}}, \qquad \text{or} \qquad I_{\text{total}} = I_{\text{central}} \times \sqrt{N}$$
+        </div>
         <div class="nb-fbox__dict">
-          <dt>SS_new</dt><dd>Total required safety stock across newly reconfigured network.</dd>
-          <dt>SS_old</dt><dd>Total baseline safety stock across existing network.</dd>
-          <dt>N_new / N_old</dt><dd>Ratio of new facility count to old facility count.</dd>
+          <dt>SS_new</dt><dd>Total required safety stock across the newly reconfigured warehouse network.</dd>
+          <dt>SS_old</dt><dd>Total baseline safety stock held across the legacy warehouse footprint.</dd>
+          <dt>N_new / N_old</dt><dd>Ratio of future warehouse facility count to existing facility count.</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>Underlying Mathematical Physics (Risk Pooling):</strong><br>
+          When customer demands across independent geographical markets are aggregated into a centralized distribution center, standard deviations add as variances ($\sigma_{\text{system}} = \sqrt{\sum \sigma_i^2}$) rather than linearly. Uncorrelated demand surges in Region A offset demand dips in Region B, dramatically lowering total safety stock requirements without reducing cycle service levels.
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Real-World Network Re-Engineering Numerical (GST Consolidation Case)</h5>
+          Prior to tax consolidation, an Indian FMCG major operated 25 state warehouses with aggregate safety stock $= ₹50\text{ Crore}$ ($SS_{\text{old}}$). The board authorizes consolidating operations into 4 regional mega-distribution centers.<br>
+          • <strong>Step 1:</strong> Facility ratio: <span class="calc-step">\frac{N_{\text{new}}}{N_{\text{old}}} = \frac{4}{25} = 0.16</span><br>
+          • <strong>Step 2:</strong> Square root: <span class="calc-step">\sqrt{0.16} = 0.40</span><br>
+          • <strong>Step 3:</strong> New safety stock: <span class="calc-step">SS_{\text{new}} = 50 \times 0.40 = ₹20.0\text{ Crore}</span><br>
+          • <strong>Capital Savings:</strong> <span class="calc-step">₹50\text{ Cr} - ₹20\text{ Cr} = \mathbf{₹30.0\text{ Crore}}</span> released from working capital!
+        </div>
+        <div class="nb-fbox__trap">
+          ⚠️ <strong>Exam Trap:</strong> The square root rule strictly applies to <em>Safety Stock</em> under independent, uncorrelated demand. It does not apply to pipeline/in-transit stock or cycle stock!
         </div>
       </div>
 
-      <div class="nb-fbox">
-        <span class="nb-fbox__label">Center of Gravity (Gravity Location Model)</span>
-        <div class="nb-fbox__math">$$X^* = rac{\sum (X_i \cdot W_i \cdot R_i)}{\sum (W_i \cdot R_i)}, \quad Y^* = rac{\sum (Y_i \cdot W_i \cdot R_i)}{\sum (W_i \cdot R_i)}$$</div>
+            <div class="nb-fbox">
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">4. Center of Gravity (Weighted Spatial Facility Optimization)</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--blue">Continuous Location</span>
+            <span class="nb-stamp nb-stamp--green">Ton-Mile Optimization</span>
+          </div>
+        </div>
+        <div class="nb-fbox__math">
+          $$X^* = \frac{\sum_{i=1}^n (X_i \cdot W_i \cdot R_i)}{\sum_{i=1}^n (W_i \cdot R_i)}, \qquad Y^* = \frac{\sum_{i=1}^n (Y_i \cdot W_i \cdot R_i)}{\sum_{i=1}^n (W_i \cdot R_i)}$$
+        </div>
         <div class="nb-fbox__dict">
-          <dt>(X_i, Y_i)</dt><dd>Spatial coordinates of demand market or supply origin $i$.</dd>
-          <dt>W_i</dt><dd>Tonnage or shipment volume shipped to or from node $i$.</dd>
-          <dt>R_i</dt><dd>Freight rate per ton-kilometer for transport leg $i$.</dd>
+          <dt>(X_i, Y_i)</dt><dd>Spatial coordinates (latitude/longitude or map grid coordinates) of source supplier or demand market $i$.</dd>
+          <dt>W_i</dt><dd>Annual tonnage, container volume, or shipment quantity moved to/from node $i$.</dd>
+          <dt>R_i</dt><dd>Freight transport rate per ton-kilometer on corridor $i$ (cancels out if freight rates are identical across routes).</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>Managerial Intuition:</strong><br>
+          Center of Gravity mathematically minimizes total system <strong>Ton-Kilometer Freight Cost</strong>. The optimal facility location is pulled gravitationally towards demand centers with heavy shipment volume ($W_i$) and premium freight tariffs ($R_i$).
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Step-by-Step Solved Problem (Exam Standard)</h5>
+          A distribution firm needs to locate a Mother DC to serve 3 consumption cities ($R_i = 1$ across all routes):<br>
+          • City A: $(X_1 = 10, Y_1 = 20)$, Volume $W_1 = 1,000\text{ Tonnes}$<br>
+          • City B: $(X_2 = 40, Y_2 = 50)$, Volume $W_2 = 2,500\text{ Tonnes}$<br>
+          • City C: $(X_3 = 70, Y_3 = 10)$, Volume $W_3 = 1,500\text{ Tonnes}$<br>
+          • <strong>Total Volume:</strong> <span class="calc-step">\sum W_i = 1000 + 2500 + 1500 = 5,000\text{ Tonnes}</span><br>
+          • <strong>X-Coordinate:</strong> <span class="calc-step">X^* = \frac{(10 \times 1000) + (40 \times 2500) + (70 \times 1500)}{5,000} = \frac{10,000 + 100,000 + 105,000}{5,000} = \frac{215,000}{5,000} = 43.0</span><br>
+          • <strong>Y-Coordinate:</strong> <span class="calc-step">Y^* = \frac{(20 \times 1000) + (50 \times 2500) + (10 \times 1500)}{5,000} = \frac{20,000 + 125,000 + 15,000}{5,000} = \frac{160,000}{5,000} = 32.0</span><br>
+          • <strong>Optimal Facility Location:</strong> Coordinate <strong>$(43.0, 32.0)$</strong>.
+        </div>
+        <div class="nb-fbox__trap">
+          ⚠️ <strong>Exam Trap:</strong> Never take the simple arithmetic mean of coordinates ($\frac{X_1 + X_2 + X_3}{3}$)! Every point must be weighted by its shipment volume $W_i$.
         </div>
       </div>
     </article>
@@ -624,11 +871,35 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
         </ul>
       </div>
 
-      <div class="nb-fbox">
-        <span class="nb-fbox__label">Logistics Cost Performance Ratios</span>
+            <div class="nb-fbox">
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">5. Perfect Order Fulfillment (OTIF) &amp; Logistics Cost Ratios</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--green">Customer Service</span>
+            <span class="nb-stamp nb-stamp--blue">Cost Accounting</span>
+          </div>
+        </div>
         <div class="nb-fbox__math">
-          $$	ext{Logistics Cost \% of Sales} = \left(rac{	ext{Total Logistics Cost}}{	ext{Gross Revenue}}ight) 	imes 100$$
-          $$	ext{Logistics Cost \% of Value Added} = \left(rac{	ext{Total Logistics Cost}}{	ext{Gross Revenue} - 	ext{Direct Materials Spend}}ight) 	imes 100$$
+          $$\text{OTIF \%} = \left(\frac{\text{On-Time Orders}}{\text{Total Orders}}\right) \times \left(\frac{\text{In-Full Orders}}{\text{Total Orders}}\right) \times \left(\frac{\text{Damage-Free \& Invoice-Accurate}}{\text{Total Orders}}\right) \times 100\%$$
+          $$\text{Logistics Cost \% of Sales} = \left(\frac{\text{Freight Cost} + \text{Warehousing Cost} + \text{Inventory Carrying Cost} + \text{Admin}}{\text{Gross Revenue}}\right) \times 100\%$$
+        </div>
+        <div class="nb-fbox__dict">
+          <dt>On-Time</dt><dd>Delivered within the committed customer SLA delivery appointment window.</dd>
+          <dt>In-Full</dt><dd>100% of order lines and SKU quantities delivered with zero backorders or stockouts.</dd>
+          <dt>Damage-Free</dt><dd>Pristine condition, undamaged packaging, and accurate electronic invoice (EDI).</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>The Multiplicative Compounding Effect:</strong><br>
+          Because OTIF is multiplicative, having 95% on-time, 95% in-full, and 95% damage-free delivery does NOT equal 95% customer satisfaction—it equals $0.95 \times 0.95 \times 0.95 = \mathbf{85.7\%}$! Over 14 out of every 100 customer orders suffer a failure.
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Numerical Demonstration</h5>
+          An FMCG distribution company processes 10,000 monthly retail shipments: 9,600 arrive on time (96%), 9,400 are filled completely (94%), and 9,800 have zero billing errors or damage (98%).<br>
+          • <strong>OTIF Score:</strong> <span class="calc-step">\text{OTIF} = 0.96 \times 0.94 \times 0.98 = 88.43\%</span><br>
+          • <strong>Cost Benchmark:</strong> If total logistics expenditure is ₹14.4 Crore against ₹120 Crore revenue: <span class="calc-step">\text{Logistics Cost \%} = \left(\frac{14.4}{120}\right) \times 100 = 12.0\%</span> (India benchmark is ~13–14%, global best practice is 8–9%).
+        </div>
+        <div class="nb-fbox__trap">
+          ⚠️ <strong>Exam Trap:</strong> Never take the simple arithmetic average of the three percentages! OTIF requires multiplying the probability ratios.
         </div>
       </div>
     </article>
@@ -756,18 +1027,21 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
         <span class="examprep-box__tag">End-Term 2023 · Question 2 (10 Marks)</span>
         <h4>Trade-Off between Inventory Holding Costs & Transport Costs in High-Tech Electronics</h4>
         <p><strong>Verbatim Problem:</strong> High-tech electronics manufacturer faces annual demand $D = 10,000$ units. Ordering cost $S = \$10/	ext{order}$, unit purchase cost $C = \$10$, annual holding cost $H = \$5.00/	ext{unit/year}$. Transport cost is $\$10.00$ per unit regardless of order size. Calculate EOQ, optimal order frequency, and total annual inventory plus transport cost.</p>
-        <div class="nb-fbox">
-          <span class="nb-fbox__label">Step-by-Step Model Solution</span>
-          <div class="nb-fbox__math">
-            $$EOQ = \sqrt{rac{2DS}{H}} = \sqrt{rac{2 	imes 10,000 	imes 10}{5}} = \sqrt{40,000} = \mathbf{200 	ext{ units}}$$
-            $$N^* = rac{D}{Q^*} = rac{10,000}{200} = \mathbf{50 	ext{ orders per year}}$$
-            $$	ext{Annual Ordering Cost} = \left(rac{10,000}{200}ight) 	imes 10 = \$500.00$$
-            $$	ext{Annual Holding Cost} = \left(rac{200}{2}ight) 	imes 5.00 = \$500.00$$
-            $$	ext{Total Annual Inventory Cost} = \$500 + \$500 = \mathbf{\$1,000.00}$$
-            $$	ext{Annual Transportation Cost} = 10,000 	imes \$10.00 = \mathbf{\$100,000.00}$$
-            $$TC_{	ext{total}} = \$1,000.00 + \$100,000.00 = \mathbf{\$101,000.00 	ext{ per year}}$$
+                  <div class="nb-fbox">
+            <div class="nb-fbox__header">
+              <span class="nb-fbox__label">Model Mathematical Solution · Maister's Square Root Law</span>
+              <div class="nb-fbox__badges">
+                <span class="nb-stamp nb-stamp--green">Full Marks Model</span>
+              </div>
+            </div>
+            <div class="nb-fbox__math">
+              $$SS_{\text{new}} = SS_{\text{old}} \times \sqrt{\frac{N_{\text{new}}}{N_{\text{old}}}} = 50 \times \sqrt{\frac{4}{25}} = 50 \times \sqrt{0.16} = 50 \times 0.40 = ₹20.0\text{ Crore}$$
+            </div>
+            <div class="nb-fbox__dict">
+              <dt>Working Capital Release</dt><dd>$₹50.0\text{ Cr} - ₹20.0\text{ Cr} = ₹30.0\text{ Crore}$ liberated immediately.</dd>
+              <dt>Annual Carrying Cost Savings</dt><dd>At 20% holding cost rate: $₹30.0\text{ Cr} \times 0.20 = ₹6.0\text{ Crore}$ per year recurring profit addition.</dd>
+            </div>
           </div>
-        </div>
       </div>
 
       <div class="examprep-box">
@@ -922,6 +1196,18 @@ window.addEventListener('scroll', () => {
   const scrolled = (winScroll / height) * 100;
   document.getElementById('progressBar').style.width = scrolled + '%';
 });
+</script>
+
+
+<script>
+// Dual-mode router for LSCM Suite navigation (works across file:// and web /operations/ paths)
+(function() {
+  if (window.location.protocol.startsWith('http')) {
+    document.querySelectorAll('a[data-web]').forEach(function(el) {
+      el.setAttribute('href', el.getAttribute('data-web'));
+    });
+  }
+})();
 </script>
 
 </body>

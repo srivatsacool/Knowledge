@@ -300,7 +300,87 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
   .sheet::before { left: 24px; }
   .sheet::after { display: none; }
 }
-  </style>
+  
+/* Master Paper Edition Formula Box Component */
+.nb-fbox {
+  position: relative; border: 2px solid var(--ink); border-radius: 8px; padding: 22px 24px;
+  margin: 26px 0 30px; background: var(--paper2); box-shadow: 6px 6px 0 var(--blue);
+}
+.nb-fbox__header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;
+  flex-wrap: wrap; gap: 8px; border-bottom: 1.5px dashed var(--line); padding-bottom: 10px;
+}
+.nb-fbox__label { font-family: var(--hand); color: var(--blue); font-size: 1.35rem; font-weight: 700; margin: 0; }
+.nb-fbox__badges { display: flex; gap: 6px; }
+.nb-fbox__math {
+  font-size: 1.3rem; line-height: 2; color: var(--ink); overflow-x: auto;
+  text-align: center; padding: 16px 20px; background: var(--paper); border-radius: 6px;
+  border: 1.5px solid var(--line); margin: 14px 0; box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+}
+.nb-fbox__dict { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 14px 0 12px; font-size: 0.95rem; font-family: var(--ui); }
+.nb-fbox__dict dt { font-weight: 700; color: var(--blue); font-family: var(--mono); font-size: 0.92rem; }
+.nb-fbox__dict dd { margin: 0; color: var(--text); line-height: 1.5; }
+.nb-fbox__insight {
+  background: rgba(26,75,140,0.06); border-left: 3.5px solid var(--blue); padding: 12px 16px;
+  border-radius: 0 6px 6px 0; margin: 14px 0; font-size: 0.93rem; font-family: var(--ui); line-height: 1.55;
+}
+.nb-fbox__insight strong { color: var(--blue); }
+.nb-fbox__example {
+  background: rgba(46,125,50,0.07); border-left: 3.5px solid var(--green); padding: 14px 18px;
+  border-radius: 0 6px 6px 0; margin: 14px 0; font-size: 0.93rem; font-family: var(--ui); line-height: 1.55;
+}
+.nb-fbox__example h5 {
+  margin: 0 0 8px; color: var(--green); font-size: 1rem; font-family: var(--ui); font-weight: 700;
+  display: flex; align-items: center; gap: 6px;
+}
+.nb-fbox__example .calc-step {
+  font-family: var(--mono); font-size: 0.88rem; background: rgba(0,0,0,0.04);
+  padding: 4px 8px; border-radius: 4px; display: inline-block; margin: 3px 0;
+}
+.nb-fbox__trap {
+  background: rgba(198,40,40,0.06); border-left: 3.5px solid var(--red); padding: 12px 16px;
+  border-radius: 0 6px 6px 0; margin: 14px 0 0; font-size: 0.9rem; font-family: var(--ui); line-height: 1.5; color: var(--text);
+}
+.nb-fbox__trap strong { color: var(--red); }
+
+/* LSCM Course Suite Navigation Bar */
+.lscm-suite-bar {
+  background: var(--paper2); border-bottom: 2px solid var(--line);
+  padding: 8px 18px; display: flex; align-items: center; gap: 10px;
+  overflow-x: auto; white-space: nowrap; font-family: var(--ui);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03); position: sticky; top: var(--bar); z-index: 50;
+}
+.lscm-suite-bar::-webkit-scrollbar { height: 4px; }
+.lscm-suite-bar::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+.lscm-suite-bar__label { font-weight: 700; color: var(--pencil); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+.lscm-suite-link {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
+  border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;
+  color: var(--text); border: 1.5px solid var(--line); background: var(--paper);
+  transition: all 0.15s ease; flex-shrink: 0;
+}
+.lscm-suite-link:hover { background: var(--hl-yellow); border-color: var(--ink); color: var(--ink); }
+.lscm-suite-link.active {
+  background: var(--ink); color: var(--paper); border-color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15); pointer-events: none;
+}
+.lscm-suite-link .tag {
+  font-size: 10.5px; opacity: 0.85; font-weight: normal; margin-left: 2px;
+}
+
+</style>
+  <!-- KaTeX for High-Fidelity Mathematical Typography -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+
 </head>
 <body>
 
@@ -316,6 +396,26 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
   <div class="progressWrap"><div id="progressBar"></div></div>
 </header>
 
+<nav class="lscm-suite-bar">
+  <span class="lscm-suite-bar__label">📚 LSCM Suite:</span>
+  <a href="04_LSCM_Complete_Syllabus_PYQ_Master_Notebook.html" data-web="/operations/lscm-master-syllabus-pyq-notebook/" class="lscm-suite-link">
+    <span>📘 Master 15-Topic &amp; Solved PYQ Bank</span>
+  </a>
+  <a href="01_Ajit_Sir_LSCM_Notebook.html" data-web="/operations/lscm-ajit-maurya-notebook/" class="lscm-suite-link">
+    <span>🏛️ Prof. Ajit Maurya</span>
+    <span class="tag">SCM Arch &amp; Drivers</span>
+  </a>
+  <a href="02_Manoj_Sir_LSCM_Notebook.html" data-web="/operations/lscm-manoj-sir-notebook/" class="lscm-suite-link active">
+    <span>📦 Prof. Manoj</span>
+    <span class="tag">Warehousing &amp; EXIM</span>
+  </a>
+  <a href="03_Praful_Sir_LSCM_Notebook.html" data-web="/operations/lscm-praful-more-notebook/" class="lscm-suite-link">
+    <span>🧮 Prof. Praful More</span>
+    <span class="tag">Inventory &amp; Sourcing</span>
+  </a>
+</nav>
+
+
 <div class="timerPanel" id="timerPanel">
   <div class="clock" id="clockDisplay">25:00</div>
   <div class="row">
@@ -326,7 +426,14 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
 
 <div class="shell">
   <aside class="side">
-    <h2>Sessions & Modules</h2>
+    
+    <h2>LSCM Course Hub</h2>
+    <a href="04_LSCM_Complete_Syllabus_PYQ_Master_Notebook.html" data-web="/operations/lscm-master-syllabus-pyq-notebook/"><span class="dot"></span> 📘 Master Syllabus &amp; PYQs</a>
+    <a href="01_Ajit_Sir_LSCM_Notebook.html" data-web="/operations/lscm-ajit-maurya-notebook/"><span class="dot"></span> 🏛️ Prof. Ajit Maurya</a>
+    <a href="02_Manoj_Sir_LSCM_Notebook.html" data-web="/operations/lscm-manoj-sir-notebook/" class="cur"><span class="dot st-done"></span> 📦 Prof. Manoj</a>
+    <a href="03_Praful_Sir_LSCM_Notebook.html" data-web="/operations/lscm-praful-more-notebook/"><span class="dot"></span> 🧮 Prof. Praful More</a>
+
+<h2>Sessions & Modules</h2>
     <a href="#cover" class="cur"><span class="dot st-done"></span> Overview & Meta</a>
     <a href="#mod1"><span class="dot"></span> 1. Warehouse Architecture</a>
     <a href="#mod2"><span class="dot"></span> 2. Global Sourcing & Blocs</a>
@@ -538,6 +645,81 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
           <li><strong>Bank Negotiation & Payment:</strong> Issuing bank verifies document compliance under UCP 600 rules and releases funds.</li>
           <li><strong>Customs Import Clearance:</strong> Importer retires original documents from bank, pays import tariffs, and collects cargo.</li>
         </ol>
+
+      <div class="nb-fbox">
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">1. Storage Cube Utilization &amp; Honeycomb Loss Factor</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--blue">Warehouse KPI</span>
+            <span class="nb-stamp nb-stamp--amber">Layout Optimization</span>
+          </div>
+        </div>
+
+      <div class="nb-fbox">
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">3. Total Landed Cost (TLC) Architecture in Global Sourcing</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--blue">International Trade</span>
+            <span class="nb-stamp nb-stamp--amber">Global Sourcing</span>
+          </div>
+        </div>
+        <div class="nb-fbox__math">
+          $$\text{TLC} = P_{\text{EXW}} + C_{\text{inland}} + C_{\text{export}} + C_{\text{freight}} + C_{\text{ins}} + \text{Customs BCD} + \text{SWS} + \text{IGST} + C_{\text{port}} + C_{\text{dest\_inland}}$$
+        </div>
+        <div class="nb-fbox__dict">
+          <dt>P_EXW</dt><dd>Ex Works purchase price paid to overseas supplier at their factory gate.</dd>
+          <dt>C_freight &amp; C_ins</dt><dd>International ocean or air freight charges + marine cargo insurance premium.</dd>
+          <dt>BCD + SWS + IGST</dt><dd>Basic Customs Duty + Social Welfare Surcharge (10% of BCD) + Integrated GST assessed at port of entry.</dd>
+          <dt>C_port &amp; C_dest</dt><dd>Port terminal handling charges (THC), container demurrage, customs clearance broker fees, and destination inland delivery.</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>Strategic Sourcing Lesson:</strong><br>
+          Low nominal factory purchase prices in overseas origins frequently mask severe landed cost inflation (freight, duties, financing pipeline inventory, container detention). Overseas sourcing is often 25–40% more expensive than the purchase order price!
+        </div>
+      </div>
+        <div class="nb-fbox__math">
+          $$\text{Cube Space Utilization} = \left(\frac{\text{Total Cargo Stored Volume (CBM)}}{\text{Total Usable Internal Building Volume (CBM)}}\right) \times 100\%$$
+          $$\text{Honeycomb Loss Factor} = 1 - \left(\frac{\text{Occupied Pallet Positions}}{\text{Total Storage Locations Available}}\right)$$
+        </div>
+        <div class="nb-fbox__dict">
+          <dt>Cube Utilization</dt><dd>Measures 3D space efficiency. Typical conventional flat warehouses achieve only 20–30% cube utilization; automated high-bay ASRS achieve 60–75%.</dd>
+          <dt>Honeycomb Loss</dt><dd>Lost storage capacity caused by inability to utilize empty rack spaces because stored SKUs cannot be co-mingled or blocked.</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>Engineering Principle:</strong><br>
+          Storing cargo in standard ISO pallets ($1000\text{mm} \times 1200\text{mm}$) on 12-meter high vertical selective racking doubles effective storage capacity without expanding building ground footprint.
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Warehouse Space Planning Numerical</h5>
+          A DC has 10,000 pallet rack locations. Due to SKU segregation and lot-number integrity rules, 1,800 pallet slots remain unusable across partial aisles.<br>
+          • <strong>Honeycomb Loss:</strong> <span class="calc-step">\text{Loss} = \frac{1,800}{10,000} = 18.0\%</span><br>
+          • <strong>Corrective Action:</strong> Implementing dynamic WMS slotting algorithms reduces honeycomb loss to &lt;6%, freeing up 1,200 pallet positions without expanding warehouse square footage.
+        </div>
+      </div>
+
+      <div class="nb-fbox">
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">2. Order Picking Productivity &amp; Fulfillment Lead Time</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--green">Labor Productivity</span>
+            <span class="nb-stamp nb-stamp--blue">Fulfillment Velocity</span>
+          </div>
+        </div>
+        <div class="nb-fbox__math">
+          $$\text{Pick Lines Per Labor Hour (LPH)} = \frac{\text{Total Order Lines Picked}}{\text{Direct Picker Labor Hours}}$$
+          $$\text{Total Fulfillment Lead Time} = T_{\text{Release}} + T_{\text{Travel}} + T_{\text{Pick}} + T_{\text{Sort/Pack}} + T_{\text{Dispatch}}$$
+        </div>
+        <div class="nb-fbox__dict">
+          <dt>Lines Per Hour (LPH)</dt><dd>Industry standard measure of picking labor throughput. Travel time consumes up to 55% of manual picker hours.</dd>
+          <dt>Fulfillment Lead Time</dt><dd>Elapsed time from ERP order induction to carrier departure dock loading.</dd>
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Order Picking Optimization Numerical</h5>
+          A fulfillment center processes 12,000 daily order lines using 30 warehouse operators working 8-hour shifts.<br>
+          • <strong>Current Throughput:</strong> <span class="calc-step">\text{LPH} = \frac{12,000}{30 \times 8} = \frac{12,000}{240} = 50\text{ lines/hour}</span><br>
+          • <strong>Automation Impact:</strong> Migrating from single-order paper picking to Batch Picking with Zone Sorting and Pick-to-Light accelerates throughput to 125 LPH, cutting required direct labor from 30 operators to 12 operators!
+        </div>
+      </div>
       </div>
 
       <h3>Documentary Letters of Credit (LC) & UCP 600</h3>
@@ -756,6 +938,18 @@ window.addEventListener('scroll', () => {
   const scrolled = (winScroll / height) * 100;
   document.getElementById('progressBar').style.width = scrolled + '%';
 });
+</script>
+
+
+<script>
+// Dual-mode router for LSCM Suite navigation (works across file:// and web /operations/ paths)
+(function() {
+  if (window.location.protocol.startsWith('http')) {
+    document.querySelectorAll('a[data-web]').forEach(function(el) {
+      el.setAttribute('href', el.getAttribute('data-web'));
+    });
+  }
+})();
 </script>
 
 </body>

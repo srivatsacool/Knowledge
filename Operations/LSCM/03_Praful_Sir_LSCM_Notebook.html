@@ -310,7 +310,87 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
   .sheet::before { left: 24px; }
   .sheet::after { display: none; }
 }
-  </style>
+  
+/* Master Paper Edition Formula Box Component */
+.nb-fbox {
+  position: relative; border: 2px solid var(--ink); border-radius: 8px; padding: 22px 24px;
+  margin: 26px 0 30px; background: var(--paper2); box-shadow: 6px 6px 0 var(--blue);
+}
+.nb-fbox__header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;
+  flex-wrap: wrap; gap: 8px; border-bottom: 1.5px dashed var(--line); padding-bottom: 10px;
+}
+.nb-fbox__label { font-family: var(--hand); color: var(--blue); font-size: 1.35rem; font-weight: 700; margin: 0; }
+.nb-fbox__badges { display: flex; gap: 6px; }
+.nb-fbox__math {
+  font-size: 1.3rem; line-height: 2; color: var(--ink); overflow-x: auto;
+  text-align: center; padding: 16px 20px; background: var(--paper); border-radius: 6px;
+  border: 1.5px solid var(--line); margin: 14px 0; box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+}
+.nb-fbox__dict { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 14px 0 12px; font-size: 0.95rem; font-family: var(--ui); }
+.nb-fbox__dict dt { font-weight: 700; color: var(--blue); font-family: var(--mono); font-size: 0.92rem; }
+.nb-fbox__dict dd { margin: 0; color: var(--text); line-height: 1.5; }
+.nb-fbox__insight {
+  background: rgba(26,75,140,0.06); border-left: 3.5px solid var(--blue); padding: 12px 16px;
+  border-radius: 0 6px 6px 0; margin: 14px 0; font-size: 0.93rem; font-family: var(--ui); line-height: 1.55;
+}
+.nb-fbox__insight strong { color: var(--blue); }
+.nb-fbox__example {
+  background: rgba(46,125,50,0.07); border-left: 3.5px solid var(--green); padding: 14px 18px;
+  border-radius: 0 6px 6px 0; margin: 14px 0; font-size: 0.93rem; font-family: var(--ui); line-height: 1.55;
+}
+.nb-fbox__example h5 {
+  margin: 0 0 8px; color: var(--green); font-size: 1rem; font-family: var(--ui); font-weight: 700;
+  display: flex; align-items: center; gap: 6px;
+}
+.nb-fbox__example .calc-step {
+  font-family: var(--mono); font-size: 0.88rem; background: rgba(0,0,0,0.04);
+  padding: 4px 8px; border-radius: 4px; display: inline-block; margin: 3px 0;
+}
+.nb-fbox__trap {
+  background: rgba(198,40,40,0.06); border-left: 3.5px solid var(--red); padding: 12px 16px;
+  border-radius: 0 6px 6px 0; margin: 14px 0 0; font-size: 0.9rem; font-family: var(--ui); line-height: 1.5; color: var(--text);
+}
+.nb-fbox__trap strong { color: var(--red); }
+
+/* LSCM Course Suite Navigation Bar */
+.lscm-suite-bar {
+  background: var(--paper2); border-bottom: 2px solid var(--line);
+  padding: 8px 18px; display: flex; align-items: center; gap: 10px;
+  overflow-x: auto; white-space: nowrap; font-family: var(--ui);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03); position: sticky; top: var(--bar); z-index: 50;
+}
+.lscm-suite-bar::-webkit-scrollbar { height: 4px; }
+.lscm-suite-bar::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+.lscm-suite-bar__label { font-weight: 700; color: var(--pencil); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+.lscm-suite-link {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
+  border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;
+  color: var(--text); border: 1.5px solid var(--line); background: var(--paper);
+  transition: all 0.15s ease; flex-shrink: 0;
+}
+.lscm-suite-link:hover { background: var(--hl-yellow); border-color: var(--ink); color: var(--ink); }
+.lscm-suite-link.active {
+  background: var(--ink); color: var(--paper); border-color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15); pointer-events: none;
+}
+.lscm-suite-link .tag {
+  font-size: 10.5px; opacity: 0.85; font-weight: normal; margin-left: 2px;
+}
+
+</style>
+  <!-- KaTeX for High-Fidelity Mathematical Typography -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+
 </head>
 <body>
 
@@ -326,6 +406,26 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
   <div class="progressWrap"><div id="progressBar"></div></div>
 </header>
 
+<nav class="lscm-suite-bar">
+  <span class="lscm-suite-bar__label">📚 LSCM Suite:</span>
+  <a href="04_LSCM_Complete_Syllabus_PYQ_Master_Notebook.html" data-web="/operations/lscm-master-syllabus-pyq-notebook/" class="lscm-suite-link">
+    <span>📘 Master 15-Topic &amp; Solved PYQ Bank</span>
+  </a>
+  <a href="01_Ajit_Sir_LSCM_Notebook.html" data-web="/operations/lscm-ajit-maurya-notebook/" class="lscm-suite-link">
+    <span>🏛️ Prof. Ajit Maurya</span>
+    <span class="tag">SCM Arch &amp; Drivers</span>
+  </a>
+  <a href="02_Manoj_Sir_LSCM_Notebook.html" data-web="/operations/lscm-manoj-sir-notebook/" class="lscm-suite-link">
+    <span>📦 Prof. Manoj</span>
+    <span class="tag">Warehousing &amp; EXIM</span>
+  </a>
+  <a href="03_Praful_Sir_LSCM_Notebook.html" data-web="/operations/lscm-praful-more-notebook/" class="lscm-suite-link active">
+    <span>🧮 Prof. Praful More</span>
+    <span class="tag">Inventory &amp; Sourcing</span>
+  </a>
+</nav>
+
+
 <div class="timerPanel" id="timerPanel">
   <div class="clock" id="clockDisplay">25:00</div>
   <div class="row">
@@ -336,7 +436,14 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
 
 <div class="shell">
   <aside class="side">
-    <h2>Sessions & Modules</h2>
+    
+    <h2>LSCM Course Hub</h2>
+    <a href="04_LSCM_Complete_Syllabus_PYQ_Master_Notebook.html" data-web="/operations/lscm-master-syllabus-pyq-notebook/"><span class="dot"></span> 📘 Master Syllabus &amp; PYQs</a>
+    <a href="01_Ajit_Sir_LSCM_Notebook.html" data-web="/operations/lscm-ajit-maurya-notebook/"><span class="dot"></span> 🏛️ Prof. Ajit Maurya</a>
+    <a href="02_Manoj_Sir_LSCM_Notebook.html" data-web="/operations/lscm-manoj-sir-notebook/"><span class="dot"></span> 📦 Prof. Manoj</a>
+    <a href="03_Praful_Sir_LSCM_Notebook.html" data-web="/operations/lscm-praful-more-notebook/" class="cur"><span class="dot st-done"></span> 🧮 Prof. Praful More</a>
+
+<h2>Sessions & Modules</h2>
     <a href="#cover" class="cur"><span class="dot st-done"></span> Overview & Meta</a>
     <a href="#mod1"><span class="dot"></span> 1. Inventory Costs & Functions</a>
     <a href="#mod2"><span class="dot"></span> 2. Deterministic Lot-Sizing</a>
@@ -405,26 +512,86 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
       <span class="nb-stamp nb-stamp--green">CO1 Alignment</span>
       <h2>Module 2: Deterministic Inventory Lot-Sizing Models</h2>
 
-      <div class="nb-fbox">
-        <span class="nb-fbox__label">1. Classical Economic Order Quantity (EOQ)</span>
-        <div class="nb-fbox__math">$$EOQ (Q^*) = \sqrt{rac{2DS}{H}}, \quad TC^* = \left(rac{D}{Q^*}ight)S + \left(rac{Q^*}{2}ight)H$$</div>
+            <div class="nb-fbox">
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">1. Classical Economic Order Quantity (EOQ)</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--blue">Core Deterministic</span>
+            <span class="nb-stamp nb-stamp--red">Exam Heavyweight</span>
+          </div>
+        </div>
+        <div class="nb-fbox__math">
+          $$Q^* = \sqrt{\frac{2 \cdot D \cdot S}{H}}, \qquad TC(Q^*) = \sqrt{2 \cdot D \cdot S \cdot H} + (D \cdot C)$$
+          $$N^* = \frac{D}{Q^*}, \qquad T^* = \left(\frac{Q^*}{D}\right) \times \text{Working Days}$$
+        </div>
         <div class="nb-fbox__dict">
-          <dt>D</dt><dd>Annual deterministic customer demand in units.</dd>
-          <dt>S</dt><dd>Fixed ordering cost incurred per replenishment purchase order.</dd>
-          <dt>H</dt><dd>Annual inventory carrying cost per unit ($H = I 	imes C$).</dd>
-          <dt>N*</dt><dd>Optimal order frequency: $N^* = D / Q^*$.</dd>
-          <dt>T*</dt><dd>Cycle time between orders: $T^* = (Q^* / D) 	imes 	ext{Working Days}$.</dd>
+          <dt>D</dt><dd>Annual customer demand in units (must be annualized!).</dd>
+          <dt>S</dt><dd>Fixed ordering cost incurred per replenishment purchase order (₹/order or $/order).</dd>
+          <dt>H</dt><dd>Annual inventory carrying/holding cost per unit per year ($H = i \times C$).</dd>
+          <dt>i</dt><dd>Annual inventory carrying charge as a percentage of item purchase cost (typically 18%–25%).</dd>
+          <dt>C</dt><dd>Unit purchase cost of the item (₹/unit).</dd>
+          <dt>N*</dt><dd>Optimal order frequency: number of replenishment orders placed per year.</dd>
+          <dt>T*</dt><dd>Cycle time: elapsed calendar/working days between successive order placements.</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>Calculus Derivation &amp; The Economic Equivalence Principle:</strong><br>
+          Total Annual Cost: $TC(Q) = \left(\frac{D}{Q}\right)S + \left(\frac{Q}{2}\right)H$. Differentiating with respect to $Q$ and setting to zero:<br>
+          $$\frac{dTC}{dQ} = -\frac{D \cdot S}{Q^2} + \frac{H}{2} = 0 \implies \frac{D \cdot S}{Q^2} = \frac{H}{2} \implies Q^2 = \frac{2DS}{H} \implies Q^* = \sqrt{\frac{2DS}{H}}$$
+          <strong>Fundamental Law:</strong> At optimal $Q^*$, <strong>Annual Ordering Cost = Annual Holding Cost</strong>! $\left(\frac{D}{Q^*}S = \frac{Q^*}{2}H = \sqrt{\frac{DSH}{2}}\right)$.
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Full Marks Numerical Solved Problem (WeSchool Exam Standard)</h5>
+          A manufacturing plant uses 12,000 bearing assemblies annually ($D = 12,000\text{ units}$). Procurement order placement cost $S = ₹250$ per order. Unit purchase price $C = ₹50$. Inventory holding cost is 20% of unit cost per annum ($i = 0.20 \implies H = 0.20 \times 50 = ₹10\text{/unit/year}$). Working days = 300 days/year.<br>
+          • <strong>Step 1 (Calculate EOQ):</strong> <span class="calc-step">Q^* = \sqrt{\frac{2 \times 12,000 \times 250}{10}} = \sqrt{\frac{6,000,000}{10}} = \sqrt{600,000} = 774.6 \approx 775\text{ units}</span><br>
+          • <strong>Step 2 (Order Frequency N*):</strong> <span class="calc-step">N^* = \frac{12,000}{774.6} = 15.49\text{ orders/year}</span><br>
+          • <strong>Step 3 (Cycle Time T*):</strong> <span class="calc-step">T^* = \left(\frac{774.6}{12,000}\right) \times 300 = 19.37\text{ working days}</span><br>
+          • <strong>Step 4 (Annual Ordering Cost):</strong> <span class="calc-step">\text{AOC} = \left(\frac{12,000}{774.6}\right) \times 250 = ₹3,873.00</span><br>
+          • <strong>Step 5 (Annual Holding Cost):</strong> <span class="calc-step">\text{AHC} = \left(\frac{774.6}{2}\right) \times 10 = ₹3,873.00</span> (Notice AOC = AHC exactly!)<br>
+          • <strong>Step 6 (Total Annual Relevant Cost):</strong> <span class="calc-step">TRC = 3,873 + 3,873 = ₹7,746.00</span> (Total cost including purchase: $7,746 + (12,000 \times 50) = ₹6,07,746$).
+        </div>
+        <div class="nb-fbox__trap">
+          ⚠️ <strong>4 Critical Exam Traps:</strong><br>
+          1. <em>Monthly vs Annual Demand:</em> If given demand $d_m = 1,000$/month, multiply by 12 to get $D = 12,000$.<br>
+          2. <em>Carrying Cost Units:</em> Ensure $H = i \times C$. If holding cost is ₹10, do not multiply by price again.<br>
+          3. <em>Average Inventory:</em> Cycle stock average is $Q/2$, NOT $Q$.<br>
+          4. <em>Square Root Sensitivity:</em> If demand quadruples ($4\times$), EOQ only doubles ($2\times$) due to the square root!
         </div>
       </div>
 
-      <div class="nb-fbox">
-        <span class="nb-fbox__label">2. Economic Production Quantity (EPQ / Non-Instantaneous Receipt)</span>
-        <div class="nb-fbox__math">$$EPQ (Q^*) = \sqrt{rac{2DS}{H\left(1 - rac{d}{p}ight)}}, \quad I_{\max} = Q^*\left(1 - rac{d}{p}ight)$$</div>
+            <div class="nb-fbox">
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">2. Economic Production Quantity (EPQ / EBQ / Finite Production Rate)</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--green">Manufacturing Lot Sizing</span>
+            <span class="nb-stamp nb-stamp--amber">Non-Instantaneous</span>
+          </div>
+        </div>
+        <div class="nb-fbox__math">
+          $$Q_p^* = \sqrt{\frac{2 \cdot D \cdot S}{H \cdot \left(1 - \frac{d}{p}\right)}}, \qquad I_{\max} = Q_p^* \cdot \left(1 - \frac{d}{p}\right)$$
+          $$t_1 = \frac{Q_p^*}{p} \quad (\text{Production Run}), \qquad t_2 = \frac{I_{\max}}{d} \quad (\text{Pure Consumption Phase})$$
+        </div>
         <div class="nb-fbox__dict">
-          <dt>p</dt><dd>Daily manufacturing production rate.</dd>
-          <dt>d</dt><dd>Daily consumption/sales rate ($p &gt; d$).</dd>
-          <dt>I_max</dt><dd>Peak inventory accumulated at the moment production ceases.</dd>
-          <dt>t_1</dt><dd>Length of production run: $t_1 = Q^* / p$.</dd>
+          <dt>p</dt><dd>Daily production/manufacturing rate (units/day).</dd>
+          <dt>d</dt><dd>Daily demand/consumption rate (units/day, where $p > d$).</dd>
+          <dt>1 - d/p</dt><dd>Net accumulation rate factor: fraction of produced goods entering inventory storage.</dd>
+          <dt>I_max</dt><dd>Maximum peak inventory accumulated in warehouse at the exact instant production run finishes ($t_1$).</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>Physical Intuition (Why EPQ &gt; EOQ):</strong><br>
+          Because items are produced and simultaneously consumed during the production run, stock builds up at the net rate $(p - d)$ rather than $p$. Peak inventory $I_{\max}$ never reaches batch size $Q$; it reaches only $Q(1 - d/p)$. Holding cost is therefore lower, allowing the economic production batch to be larger than standard EOQ.
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Full Marks Numerical Solved Problem</h5>
+          A factory produces electric scooter motors. Annual demand $D = 10,000$ units. Daily production capacity $p = 100$ units/day. Daily demand $d = 40$ units/day (based on 250 working days/yr). Machine setup cost $S = ₹600$. Annual holding cost $H = ₹5$ per unit/year.<br>
+          • <strong>Step 1 (Net Accumulation Factor):</strong> <span class="calc-step">1 - \frac{d}{p} = 1 - \frac{40}{100} = 0.60</span><br>
+          • <strong>Step 2 (Calculate EPQ Q_p*):</strong> <span class="calc-step">Q_p^* = \sqrt{\frac{2 \times 10,000 \times 600}{5 \times 0.60}} = \sqrt{\frac{12,000,000}{3.0}} = \sqrt{4,000,000} = 2,000\text{ units}</span><br>
+          • <strong>Step 3 (Peak Inventory I_max):</strong> <span class="calc-step">I_{\max} = 2,000 \times (1 - 0.40) = 2,000 \times 0.60 = 1,200\text{ units}</span><br>
+          • <strong>Step 4 (Production Run Time t_1):</strong> <span class="calc-step">t_1 = \frac{2,000}{100} = 20\text{ days of active manufacturing}</span><br>
+          • <strong>Step 5 (Consumption Time t_2):</strong> <span class="calc-step">t_2 = \frac{1,200}{40} = 30\text{ days of pure depletion}</span><br>
+          • <strong>Step 6 (Total Cycle Time):</strong> <span class="calc-step">T = t_1 + t_2 = 20 + 30 = 50\text{ days}</span> (Annual batches $= 250 / 50 = 5$ production runs).
+        </div>
+        <div class="nb-fbox__trap">
+          ⚠️ <strong>Exam Trap:</strong> Average inventory for holding cost in EPQ is $\frac{I_{\max}}{2} = \frac{Q_p^*(1 - d/p)}{2}$, NOT $Q_p^* / 2$!
         </div>
       </div>
 
@@ -435,7 +602,9 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
           <li>Compute standard EOQ for the lowest unit price tier ($C_{	ext{lowest}}$).</li>
           <li>If feasible, it is optimal. If infeasible, step up to next price tier until a feasible EOQ is found.</li>
           <li>Compute Total Annual Cost ($TC$) at feasible EOQ and at <strong>every quantity breakpoint above it</strong>:
-            $$TC(Q) = (D \cdot C) + \left(rac{D}{Q}ight)S + \left(rac{Q}{2}ight)(I \cdot C)$$
+            $$TC(Q) = (D \cdot C) + \left(\frac{D}{Q}
+ight)S + \left(\frac{Q}{2}
+ight)(I \cdot C)$$
           </li>
           <li>Select the order quantity $Q$ minimizing total annual procurement plus holding and ordering costs.</li>
         </ol>
@@ -448,19 +617,74 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
       <span class="nb-stamp nb-stamp--green">CO1 Alignment</span>
       <h2>Module 3: Managing Uncertainty, Safety Stock & Stochastic Inventory</h2>
 
-      <div class="nb-fbox">
-        <span class="nb-fbox__label">Safety Stock Formulations Under Uncertainty</span>
+            <div class="nb-fbox">
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">3. Safety Stock &amp; Reorder Point Formulations Under Uncertainty</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--blue">Stochastic Inventory</span>
+            <span class="nb-stamp nb-stamp--red">Exam Heavyweight</span>
+          </div>
+        </div>
         <div class="nb-fbox__math">
-          $$	ext{Case A (Demand Variable, Lead Time Fixed): } SS = z \cdot \sigma_d \sqrt{L}$$
-          $$	ext{Case B (Lead Time Variable, Demand Fixed): } SS = z \cdot d \cdot \sigma_L$$
-          $$	ext{Case C (Both Variable - Dual Uncertainty): } SS = z \cdot \sqrt{L \cdot \sigma_d^2 + d^2 \cdot \sigma_L^2}$$
-          $$ROP = (d \cdot L) + SS$$
+          $$\text{Case A (Demand Uncertain, Lead Time Fixed): } SS = Z \cdot \sigma_d \cdot \sqrt{L}, \qquad ROP = (\bar{d} \cdot L) + SS$$
+          $$\text{Case B (Lead Time Uncertain, Demand Fixed): } SS = Z \cdot d \cdot \sigma_L, \qquad ROP = (d \cdot \bar{L}) + SS$$
+          $$\text{Case C (Dual Uncertainty - Both Variable): } SS = Z \cdot \sqrt{\bar{L} \cdot \sigma_d^2 + \bar{d}^2 \cdot \sigma_L^2}, \qquad ROP = (\bar{d} \cdot \bar{L}) + SS$$
         </div>
         <div class="nb-fbox__dict">
-          <dt>z</dt><dd>Standard normal service factor corresponding to target Cycle Service Level ($CSL$).</dd>
+          <dt>Z</dt><dd>Standard normal deviate corresponding to desired Cycle Service Level ($CSL$): $90\% \to 1.282$, $95\% \to 1.645$, $97.5\% \to 1.96$, $99\% \to 2.326$.</dd>
           <dt>\sigma_d</dt><dd>Standard deviation of daily consumer demand.</dd>
-          <dt>\sigma_L</dt><dd>Standard deviation of replenishment lead time in days.</dd>
-          <dt>d, L</dt><dd>Average daily demand ($d$) and average supplier lead time ($L$).</dd>
+          <dt>\sigma_L</dt><dd>Standard deviation of vendor replenishment lead time (in days).</dd>
+          <dt>\bar{d}, \bar{L}</dt><dd>Average daily demand rate ($\bar{d}$) and average vendor lead time ($\bar{L}$).</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>Strategic Managerial Takeaway: The Lead-Time Volatility Killer:</strong><br>
+          In Case C, lead time variance is multiplied by <strong>mean daily demand squared ($\bar{d}^2$)</strong>! For example, if $\bar{d} = 100$, $\bar{d}^2 = 10,000$. Consequently, supplier delivery unreliability causes over 80–95% of real-world safety stock bloat. Compressing supplier lead-time variance ($\sigma_L$) releases vastly more capital than trying to improve customer forecasting accuracy ($\sigma_d$).
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Full Marks Numerical Solved Problem (Case C Dual Uncertainty)</h5>
+          A hospital pharmacy manages critical antibiotics: Average daily demand $\bar{d} = 100$ vials/day, $\sigma_d = 15$ vials/day. Supplier lead time averages $\bar{L} = 9$ days, with $\sigma_L = 2$ days. Management mandates a 95% Cycle Service Level ($Z = 1.645$).<br>
+          • <strong>Step 1 (Demand Variance Component):</strong> <span class="calc-step">\bar{L} \cdot \sigma_d^2 = 9 \times (15)^2 = 9 \times 225 = 2,025</span><br>
+          • <strong>Step 2 (Lead Time Variance Component):</strong> <span class="calc-step">\bar{d}^2 \cdot \sigma_L^2 = (100)^2 \times (2)^2 = 10,000 \times 4 = 40,000</span><br>
+          • <strong>Step 3 (Combined Lead-Time Std Dev):</strong> <span class="calc-step">\sigma_{DL} = \sqrt{2,025 + 40,000} = \sqrt{42,025} = 205.0\text{ vials}</span><br>
+          • <strong>Step 4 (Safety Stock Calculation):</strong> <span class="calc-step">SS = 1.645 \times 205.0 = 337.2 \approx 338\text{ vials}</span><br>
+          • <strong>Step 5 (Expected Lead Time Demand):</strong> <span class="calc-step">\text{LTD} = \bar{d} \cdot \bar{L} = 100 \times 9 = 900\text{ vials}</span><br>
+          • <strong>Step 6 (Reorder Point ROP):</strong> <span class="calc-step">ROP = 900 + 338 = \mathbf{1,238\text{ vials}}</span> (Place replenishment order when stock hits 1,238).
+        </div>
+        <div class="nb-fbox__trap">
+          ⚠️ <strong>Exam Trap:</strong> Notice that lead time variance ($40,000$) contributed $95.2\%$ of the total system risk ($42,025$), while demand variance contributed only $4.8\%$! Mentioning this in your exam answer earns top distinction marks.
+        </div>
+      </div>
+
+      <div class="nb-fbox">
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">3. All-Units Quantity Discount Breakeven Algorithm</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--green">Price Break Analysis</span>
+            <span class="nb-stamp nb-stamp--amber">Cost Minimization</span>
+          </div>
+        </div>
+        <div class="nb-fbox__math">
+          $$TC(Q) = (D \cdot C_j) + \left(\frac{D}{Q}\right)S + \left(\frac{Q}{2}\right)(i \cdot C_j)$$
+        </div>
+        <div class="nb-fbox__dict">
+          <dt>C_j</dt><dd>Unit acquisition price at discount tier $j$ (where price drops as order quantity crosses breakpoint $q_j$).</dd>
+          <dt>D \cdot C_j</dt><dd>Annual purchase cost (this is now a variable decision cost because price changes with quantity!).</dd>
+          <dt>i \cdot C_j</dt><dd>Unit carrying cost scales dynamically with the discounted purchase price $C_j$.</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>Decision Algorithm Protocol (Step-by-Step):</strong><br>
+          1. Calculate $Q^*$ for the lowest price tier (highest volume discount).<br>
+          2. If $Q^* \ge \text{minimum qualification volume}$, it is globally optimal.<br>
+          3. If $Q^* < \text{minimum volume}$ (infeasible), evaluate Total Cost $TC$ at the <strong>minimum qualifying price-break volume</strong>, and compare against $TC$ at the feasible EOQ of higher-priced tiers.<br>
+          4. Select the quantity that yields the absolute lowest Total Annual Cost $TC$.
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Quantity Discount Numerical Comparison</h5>
+          $D = 5,000$ units/year, $S = ₹200$/order, $i = 20\%$ annual holding charge.<br>
+          • Tier 1 ($Q < 1,000$): $C_1 = ₹10.00 \implies H_1 = ₹2.00 \implies Q_1^* = \sqrt{\frac{2 \times 5000 \times 200}{2}} = 1,000$ (infeasible at boundary).<br>
+          • Tier 2 ($Q \ge 1,000$): $C_2 = ₹9.50 \implies H_2 = ₹1.90 \implies Q_2^* = \sqrt{\frac{2 \times 5000 \times 200}{1.90}} = 1,026\text{ units}$ (FEASIBLE!).<br>
+          • <strong>Total Cost at Q = 1,026:</strong> <span class="calc-step">TC = (5000 \times 9.50) + \left(\frac{5000}{1026}\right)200 + \left(\frac{1026}{2}\right)1.90 = 47,500 + 974.66 + 974.70 = \mathbf{₹49,449.36}</span><br>
+          • Result: Ordering 1,026 units secures the ₹9.50 discount price, saving over ₹3,000 compared to un-discounted purchasing.
         </div>
       </div>
 
@@ -485,23 +709,49 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
       <span class="nb-stamp nb-stamp--green">CO1 Alignment</span>
       <h2>Module 4: The Single-Period Stochastic (Newsvendor) Model</h2>
 
-      <div class="nb-fbox">
-        <span class="nb-fbox__label">The Newsvendor Model & Critical Fractile</span>
+            <div class="nb-fbox">
+        <div class="nb-fbox__header">
+          <span class="nb-fbox__label">4. The Newsvendor Model &amp; Critical Fractile (Single-Period Stochastic)</span>
+          <div class="nb-fbox__badges">
+            <span class="nb-stamp nb-stamp--blue">Perishable Inventory</span>
+            <span class="nb-stamp nb-stamp--green">Critical Ratio</span>
+          </div>
+        </div>
         <div class="nb-fbox__math">
-          $$C_u = P - C, \quad C_o = C - S$$
-          $$CR = rac{C_u}{C_u + C_o}, \quad Q^* = \mu + z \cdot \sigma \quad [\Phi(z) = CR]$$
+          $$C_u = P - C, \qquad C_o = C - V$$
+          $$\text{Critical Fractile } (CR) = \frac{C_u}{C_u + C_o}, \qquad Q^* = \mu + Z^* \cdot \sigma \quad [\Phi(Z^*) = CR]$$
         </div>
         <div class="nb-fbox__dict">
-          <dt>C_u</dt><dd>Cost of Understocking: Profit margin forfeited per unit of unmet customer demand.</dd>
-          <dt>C_o</dt><dd>Cost of Overstocking: Net financial loss incurred per unsold unit salvaged.</dd>
-          <dt>CR</dt><dd>Critical Fractile / Service Level optimizing expected channel profitability.</dd>
-          <dt>\mu, \sigma</dt><dd>Mean ($\mu$) and standard deviation ($\sigma$) of normally distributed single-period demand.</dd>
+          <dt>C_u</dt><dd>Cost of Underage: Gross profit margin forfeited per unit of unmet customer demand ($P - C$).</dd>
+          <dt>C_o</dt><dd>Cost of Overage: Net financial loss incurred per unsold unit salvaged or discarded ($C - V$).</dd>
+          <dt>P, C, V</dt><dd>Selling Price ($P$), Procurement Cost ($C$), Salvage/Liquidation Value ($V$).</dd>
+          <dt>CR</dt><dd>Critical Ratio: The exact cumulative probability fractile balancing marginal expected profit with marginal risk.</dd>
+          <dt>\mu, \sigma</dt><dd>Mean ($\mu$) and standard deviation ($\sigma$) of single-period demand distribution.</dd>
+        </div>
+        <div class="nb-fbox__insight">
+          <strong>Economic Logic of the Critical Fractile:</strong><br>
+          The decision rule balances expected marginal revenue against expected marginal loss: $P(\text{Demand} \le Q^*) \cdot C_o = P(\text{Demand} > Q^*) \cdot C_u \implies F(Q^*) = \frac{C_u}{C_u + C_o}$.<br>
+          • If margin is high and salvage loss is low ($C_u > C_o$), $CR > 0.50 \implies$ order more than average demand ($Q^* > \mu$).<br>
+          • If markdown penalty is severe ($C_o > C_u$), $CR < 0.50 \implies$ order less than average demand ($Q^* < \mu$).
+        </div>
+        <div class="nb-fbox__example">
+          <h5>💼 Full Marks Numerical Solved Problem (WeSchool Exam Benchmark)</h5>
+          A retailer stocks seasonal designer jackets: Retail Price $P = ₹5,000$, Wholesale Cost $C = ₹3,000$. Unsold jackets at the end of the season are liquidated at salvage value $V = ₹1,500$. Demand is normally distributed with mean $\mu = 500$ jackets and $\sigma = 80$ jackets.<br>
+          • <strong>Step 1 (Cost of Underage C_u):</strong> <span class="calc-step">C_u = 5,000 - 3,000 = ₹2,000</span><br>
+          • <strong>Step 2 (Cost of Overage C_o):</strong> <span class="calc-step">C_o = 3,000 - 1,500 = ₹1,500</span><br>
+          • <strong>Step 3 (Critical Fractile CR):</strong> <span class="calc-step">CR = \frac{2,000}{2,000 + 1,500} = \frac{2,000}{3,500} = 0.5714\text{ (57.14%)}</span><br>
+          • <strong>Step 4 (Lookup Z-Score for \Phi(Z) = 0.5714):</strong> From standard normal table, <span class="calc-step">Z^* \approx +0.18</span><br>
+          • <strong>Step 5 (Optimal Stocking Quantity Q*):</strong> <span class="calc-step">Q^* = 500 + (0.18 \times 80) = 500 + 14.4 \approx \mathbf{515\text{ jackets}}</span><br>
+          • <strong>Managerial Takeaway:</strong> Because profit margin (₹2,000) exceeds overstock risk (₹1,500), the buyer should buffer by 15 jackets above average expected demand.
+        </div>
+        <div class="nb-fbox__trap">
+          ⚠️ <strong>Exam Trap:</strong> Salvage value $V$ is SUBTRACTED in $C_o = C - V$. If disposal incurs a scrap fee, $V$ becomes negative and adds to $C_o$!
         </div>
       </div>
 
       <div class="launchpad-box">
         <span class="launchpad-box__tag">The Double Marginalization Trap</span>
-        <p>In a decentralized supply chain, the retailer's critical fractile $CR_{	ext{retailer}} = rac{P - W}{(P - W) + (W - S)}$ is strictly lower than the integrated supply chain's fractile $CR_{	ext{chain}} = rac{P - C}{(P - C) + (C - S)}$. Consequently, individual store managers systematically under-order relative to the system optimum, destroying total channel profitability.</p>
+        <p>In a decentralized supply chain, the retailer's critical fractile $CR_{	ext{retailer}} = \frac{P - W}{(P - W) + (W - S)}$ is strictly lower than the integrated supply chain's fractile $CR_{	ext{chain}} = \frac{P - C}{(P - C) + (C - S)}$. Consequently, individual store managers systematically under-order relative to the system optimum, destroying total channel profitability.</p>
       </div>
     </article>
 
@@ -604,17 +854,19 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
         <h4>Three-Part Quantitative Inventory Mastery</h4>
         <ul>
           <li><strong>(a) Deterministic EOQ:</strong>
-            $$EOQ = \sqrt{rac{2 	imes 5,000 	imes 40}{2}} = \sqrt{200,000} pprox \mathbf{447.21 \implies 447 	ext{ units}}$$
-            $$TC^* = \left(rac{5,000}{447.21}ight)40 + \left(rac{447.21}{2}ight)2.00 = \$447.21 + \$447.21 = \mathbf{\$894.43/	ext{year}}$$
+            $$EOQ = \sqrt{\frac{2 	imes 5,000 	imes 40}{2}} = \sqrt{200,000} pprox \mathbf{447.21 \implies 447 	ext{ units}}$$
+            $$TC^* = \left(\frac{5,000}{447.21}
+ight)40 + \left(\frac{447.21}{2}
+ight)2.00 = \$447.21 + \$447.21 = \mathbf{\$894.43/	ext{year}}$$
           </li>
           <li><strong>(b) Stochastic Newsvendor:</strong>
             $$C_u = \$30 - \$15 = \$15, \quad C_o = \$15 - \$10 = \$5$$
-            $$CR = rac{15}{15 + 5} = rac{15}{20} = \mathbf{0.75 \implies 75\%}, \quad \Phi(z) = 0.75 \implies \mathbf{z = 0.674}$$
+            $$CR = \frac{15}{15 + 5} = \frac{15}{20} = \mathbf{0.75 \implies 75\%}, \quad \Phi(z) = 0.75 \implies \mathbf{z = 0.674}$$
           </li>
           <li><strong>(c) Multi-Period Continuous Review:</strong>
             $$s = 200, \quad S = 500, \quad \mu_{DL} = 150, \quad \sigma_{DL} = 30$$
             $$SS = s - \mu_{DL} = 200 - 150 = \mathbf{50 	ext{ doses}}$$
-            $$z = rac{SS}{\sigma_{DL}} = rac{50}{30} = 1.667 pprox 1.67 \implies \mathbf{CSL = \Phi(1.67) = 95.25\%}$$
+            $$z = \frac{SS}{\sigma_{DL}} = \frac{50}{30} = 1.667 pprox 1.67 \implies \mathbf{CSL = \Phi(1.67) = 95.25\%}$$
           </li>
         </ul>
       </div>
@@ -624,9 +876,10 @@ pre.ascii { background: #1B263B; color: #E0E1DD; padding: 14px; border-radius: 6
         <h4>ElectroTech Solutions Category A Inventory Math</h4>
         <ul>
           <li>$$D = 50,000, \quad S = \$100, \quad H = \$2.00$$</li>
-          <li>$$EOQ = \sqrt{rac{2 	imes 50,000 	imes 100}{2}} = \sqrt{5,000,000} pprox \mathbf{2,236.07 \implies 2,236 	ext{ units}}$$</li>
-          <li>$$N^* = rac{50,000}{2,236.07} = \mathbf{22.36 	ext{ orders per year}}$$</li>
-          <li>$$	ext{Annual Holding Cost} = \left(rac{2,236.07}{2}ight) 	imes 2.00 = \mathbf{\$2,236.07/	ext{year}}$$</li>
+          <li>$$EOQ = \sqrt{\frac{2 	imes 50,000 	imes 100}{2}} = \sqrt{5,000,000} pprox \mathbf{2,236.07 \implies 2,236 	ext{ units}}$$</li>
+          <li>$$N^* = \frac{50,000}{2,236.07} = \mathbf{22.36 	ext{ orders per year}}$$</li>
+          <li>$$	ext{Annual Holding Cost} = \left(\frac{2,236.07}{2}
+ight) 	imes 2.00 = \mathbf{\$2,236.07/	ext{year}}$$</li>
         </ul>
       </div>
     </article>
@@ -743,6 +996,18 @@ window.addEventListener('scroll', () => {
   const scrolled = (winScroll / height) * 100;
   document.getElementById('progressBar').style.width = scrolled + '%';
 });
+</script>
+
+
+<script>
+// Dual-mode router for LSCM Suite navigation (works across file:// and web /operations/ paths)
+(function() {
+  if (window.location.protocol.startsWith('http')) {
+    document.querySelectorAll('a[data-web]').forEach(function(el) {
+      el.setAttribute('href', el.getAttribute('data-web'));
+    });
+  }
+})();
 </script>
 
 </body>
