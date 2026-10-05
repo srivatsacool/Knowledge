@@ -1,0 +1,211 @@
+---
+interface Step {
+  stepNumber?: number | string;
+  action: string;
+  calculation?: string;
+  explanation: string;
+}
+
+interface Props {
+  problemNumber?: string | number;
+  title: string;
+  problem: string;
+  givenData: Array<{ label: string; symbol: string; value: string; unit?: string }>;
+  required: string;
+  formula: string;
+  whyFormula: string;
+  variables?: Array<{ symbol: string; meaning: string; value: string }>;
+  steps: Step[];
+  answer: string;
+  interpretation: string;
+  sanityCheck: string;
+  commonMistake: string;
+}
+
+const {
+  problemNumber = "1",
+  title,
+  problem,
+  givenData = [],
+  required,
+  formula,
+  whyFormula,
+  variables = [],
+  steps = [],
+  answer,
+  interpretation,
+  sanityCheck,
+  commonMistake,
+} = Astro.props;
+---
+
+<div class="worked-example paper-card p-6 sm:p-8 my-8 rounded-xl border-2 border-[var(--line)] bg-[var(--paper)] shadow-paper-md relative overflow-hidden">
+  
+  <!-- Step Flag / Stamp -->
+  <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b-2 border-[var(--rule)]">
+    <div class="flex items-center space-x-2">
+      <span class="rubber-stamp stamp-green text-[10px]">PROFESSOR CALCULATION DRILL</span>
+      <span class="font-mono text-xs font-bold text-[var(--pencil)]">PROBLEM #{problemNumber}</span>
+    </div>
+    <span class="font-mono text-[10px] uppercase tracking-wider text-[var(--ink2)] font-bold">12-STEP NUMERICAL PEDAGOGY</span>
+  </div>
+
+  <h3 class="font-serif text-xl sm:text-2xl font-bold text-[var(--ink)] mt-3 mb-4">
+    {title}
+  </h3>
+
+  <!-- 1. PROBLEM STATEMENT -->
+  <div class="p-4 rounded-lg bg-[var(--card)] border border-[var(--line)] mb-5">
+    <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold mb-1">
+      01. Problem Statement
+    </div>
+    <p class="text-xs sm:text-sm text-[var(--text)] leading-relaxed font-sans">
+      {problem}
+    </p>
+  </div>
+
+  <!-- 2 & 3: GIVEN DATA & WHAT IS REQUIRED -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+    <!-- 02. Given Data -->
+    <div class="p-4 rounded-lg bg-[var(--card)] border border-[var(--line)]">
+      <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold mb-2">
+        02. Given Data (Knowns)
+      </div>
+      <div class="space-y-1.5 text-xs font-mono">
+        {givenData.map(d => (
+          <div class="flex items-center justify-between py-1 border-b border-[var(--rule)] last:border-none">
+            <span class="text-[var(--pencil)]">{d.label} (<code class="font-bold text-[var(--ink)]">${d.symbol}$</code>):</span>
+            <span class="font-bold text-[var(--text)]">{d.value} {d.unit || ''}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- 03. What is Required -->
+    <div class="p-4 rounded-lg bg-[var(--card)] border border-[var(--line)] flex flex-col justify-between">
+      <div>
+        <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold mb-2">
+          03. What is Required? (Objective)
+        </div>
+        <p class="text-xs sm:text-sm text-[var(--text)] font-sans leading-relaxed">
+          {required}
+        </p>
+      </div>
+      <div class="mt-3 p-2 rounded bg-[var(--paper)] border border-[var(--rule)] font-mono text-[11px] text-[var(--ink2)] font-bold">
+        Target: Exact numerical calculation with dimensionally consistent units.
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 & 5: FORMULA / MODEL & WHY THIS FORMULA -->
+  <div class="p-4 rounded-lg bg-[var(--card)] border border-[var(--line)] mb-5 space-y-3">
+    <div class="flex flex-wrap items-baseline justify-between gap-2">
+      <span class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold">04. Mathematical Model / Equation</span>
+      <span class="font-mono text-[10px] text-[var(--ink2)]">KaTeX Proof</span>
+    </div>
+    
+    <div class="p-3 bg-[var(--paper)] rounded text-center text-lg sm:text-xl border border-[var(--line)] overflow-x-auto">
+      $${formula}$$
+    </div>
+
+    <div>
+      <span class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold block mb-1">05. Why This Formula? (Model Justification)</span>
+      <p class="text-xs text-[var(--pencil)] leading-relaxed">
+        {whyFormula}
+      </p>
+    </div>
+  </div>
+
+  <!-- 6. VARIABLE DEFINITIONS -->
+  {variables.length > 0 && (
+    <div class="p-4 rounded-lg bg-[var(--card)] border border-[var(--line)] mb-5">
+      <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold mb-2">
+        06. Variable Definitions & Parameter Mapping
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 text-xs font-mono">
+        {variables.map(v => (
+          <div class="p-2 rounded bg-[var(--paper)] border border-[var(--rule)]">
+            <div class="font-bold text-[var(--ink)]">${v.symbol}$</div>
+            <div class="text-[11px] text-[var(--pencil)]">{v.meaning}</div>
+            <div class="text-xs font-bold text-[var(--text)] mt-1">= {v.value}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <!-- 7 & 8: CALCULATION TRACE (STEP-BY-STEP ARITHMETIC) -->
+  <div class="p-5 rounded-lg bg-[var(--card)] border border-[var(--line)] mb-5 space-y-3">
+    <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold">
+      07 & 08. Step-by-Step Substitution & Arithmetic Trace
+    </div>
+    <div class="space-y-3 font-sans text-xs">
+      {steps.map((st, idx) => (
+        <div class="p-3.5 rounded bg-[var(--paper)] border border-[var(--line)] space-y-1.5">
+          <div class="flex items-center space-x-2">
+            <span class="w-5 h-5 rounded-full bg-[var(--ink)] text-white font-mono text-[11px] font-bold flex items-center justify-center shrink-0">
+              {st.stepNumber || (idx + 1)}
+            </span>
+            <span class="font-serif font-bold text-xs sm:text-sm text-[var(--ink)]">{st.action}</span>
+          </div>
+          {st.calculation && (
+            <div class="pl-7 font-mono text-xs sm:text-sm text-[var(--text)] bg-[var(--card)] p-2 rounded border border-[var(--rule)] overflow-x-auto">
+              $${st.calculation}$$
+            </div>
+          )}
+          <p class="pl-7 text-[var(--pencil)] text-xs leading-relaxed">
+            {st.explanation}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- 9. FINAL ANSWER -->
+  <div class="p-5 rounded-xl bg-[var(--card)] border-2 border-[var(--green)] mb-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div>
+      <span class="font-mono text-[10px] uppercase tracking-wider text-[var(--green)] font-bold block">
+        09. Final Calculated Answer
+      </span>
+      <div class="font-serif text-2xl sm:text-3xl font-extrabold text-[var(--text)] mt-1">
+        {answer}
+      </div>
+    </div>
+    <span class="rubber-stamp stamp-green text-xs shrink-0">VERIFIED ANSWER</span>
+  </div>
+
+  <!-- 10. INTERPRETATION -->
+  <div class="p-4 rounded-lg bg-[var(--card)] border-l-4 border-[var(--ink)] mb-4">
+    <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--ink)] font-bold mb-1">
+      10. Managerial & Operational Interpretation
+    </div>
+    <p class="text-xs sm:text-sm text-[var(--text)] leading-relaxed">
+      {interpretation}
+    </p>
+  </div>
+
+  <!-- 11 & 12: SANITY TEST & COMMON MISTAKE -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- 11. Sanity Test -->
+    <div class="p-4 rounded-lg bg-[var(--card)] border border-[var(--line)]">
+      <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--green)] font-bold mb-1">
+        11. Sanity Test & Boundary Check
+      </div>
+      <p class="text-xs text-[var(--pencil)] leading-relaxed font-mono">
+        ✓ {sanityCheck}
+      </p>
+    </div>
+
+    <!-- 12. Common Exam Mistake -->
+    <div class="p-4 rounded-lg bg-[var(--st-r)] text-[var(--st-text)] border border-[var(--red)]/30 rounded-br-2xl">
+      <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--red)] font-bold mb-1 flex items-center space-x-1">
+        <span>⚠</span>
+        <span>12. Common Mistake / Exam Trap</span>
+      </div>
+      <p class="text-xs leading-relaxed font-sans">
+        {commonMistake}
+      </p>
+    </div>
+  </div>
+
+</div>

@@ -11,9 +11,16 @@ interface Props {
   title?: string;
   katex?: string;
   formula?: string;
+  meaning?: string;
   description?: string;
   explanation?: string;
   variables?: Variable[];
+  assumptions?: string[];
+  substitution?: string | string[];
+  result?: string;
+  interpretation?: string;
+  sanityCheck?: string;
+  provenance?: string;
   example?: {
     problem: string;
     steps: string[];
@@ -23,66 +30,152 @@ interface Props {
 
 const {
   name,
-  title = name || 'Formula',
+  title = name || 'Formula Specification',
   katex,
   formula = katex || '',
+  meaning,
   description,
-  explanation = description || '',
+  explanation = meaning || description || '',
   variables = [],
+  assumptions = [],
+  substitution,
+  result,
+  interpretation,
+  sanityCheck,
+  provenance,
   example,
 } = Astro.props;
+
+const assumptionsList = Array.isArray(assumptions)
+  ? assumptions
+  : (typeof assumptions === 'string' && assumptions.trim()
+    ? (assumptions.includes('\n') ? assumptions.split('\n').map(s => s.trim()).filter(Boolean) : [assumptions.trim()])
+    : []);
+
+const varList = Array.isArray(variables) ? variables : [];
 ---
 
-<div class="formula-card paper-card p-6 my-6 rounded-lg border border-[var(--line)]">
-  <div class="flex items-baseline justify-between mb-2">
-    <h4 class="font-serif text-lg font-bold text-[var(--ink)]">
-      {title}
-    </h4>
-    <span class="rubber-stamp stamp-green text-[10px]">FORMULA</span>
+<div class="formula-card paper-card p-6 my-6 rounded-xl border border-[var(--line)] bg-[var(--card)] shadow-xs">
+  <!-- Header: Title and Stamps -->
+  <div class="flex items-baseline justify-between mb-3 pb-2 border-b border-[var(--rule)]">
+    <div>
+      <span class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold">MATHEMATICAL MODEL</span>
+      <h4 class="font-serif text-lg sm:text-xl font-bold text-[var(--ink)]">
+        {title}
+      </h4>
+    </div>
+    <div class="flex items-center space-x-2">
+      <span class="rubber-stamp stamp-green text-[9px]">VERIFIED KaTeX</span>
+      {provenance && (
+        <span class="font-mono text-[10px] text-[var(--pencil)] hidden sm:inline">{provenance}</span>
+      )}
+    </div>
   </div>
 
+  <!-- Conceptual Meaning -->
   {explanation && (
-    <p class="text-xs text-[var(--pencil)] mb-3 leading-relaxed">
+    <div class="mb-4 text-xs sm:text-sm text-[var(--pencil)] leading-relaxed">
+      <strong class="text-[var(--text)] font-semibold font-mono text-xs uppercase tracking-wider block mb-1">Conceptual Meaning:</strong>
       {explanation}
-    </p>
+    </div>
   )}
 
-  <div class="formula-box p-4 my-3 text-center text-xl overflow-x-auto bg-[var(--paper)]">
+  <!-- Primary Formula Box -->
+  <div class="formula-box p-4 my-4 text-center text-xl sm:text-2xl overflow-x-auto bg-[var(--paper)] rounded-lg border border-[var(--line)] shadow-inner">
     $${formula}$$
   </div>
 
-  {variables.length > 0 && (
+  <!-- Variable Definitions Table -->
+  {varList.length > 0 && (
     <div class="mt-4 pt-3 border-t border-[var(--rule)]">
-      <div class="font-mono text-[11px] uppercase tracking-wider text-[var(--pencil)] font-bold mb-2">
-        Variable Definitions & Units:
+      <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold mb-2">
+        Variable Definitions, Dimensions & Units:
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-        {variables.map(v => (
-          <div class="flex items-start space-x-2">
-            <code class="font-mono font-bold text-[var(--ink)] px-1.5 py-0.5 rounded bg-[var(--card)] border border-[var(--line)] shrink-0">${v.symbol}$</code>
-            <span class="text-[var(--text)]">{v.description || v.name}</span>
-            {v.unit && <span class="text-[var(--pencil)] text-[11px]">({v.unit})</span>}
+        {varList.map(v => (
+          <div class="flex items-start space-x-2 p-1.5 rounded bg-[var(--paper)] border border-[var(--line)]">
+            <code class="font-mono font-bold text-[var(--ink)] px-1.5 py-0.5 rounded bg-[var(--card)] border border-[var(--rule)] shrink-0">${v.symbol}$</code>
+            <div class="flex-1 min-w-0">
+              <span class="text-[var(--text)] font-medium">{v.description || v.name}</span>
+              {v.unit && <span class="text-[var(--pencil)] text-[11px] block font-mono">Unit: {v.unit}</span>}
+            </div>
           </div>
         ))}
       </div>
     </div>
   )}
 
-  {example && (
-    <div class="mt-4 p-4 rounded bg-[var(--paper)] border border-[var(--line)] text-xs font-mono space-y-1.5">
-      <div class="font-bold text-[var(--amber)] text-xs mb-1">
-        Worked Numerical Proof:
+  <!-- Assumptions & Boundary Conditions -->
+  {assumptionsList.length > 0 && (
+    <div class="mt-4 pt-3 border-t border-[var(--rule)]">
+      <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold mb-1.5">
+        Assumptions & Boundary Conditions:
       </div>
-      <div class="text-[var(--pencil)] italic mb-2">{example.problem}</div>
-      {example.steps.map(st => (
-        <div class="flex items-start space-x-2">
-          <span class="text-[var(--ink2)] font-bold">→</span>
-          <span>{st}</span>
+      <ul class="list-disc list-inside text-xs text-[var(--pencil)] space-y-1">
+        {assumptionsList.map(a => (
+          <li><span class="text-[var(--text)]">{a}</span></li>
+        ))}
+      </ul>
+    </div>
+  )}
+
+  <!-- Worked Numerical Substitution & Result -->
+  {(example || substitution) && (
+    <div class="mt-4 p-4 rounded-lg bg-[var(--paper)] border border-[var(--line)] text-xs space-y-2">
+      <div class="font-mono text-[10px] uppercase tracking-wider font-bold text-[var(--amber)]">
+        Worked Mathematical Proof & Substitution:
+      </div>
+
+      {example && (
+        <div class="text-[var(--pencil)] italic mb-2">{example.problem}</div>
+      )}
+
+      {example && example.steps && (
+        <div class="space-y-1 font-mono text-[11px]">
+          {example.steps.map(st => (
+            <div class="flex items-start space-x-2">
+              <span class="text-[var(--ink2)] font-bold">→</span>
+              <span>{st}</span>
+            </div>
+          ))}
         </div>
-      ))}
-      <div class="pt-2 border-t border-[var(--rule)] font-bold text-[var(--green)]">
-        Result: {example.result}
-      </div>
+      )}
+
+      {Array.isArray(substitution) && (
+        <div class="space-y-1 font-mono text-[11px]">
+          {substitution.map(st => (
+            <div class="flex items-start space-x-2">
+              <span class="text-[var(--ink2)] font-bold">→</span>
+              <span>{st}</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {(result || (example && example.result)) && (
+        <div class="pt-2 border-t border-[var(--rule)] flex items-center justify-between font-mono">
+          <span class="text-[var(--pencil)] font-bold">Calculated Output:</span>
+          <span class="text-sm font-bold text-[var(--green)] bg-[var(--card)] px-2.5 py-1 rounded border border-[var(--line)]">
+            {result || (example && example.result)}
+          </span>
+        </div>
+      )}
+    </div>
+  )}
+
+  <!-- Managerial Interpretation -->
+  {interpretation && (
+    <div class="mt-3 p-3 rounded bg-[var(--card)] border-l-4 border-[var(--ink)] text-xs text-[var(--text)] leading-relaxed">
+      <span class="font-mono font-bold text-[10px] uppercase tracking-wider text-[var(--ink)] block mb-0.5">Managerial / Operational Interpretation:</span>
+      {interpretation}
+    </div>
+  )}
+
+  <!-- Sanity Check -->
+  {sanityCheck && (
+    <div class="mt-2 text-[11px] font-mono text-[var(--pencil)] flex items-center space-x-2">
+      <span class="text-[var(--green)] font-bold">✓ Sanity Check:</span>
+      <span>{sanityCheck}</span>
     </div>
   )}
 </div>

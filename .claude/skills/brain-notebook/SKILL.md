@@ -1,562 +1,176 @@
 ---
 name: brain-notebook
-description: Deterministic BRAIN Paper notebook generator. Preserves the proven FIN403/ERP HTML interaction model while adding deeper explanations, semantic infographics, diagrams, PYQs, quizzes and a complete appendix.
+description: Authoritative academic paper notebook authoring skill for BRAIN. Defines the visual, typographic, mathematical, numerical, infographic, examination, and archival standards for canonical MDX notebooks.
 ---
 
-# Brain Notebook
+# Brain Notebook Specification & Authoring Standard
 
 ## Purpose
 
-Generate the canonical BRAIN notebook from a validated research package.
+`brain-notebook` is the authoritative skill for transforming structured research from `brain-research` into canonical, publication-ready academic paper study notebooks in BRAIN.
 
-The existing FIN403/ERP HTML notebook is the compatibility baseline. Preserve its successful interaction and paper-notebook language rather than inventing a new style for every subject.
+A BRAIN notebook is defined as:
+> *"A beautifully typeset academic notebook that became interactive."*  
+> Not an HTML page pretending to be a notebook, and not a SaaS dashboard.
 
-The generator improves the knowledge architecture and visual explanation quality.
-
-## 1. Determinism contract
-
-Same:
-- validated research;
-- metadata;
-- source manifest;
-- template version;
-- design tokens;
-
-must produce the same:
-- section order;
-- page order;
-- component choices;
-- figure numbering;
-- asset naming;
-- index labels;
-- quiz order;
-- PYQ order;
-- appendix structure.
-
-Do not randomly vary fonts, colours, card types, diagrams or layout.
-
-Variation is allowed only through explicit content-driven rules.
-
-## 2. Canonical visual language
-
-Use the reference notebook's paper language:
-
-- warm cream/off-white paper;
-- subtle horizontal ruled lines;
-- muted red notebook margin;
-- spiral/punched-hole illusion;
-- restrained paper texture;
-- soft physical-paper shadow;
-- editorial academic typography;
-- restrained handwritten annotations;
-- sticky notes, tape, stamps and highlights.
-
-Do not use:
-- cyberpunk;
-- neon;
-- glassmorphism;
-- SaaS dashboards;
-- childish scrapbook styling;
-- excessive animation;
-- decorative image walls.
-
-Colour is semantic:
-- primary ink;
-- secondary ink;
-- graphite;
-- rule;
-- margin;
-- yellow/green/blue/pink highlights;
-- warning red;
-- success green;
-- amber.
-
-## 3. Canonical notebook order
-
-Default structure:
-
-~~~text
-01 COVER
-02 HOW TO USE / STUDY CONTROLS
-03 INDEX / NOTEBOOK MAP
-
-04 START / ORIENTATION
-05 FOUNDATIONS
-06 CORE CONCEPTS
-07 FRAMEWORKS & MODELS
-08 WORKED EXAMPLES
-09 CASES & APPLICATIONS
-
-10 PYQs
-11 QUIZ & REVISION
-12 QUICK REVISION
-
-13 APPENDIX
-   A. Source Register
-   B. Citation Register
-   C. Figure & Diagram Register
-   D. PYQ Provenance
-   E. Glossary
-   F. Formula Register
-   G. Change History
-~~~
-
-If a section genuinely has no content, it may be collapsed, but the canonical ordering remains.
-
-## 4. Grouped index
-
-The index must be visibly divided into groups:
-
-- START
-- FOUNDATIONS
-- CORE CONCEPTS
-- FRAMEWORKS & MODELS
-- WORKED EXAMPLES
-- CASES & APPLICATIONS
-- PYQs
-- QUIZ & REVISION
-- APPENDIX
-
-Every page uses machine-readable metadata:
-
-~~~html
-<section
-  class="page"
-  id="..."
-  data-title="..."
-  data-group="Core Concepts"
-  data-count="yes"
-  aria-label="..."
->
-~~~
-
-The sidebar is generated from this metadata.
-
-## 5. Required top controls
-
-Retain the reference notebook controls:
-
-### Index/menu
-Opens the grouped sidebar.
-
-### Magnifying-glass search
-Searches:
-- headings;
-- paragraphs;
-- lists;
-- tables;
-- formulas;
-- PYQs;
-- quiz questions;
-- glossary;
-- appendix;
-- figure captions.
-
-Search remains local/static/offline.
-
-### Focus mode
-Expands the reading canvas and hides distractions.
-
-### Light/dark mode
-Toggle between the cream paper reading mode and a low-strain dark reading mode.
-
-Dark mode is the same design system, not a separate theme.
-
-### Print
-Print/export the whole notebook.
-
-### Progress
-Display completion percentage and page completion state.
-
-Persist preferences/progress locally in the browser.
-
-## 6. Page interaction
-
-Meaningful pages can contain:
-- previous/next;
-- mark complete;
-- section label;
-- page title;
-- anchors;
-- expandable explanations;
-- worked examples;
-- formula cards;
-- self-checks;
-- related concepts.
-
-Interaction must support learning. Do not turn every paragraph into a widget.
-
-## 7. Concept explanation grammar
-
-For every major concept evaluate:
-
-### A. Definition
-Authoritative concise explanation.
-
-### B. Intuition
-Plain-language mental model.
-
-### C. Why it matters
-Strategic/operational/technical significance.
-
-### D. How it works
-Step-by-step mechanism.
-
-### E. Anatomy
-Components, actors, inputs and outputs.
-
-### F. Visual explanation
-Diagram or infographic.
-
-### G. Example
-Concrete scenario.
-
-### H. Worked example
-Numerical/procedural walkthrough when applicable.
-
-### I. Application/case
-Real-world context.
-
-### J. Trade-offs/limitations
-What should not be oversimplified.
-
-### K. Common mistakes
-Misconceptions and exam/interview traps.
-
-### L. Recall check
-Active-recall question.
-
-### M. Answer pattern
-How to communicate the concept clearly.
-
-Not every concept requires every block, but every block must be considered.
-
-## 8. Infographics and diagrams
-
-Visual explanation is a core feature.
-
-Prefer:
-**SVG > HTML/CSS > raster**
-
-SVG is preferred because it is deterministic, responsive, printable, accessible and lightweight.
-
-Naming:
-
-~~~text
-fig-001-topic-slug.svg
-fig-002-process-flow.svg
-fig-003-framework.svg
-~~~
-
-Metadata:
-
-~~~yaml
-figure_id: FIG-001
-title: "MRP Information Flow"
-type: process-flow
-concept: mrp
-caption: "How demand information becomes planned orders."
-source: "Derived from verified research package"
-alt: "Flow from master schedule through BOM and inventory records to planned orders."
-~~~
-
-Selection rules:
-
-| Content | Visual |
-|---|---|
-| Definition | annotated concept card |
-| Process | flowchart |
-| Architecture | layered diagram |
-| Sequence | timeline |
-| Comparison | matrix |
-| Strategy | 2×2 |
-| Decision | decision tree |
-| Hierarchy | tree |
-| Quantitative relationship | chart/curve |
-| Formula | formula card + variable map |
-| Supply chain | network/flow |
-| System | architecture map |
-| Case | before/after or operating model |
-| Numerical problem | step diagram/table |
-| Lifecycle | lifecycle diagram |
-
-A visual must teach something; it must not be decorative filler.
-
-## 9. Image generation policy
-
-When a visual cannot be expressed accurately as SVG/CSS:
-
-1. define its educational purpose;
-2. define a stable prompt;
-3. record prompt and asset metadata;
-4. store it under the notebook asset directory;
-5. provide alt text;
-6. preserve provenance.
-
-For technical concepts, use precise vector diagrams whenever possible.
-
-## 10. PYQ section
-
-PYQs appear near the end, immediately before Quiz & Revision.
-
-Structure:
-
-~~~text
-PYQ Overview
-→ Frequency / Recurrence Matrix
-→ Year-wise Questions
-→ Topic-wise Questions
-→ Step-by-step Solutions
-→ Answer Frameworks
-→ Common PYQ Traps
-~~~
-
-Rules:
-- exact source wording where available;
-- year and marks always shown;
-- zero fabricated historical questions;
-- recurrence based only on verified PYQs;
-- numerical solutions show meaningful steps;
-- answer keys may be separate from full solutions;
-- each PYQ links back to concept pages.
-
-Use the established PYQ year-card/question-card language from the reference HTML.
-
-## 11. Quiz section
-
-Quiz follows PYQs.
-
-Use:
-- MCQ;
-- true/false + explanation;
-- classification;
-- matching;
-- numerical checks;
-- scenarios;
-- diagram interpretation;
-- spot-the-mistake;
-- short recall.
-
-Metadata:
-
-~~~yaml
-question_id:
-type:
-difficulty:
-topic:
-question:
-options:
-answer:
-explanation:
-source_basis:
-~~~
-
-Answers should be revealable.
-
-Quiz questions must test understanding rather than copying notebook sentences.
-
-## 12. Quick revision section
-
-Include, where appropriate:
-- one-page concept map;
-- key formulas;
-- key frameworks;
-- high-frequency traps;
-- glossary blitz;
-- 10–20 key takeaways;
-- exam/real-world answer skeletons.
-
-This is a compression layer, not a replacement for the notebook.
-
-## 13. Appendix
-
-The appendix is always the final section.
-
-Include:
-
-### A. Source Register
-Every source used.
-
-### B. Citation Register
-Canonical citations.
-
-### C. Figure & Diagram Register
-Every visual, purpose and provenance.
-
-### D. PYQ Provenance
-Year/question/source mapping.
-
-### E. Glossary
-Important terms.
-
-### F. Formula Register
-Formula, variables, units and source.
-
-### G. Change History
-Version and meaningful changes.
-
-The appendix is the notebook's audit trail.
-
-## 14. Metadata
-
-Use frontmatter similar to:
-
-~~~yaml
 ---
-id: erp-foundations
-title: Enterprise Resource Planning
-slug: enterprise-resource-planning
-description: "..."
-version: 1.0.0
-templateVersion: brain-paper-1.0
-status: published
-updated: 2026-10-05
-tags:
-  - ERP
-  - Operations
 
-features:
-  search: true
-  focusMode: true
-  darkMode: true
-  progressTracking: true
-  pyq: true
-  quiz: true
-  appendix: true
-  diagrams: true
-  infographics: true
-  pdf: true
-  interactiveBook: false
+## 1. Physical Paper Aesthetic & Visual Language
+
+Every notebook must embody physical stationery qualities resting upon a scholar's study desk:
+
+1. **Paper Canvas**: Warm cream paper background (`--paper: #FCF8EE` light, `--paper: #171412` dark).
+2. **Horizontal Ruled Lines**: Subtle blue notebook rulings (`--rule: #D6E3EF` light, `--rule: #243049` dark) spaced at 30px line-height.
+3. **Vertical Red Margin**: Left red margin demarcation line (`--margin: #E28B8B` light, `--margin: #7F1D1D` dark).
+4. **Punch-Holes & Binding Spine**: Authentic three-hole punch radial cutouts and spiral binding teeth on the left edge.
+5. **Marginalia & Accents**: Handwritten annotations and washi-tape sticky notes (`Caveat` and `Patrick Hand` fonts).
+6. **Rubber Stamps**: Editorial impressions (`VERIFIED`, `EXAM CRITICAL`, `HISTORICAL`, `DATA QUALITY LAW`).
+7. **Highlighter Marks**: Semi-transparent yellow (`--hy`), green (`--hg`), pink (`--hp`), and blue (`--hb`) chisel marks.
+
 ---
-~~~
 
-## 15. Shared component vocabulary
+## 2. Typography Standard
 
-Use reusable components:
+The typographic hierarchy must enforce intellectual authority and high legibility:
 
-- Notebook
-- NotebookCover
-- NotebookPage
-- NotebookIndex
-- NotebookTab
-- SectionHeader
-- StickyNote
-- Tape
-- Stamp
-- Highlight
-- DefinitionCard
-- ConceptCard
-- FormulaCard
-- ComparisonCard
-- ProcessDiagram
-- ArchitectureDiagram
-- TimelineDiagram
-- DecisionTree
-- Infographic
-- WorkedExample
-- CaseCard
-- PYQCard
-- PYQYearCard
-- QuizCard
-- AnswerReveal
-- RecallCard
-- GlossaryCard
-- SourceCard
-- FigureCaption
-- AppendixTable
-- ProgressControl
+* **DISPLAY & TITLES**: Editorial serif (`Libre Bodoni` / `Libre Baskerville`).
+* **SECTION HEADINGS**: Strong academic serif (`Libre Bodoni`).
+* **BODY TEXT**: High-legibility continuous reading sans-serif (`Public Sans` / `Source Sans 3`).
+* **MARGINALIA & NOTES**: Handwritten accent cursive (`Caveat` / `Patrick Hand`).
+* **FORMULAS & PROOFS**: KaTeX mathematical typography.
+* **CODE & METADATA**: Monospace (`JetBrains Mono`).
 
-Build the visual system once and reuse it.
+Typography establishes:
+* `COVER` $\to$ Editorial
+* `SECTION` $\to$ Academic
+* `BODY` $\to$ Extremely readable
+* `ANNOTATION` $\to$ Handwritten
+* `FORMULA` $\to$ Technical precision
 
-## 16. Responsive and accessibility requirements
+---
 
-Test:
-- 390px mobile;
-- 768px tablet;
-- 1024px laptop;
-- 1440px desktop;
-- print/PDF.
+## 3. Top Notebook Controls
 
-Require:
-- keyboard navigation;
-- visible focus;
-- semantic headings;
-- labelled controls;
-- alt text;
-- reduced-motion support;
-- sufficient contrast;
-- readable line length;
-- no unintended horizontal overflow.
+Every notebook must render a standardized, accessible top control bar:
 
-## 17. Print/PDF
+```text
+[ Index ]  [ Search 🔍 ]  [ Focus ]  [ Light/Dark ]  [ Progress ]  [ Print ]
+```
 
-Print must remove:
-- navigation controls;
-- search overlay;
-- interactive-only chrome.
+* **`[ Index ]`**: Opens the structured 9-section index drawer (Sheet on mobile, sidebar toggle on desktop).
+* **`[ Search 🔍 ]`**: Opens the global shadcn Command palette (⌘K) to query headings, paragraphs, formulas, tables, PYQs, quiz questions, and glossary terms.
+* **`[ Focus ]`**: Toggles Focus Mode — suppresses distractions, collapses sidebars and toolbars, and expands reading width for deep study.
+* **`[ Light/Dark ]`**: Toggles between cream paper notebook (`#FCF8EE`) and dark academic reading mode (`#171412`). Never use a simple inverted filter.
+* **`[ Progress ]`**: Real-time reading progress bar and percentage indicator.
+* **`[ Print ]`**: Opens clean printable / PDF view (`@media print`) with collapsed elements expanded and toolbars hidden.
 
-Print must preserve:
-- headings;
-- formulas;
-- diagrams;
-- tables;
-- PYQs;
-- quizzes;
-- appendix;
-- citations.
+---
 
-## 18. Deterministic build sequence
+## 4. Structured 9-Section Notebook Index
 
-1. Validate research package.
-2. Load metadata.
-3. Load template/design version.
-4. Build information architecture.
-5. Build grouped index.
-6. Build cover.
-7. Build content sections.
-8. Build diagrams.
-9. Build infographics.
-10. Build examples.
-11. Build cases.
-12. Build PYQs.
-13. Build quiz.
-14. Build quick revision.
-15. Build appendix.
-16. Build search index.
-17. Build progress metadata.
-18. Run accessibility QA.
-19. Run content QA.
-20. Run visual QA.
-21. Generate PDF.
-22. Hand off to interactive-book workflow if requested.
+The notebook index must NEVER be a flat list of headings. It MUST be organized into these 9 canonical pedagogical divisions:
 
-Never generate the final appendix before the source and figure inventory is complete.
+1. **`START`**: Scope, Course Metadata, and high-impact Sticky Note thesis.
+2. **`FOUNDATIONS`**: Core definitions, historical legacy, and theoretical problem context.
+3. **`CORE CONCEPTS`**: Fundamental axioms, taxonomies, and distinction cards.
+4. **`FRAMEWORKS & MODELS`**: Architectural blueprints, multi-tier topologies, and comparison matrices.
+5. **`WORKED EXAMPLES`**: Step-by-step mathematical proofs and 12-step numerical calculation traces.
+6. **`CASES & APPLICATIONS`**: Real-world corporate mini-cases and operational impact studies.
+7. **`PYQs`**: Past examination questions, marks allocation, frequency heatmap, and model solutions.
+8. **`QUIZ & REVISION`**: Active recall flashcards and interactive revealable quiz questions.
+9. **`APPENDIX`**: Comprehensive 7-part register (Sources, Citations, Figures, PYQ Provenance, Glossary, Formulas, Change History).
 
-## 19. QA gates
+---
 
-- [ ] reference interaction model works;
-- [ ] grouped index works;
-- [ ] search works;
-- [ ] focus mode works;
-- [ ] light/dark mode works;
-- [ ] progress works;
-- [ ] navigation works;
-- [ ] diagrams render;
-- [ ] diagrams have captions/alt text;
-- [ ] explanations contain genuine conceptual depth;
-- [ ] PYQs are source-verified;
-- [ ] quiz answers work;
-- [ ] appendix is complete;
-- [ ] citations resolve;
-- [ ] mobile layout works;
-- [ ] print layout works;
-- [ ] no console errors;
-- [ ] no broken internal links.
+## 5. Mathematical Rigor (HARD REQUIREMENT)
 
-Final status:
+Every formula must be typeset with KaTeX (`$` for inline, `$$` for display). Formulas must NEVER appear as plain text, broken HTML, or images.
 
-**NOTEBOOK READY**
+Every primary formula requires the standard 8-point specification:
+1. **Formula**: Display KaTeX equation ($$\dots$$).
+2. **Meaning**: Clear conceptual statement of what the equation models.
+3. **Variable Table**: Symbol, full name/description, and explicit unit of measurement.
+4. **Assumptions & Boundary Conditions**: Operating premises and domain constraints.
+5. **Worked Substitution**: Real-world parameter substitution with intermediate calculation steps.
+6. **Final Result**: Exact numerical answer with proper units.
+7. **Managerial / Operational Interpretation**: What the result means for decision-making.
+8. **Sanity Check**: Dimensional analysis and directional sensitivity.
 
-or
+---
 
-**NOTEBOOK BLOCKED — [reason]**
+## 6. Numerical Explanations: The 12-Step Professor Standard (HARD REQUIREMENT)
+
+Numerical problems must be presented as if a master professor is teaching the calculation at a chalkboard. Never jump directly from "Formula $\to$ Answer".
+
+Every numerical walkthrough must follow the 12-step pedagogy:
+```text
+1. PROBLEM STATEMENT        --> Real-world business or engineering scenario
+2. GIVEN DATA               --> List of known values with notation and units
+3. WHAT IS REQUIRED?        --> Explicit target variable to solve
+4. FORMULA / MODEL          --> Display KaTeX equation selected
+5. WHY THIS FORMULA?        --> Rationale for selecting this specific model
+6. VARIABLE DEFINITIONS     --> Table of symbols, descriptions, and values
+7. SUBSTITUTION             --> Numeric values substituted into the formula
+8. CALCULATION TRACE        --> Step 1, Step 2, Step 3... showing arithmetic
+9. FINAL ANSWER             --> Distinct boxed result with explicit units
+10. INTERPRETATION          --> Business implication of the calculated number
+11. SANITY TEST / CHECK     --> Boundary test, sensitivity check, or alternative verification
+12. COMMON MISTAKE / TRAP   --> Typical exam errors (e.g. daily vs annual units)
+```
+
+---
+
+## 7. Deterministic SVG Infographics
+
+Every major architectural or process concept must be paired with an explanatory visual.
+* **Format**: Deterministic, responsive SVG vector graphics.
+* **Color System**: Monochromatic ink lines with paper highlight accents (`#1D3C8C`, `#2F5FC4`, `#E28B8B`, `#1D7A45`, `#B86E00`).
+* **Metadata**: Every figure MUST have:
+  - Figure ID (`Figure 1.1`, `Figure 2.3`)
+  - Title
+  - Descriptive Caption
+  - Semantic Alt Text
+  - Provenance / Source Citation
+
+---
+
+## 8. Past Examination Questions (PYQ) Protocol
+
+1. **Zero Fabrication**: Only genuine questions from verified past exam papers.
+2. **Metadata**: Each PYQ must record: Year, Session/Paper, Question Number, Marks Weightage, Exact Wording, and Topic.
+3. **Structure**:
+   - Examination Frequency & Heatmap Matrix
+   - Year-wise & Topic-wise grouping
+   - Step-by-step Model Answer
+   - 4-Pillar Answer Construction Strategy (Definition, Blueprint, Workflow, Case Evidence)
+   - Common Exam Pitfalls & Traps
+
+---
+
+## 9. Active Recall Quiz
+
+Following the PYQ section, include conceptual evaluation:
+* **Formats**: Multiple-Choice Questions (MCQs), True/False with justification, Scenario analysis, Numerical quick-fire, and Spot-the-Mistake.
+* **Interactivity**: Answers hidden by default using accessible accordion/collapsible controls.
+* **Pedagogy**: Every answer MUST explain *why* the correct answer is right and *why* distractors are incorrect.
+
+---
+
+## 10. The 7-Part Appendix
+
+Every canonical notebook ends with a standardized 7-part appendix:
+* **A. SOURCE REGISTER**: Formal citation of books, research papers, faculty notes, and official manuals.
+* **B. CITATION REGISTER**: Mapping of inline citation keys to bibliography entries.
+* **C. FIGURE / DIAGRAM REGISTER**: Catalogue of all figures with provenance.
+* **D. PYQ PROVENANCE**: Verification table linking each PYQ to its source exam paper.
+* **E. GLOSSARY**: Comprehensive alphabetical definition of terms, acronyms, and transaction codes.
+* **F. FORMULA REGISTER**: Master cheat sheet summarizing all equations and units.
+* **G. CHANGE HISTORY**: Version log, update timestamps, and author review sign-off.
+
+---
+
+## 11. Strict Compliance Rules
+
+1. **Zero Prohibited Terms**: Never include `WeSchool`, `Welingkar`, `MBA`, `PGDM`, `B-school`, or `business school`.
+2. **Canonical Placement**: Notebooks live strictly as MDX files in `domains/<domain>/<subject>/notebooks/<slug>.mdx`.
+3. **Companion Print Route**: Every notebook must provide a print companion at `.../notebooks/<slug>/print/`.

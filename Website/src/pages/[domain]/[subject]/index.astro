@@ -52,13 +52,16 @@ const { subject, domain, notebooks } = Astro.props;
 
 // Check for interactive books
 const interactiveNotebooks = notebooks.filter(nb => nb.data.interactive?.available);
+
+// Extract knowledge map concepts from notebook tags
+const allTags = Array.from(new Set(notebooks.flatMap(nb => nb.data.tags || [])));
 ---
 
 <BaseLayout 
   title={`${subject.title} · ${domain.title} · Brain Knowledge Library`}
   description={subject.description}
 >
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-12">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-12">
 
     <!-- Breadcrumb -->
     <nav class="flex items-center space-x-2 text-xs font-mono text-[var(--pencil)]">
@@ -70,18 +73,18 @@ const interactiveNotebooks = notebooks.filter(nb => nb.data.interactive?.availab
     </nav>
 
     <!-- Subject Header -->
-    <header class="paper-card p-6 sm:p-10 rounded-xl border border-[var(--line)] bg-[var(--card)] relative">
-      <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[var(--rule)]">
+    <header class="paper-card p-6 sm:p-10 rounded-2xl border-2 border-[var(--line)] bg-[var(--card)] relative shadow-paper-md">
+      <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b-2 border-[var(--rule)]">
         <div class="flex items-center space-x-2">
-          <span class="rubber-stamp stamp-green text-[10px]">SUBJECT ARCHIVE</span>
-          <span class="font-mono text-xs text-[var(--pencil)]">{domain.title.toUpperCase()}</span>
+          <span class="rubber-stamp stamp-green text-[10px]">SUBJECT PORTFOLIO</span>
+          <span class="font-mono text-xs uppercase text-[var(--pencil)]">{domain.title}</span>
         </div>
         <div class="flex items-center space-x-3 font-mono text-xs text-[var(--pencil)]">
           <span>{notebooks.length} Canonical Notebook{notebooks.length !== 1 ? 's' : ''}</span>
           {interactiveNotebooks.length > 0 && (
             <>
               <span>•</span>
-              <span class="text-[var(--ink)] font-bold">{interactiveNotebooks.length} Interactive Book{interactiveNotebooks.length !== 1 ? 's' : ''}</span>
+              <span class="text-[var(--amber)] font-bold">{interactiveNotebooks.length} Interactive Simulator{interactiveNotebooks.length !== 1 ? 's' : ''}</span>
             </>
           )}
         </div>
@@ -91,12 +94,12 @@ const interactiveNotebooks = notebooks.filter(nb => nb.data.interactive?.availab
         <div class="font-mono text-xs uppercase tracking-wider text-[var(--pencil)] mb-1">
           {subject.courseName || subject.title}
         </div>
-        <h1 class="font-serif text-3xl sm:text-5xl font-bold text-[var(--ink)] tracking-tight">
+        <h1 class="font-serif text-3xl sm:text-5xl font-extrabold text-[var(--ink)] tracking-tight">
           {subject.title}
         </h1>
         {subject.professor && (
           <p class="font-mono text-xs sm:text-sm text-[var(--pencil)] mt-2">
-            Academic Reference / Lead: <span class="text-[var(--ink)] font-semibold">{subject.professor}</span>
+            Academic Lead / Faculty Reference: <span class="text-[var(--ink)] font-semibold">{subject.professor}</span>
           </p>
         )}
         <p class="mt-4 text-sm sm:text-base text-[var(--pencil)] font-sans leading-relaxed">
@@ -109,14 +112,14 @@ const interactiveNotebooks = notebooks.filter(nb => nb.data.interactive?.availab
         {notebooks.length > 0 && (
           <a 
             href={`/${domain.slug}/${subject.slug}/notebooks/${notebooks[0].data.slug}/`}
-            class="px-5 py-2.5 rounded-lg bg-[var(--ink)] text-white hover:bg-[var(--ink2)] font-medium text-xs sm:text-sm shadow-sm transition-all flex items-center space-x-2"
+            class="px-5 py-2.5 rounded-lg bg-[var(--ink)] text-white hover:bg-[var(--ink2)] font-mono text-xs font-bold shadow-xs transition-colors flex items-center space-x-2"
           >
             <span>Read Primary Notebook →</span>
           </a>
         )}
         <button 
-          onclick="document.getElementById('global-search-trigger')?.click()"
-          class="px-4 py-2.5 rounded-lg bg-[var(--paper)] border border-[var(--line)] hover:border-[var(--ink)] text-[var(--ink)] font-mono text-xs flex items-center space-x-2 shadow-xs transition-colors cursor-pointer"
+          onclick="window.openSearchPalette ? window.openSearchPalette() : document.getElementById('global-search-trigger')?.click()"
+          class="px-4 py-2.5 rounded-lg bg-[var(--paper)] border border-[var(--line)] hover:border-[var(--ink)] text-[var(--ink)] font-mono text-xs flex items-center space-x-2 shadow-2xs transition-colors cursor-pointer"
         >
           <svg width="14" height="14" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -126,15 +129,37 @@ const interactiveNotebooks = notebooks.filter(nb => nb.data.interactive?.availab
       </div>
     </header>
 
-    <!-- SECTION 1: CANONICAL NOTEBOOKS (PRIMARY FOCUS) -->
+    <!-- SECTION 1: KNOWLEDGE MAP -->
+    {allTags.length > 0 && (
+      <section class="paper-card p-6 rounded-xl border border-[var(--line)] bg-[var(--paper)] space-y-3">
+        <div class="flex items-center justify-between pb-2 border-b border-[var(--rule)]">
+          <span class="font-mono text-xs uppercase tracking-wider text-[var(--ink)] font-bold">
+            Knowledge Map &amp; Core Concept Anchors
+          </span>
+          <span class="font-mono text-[10px] text-[var(--pencil)]">{allTags.length} Conceptual Focus Areas</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          {allTags.map(tag => (
+            <button 
+              onclick={`window.triggerSearch('${tag}')`}
+              class="px-3 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--line)] hover:border-[var(--ink)] hover:text-[var(--ink)] font-mono text-xs text-[var(--pencil)] transition-colors cursor-pointer shadow-2xs"
+            >
+              [ {tag} ]
+            </button>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- SECTION 2: CANONICAL NOTEBOOKS (EDITORIAL LIST) -->
     <section class="space-y-6">
-      <div class="flex items-baseline justify-between border-b border-[var(--line)] pb-3">
+      <div class="flex items-baseline justify-between border-b-2 border-[var(--ink)] pb-3">
         <div>
           <h2 class="font-serif text-2xl font-bold text-[var(--ink)]">
             Canonical MDX Notebooks
           </h2>
           <p class="text-xs text-[var(--pencil)] mt-0.5">
-            The core knowledge artifacts: comprehensive, proof-backed, and verified study notebooks.
+            The core knowledge artifacts: comprehensive, proof-backed study notebooks.
           </p>
         </div>
         <span class="font-mono text-xs text-[var(--pencil)]">
@@ -142,43 +167,34 @@ const interactiveNotebooks = notebooks.filter(nb => nb.data.interactive?.availab
         </span>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Editorial List Layout -->
+      <div class="divide-y divide-[var(--rule)] border-y border-[var(--rule)] bg-[var(--card)] rounded-xl overflow-hidden shadow-xs">
         {notebooks.map(nb => (
-          <article class="paper-card p-6 sm:p-7 rounded-xl border border-[var(--line)] bg-[var(--card)] hover:border-[var(--ink)] transition-all hover:shadow-md flex flex-col justify-between group">
-            <div>
-              <div class="flex items-center justify-between gap-2 mb-3">
-                <div class="flex items-center space-x-2">
-                  <span class="rubber-stamp stamp-green text-[9px]">v{nb.data.version}</span>
-                  <span class="font-mono text-[10px] text-[var(--pencil)]">Updated {nb.data.updated}</span>
-                </div>
+          <article class="p-6 hover:bg-[var(--paper)] transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4 group">
+            <div class="space-y-2 min-w-0 max-w-3xl">
+              <div class="flex items-center space-x-2 text-[10px] font-mono text-[var(--pencil)]">
+                <span class="rubber-stamp stamp-green text-[9px]">v{nb.data.version}</span>
+                <span>Updated {nb.data.updated}</span>
                 {nb.data.readingTimeMinutes && (
-                  <span class="font-mono text-[10px] text-[var(--pencil)]">
-                    ~{nb.data.readingTimeMinutes} min read
-                  </span>
+                  <span>• ~{nb.data.readingTimeMinutes} min study</span>
                 )}
               </div>
 
               <h3 class="font-serif text-xl sm:text-2xl font-bold text-[var(--ink)] group-hover:text-[var(--ink2)] transition-colors">
-                <a href={`/${domain.slug}/${subject.slug}/notebooks/${nb.data.slug}/`} class="focus:outline-none">
+                <a href={`/${domain.slug}/${subject.slug}/notebooks/${nb.data.slug}/`}>
                   {nb.data.title}
                 </a>
               </h3>
 
-              {nb.data.professor && (
-                <p class="mt-1 font-mono text-xs text-[var(--pencil)]">
-                  Focus: {nb.data.professor}
-                </p>
-              )}
-
-              <p class="mt-3 text-xs sm:text-sm text-[var(--pencil)] leading-relaxed">
+              <p class="text-xs sm:text-sm text-[var(--pencil)] leading-relaxed font-sans">
                 {nb.data.description}
               </p>
 
               <!-- Tags -->
-              {nb.data.tags && nb.data.tags.length > 0 && (
-                <div class="mt-4 flex flex-wrap gap-1.5">
+              {nb.data.tags && (
+                <div class="flex flex-wrap gap-1.5 pt-1">
                   {nb.data.tags.map(t => (
-                    <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-[var(--paper)] border border-[var(--line)] text-[var(--pencil)]">
+                    <span class="text-[10px] font-mono text-[var(--pencil)] bg-[var(--paper)] px-1.5 py-0.5 rounded border border-[var(--line)]">
                       #{t}
                     </span>
                   ))}
@@ -186,36 +202,31 @@ const interactiveNotebooks = notebooks.filter(nb => nb.data.interactive?.availab
               )}
             </div>
 
-            <div class="mt-6 pt-4 border-t border-[var(--rule)] flex items-center justify-between">
+            <!-- Action Buttons -->
+            <div class="flex items-center space-x-2 shrink-0 pt-2 md:pt-0 font-mono text-xs">
               <a 
                 href={`/${domain.slug}/${subject.slug}/notebooks/${nb.data.slug}/`}
-                class="px-4 py-2 rounded bg-[var(--ink)] text-white hover:bg-[var(--ink2)] font-mono text-xs font-semibold shadow-xs transition-colors"
+                class="px-4 py-2 rounded-lg bg-[var(--ink)] text-white hover:bg-[var(--ink2)] font-bold shadow-2xs transition-colors"
               >
                 Read Notebook →
               </a>
-
-              <div class="flex items-center space-x-2">
-                <a 
-                  href={`/${domain.slug}/${subject.slug}/notebooks/${nb.data.slug}/print/`}
-                  target="_blank"
-                  class="px-2.5 py-1.5 rounded text-xs font-mono text-[var(--pencil)] hover:text-[var(--ink)] hover:bg-[var(--paper)] transition-colors"
-                  title="Printable Paper Edition / PDF Export"
-                >
-                  🖨 Print / PDF
-                </a>
-                {nb.data.interactive?.available && (
-                  <span class="rubber-stamp stamp-amber text-[9px]">INTERACTIVE SIM</span>
-                )}
-              </div>
+              <a 
+                href={`/${domain.slug}/${subject.slug}/notebooks/${nb.data.slug}/print/`}
+                target="_blank"
+                class="px-3 py-2 rounded-lg bg-[var(--paper)] border border-[var(--line)] text-[var(--pencil)] hover:text-[var(--ink)] hover:border-[var(--ink)] transition-colors"
+                title="Printable Paper Edition / PDF Export"
+              >
+                🖨 Print / PDF
+              </a>
             </div>
           </article>
         ))}
       </div>
     </section>
 
-    <!-- SECTION 2: INTERACTIVE BOOKS & SIMULATORS (OPTIONAL) -->
+    <!-- SECTION 3: INTERACTIVE BOOKS & SIMULATORS (IF AVAILABLE) -->
     {interactiveNotebooks.length > 0 && (
-      <section class="paper-card p-6 sm:p-8 rounded-xl border border-[var(--line)] bg-[var(--paper)] space-y-6">
+      <section class="paper-card p-6 sm:p-8 rounded-xl border border-[var(--line)] bg-[var(--paper)] space-y-6 shadow-xs">
         <div class="flex items-baseline justify-between border-b border-[var(--rule)] pb-3">
           <div>
             <div class="flex items-center space-x-2">
@@ -232,16 +243,16 @@ const interactiveNotebooks = notebooks.filter(nb => nb.data.interactive?.availab
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           {interactiveNotebooks.map(nb => (
-            <div class="p-5 rounded-lg bg-[var(--card)] border border-[var(--line)] flex flex-col justify-between">
+            <div class="p-5 rounded-xl bg-[var(--card)] border border-[var(--line)] flex flex-col justify-between shadow-2xs">
               <div>
-                <span class="font-mono text-[10px] text-[var(--pencil)] uppercase tracking-wider">
-                  Interactive Simulator
+                <span class="font-mono text-[10px] text-[var(--pencil)] uppercase tracking-wider font-bold">
+                  Interactive Simulation
                 </span>
                 <h4 class="font-serif text-lg font-bold text-[var(--ink)] mt-1">
                   {nb.data.interactive?.title || nb.data.title}
                 </h4>
-                <p class="text-xs text-[var(--pencil)] mt-2">
-                  Explore parameter sensitivity, step-by-step state animations, and instant curve recalculation.
+                <p class="text-xs text-[var(--pencil)] mt-2 font-sans leading-relaxed">
+                  Explore parameter sensitivity, step-by-step state animations, and instant mathematical recalculation.
                 </p>
               </div>
               <div class="mt-4 pt-3 border-t border-[var(--rule)] flex justify-between items-center">
@@ -258,26 +269,63 @@ const interactiveNotebooks = notebooks.filter(nb => nb.data.interactive?.availab
       </section>
     )}
 
-    <!-- SECTION 3: REVISION & PRACTICE QUESTION BANK -->
-    <section class="paper-card p-6 sm:p-8 rounded-xl border border-[var(--line)] bg-[var(--card)] space-y-4">
+    <!-- SECTION 4: RESOURCES (READINGS, CASES, QUESTIONS, REFERENCES) -->
+    <section class="paper-card p-6 sm:p-8 rounded-xl border border-[var(--line)] bg-[var(--card)] space-y-6 shadow-xs">
       <div class="flex items-baseline justify-between border-b border-[var(--rule)] pb-3">
         <h3 class="font-serif text-xl font-bold text-[var(--ink)]">
-          Examination Preparation & Practice Bank
+          Scholarly Resources &amp; Examination Bank
         </h3>
-        <span class="font-mono text-xs text-[var(--pencil)]">High-Scoring Model Answers</span>
+        <span class="font-mono text-xs text-[var(--pencil)]">Pedagogical Assets</span>
       </div>
-      <p class="text-xs sm:text-sm text-[var(--pencil)] leading-relaxed">
-        Every canonical notebook includes an embedded Question Bank featuring solved examination questions, mark breakdowns, step-by-step arithmetic proofs, and active recall flashcards.
-      </p>
-      <div class="pt-2 flex flex-wrap gap-3">
-        {notebooks.map(nb => (
-          <a 
-            href={`/${domain.slug}/${subject.slug}/notebooks/${nb.data.slug}/#past-examination-questions--model-solutions`}
-            class="px-3 py-1.5 rounded bg-[var(--paper)] border border-[var(--line)] hover:border-[var(--ink)] text-xs font-mono text-[var(--ink)] hover:underline transition-colors"
-          >
-            Q&A: {nb.data.title.split(' ')[0]}... →
-          </a>
-        ))}
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-sans">
+        <div class="p-4 rounded-xl bg-[var(--paper)] border border-[var(--rule)] space-y-1.5">
+          <strong class="font-mono font-bold text-[var(--ink)] text-sm block">01. Solved PYQs</strong>
+          <p class="text-[var(--pencil)] leading-relaxed">
+            University examination question bank with 4-pillar model answers and scoring blueprints.
+          </p>
+          <div class="pt-2">
+            <a href={`/${domain.slug}/${subject.slug}/notebooks/${notebooks[0]?.data.slug || ''}/#09--past-examination-questions-pyqs--model-solutions`} class="font-mono text-[11px] text-[var(--ink2)] font-bold hover:underline">
+              Browse Questions →
+            </a>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-[var(--paper)] border border-[var(--rule)] space-y-1.5">
+          <strong class="font-mono font-bold text-[var(--amber)] text-sm block">02. Formula Registers</strong>
+          <p class="text-[var(--pencil)] leading-relaxed">
+            Complete KaTeX mathematical proofs, variable tables, dimensional units, and boundary conditions.
+          </p>
+          <div class="pt-2">
+            <a href={`/${domain.slug}/${subject.slug}/notebooks/${notebooks[0]?.data.slug || ''}/#11--appendix--verification-registers`} class="font-mono text-[11px] text-[var(--ink2)] font-bold hover:underline">
+              Inspect Formulas →
+            </a>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-[var(--paper)] border border-[var(--rule)] space-y-1.5">
+          <strong class="font-mono font-bold text-[var(--green)] text-sm block">03. Corporate Cases</strong>
+          <p class="text-[var(--pencil)] leading-relaxed">
+            Real-world corporate turnaround and failure studies (FoxMeyer, Subway, Precision Hydraulics).
+          </p>
+          <div class="pt-2">
+            <a href={`/${domain.slug}/${subject.slug}/notebooks/${notebooks[0]?.data.slug || ''}/#08--cases--applications-mini-case-precision-hydraulics-assembly`} class="font-mono text-[11px] text-[var(--ink2)] font-bold hover:underline">
+              Read Case Studies →
+            </a>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-[var(--paper)] border border-[var(--rule)] space-y-1.5">
+          <strong class="font-mono font-bold text-[var(--text)] text-sm block">04. Source References</strong>
+          <p class="text-[var(--pencil)] leading-relaxed">
+            Scholarly citations, textbooks, and primary literature registers with verified provenance.
+          </p>
+          <div class="pt-2">
+            <a href={`/${domain.slug}/${subject.slug}/notebooks/${notebooks[0]?.data.slug || ''}/#11--appendix--verification-registers`} class="font-mono text-[11px] text-[var(--ink2)] font-bold hover:underline">
+              View Register →
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 

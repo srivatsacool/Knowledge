@@ -1,0 +1,429 @@
+---
+import { getCollection } from 'astro:content';
+
+const allDomains = await getCollection('domains');
+const allSubjects = await getCollection('subjects');
+const allNotebooks = await getCollection('notebooks');
+
+interface SearchItem {
+  id: string;
+  category: 'Notebook' | 'Formula' | 'PYQ' | 'Concept' | 'Glossary' | 'Domain';
+  title: string;
+  subtitle: string;
+  url: string;
+  snippet: string;
+  keywords: string;
+}
+
+const items: SearchItem[] = [];
+
+// 1. Domains
+allDomains.forEach(d => {
+  items.push({
+    id: `domain-${d.data.slug}`,
+    category: 'Domain',
+    title: d.data.title,
+    subtitle: `Domain Shelf · ${d.data.subjects.length} subjects`,
+    url: `/${d.data.slug}/`,
+    snippet: d.data.description,
+    keywords: `${d.data.title} ${d.data.slug} domain shelf`,
+  });
+});
+
+// 2. Subjects
+allSubjects.forEach(s => {
+  items.push({
+    id: `subject-${s.data.slug}`,
+    category: 'Domain',
+    title: s.data.title,
+    subtitle: `${s.data.domain.toUpperCase()} Subject Portfolio`,
+    url: `/${s.data.domain}/${s.data.slug}/`,
+    snippet: s.data.description,
+    keywords: `${s.data.title} ${s.data.slug} ${s.data.domain} ${s.data.professor || ''}`,
+  });
+});
+
+// 3. Notebooks
+allNotebooks.forEach(nb => {
+  items.push({
+    id: `nb-${nb.data.slug}`,
+    category: 'Notebook',
+    title: nb.data.title,
+    subtitle: `${nb.data.domain.toUpperCase()} · ${nb.data.subject.toUpperCase()}`,
+    url: `/${nb.data.domain}/${nb.data.subject}/notebooks/${nb.data.slug}/`,
+    snippet: nb.data.description,
+    keywords: `${nb.data.title} ${nb.data.description} ${nb.data.tags.join(' ')} ${nb.data.professor || ''}`,
+  });
+
+  // Extract core concepts/formulas from metadata
+  if (nb.data.tags) {
+    nb.data.tags.forEach(tag => {
+      items.push({
+        id: `tag-${nb.data.slug}-${tag}`,
+        category: 'Concept',
+        title: tag,
+        subtitle: `Concept in ${nb.data.title}`,
+        url: `/${nb.data.domain}/${nb.data.subject}/notebooks/${nb.data.slug}/`,
+        snippet: `Explore ${tag} concepts within ${nb.data.title}.`,
+        keywords: `${tag} ${nb.data.title}`,
+      });
+    });
+  }
+});
+
+// 4. Authoritative Formulas from Knowledge Base
+const FORMULAS = [
+  {
+    name: "Economic Order Quantity (EOQ)",
+    formula: "EOQ = \\sqrt{\\frac{2DS}{H}}",
+    url: "/operations/logistics-supply-chain/notebooks/inventory-optimization/#economic-order-quantity-eoq-mathematical-derivation",
+    snippet: "Optimal order quantity balancing annual setup and inventory holding costs under constant demand.",
+    keywords: "EOQ Economic Order Quantity Wilson formula ordering holding cost",
+  },
+  {
+    name: "MRP Net Requirements Balance",
+    formula: "NR_t = \\max(0, GR_t - (PA_{t-1} + SR_t) + SS)",
+    url: "/operations/enterprise-resource-planning/notebooks/mrp-planning/#06--deterministic-mrp-matrix-arithmetic-walkthrough",
+    snippet: "Calculates net component deficit in period t based on gross requirements, scheduled receipts, and safety stock.",
+    keywords: "MRP Net Requirements gross requirements planned order releases Plossl netting",
+  },
+  {
+    name: "Safety Stock under Lead Time Uncertainty",
+    formula: "SS = Z \\times \\sqrt{L \\sigma_D^2 + D^2 \\sigma_L^2}",
+    url: "/operations/logistics-supply-chain/notebooks/inventory-optimization/#safety-stock-under-combined-demand--lead-time-uncertainty",
+    snippet: "Calculates buffer inventory protecting against joint stochastic variations in daily customer demand and supplier replenishment lead times.",
+    keywords: "Safety Stock normal distribution Z score lead time demand variance standard deviation",
+  },
+  {
+    name: "Reorder Point (ROP)",
+    formula: "ROP = (D \\times L) + SS",
+    url: "/operations/logistics-supply-chain/notebooks/inventory-optimization/#continuous-review-s-q-policy--reorder-point",
+    snippet: "Inventory threshold triggering a new procurement batch under continuous review policies.",
+    keywords: "ROP Reorder Point continuous review safety stock lead time",
+  },
+  {
+    name: "Fisher Strategic Fit Matrix",
+    formula: "Functional Products \\to Efficient SCM; Innovative Products \\to Responsive SCM",
+    url: "/operations/logistics-supply-chain/notebooks/scm-architecture-drivers/#fisher-strategic-fit-framework",
+    snippet: "Aligning supply chain strategy with product demand characteristics to avoid strategic mismatch.",
+    keywords: "Fisher strategic fit functional innovative responsive efficient supply chain",
+  },
+  {
+    name: "CAP Theorem Formulation",
+    formula: "Consistency + Availability + Partition Tolerance \\le 2",
+    url: "/technology/distributed-systems/notebooks/cap-theorem-consensus/",
+    snippet: "Eric Brewer theorem stating a distributed data store can simultaneously provide at most two of three guarantees.",
+    keywords: "CAP theorem consistency availability partition tolerance Brewer consensus distributed",
+  }
+];
+
+FORMULAS.forEach((f, idx) => {
+  items.push({
+    id: `formula-${idx}`,
+    category: 'Formula',
+    title: f.name,
+    subtitle: f.formula,
+    url: f.url,
+    snippet: f.snippet,
+    keywords: f.keywords,
+  });
+});
+
+// 5. Authoritative PYQs from Knowledge Base
+const PYQS = [
+  {
+    q: "Explain the evolution from siloed functional applications to Enterprise Resource Planning. What business liabilities did siloed applications create?",
+    year: "2024 Exam",
+    url: "/operations/enterprise-resource-planning/notebooks/erp-foundations/#past-examination-questions",
+    snippet: "Detailed breakdown of siloed legacy liabilities (data duplication, batch latency, lack of single source of truth) vs ERP real-time synchronous OLTP.",
+    keywords: "siloed functional applications evolution legacy ERP batch latency single source truth 2024",
+  },
+  {
+    q: "Is ERP a Software/Technology Strategy or a Business Strategy? Discuss using the Strategic Alignment Model (SAM).",
+    year: "2025 Exam",
+    url: "/operations/enterprise-resource-planning/notebooks/erp-foundations/",
+    snippet: "Thesis on asymmetric symbiosis: ERP is fundamentally a business process transformation enabled by software.",
+    keywords: "ERP business strategy technology strategy Strategic Alignment Model SAM Henderson Venkatraman",
+  },
+  {
+    q: "Differentiate between Independent and Dependent demand. Explain how an ERP system utilizes the Bill of Materials to convert the MPS into shop floor work orders.",
+    year: "2024 Exam",
+    url: "/operations/enterprise-resource-planning/notebooks/mrp-planning/",
+    snippet: "Detailed distinction between Orlicky independent forecasted demand and deterministic BOM calculated dependent demand.",
+    keywords: "Independent Dependent demand BOM Bill of Materials MPS Master Production Schedule 2024",
+  },
+  {
+    q: "Deconstruct Subway's 4-tier franchise hierarchy. How does an ERP system prevent multi-echelon franchise collapse?",
+    year: "Case Exam",
+    url: "/operations/enterprise-resource-planning/notebooks/master-data-governance/",
+    snippet: "Analyzing HQ, Development Agents, Franchisee store owners, and IPC procurement cooperatives under master data governance.",
+    keywords: "Subway franchise hierarchy multi-echelon supply chain master data replenishment IPC",
+  }
+];
+
+PYQS.forEach((p, idx) => {
+  items.push({
+    id: `pyq-${idx}`,
+    category: 'PYQ',
+    title: p.q,
+    subtitle: `${p.year} · Solved Model Answer`,
+    url: p.url,
+    snippet: p.snippet,
+    keywords: `${p.q} ${p.keywords}`,
+  });
+});
+
+// 6. Authoritative Technical Glossary
+const GLOSSARY = [
+  { term: "OLTP", desc: "Online Transaction Processing: Database architecture optimized for high-throughput, low-latency transactional integrity (ACID)." },
+  { term: "BOM", desc: "Bill of Materials: Hierarchical engineering recipe defining components and quantities needed to produce a parent assembly." },
+  { term: "MPS", desc: "Master Production Schedule: Disaggregated build schedule stating finished goods quantities produced across planning buckets." },
+  { term: "Low-Level Coding (LLC)", desc: "MRP algorithm convention assigning components to their deepest BOM tier to prevent fragmented recalculations." },
+  { term: "3-Tier Architecture", desc: "Distributed topology separating Presentation (Client UI), Application (Logic Engine), and Database (RDBMS)." },
+  { term: "SSOT", desc: "Single Source of Truth: Centralized data repository preventing conflicting definitions of inventory, cost, or customer records." },
+  { term: "Bullwhip Effect", desc: "Amplification of demand variability moving upstream in a supply chain caused by batch ordering and lead-time delays." },
+];
+
+GLOSSARY.forEach((g, idx) => {
+  items.push({
+    id: `glossary-${idx}`,
+    category: 'Glossary',
+    title: g.term,
+    subtitle: 'Technical Term Definition',
+    url: `/operations/enterprise-resource-planning/notebooks/erp-foundations/#appendix`,
+    snippet: g.desc,
+    keywords: `${g.term} ${g.desc} glossary definition`,
+  });
+});
+---
+
+<div 
+  id="command-dialog" 
+  class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-start justify-center pt-14 sm:pt-20 px-4 hidden transition-opacity duration-150"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="command-input"
+>
+  <div class="bg-[var(--card)] border-2 border-[var(--ink)] rounded-2xl shadow-paper-lg max-w-2xl w-full overflow-hidden flex flex-col max-h-[82vh]">
+    
+    <!-- Command Header & Input Bar -->
+    <div class="p-3.5 border-b-2 border-[var(--rule)] flex items-center space-x-3 bg-[var(--paper)]">
+      <svg width="20" height="20" class="w-5 h-5 text-[var(--ink)] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+      <input 
+        id="command-input"
+        type="text" 
+        placeholder="Type to search across notebooks, formulas, PYQs, and concepts... (e.g. EOQ, BOM, 3-Tier, 2024)"
+        class="w-full bg-transparent border-none outline-none text-sm sm:text-base text-[var(--text)] placeholder-[var(--pencil)] font-sans"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <kbd class="px-2 py-0.5 text-[10px] font-mono bg-[var(--card)] border border-[var(--line)] rounded text-[var(--pencil)] shrink-0">
+        ESC
+      </kbd>
+    </div>
+
+    <!-- Category Filter Pills -->
+    <div class="px-3 py-2 bg-[var(--paper)] border-b border-[var(--rule)] flex items-center space-x-1.5 overflow-x-auto text-[11px] font-mono">
+      <button class="cmd-filter-pill px-2.5 py-0.5 rounded-full bg-[var(--ink)] text-white font-bold cursor-pointer" data-category="ALL">All</button>
+      <button class="cmd-filter-pill px-2.5 py-0.5 rounded-full bg-[var(--card)] border border-[var(--line)] text-[var(--pencil)] hover:text-[var(--ink)] cursor-pointer" data-category="Notebook">Notebooks</button>
+      <button class="cmd-filter-pill px-2.5 py-0.5 rounded-full bg-[var(--card)] border border-[var(--line)] text-[var(--pencil)] hover:text-[var(--ink)] cursor-pointer" data-category="Formula">Formulas</button>
+      <button class="cmd-filter-pill px-2.5 py-0.5 rounded-full bg-[var(--card)] border border-[var(--line)] text-[var(--pencil)] hover:text-[var(--ink)] cursor-pointer" data-category="PYQ">PYQs</button>
+      <button class="cmd-filter-pill px-2.5 py-0.5 rounded-full bg-[var(--card)] border border-[var(--line)] text-[var(--pencil)] hover:text-[var(--ink)] cursor-pointer" data-category="Concept">Concepts</button>
+      <button class="cmd-filter-pill px-2.5 py-0.5 rounded-full bg-[var(--card)] border border-[var(--line)] text-[var(--pencil)] hover:text-[var(--ink)] cursor-pointer" data-category="Glossary">Glossary</button>
+    </div>
+
+    <!-- Live Results Container -->
+    <div id="command-results" class="overflow-y-auto p-2 space-y-1 divide-y divide-[var(--rule)]">
+      <!-- Populated dynamically via JS -->
+    </div>
+
+    <!-- Footer Controls Help -->
+    <div class="p-3 bg-[var(--paper)] border-t border-[var(--rule)] text-[11px] text-[var(--pencil)] flex items-center justify-between font-mono">
+      <div class="flex items-center space-x-3">
+        <span><kbd class="bg-[var(--card)] px-1 py-0.5 rounded border border-[var(--line)]">↑</kbd> <kbd class="bg-[var(--card)] px-1 py-0.5 rounded border border-[var(--line)]">↓</kbd> navigate</span>
+        <span><kbd class="bg-[var(--card)] px-1 py-0.5 rounded border border-[var(--line)]">↵</kbd> select</span>
+      </div>
+      <span>{items.length} records indexed</span>
+    </div>
+
+  </div>
+</div>
+
+<script is:inline define:vars={{ items }}>
+  const dialog = document.getElementById('command-dialog');
+  const input = document.getElementById('command-input');
+  const resultsContainer = document.getElementById('command-results');
+  const filterPills = document.querySelectorAll('.cmd-filter-pill');
+
+  let activeIndex = 0;
+  let currentResults = [];
+  let selectedCategory = 'ALL';
+
+  window.openSearchPalette = function(initialQuery = '') {
+    if (!dialog) return;
+    dialog.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    if (input) {
+      input.value = initialQuery;
+      input.focus();
+    }
+    filterResults();
+  };
+
+  window.closeSearchPalette = function() {
+    if (!dialog) return;
+    dialog.classList.add('hidden');
+    document.body.style.overflow = '';
+  };
+
+  // Global trigger
+  window.triggerSearch = function(query) {
+    window.openSearchPalette(query);
+  };
+
+  // Keyboard hotkeys: ⌘K or Ctrl+K
+  window.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (dialog && !dialog.classList.contains('hidden')) {
+        window.closeSearchPalette();
+      } else {
+        window.openSearchPalette();
+      }
+    } else if (e.key === 'Escape' && dialog && !dialog.classList.contains('hidden')) {
+      window.closeSearchPalette();
+    }
+  });
+
+  // Backdrop click close
+  dialog?.addEventListener('click', (e) => {
+    if (e.target === dialog) {
+      window.closeSearchPalette();
+    }
+  });
+
+  // Filter selection
+  filterPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      filterPills.forEach(p => {
+        p.classList.remove('bg-[var(--ink)]', 'text-white', 'font-bold');
+        p.classList.add('bg-[var(--card)]', 'text-[var(--pencil)]');
+      });
+      pill.classList.remove('bg-[var(--card)]', 'text-[var(--pencil)]');
+      pill.classList.add('bg-[var(--ink)]', 'text-white', 'font-bold');
+      
+      selectedCategory = pill.getAttribute('data-category') || 'ALL';
+      filterResults();
+    });
+  });
+
+  function filterResults() {
+    const q = (input?.value || '').toLowerCase().trim();
+    
+    let filtered = items;
+    if (selectedCategory !== 'ALL') {
+      filtered = filtered.filter(item => item.category === selectedCategory);
+    }
+
+    if (q) {
+      const tokens = q.split(/\s+/);
+      filtered = filtered.filter(item => {
+        const fullText = (item.title + ' ' + item.subtitle + ' ' + item.snippet + ' ' + item.keywords).toLowerCase();
+        return tokens.every(t => fullText.includes(t));
+      });
+    }
+
+    currentResults = filtered.slice(0, 20);
+    activeIndex = currentResults.length > 0 ? 0 : -1;
+    renderResults();
+  }
+
+  function renderResults() {
+    if (!resultsContainer) return;
+
+    if (currentResults.length === 0) {
+      resultsContainer.innerHTML = `
+        <div class="p-8 text-center text-xs text-[var(--pencil)] font-mono">
+          No matching records found. Try searching for "EOQ", "3-Tier", "MRP", "Fisher", or "2024".
+        </div>
+      `;
+      return;
+    }
+
+    resultsContainer.innerHTML = currentResults.map((item, idx) => {
+      const badgeColor = 
+        item.category === 'Formula' ? 'stamp-green' :
+        item.category === 'PYQ' ? 'stamp-amber' :
+        item.category === 'Notebook' ? 'stamp-blue' :
+        'stamp-red';
+
+      return `
+        <a 
+          href="${item.url}" 
+          data-index="${idx}"
+          class="cmd-item block p-3 rounded-lg hover:bg-[var(--paper)] transition-colors ${idx === activeIndex ? 'bg-[var(--paper)] border-l-3 border-[var(--ink)]' : ''}"
+        >
+          <div class="flex items-center justify-between mb-1">
+            <span class="rubber-stamp ${badgeColor} text-[9px] uppercase font-bold">
+              ${item.category}
+            </span>
+            <span class="font-mono text-[10px] text-[var(--pencil)] truncate max-w-xs">
+              ${item.subtitle}
+            </span>
+          </div>
+          <div class="text-xs sm:text-sm font-bold text-[var(--ink)] font-serif mb-1">
+            ${item.title}
+          </div>
+          <p class="text-[11px] text-[var(--pencil)] line-clamp-2 leading-relaxed">
+            ${item.snippet}
+          </p>
+        </a>
+      `;
+    }).join('');
+
+    // Rebind item click
+    resultsContainer.querySelectorAll('.cmd-item').forEach(el => {
+      el.addEventListener('click', () => {
+        window.closeSearchPalette();
+      });
+    });
+  }
+
+  // Keyboard navigation within list
+  input?.addEventListener('input', filterResults);
+  input?.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (currentResults.length > 0) {
+        activeIndex = (activeIndex + 1) % currentResults.length;
+        updateActiveHighlight();
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (currentResults.length > 0) {
+        activeIndex = (activeIndex - 1 + currentResults.length) % currentResults.length;
+        updateActiveHighlight();
+      }
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (activeIndex >= 0 && activeIndex < currentResults.length) {
+        window.location.href = currentResults[activeIndex].url;
+        window.closeSearchPalette();
+      }
+    }
+  });
+
+  function updateActiveHighlight() {
+    const rendered = resultsContainer?.querySelectorAll('.cmd-item');
+    rendered?.forEach((el, idx) => {
+      if (idx === activeIndex) {
+        el.classList.add('bg-[var(--paper)]', 'border-l-3', 'border-[var(--ink)]');
+        el.scrollIntoView({ block: 'nearest' });
+      } else {
+        el.classList.remove('bg-[var(--paper)]', 'border-l-3', 'border-[var(--ink)]');
+      }
+    });
+  }
+</script>

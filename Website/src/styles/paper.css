@@ -418,3 +418,32 @@ mark.hb { background: var(--hb); padding: 0.1em 0.3em; border-radius: 2px; }
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
+/* =========================================================
+   FOCUS MODE (Immersive Academic Study View)
+   ========================================================= */
+body.focus-mode header.main-header,
+body.focus-mode footer.main-footer,
+body.focus-mode #notebook-sidebar-container {
+  display: none !important;
+}
+
+body.focus-mode .notebook-canvas-container {
+  grid-column: span 12 / span 12 !important;
+  max-width: 980px !important;
+  margin: 0 auto !important;
+}
+
+body.focus-mode .notebook-sheet {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  padding: 2.5rem 3.5rem !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+@media (max-width: 768px) {
+  body.focus-mode .notebook-sheet {
+    padding: 1.5rem !important;
+  }
+}
+
+

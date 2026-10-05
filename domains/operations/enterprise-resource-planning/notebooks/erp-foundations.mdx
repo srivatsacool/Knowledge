@@ -10,7 +10,7 @@ description: >
   siloed legacy evolution, 3-tier client-server architecture, the Five Pillars of ERP,
   and Value Matrix strategic analysis.
 status: published
-version: 1.0.0
+version: 2.0.0
 updated: "2026-10-05"
 tags:
   - ERP
@@ -29,25 +29,82 @@ pdf:
 
 # 01 — Notebook Information & Scope
 
-<StickyNote color="yellow" title="Architectural Thesis">
-  Enterprise Resource Planning (ERP) is fundamentally a business process transformation system enabled by software, not merely a software package. Its purpose is to enforce disciplined master data management, transactional integrity, and cross-functional synchronization across an enterprise.
+<StickyNote color="yellow" title="Architectural Thesis: The Asymmetric Symbiosis">
+  "Enterprise Resource Planning (ERP) is fundamentally a business process transformation system enabled by software, not merely an IT tool. Technology is the enabler; business strategy is the driver. An organization that computerizes a broken process merely achieves high-speed chaos." — Prof. Rahul Altekar.
 </StickyNote>
 
 * **Domain**: Operations & Supply Chain Systems
 * **Subject**: Enterprise Resource Planning
-* **Pedagogical Lead**: Prof. Rahul Altekar
-* **Core Reference Model**: 3-Tier Distributed Architecture & The Five Pillars of Enterprise Alignment
+* **Faculty Reference**: Prof. Rahul Altekar
+* **Core Reference Model**: 3-Tier Distributed Client-Server Topology, Henderson-Venkatraman Strategic Alignment Model (SAM), and Leavitt's Socio-Technical Diamond
 
 ---
 
 # 02 — Learning Map
 
-```text
-[Siloed Legacy Systems] ──> [Integration Need] ──> [3-Tier Client-Server]
-                                                         │
-                                                         ▼
-[Value Matrix Prioritization] <── [The Five Pillars] <── [Relational RDBMS Engine]
-```
+<ProcessDiagram
+  figureId="Figure 2.1"
+  title="Distributed 3-Tier Client-Server ERP Architecture"
+  type="architecture"
+  provenance="SAP AG / Technical Architecture Standards"
+  caption="Clean separation of presentation, scalable application cluster executing business logic engines, and central relational/in-memory ACID database."
+>
+  <svg viewBox="0 0 840 280" class="w-full max-w-3xl" xmlns="http://www.w3.org/2000/svg">
+    
+    <rect x="20" y="20" width="220" height="230" rx="10" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+    <rect x="35" y="35" width="190" height="30" rx="6" fill="var(--st-b)"/>
+    <text x="130" y="55" font-family="var(--body)" font-size="12" font-weight="700" fill="var(--ink)" text-anchor="middle">Tier 1: Presentation Layer</text>
+    
+    <rect x="40" y="80" width="180" height="35" rx="5" fill="var(--card)" stroke="var(--line)"/>
+    <text x="130" y="102" font-family="var(--body)" font-size="11" fill="var(--text)" text-anchor="middle">SAP GUI / Web Fiori</text>
+
+    <rect x="40" y="125" width="180" height="35" rx="5" fill="var(--card)" stroke="var(--line)"/>
+    <text x="130" y="147" font-family="var(--body)" font-size="11" fill="var(--text)" text-anchor="middle">Mobile Tablet Interface</text>
+
+    <rect x="40" y="170" width="180" height="35" rx="5" fill="var(--card)" stroke="var(--line)"/>
+    <text x="130" y="192" font-family="var(--body)" font-size="11" fill="var(--text)" text-anchor="middle">POS &amp; RF Scanners</text>
+
+    <text x="130" y="235" font-family="var(--body)" font-size="10" fill="var(--pencil)" text-anchor="middle">Zero Direct Database Queries</text>
+
+    
+    <path d="M 240 135 L 310 135" stroke="var(--ink2)" stroke-width="2" stroke-dasharray="4,4"/>
+    <text x="275" y="125" font-family="var(--body)" font-size="9" font-weight="700" fill="var(--ink2)" text-anchor="middle">TCP/IP</text>
+
+    
+    <rect x="310" y="20" width="230" height="230" rx="10" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/>
+    <rect x="325" y="35" width="200" height="30" rx="6" fill="var(--st-y)"/>
+    <text x="425" y="55" font-family="var(--body)" font-size="12" font-weight="700" fill="var(--st-text)" text-anchor="middle">Tier 2: Application Server Pool</text>
+
+    <rect x="330" y="80" width="190" height="35" rx="5" fill="var(--paper)" stroke="var(--line)"/>
+    <text x="425" y="102" font-family="var(--body)" font-size="11" font-weight="600" fill="var(--ink)" text-anchor="middle">Sales Order Pricing Engine</text>
+
+    <rect x="330" y="125" width="190" height="35" rx="5" fill="var(--paper)" stroke="var(--line)"/>
+    <text x="425" y="147" font-family="var(--body)" font-size="11" font-weight="600" fill="var(--ink)" text-anchor="middle">MRP Explosion &amp; Offsetting</text>
+
+    <rect x="330" y="170" width="190" height="35" rx="5" fill="var(--paper)" stroke="var(--line)"/>
+    <text x="425" y="192" font-family="var(--body)" font-size="11" font-weight="600" fill="var(--ink)" text-anchor="middle">3-Way Match &amp; General Ledger</text>
+
+    <text x="425" y="235" font-family="var(--body)" font-size="10" fill="var(--pencil)" text-anchor="middle">Load-Balanced Application Cluster</text>
+
+    
+    <path d="M 540 135 L 610 135" stroke="var(--ink2)" stroke-width="2"/>
+    <text x="575" y="125" font-family="var(--body)" font-size="9" font-weight="700" fill="var(--ink2)" text-anchor="middle">SQL / ACID</text>
+
+    
+    <rect x="610" y="20" width="210" height="230" rx="10" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+    <rect x="625" y="35" width="180" height="30" rx="6" fill="var(--st-g)"/>
+    <text x="715" y="55" font-family="var(--body)" font-size="12" font-weight="700" fill="var(--green)" text-anchor="middle">Tier 3: Database Engine</text>
+
+    <circle cx="715" cy="115" r="35" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/>
+    <text x="715" y="112" font-family="var(--body)" font-size="12" font-weight="800" fill="var(--ink)" text-anchor="middle">RDBMS</text>
+    <text x="715" y="128" font-family="var(--body)" font-size="10" fill="var(--green)" text-anchor="middle">HANA In-Memory</text>
+
+    <rect x="630" y="170" width="170" height="35" rx="5" fill="var(--card)" stroke="var(--line)"/>
+    <text x="715" y="192" font-family="var(--body)" font-size="11" fill="var(--text)" text-anchor="middle">Single Source of Truth (SSOT)</text>
+
+    <text x="715" y="235" font-family="var(--body)" font-size="10" fill="var(--pencil)" text-anchor="middle">Guaranteed ACID Integrity</text>
+  </svg>
+</ProcessDiagram>
 
 ---
 
@@ -73,12 +130,12 @@ This departmental fragmentation produced structural liabilities:
 
 ---
 
-# 04 — The 3-Tier Client-Server Architecture
+# 04 — Frameworks & Models: 3-Tier Architecture & The Five Pillars
 
-Modern ERP platforms (such as SAP S/4HANA and Oracle Cloud Applications) execute upon a distributed three-tier architecture:
+Modern ERP platforms execute upon a distributed three-tier architecture:
 
 1. **Presentation Layer (Tier 1 — Client UI)**:
-   The user interface (desktop GUI, web browser, or mobile interface) responsible for input capture and output display. It executes zero business logic and zero direct database queries.
+   The user interface responsible for input capture and output display. It executes zero business logic and zero direct database queries.
 2. **Application Layer (Tier 2 — Business Logic Engine)**:
    A scalable cluster of application servers executing program rules, transactional authorizations, pricing logic, MRP explosions, and workflow state machines.
 3. **Database Layer (Tier 3 — Relational/In-Memory RDBMS)**:
@@ -112,12 +169,8 @@ Modern ERP platforms (such as SAP S/4HANA and Oracle Cloud Applications) execute
   ]}
 />
 
----
-
-# 05 — Strategic Frameworks: The Five Pillars of ERP
-
-Prof. Rahul Altekar emphasizes five foundational pillars necessary for ERP operational viability:
-
+### The Five Pillars of ERP Operational Viability
+Prof. Rahul Altekar emphasizes five foundational pillars necessary for ERP viability:
 1. **Integrated Business Processes**: Eliminating organizational silos so that sales, manufacturing, logistics, and finance operate as one continuous workflow.
 2. **Single Source of Truth (SSOT)**: Centralized data repository preventing conflicting definitions of inventory, cost, or customer balances.
 3. **Real-Time Visibility**: Instant visibility of order statuses, WIP queue lengths, cash positions, and material availability across the supply network.
@@ -126,7 +179,7 @@ Prof. Rahul Altekar emphasizes five foundational pillars necessary for ERP opera
 
 ---
 
-# 06 — Strategic Prioritization: Value Matrix Analysis
+# 05 — Strategic Prioritization: Value Matrix Analysis
 
 When evaluating ERP functionality and process automation, executive sponsors utilize the **Value Matrix**:
 
@@ -141,7 +194,98 @@ When evaluating ERP functionality and process automation, executive sponsors uti
 
 ---
 
-# 07 — Active Recall & Study Flashcards
+# 06 — Cases & Applications: Subway 4-Tier Franchise Hierarchy Case
+
+* **Entity**: Subway Franchise System
+* **Context**: 40,000+ independently owned quick-service restaurant locations operating across 100+ countries.
+* **Structural Hierarchy**:
+  1. *Global Headquarters (Doctor's Associates)*: Global brand standards, master menu definitions, technology platforms.
+  2. *Development Agents (DAs)*: Regional supervisors overseeing franchise development, site inspections, and local operations.
+  3. *Franchisee Store Owners*: Independent business operators managing store-level P&L, staffing, and local ingredients.
+  4. *Independent Purchasing Cooperative (IPC)*: Mandated procurement cooperative managing supplier contracts and regional distribution center replenishment.
+* **The Structural Failure Risk**:
+  Without an integrated enterprise system, a 4-tier franchise hierarchy suffers from catastrophic bullwhip distortion, unauthorized local ingredient sourcing (food safety violations), and fragmented royalties collection.
+* **The ERP Solution**:
+  * Centralized master data enforces global recipe standards (BOM) and approved vendor lists.
+  * Point-of-Sale (POS) transactions at every store automatically trigger EDI replenishment purchase orders to IPC regional distribution centers.
+  * Direct automated deduction of franchise royalties based on verified daily POS register closures eliminates revenue leakage.
+
+---
+
+# 07 — Past Examination Questions (PYQs) & Model Solutions
+
+<PYQSection
+  subject="Enterprise Resource Planning"
+  title="Solved Past Examination Questions: Strategy & Architecture"
+  frequencyMatrix={[
+    { topic: "Evolution from Siloed Systems to ERP", weight: "Critical", frequency: "Repeated 2023, 2024, 2025", marks: "10 Marks" },
+    { topic: "Is ERP Business Strategy or Technology Strategy? (SAM)", weight: "Critical", frequency: "Repeated 2024, 2025", marks: "10 Marks" },
+    { topic: "3-Tier Client-Server Architecture Breakdown", weight: "High", frequency: "Repeated 2023, 2024", marks: "10 Marks" },
+    { topic: "Value Matrix Analysis & Implementation Risks", weight: "High", frequency: "Repeated 2023, 2025", marks: "10 Marks" }
+  ]}
+>
+  <PYQCard
+    year="2024"
+    session="Winter Exam"
+    number="1"
+    marks={10}
+    type="theory"
+    topic="Legacy Evolution & Structural Liabilities"
+    source="Operations Examination Board 2024"
+    conceptLink="#03--core-concepts-what-is-erp"
+    frequency="Annual Core Question"
+    question="Explain the evolution from siloed functional applications to Enterprise Resource Planning. What business liabilities did siloed applications create?"
+    answerSummary="Siloed systems created three fatal operational liabilities: data duplication, asynchronous batch latency, and lack of a single source of truth. ERP solved this by consolidating all transactions into a synchronous relational schema."
+    commonTraps="Focusing only on the technical software aspects while omitting business liabilities like customer delivery delays, excess safety stock, and cash reconciliation delays."
+  >
+    <h4>1. Academic Context & Evolution</h4>
+    <p>Prior to ERP, organizations automated departmental functions independently using discrete software tools (Standalone Accounting packages, Materials Requirement Planning I, Custom CRM). This created isolated functional "islands of automation".</p>
+
+    <h4>2. The Three Structural Liabilities</h4>
+    <ul>
+      <li><strong>Data Duplication & Inconsistency:</strong> A single customer had multiple records across sales, shipping, and credit departments with conflicting addresses and credit limits.</li>
+      <li><strong>Batch Latency:</strong> Information moved between departments via nightly or weekly batch file transfers. Executives had zero real-time visibility into shop-floor work in progress (WIP) or cash obligations.</li>
+      <li><strong>Information Asymmetry & Departmental Friction:</strong> Sales promised delivery dates based on manual spreadsheets without visibility into raw material stockouts, causing customer delivery failures.</li>
+    </ul>
+
+    <h4>3. The ERP Solution</h4>
+    <p>ERP introduced a single relational database where a transaction executed by any functional department (e.g. shipping goods at the loading dock) immediately updates inventory ledgers, accounts receivable, and cost accounting synchronously in real time.</p>
+  </PYQCard>
+
+  <PYQCard
+    year="2025"
+    session="Spring Exam"
+    number="2"
+    marks={10}
+    type="theory"
+    topic="ERP Strategy: Business vs Technology"
+    source="Operations Examination Board 2025"
+    conceptLink="#01--notebook-information--scope"
+    frequency="Repeated Frequently"
+    question="Is ERP a Software/Technology Strategy or a Business Strategy? Discuss the 'Asymmetric Symbiosis' and justify your answer using the Strategic Alignment Model (SAM)."
+    answerSummary="ERP is an Asymmetric Symbiosis: Technology is the enabler, but Business Strategy is the driver. An IT-led ERP implementation that treats the project merely as a software install inevitably fails."
+    commonTraps="Treating ERP as solely IT software or solely business operations without demonstrating how the Henderson-Venkatraman SAM links business scope to IT infrastructure."
+  >
+    <h4>1. Core Thesis: The Asymmetric Symbiosis</h4>
+    <p>ERP cannot be classified as purely technology or purely business; it represents an <strong>asymmetric symbiosis</strong> where business strategy drives the organizational goals while information technology enables scalable process execution.</p>
+
+    <h4>2. Strategic Alignment Model (SAM) Analysis</h4>
+    <p>According to Henderson and Venkatraman's Strategic Alignment Model, strategic fit requires harmony across four quadrants:</p>
+    <ul>
+      <li><em>Business Strategy:</em> Defining business scope, distinctive competencies, and market governance.</li>
+      <li><em>IT Strategy:</em> Technology scope, systemic competencies, and IT architecture.</li>
+      <li><em>Organizational Infrastructure:</em> Administrative structures, workflows, and employee skills.</li>
+      <li><em>IT Infrastructure:</em> Hardware, enterprise databases, and application software.</li>
+    </ul>
+
+    <h4>3. Failure Mode: The Peril of IT-Led ERP</h4>
+    <p>When leadership delegates an ERP implementation exclusively to the IT department, the project is managed as a technical software installation. Business processes remain unexamined and unaligned. Without business process re-engineering (BPR) driven by executive leadership, the implementation experiences massive user resistance, budget overruns, and operational failure (as observed in the FoxMeyer Drug bankruptcy).</p>
+  </PYQCard>
+</PYQSection>
+
+---
+
+# 08 — Active Recall Quiz & Conceptual Check
 
 <Flashcard 
   front="What are the three tiers in modern ERP client-server computing?"
@@ -154,10 +298,6 @@ When evaluating ERP functionality and process automation, executive sponsors uti
   back="Because transactional workflows inherit parameters directly from master data. An error in a material master (e.g., wrong lead time or unit of measure) cascades through every future MRP calculation, purchase order, and inventory valuation."
   category="Governance"
 />
-
----
-
-# 08 — Interactive Conceptual Check
 
 <Quiz 
   question="Which of the following processes belongs strictly to the Application Layer in a 3-tier ERP architecture?"
@@ -173,49 +313,82 @@ When evaluating ERP functionality and process automation, executive sponsors uti
 
 ---
 
-# 09 — Verified Examination Questions & Model Solutions
+# 09 — Appendix & Verification Registers
 
-<QuestionCard 
-  number="1"
-  question="Explain the evolution from siloed functional applications to Enterprise Resource Planning. What business liabilities did siloed applications create?"
-  marks={10}
-  type="Strategic Theory"
-  source="ERP Business Applications Core Question Bank"
->
-  <p><strong>1. Executive Summary:</strong> Pre-ERP enterprise systems were functionally isolated, resulting in data redundancy, asynchronous batch latency, and cross-departmental conflict.</p>
-  <p><strong>2. Core Structural Liabilities:</strong></p>
-  <ul>
-    <li><em>Information Asymmetry:</em> Sales promised delivery dates based on manual spreadsheets without visibility into shop floor WIP or component shortages.</li>
-    <li><em>Inventory Inaccuracies:</em> Month-end reconciliations routinely revealed unrecorded material consumption, driving safety stock inflation.</li>
-    <li><em>High Transactional Cost:</em> Every inter-departmental transaction required manual paper slips or duplicate re-entry into secondary ledgers.</li>
-  </ul>
-  <p><strong>3. The ERP Solution:</strong> Implementing a common relational schema with real-time transactional posting provides immediate end-to-end auditability and eliminates duplicate data entry.</p>
-</QuestionCard>
+<AppendixRegister
+  sources={[
+    {
+      id: "S-1",
+      title: "Enterprise Resource Planning: Concepts and Practice",
+      author: "Vinod Kumar Garg, N. K. Venkitakrishnan",
+      year: 2003,
+      publisher: "Prentice Hall India"
+    },
+    {
+      id: "S-2",
+      title: "Strategic Alignment: Leveraging Information Technology for Transforming Organizations",
+      author: "J. C. Henderson, N. Venkatraman",
+      year: 1993,
+      publisher: "IBM Systems Journal",
+      url: "https://doi.org/10.1147/sj.382.0472"
+    },
+    {
+      id: "S-3",
+      title: "Concepts in Enterprise Resource Planning",
+      author: "Ellen Monk, Bret Wagner",
+      year: 2012,
+      publisher: "Cengage Learning"
+    }
+  ]}
+  citations={[
+    { key: "C-1", sourceId: "S-2", location: "pp. 472-484", notes: "Strategic Alignment Model (SAM) foundation" },
+    { key: "C-2", sourceId: "S-1", location: "Chapter 2, pp. 24-40", notes: "Evolution from siloed legacy systems" },
+    { key: "C-3", sourceId: "S-3", location: "Chapter 1, pp. 1-18", notes: "3-tier client-server topology" }
+  ]}
+  figures={[
+    { id: "Figure 2.1", title: "Distributed 3-Tier Client-Server ERP Architecture", type: "architecture", provenance: "SAP AG Reference Model" }
+  ]}
+  pyqs={[
+    { year: "2024", paper: "Winter", qNumber: "1", marks: 10, topic: "Siloed Functional Applications Evolution" },
+    { year: "2025", paper: "Spring", qNumber: "2", marks: 10, topic: "ERP Asymmetric Symbiosis & SAM Alignment" }
+  ]}
+  glossary={[
+    { term: "OLTP", acronym: "Online Transaction Processing", definition: "High-throughput database engine optimized for real-time inserts and transactional ACID guarantees." },
+    { term: "SSOT", acronym: "Single Source of Truth", definition: "A centralized master repository ensuring consistent, non-redundant business records enterprise-wide." },
+    { term: "SAM", acronym: "Strategic Alignment Model", definition: "Henderson-Venkatraman framework mapping business strategy, IT strategy, organizational structure, and IT infrastructure." },
+    { term: "BPR", acronym: "Business Process Re-engineering", definition: "Fundamental rethinking and radical redesign of business processes to achieve dramatic performance gains." }
+  ]}
+  formulas={[
+    { name: "ERP Strategic Alignment Ratio", formula: "\\text{Strategic Alignment} = f(\\text{Business Scope}, \\text{IT Scope}, \\text{Process Governance})", units: "Index", purpose: "Measures harmony between organizational objectives and technical capability" }
+  ]}
+  history={[
+    { version: "2.0.0", date: "2026-10-05", author: "Academic Editorial Team", summary: "Complete rebuild adhering to brain-notebook specification: 3-tier SVG blueprint, SAM strategy analysis, Subway franchise case, solved PYQs, and 7-part appendix." },
+    { version: "1.0.0", date: "2026-10-01", author: "Curriculum Team", summary: "Initial outline release." }
+  ]}
+/>
 
 ---
 
-# 10 — Related Knowledge
+# 10 — Knowledge Graph & Cross-References
 
-<RelatedKnowledge links={[
-  {
-    title: "Material Requirements Planning (MRP)",
-    url: "/operations/enterprise-resource-planning/notebooks/mrp-planning/",
-    domain: "Operations",
-    subject: "ERP",
-    description: "Plossl manufacturing flow principles, BOM explosion logic, and gross-to-net scheduling mechanics."
-  },
-  {
-    title: "SAP S/4HANA Module Integration",
-    url: "/operations/enterprise-resource-planning/notebooks/sap-architecture/",
-    domain: "Operations",
-    subject: "ERP",
-    description: "Cross-module integration across MM, SD, PP, and FI/CO within two-tier cloud topologies."
-  },
-  {
-    title: "Master Data Governance & Subway Case",
-    url: "/operations/enterprise-resource-planning/notebooks/master-data-governance/",
-    domain: "Operations",
-    subject: "ERP",
-    description: "Managing single sources of truth, data cleansing, and multi-echelon franchise replenishment."
-  }
-]} />
+<RelatedKnowledge
+  domain="operations"
+  subject="enterprise-resource-planning"
+  links={[
+    {
+      title: "Material Requirements Planning (MRP)",
+      slug: "mrp-planning",
+      relationship: "Core Manufacturing Engine: Explodes parent MPS into component netting schedules and planned order releases."
+    },
+    {
+      title: "SAP S/4HANA Module Integration",
+      slug: "sap-architecture",
+      relationship: "Execution Topology: Demonstrates cross-module document flows across SD, MM, PP, and FI/CO."
+    },
+    {
+      title: "Master Data Governance & Item Types",
+      slug: "master-data-governance",
+      relationship: "Data Foundation: Managing material types (ROH, HALB, FERT) and multi-echelon replenishment."
+    }
+  ]}
+/>

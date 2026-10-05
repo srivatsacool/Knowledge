@@ -1,0 +1,286 @@
+---
+interface SourceItem {
+  id: string;
+  title: string;
+  author?: string;
+  year?: string | number;
+  publisher?: string;
+  url?: string;
+}
+
+interface CitationItem {
+  key: string;
+  sourceId: string;
+  location: string;
+  notes?: string;
+}
+
+interface FigureItem {
+  id: string;
+  title: string;
+  type: string;
+  provenance: string;
+}
+
+interface PyqItem {
+  year: string | number;
+  paper: string;
+  qNumber: string | number;
+  marks: number;
+  topic: string;
+}
+
+interface GlossaryItem {
+  term: string;
+  acronym?: string;
+  definition: string;
+}
+
+interface FormulaItem {
+  name: string;
+  formula: string;
+  units: string;
+  purpose: string;
+}
+
+interface HistoryItem {
+  version: string;
+  date: string;
+  author: string;
+  summary: string;
+}
+
+interface Props {
+  sources?: SourceItem[];
+  citations?: CitationItem[];
+  figures?: FigureItem[];
+  pyqs?: PyqItem[];
+  glossary?: GlossaryItem[];
+  formulas?: FormulaItem[];
+  history?: HistoryItem[];
+}
+
+const {
+  sources = [],
+  citations = [],
+  figures = [],
+  pyqs = [],
+  glossary = [],
+  formulas = [],
+  history = [],
+} = Astro.props;
+---
+
+<section id="appendix" class="appendix-section my-16 pt-10 border-t-4 border-[var(--ink)] space-y-10">
+  <!-- Masthead -->
+  <div class="flex flex-wrap items-baseline justify-between gap-3 pb-3 border-b-2 border-[var(--rule)]">
+    <div>
+      <span class="font-mono text-xs uppercase tracking-widest text-[var(--pencil)] font-bold">SCHOLARLY APPARATUS</span>
+      <h2 class="font-serif text-2xl sm:text-4xl font-bold text-[var(--ink)]">
+        Appendix & Verification Registers
+      </h2>
+    </div>
+    <div class="flex items-center space-x-2">
+      <span class="rubber-stamp stamp-green text-[10px]">7-PART AUDIT TRAIL</span>
+    </div>
+  </div>
+
+  <!-- A. SOURCE REGISTER -->
+  <div class="paper-card p-6 rounded-xl border border-[var(--line)] bg-[var(--card)] space-y-3">
+    <div class="flex items-center justify-between pb-2 border-b border-[var(--rule)]">
+      <h3 class="font-serif text-lg font-bold text-[var(--ink)]">
+        A. Primary Source Register
+      </h3>
+      <span class="font-mono text-[11px] text-[var(--pencil)]">{sources.length} Verified Sources</span>
+    </div>
+    <div class="space-y-2 text-xs">
+      {sources.map(s => (
+        <div class="p-3 rounded bg-[var(--paper)] border border-[var(--rule)] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <span class="font-mono font-bold text-[var(--ink)] mr-2">[{s.id}]</span>
+            <strong class="text-[var(--text)]">{s.title}</strong>
+            {s.author && <span class="text-[var(--pencil)]"> — {s.author} ({s.year || 'n.d.'})</span>}
+            {s.publisher && <span class="text-[var(--pencil)] italic">, {s.publisher}</span>}
+          </div>
+          {s.url && (
+            <a href={s.url} target="_blank" rel="noopener noreferrer" class="font-mono text-[11px] text-[var(--ink2)] hover:underline shrink-0">
+              Reference Link ↗
+            </a>
+          )}
+        </div>
+      ))}
+      {sources.length === 0 && (
+        <div class="text-[var(--pencil)] italic text-xs">All citations derived from foundational curriculum materials and verified literature.</div>
+      )}
+    </div>
+  </div>
+
+  <!-- B. CITATION REGISTER -->
+  {citations.length > 0 && (
+    <div class="paper-card p-6 rounded-xl border border-[var(--line)] bg-[var(--card)] space-y-3">
+      <div class="flex items-center justify-between pb-2 border-b border-[var(--rule)]">
+        <h3 class="font-serif text-lg font-bold text-[var(--ink)]">
+          B. Inline Citation Cross-Register
+        </h3>
+        <span class="font-mono text-[11px] text-[var(--pencil)]">{citations.length} Inline Anchors</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
+        {citations.map(c => (
+          <div class="p-2.5 rounded bg-[var(--paper)] border border-[var(--rule)]">
+            <span class="font-bold text-[var(--ink)]">{c.key}</span>
+            <span class="text-[var(--pencil)]"> $\to$ [{c.sourceId}], {c.location}</span>
+            {c.notes && <div class="text-[11px] text-[var(--pencil)] mt-1 font-sans">{c.notes}</div>}
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <!-- C. FIGURE / DIAGRAM REGISTER -->
+  {figures.length > 0 && (
+    <div class="paper-card p-6 rounded-xl border border-[var(--line)] bg-[var(--card)] space-y-3">
+      <div class="flex items-center justify-between pb-2 border-b border-[var(--rule)]">
+        <h3 class="font-serif text-lg font-bold text-[var(--ink)]">
+          C. Figure & Architectural Diagram Register
+        </h3>
+        <span class="font-mono text-[11px] text-[var(--pencil)]">{figures.length} Technical Figures</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left border-collapse">
+          <thead>
+            <tr class="border-b-2 border-[var(--rule)] font-mono text-[11px] text-[var(--ink)]">
+              <th class="py-2 pr-4">Figure ID</th>
+              <th class="py-2 px-4">Title / Concept</th>
+              <th class="py-2 px-4">Type</th>
+              <th class="py-2 pl-4">Model Provenance</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[var(--rule)]">
+            {figures.map(f => (
+              <tr>
+                <td class="py-2 pr-4 font-mono font-bold text-[var(--ink)]">{f.id}</td>
+                <td class="py-2 px-4 font-semibold text-[var(--text)]">{f.title}</td>
+                <td class="py-2 px-4 font-mono uppercase text-[10px] text-[var(--pencil)]">{f.type}</td>
+                <td class="py-2 pl-4 font-mono text-[var(--pencil)]">{f.provenance}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
+
+  <!-- D. PYQ PROVENANCE -->
+  {pyqs.length > 0 && (
+    <div class="paper-card p-6 rounded-xl border border-[var(--line)] bg-[var(--card)] space-y-3">
+      <div class="flex items-center justify-between pb-2 border-b border-[var(--rule)]">
+        <h3 class="font-serif text-lg font-bold text-[var(--ink)]">
+          D. Examination Question Provenance
+        </h3>
+        <span class="rubber-stamp stamp-green text-[9px]">ZERO FABRICATION</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left border-collapse">
+          <thead>
+            <tr class="border-b-2 border-[var(--rule)] font-mono text-[11px] text-[var(--ink)]">
+              <th class="py-2 pr-4">Year / Session</th>
+              <th class="py-2 px-4">Q#</th>
+              <th class="py-2 px-4">Marks</th>
+              <th class="py-2 pl-4">Topic Area</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[var(--rule)] font-mono">
+            {pyqs.map(p => (
+              <tr>
+                <td class="py-2 pr-4 font-bold text-[var(--ink)]">{p.year} ({p.paper})</td>
+                <td class="py-2 px-4 text-[var(--pencil)]">Q{p.qNumber}</td>
+                <td class="py-2 px-4 font-bold text-[var(--amber)]">{p.marks}M</td>
+                <td class="py-2 pl-4 font-sans text-[var(--text)]">{p.topic}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
+
+  <!-- E. GLOSSARY -->
+  {glossary.length > 0 && (
+    <div class="paper-card p-6 rounded-xl border border-[var(--line)] bg-[var(--card)] space-y-3">
+      <div class="flex items-center justify-between pb-2 border-b border-[var(--rule)]">
+        <h3 class="font-serif text-lg font-bold text-[var(--ink)]">
+          E. Technical Glossary & Nomenclature
+        </h3>
+        <span class="font-mono text-[11px] text-[var(--pencil)]">{glossary.length} Defined Terms</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+        {glossary.map(g => (
+          <div class="p-3 rounded bg-[var(--paper)] border border-[var(--rule)] space-y-1">
+            <div class="flex items-baseline space-x-2">
+              <strong class="font-mono font-bold text-[var(--ink)]">{g.term}</strong>
+              {g.acronym && <span class="font-mono text-[10px] text-[var(--pencil)]">({g.acronym})</span>}
+            </div>
+            <p class="text-[var(--text)] font-sans leading-relaxed">{g.definition}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <!-- F. FORMULA REGISTER -->
+  {formulas.length > 0 && (
+    <div class="paper-card p-6 rounded-xl border border-[var(--line)] bg-[var(--card)] space-y-3">
+      <div class="flex items-center justify-between pb-2 border-b border-[var(--rule)]">
+        <h3 class="font-serif text-lg font-bold text-[var(--ink)]">
+          F. Master Formula Register
+        </h3>
+        <span class="rubber-stamp stamp-blue text-[9px]">KaTeX CHEAT SHEET</span>
+      </div>
+      <div class="space-y-2 text-xs">
+        {formulas.map(f => (
+          <div class="p-3 rounded bg-[var(--paper)] border border-[var(--rule)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <strong class="text-[var(--ink)] font-serif block mb-0.5">{f.name}</strong>
+              <span class="text-[var(--pencil)]">{f.purpose}</span>
+            </div>
+            <div class="text-right">
+              <code class="font-mono font-bold text-xs sm:text-sm text-[var(--ink2)] bg-[var(--card)] px-2 py-1 rounded border border-[var(--rule)]">
+                $${f.formula}$$
+              </code>
+              <span class="text-[10px] font-mono text-[var(--pencil)] block mt-1">Units: {f.units}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <!-- G. CHANGE HISTORY -->
+  <div class="paper-card p-6 rounded-xl border border-[var(--line)] bg-[var(--card)] space-y-3">
+    <div class="flex items-center justify-between pb-2 border-b border-[var(--rule)]">
+      <h3 class="font-serif text-lg font-bold text-[var(--ink)]">
+        G. Document Provenance & Change History
+      </h3>
+      <span class="font-mono text-[10px] text-[var(--green)]">STABLE CANONICAL RELEASE</span>
+    </div>
+    <div class="space-y-1.5 text-xs font-mono">
+      {history.map(h => (
+        <div class="p-2.5 rounded bg-[var(--paper)] border border-[var(--rule)] flex items-center justify-between gap-2">
+          <div class="flex items-center space-x-2">
+            <span class="font-bold text-[var(--ink)]">v{h.version}</span>
+            <span class="text-[var(--pencil)]">({h.date})</span>
+            <span class="font-sans text-[var(--text)]">— {h.summary}</span>
+          </div>
+          <span class="text-[10px] text-[var(--pencil)] shrink-0">{h.author}</span>
+        </div>
+      ))}
+      {history.length === 0 && (
+        <div class="p-2.5 rounded bg-[var(--paper)] border border-[var(--rule)] flex items-center justify-between">
+          <span class="font-bold text-[var(--ink)]">v1.0.0</span>
+          <span class="text-[var(--pencil)]">2026-10-05</span>
+          <span class="font-sans text-[var(--text)]">Initial Canonical MDX Edition with 7-Part Appendix</span>
+        </div>
+      )}
+    </div>
+  </div>
+</section>

@@ -1,508 +1,124 @@
 ---
 name: brain-knowledge-workflow
-description: End-to-end BRAIN workflow orchestrating research, deterministic notebook generation, PDF, optional Papermorph interactive books, QA, registration and publication.
+description: Master orchestration and end-to-end publishing pipeline skill for the BRAIN Knowledge OS. Coordinates raw source intake, research synthesis, canonical MDX notebook authoring, static Astro edge publishing, multi-stage QA, and Cloudflare deployment.
 ---
 
-# Brain Knowledge Workflow
+# BRAIN Knowledge Workflow: End-to-End Operating Procedure
 
 ## Purpose
 
-This is the top-level orchestrator for BRAIN.
+`brain-knowledge-workflow` governs the end-to-end knowledge authoring, transformation, verification, and deployment lifecycle in the BRAIN Knowledge OS repository (`srivatsacool/Knowledge`).
 
-It coordinates the other skills instead of duplicating their rules.
+It enforces the single authoritative publishing sequence:
 
-~~~text
-RAW MATERIAL
+```text
+RAW SOURCES (PDFs, Notes, Transcripts, Exam Papers, Slides)
     ↓
-RESEARCH
+brain-research (Evidence Engineering, Source Triangulation, Formula & PYQ Registers)
     ↓
-STRUCTURED KNOWLEDGE
+STRUCTURED KNOWLEDGE (Topic Map, Provenance & Evidence Records)
     ↓
-BRAIN PAPER NOTEBOOK
+brain-notebook (12-Point Anatomy, Ruled Paper Typesetting, KaTeX, 12-Step Numericals)
     ↓
-PDF
+CANONICAL MDX (domains/<domain>/<subject>/notebooks/<slug>.mdx)
     ↓
-OPTIONAL INTERACTIVE BOOK / PAPERMORPH
+HTML NOTEBOOK (Astro Static Edge Publication Artifact)
     ↓
-QA
+PDF (Printable Paper Edition / Print Stylesheet)
     ↓
-REGISTER
+OPTIONAL INTERACTIVE BOOK (Papermorph 16:9 Parametric Vector Simulators)
     ↓
-PUBLISH
-~~~
-
-## 1. Canonical-source rule
-
-Canonical knowledge is structured Markdown/MDX plus research/provenance files.
-
-HTML and PDF are publication artifacts.
-
-Interactive books are derivative artifacts.
-
-Never allow a generated artifact to silently become the canonical source.
-
-Never overwrite canonical research/content merely to satisfy a derivative format.
-
-## 2. Supported input modes
-
-### Topic only
-Research from the web, build structured knowledge, generate notebook.
-
-### Topic + files
-Inspect supplied material first, then supplement and verify with web research.
-
-### Existing notebook
-Audit the notebook, preserve successful interaction patterns, extract content, and rebuild only when requested.
-
-### Existing PDF → interactive book
-Skip notebook creation when explicitly requested.
-
-## 3. Intake
-
-Create/update:
-
-~~~text
-PROJECT.md
-CONTENT_MANIFEST.md
-SOURCE_MANIFEST.md
-~~~
-
-Capture:
-- title;
-- slug;
-- domain;
-- subject;
-- purpose;
-- audience;
-- sources;
-- depth;
-- PYQ availability;
-- diagram requirements;
-- quiz requirement;
-- PDF requirement;
-- interactive-book requirement.
-
-Hash source files when possible.
-
-## 4. Phase 1 — Research
-
-Invoke **brain-research**.
-
-Expected:
-
-~~~text
-research/
-├── research-brief.md
-├── topic-map.md
-├── evidence.md
-├── source-register.md
-├── visual-plan.md
-├── formula-register.md
-├── pyq-map.md
-├── glossary.md
-└── research-review.md
-~~~
-
-Do not proceed through a critical research failure.
-
-## 5. Phase 2 — Knowledge model
-
-Convert research into structured content.
-
-Each major concept should support:
-
-~~~yaml
-id:
-title:
-section:
-definition:
-intuition:
-why_it_matters:
-mechanism:
-components:
-visuals:
-examples:
-applications:
-tradeoffs:
-mistakes:
-recall:
-pyqs:
-sources:
-~~~
-
-This is the bridge between evidence and presentation.
-
-## 6. Phase 3 — Notebook
-
-Invoke **brain-notebook**.
-
-The canonical order is:
-
-~~~text
-Cover
-How to Use
-Grouped Index
-
-Start
-Foundations
-Core Concepts
-Frameworks & Models
-Worked Examples
-Cases & Applications
-
-PYQs
-Quiz & Revision
-Quick Revision
-
-Appendix
-~~~
-
-The reference FIN403/ERP notebook interaction model is the compatibility baseline:
-
-- grouped sidebar;
-- local search;
-- focus mode;
-- theme toggle;
-- print;
-- progress tracking;
-- revealable answers;
-- timers where useful;
-- paper notebook styling;
-- responsive behavior.
-
-Do not remove these merely because the subject changes.
-
-## 7. Phase 4 — Visual explanation pass
-
-Perform a dedicated visual pass.
-
-For every major concept ask:
-
-> Would a diagram make this easier to understand?
-
-If yes, create one.
-
-Priority:
-
-1. deterministic SVG;
-2. HTML/CSS infographic;
-3. generated visual only when necessary.
-
-Target:
-- processes;
-- architectures;
-- frameworks;
-- comparisons;
-- timelines;
-- formulas;
-- decisions;
-- numerical mechanics;
-- cases.
-
-Avoid decorative image dumping.
-
-## 8. Phase 5 — PYQ intelligence
-
-When PYQs exist:
-
-1. verify against source;
-2. classify by topic;
-3. calculate recurrence;
-4. identify recurring concepts;
-5. map to notebook sections;
-6. generate full solutions;
-7. generate answer structures;
-8. generate common traps;
-9. build PYQ section;
-10. link questions back to concepts.
-
-Never manufacture PYQs.
-
-If there are no PYQs, do not invent a historical section.
-
-## 9. Phase 6 — Quiz
-
-Generate quizzes only from verified notebook content.
-
-Default balance:
-- 30% foundational;
-- 40% application;
-- 20% analytical;
-- 10% challenge.
-
-Adjust for subject requirements.
-
-Every answer includes an explanation.
-
-## 10. Phase 7 — Appendix
-
-Build the appendix last:
-
-~~~text
-Appendix
-├── Source Register
-├── Citation Register
-├── Figure Register
-├── PYQ Provenance
-├── Glossary
-├── Formula Register
-└── Change History
-~~~
-
-Cross-check:
-- every factual source used is listed;
-- every figure has provenance;
-- every PYQ has provenance;
-- every formula has a source/derivation basis;
-- no unused source is falsely presented as evidence.
-
-## 11. Phase 8 — PDF
-
-Generate print-quality PDF from the canonical notebook.
-
-Preserve:
-- diagrams;
-- formulas;
-- tables;
-- headings;
-- sources.
-
-Remove interactive chrome.
-
-Verify:
-- page breaks;
-- no clipping;
-- readable figures;
-- correct formulas;
-- complete appendix.
-
-PDF is not the source of truth.
-
-## 12. Phase 9 — Optional interactive book
-
-Only create this when requested or explicitly enabled.
-
-Flow:
-
-~~~text
-Canonical Notebook
-        ↓
-PDF / structured content
-        ↓
-Papermorph
-        ↓
-Interactive Book
-~~~
-
-Store separately:
-
-~~~text
-subject/
-├── notebooks/
-│   └── topic.mdx
-├── pdf/
-│   └── topic.pdf
-└── interactive/
-    └── topic/
-~~~
-
-Never replace the notebook with the interactive book.
-
-## 13. Papermorph rules
-
-When enabled:
-
-1. inspect the installed/current Papermorph workflow;
-2. verify accepted input;
-3. create a derivative input;
-4. generate the book;
-5. validate scenes/stages;
-6. verify responsive behavior;
-7. verify navigation;
-8. verify controls;
-9. record Papermorph/version metadata;
-10. register the artifact.
-
-Interactive books should emphasize:
-- progressive visual explanation;
-- animation;
-- parameter manipulation;
-- micro-checks;
-- concept simulation.
-
-Do not merely turn notebook pages into slides.
-
-## 14. Registration
-
-Update the subject/project manifest:
-
-~~~yaml
-notebook:
-  path: notebooks/topic.mdx
-  status: published
-  version: 1.0.0
-
-pdf:
-  path: pdf/topic.pdf
-  available: true
-
-interactive:
-  available: true
-  path: interactive/topic/
-  engine: papermorph
-
-features:
-  diagrams: true
-  infographics: true
-  pyq: true
-  quiz: true
-  appendix: true
-~~~
-
-Astro should consume this metadata rather than hardcoding individual projects.
-
-## 15. QA pipeline
-
-### Content QA
-- source coverage;
-- factual accuracy;
-- terminology;
-- formulas;
-- PYQ authenticity;
-- solution correctness;
-- explanation depth.
-
-### Structural QA
-- section order;
-- metadata;
-- internal anchors;
-- grouped index;
-- search index.
-
-### Visual QA
-Check:
-- desktop;
-- mobile;
-- dark mode;
-- focus mode;
-- diagrams;
-- tables;
-- formulas;
-- notebook paper;
-- sidebar;
-- print.
-
-### Accessibility QA
-Check:
-- headings;
-- labels;
-- focus states;
-- keyboard use;
-- alt text;
-- contrast;
-- reduced motion.
-
-### Technical QA
-Check:
-- zero console errors;
-- zero broken links;
-- no missing assets;
-- no failed scripts;
-- no unnecessary oversized assets;
-- no private source files in public bundle.
-
-## 16. Release gate
-
-Publish only when:
-
-~~~text
-RESEARCH VERIFIED
-        AND
-NOTEBOOK VERIFIED
-        AND
-PDF VERIFIED
-        AND
-OPTIONAL INTERACTIVE VERIFIED
-        AND
-SOURCE APPENDIX VERIFIED
-        AND
-ACCESSIBILITY VERIFIED
-        AND
-BUILD VERIFIED
-~~~
-
-Otherwise:
-
-**BLOCKED — [specific failing gate]**
-
-Never claim deployment without verification.
-
-## 17. Publishing
-
-When publication is requested:
-
-1. build Astro;
-2. run static QA;
-3. verify routes;
-4. verify notebook/PDF/interactive links;
-5. commit;
-6. push GitHub;
-7. deploy Cloudflare Pages;
-8. verify public URL;
-9. update release/change history.
-
-Never expose private research material or source PDFs unless explicitly intended for publication.
-
-## 18. Failure recovery
-
-Research failure:
-- preserve partial evidence;
-- mark blocked areas;
-- never fabricate.
-
-Notebook failure:
-- preserve research;
-- repair generator;
-- regenerate.
-
-Diagram failure:
-- replace with deterministic SVG/HTML;
-- do not remove the underlying explanation.
-
-PDF failure:
-- repair print CSS;
-- do not distort canonical content.
-
-Papermorph failure:
-- notebook/PDF remain valid;
-- interactive status becomes unavailable;
-- retry independently.
-
-Deployment failure:
-- preserve build;
-- report exact failure;
-- do not claim publication.
-
-## 19. Final release report
-
-Produce:
-
-~~~text
-QA/release-report.md
-~~~
-
-It must state:
-- research completed;
-- sources used;
-- notebook generated;
-- diagram/infographic count;
-- verified PYQ count;
-- quiz count;
-- PDF status;
-- interactive status;
-- QA status;
-- publication URL.
-
-Final state:
-
-**BRAIN KNOWLEDGE ARTIFACT READY**
+11-DIMENSION QA SUITE (Content, Math, Numericals, PYQs, Responsive, Performance)
+    ↓
+ASTRO WEBSITE COMPILATION (Static Directory Routing)
+    ↓
+CLOUDFLARE PAGES DEPLOYMENT (https://knowledge-du5.pages.dev/)
+```
+
+---
+
+## 1. Architectural Tiers & Source of Truth
+
+Knowledge in BRAIN is strictly tiered:
+
+1. **Tier 1: Canonical Source of Truth**:
+   * Stored in `domains/<domain>/<subject>/notebooks/*.mdx`.
+   * Companion metadata in `domains/<domain>/domain.md` and `domains/<domain>/<subject>/subject.md`.
+   * Authored in structured Markdown/MDX with typed frontmatter adhering to `Website/src/content.config.ts`.
+2. **Tier 2: Publishing Application Layer**:
+   * Located in `Website/` (Astro 5+ project, Tailwind CSS, paper components, edge routing).
+   * Emits static edge assets to ephemeral build targets (`Website/dist/`).
+3. **Tier 3: Publication Artifacts**:
+   * HTML Notebook Experience (`/<domain>/<subject>/notebooks/<slug>/`).
+   * Printable / PDF Edition (`/<domain>/<subject>/notebooks/<slug>/print/`).
+   * Derivative Interactive Simulator (`/<domain>/<subject>/interactive/<slug>/`).
+
+---
+
+## 2. Multi-Stage Operational Workflow
+
+### Stage 1: Intake & Boundary Verification
+1. Gather user-supplied documents (PDFs, syllabi, lecture transcripts, question papers).
+2. Execute **Topic Boundary Check**:
+   * If a topic decomposes into multiple independent standalone knowledge units, formulate the modular decomposition before drafting.
+   * Verify that no prohibited institutional names (`WeSchool`, `Welingkar`, `MBA`, `B-school`) are present in proposed outputs.
+
+### Stage 2: Research & Evidence Synthesis (`brain-research`)
+1. Create research artifact directory `research/<topic-slug>/`.
+2. Generate:
+   * `research-brief.md`: Scope, learning objectives, domain placement.
+   * `topic-map.md`: Hierarchical concept breakdown and prerequisite mapping.
+   * `evidence.md`: Triangulated claims with distinction between user sources, academic literature, and synthesis.
+   * `formula-register.md`: Verified equations, notation conventions, units, and assumptions.
+   * `pyq-map.md`: Past examination questions with verified year, marks, paper, and topic link (Zero Fabrication).
+   * `glossary.md`: Canonical nomenclature, acronyms, and transaction codes.
+3. Validate research gate: **READY FOR NOTEBOOK**.
+
+### Stage 3: Canonical MDX Authoring (`brain-notebook`)
+1. Author canonical MDX document in `domains/<domain>/<subject>/notebooks/<slug>.mdx`.
+2. Structure the document with the **12-Point Anatomy** and **9-Section Index**:
+   * `START`: YAML frontmatter + High-impact StickyNote thesis.
+   * `FOUNDATIONS`: Problem statement, legacy liabilities, and definitions.
+   * `CORE CONCEPTS`: Core axioms, taxonomies, and comparison tables.
+   * `FRAMEWORKS & MODELS`: Architecture blueprints and deterministic SVG diagrams.
+   * `WORKED EXAMPLES`: 12-step professor numerical calculations with explicit arithmetic traces.
+   * `CASES & APPLICATIONS`: Real-world corporate mini-cases analyzing business trade-offs.
+   * `PYQs`: Solved past examination question bank and frequency matrix.
+   * `QUIZ & REVISION`: Active recall flashcards and interactive revealable quiz questions.
+   * `APPENDIX`: Full 7-part register (Sources, Citations, Figures, PYQ Provenance, Glossary, Formulas, Change History).
+
+### Stage 4: Interactive Book & Visual Simulators (Derivative Artifacts)
+1. For parametric models requiring dynamic parameter exploration (e.g. EOQ sensitivity, Safety Stock curves, INCOTERMS risk frontier):
+   * Build responsive 1600x900 SVG parameter stage.
+   * Provide client-side range sliders with instant recalculation.
+   * Ensure dark mode and light mode parity.
+
+### Stage 5: Static Publishing Generation & Routing
+1. Astro content layer loads canonical MDX via `Website/src/content.config.ts`.
+2. Generate static routes:
+   * Notebook reader: `Website/src/pages/[domain]/[subject]/notebooks/[slug].astro`
+   * Printable PDF: `Website/src/pages/[domain]/[subject]/notebooks/[slug]/print.astro`
+   * Subject desk: `Website/src/pages/[domain]/[subject]/index.astro`
+   * Domain shelf: `Website/src/pages/[domain]/index.astro`
+   * Library homepage: `Website/src/pages/index.astro`
+   * Global search index: Built statically for shadcn Command dialog.
+
+### Stage 6: The 11-Dimension QA Suite
+Before any deployment, verify all 11 quality gates:
+1. **Content QA**: Zero prohibited terms (`node Website/scripts/scan-forbidden.js`).
+2. **Structural QA**: Typed frontmatter validation (`astro check`).
+3. **Visual QA**: Ruled lines, red margin, punch-holes, spiral spine, stamps, and sticky notes intact.
+4. **Math QA**: KaTeX equations compile without LaTeX syntax errors (`node Website/scripts/find-math.js`).
+5. **Numerical QA**: 12-step calculation trace, intermediate steps shown, sanity checks verified.
+6. **PYQ QA**: Zero fabricated questions; verified marks, paper, and model answers.
+7. **Quiz QA**: Revealable accordion answers with in-depth justification.
+8. **Accessibility QA**: Keyboard navigation, ARIA modal attributes, visible focus rings.
+9. **Responsive QA**: Tested across 390px, 768px, 1024px, and 1440px.
+10. **Performance QA**: Lightweight SVG, zero unneeded runtime JS, fast edge caching.
+11. **Build QA**: `npm run build` exits with code `0`.
+
+### Stage 7: Git Staging & Cloudflare Pages Verification
+1. Review Git status (`git status`).
+2. Stage and commit verified canonical files and components.
+3. Push to `main` branch to trigger Cloudflare Pages automatic edge build.
+4. Verify live deployment at `https://knowledge-du5.pages.dev/`.

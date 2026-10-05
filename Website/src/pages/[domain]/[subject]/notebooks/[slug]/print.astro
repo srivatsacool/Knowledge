@@ -5,6 +5,11 @@ import StickyNote from '../../../../../components/paper/StickyNote.astro';
 import Stamp from '../../../../../components/paper/Stamp.astro';
 import Callout from '../../../../../components/paper/Callout.astro';
 import FormulaCard from '../../../../../components/paper/FormulaCard.astro';
+import WorkedExample from '../../../../../components/paper/WorkedExample.astro';
+import ProcessDiagram from '../../../../../components/paper/ProcessDiagram.astro';
+import PYQSection from '../../../../../components/paper/PYQSection.astro';
+import PYQCard from '../../../../../components/paper/PYQCard.astro';
+import AppendixRegister from '../../../../../components/paper/AppendixRegister.astro';
 import ComparisonCard from '../../../../../components/paper/ComparisonCard.astro';
 import DiagramCard from '../../../../../components/paper/DiagramCard.astro';
 import QuestionCard from '../../../../../components/paper/QuestionCard.astro';
@@ -73,25 +78,58 @@ const { Content } = await render(notebook);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{notebook.data.title} · Print Edition · Brain</title>
+    <title>{notebook.data.title} — Printable Academic Edition</title>
+    
+    <!-- KaTeX CSS for equation rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+    
+    <!-- Academic Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-      :root {
-        --paper: #ffffff;
-        --desk: #f4eedd;
-        --ink: #111827;
-        --ink2: #1e3a8a;
-        --pencil: #4b5563;
-        --line: #e5e7eb;
-        --rule: #e5e7eb;
-        --card: #ffffff;
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=JetBrains+Mono:wght@400;500;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style is:inline>
+      @page {
+        size: A4 portrait;
+        margin: 20mm 15mm 20mm 15mm;
+      }
+      @media print {
+        .no-print {
+          display: none !important;
+        }
+        body {
+          background: #ffffff !important;
+          color: #000000 !important;
+          font-size: 11pt !important;
+          line-height: 1.5 !important;
+        }
+        .print-page {
+          max-width: 100% !important;
+          box-shadow: none !important;
+          border: none !important;
+          padding: 0 !important;
+        }
+        details {
+          display: block !important;
+        }
+        details > div {
+          display: block !important;
+        }
+        summary {
+          display: none !important;
+        }
+        a {
+          text-decoration: underline !important;
+          color: #000000 !important;
+        }
+        .formula-box, .diagram-canvas {
+          break-inside: avoid;
+        }
       }
       body {
-        font-family: 'Public Sans', sans-serif;
         background-color: #f3f4f6;
-        color: #111827;
+        color: #1f2937;
+        font-family: 'Public Sans', system-ui, sans-serif;
         margin: 0;
         padding: 20px;
       }
@@ -99,24 +137,9 @@ const { Content } = await render(notebook);
         max-width: 850px;
         margin: 0 auto;
         background: #ffffff;
-        padding: 60px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        padding: 40px 50px;
         border: 1px solid #e5e7eb;
-      }
-      @media print {
-        body {
-          background: #ffffff;
-          padding: 0;
-        }
-        .print-page {
-          max-width: 100%;
-          border: none;
-          box-shadow: none;
-          padding: 0;
-        }
-        .no-print {
-          display: none !important;
-        }
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
       }
       h1, h2, h3, h4 {
         font-family: 'Libre Baskerville', serif;
@@ -167,6 +190,11 @@ const { Content } = await render(notebook);
           Stamp,
           Callout,
           FormulaCard,
+          WorkedExample,
+          ProcessDiagram,
+          PYQSection,
+          PYQCard,
+          AppendixRegister,
           ComparisonCard,
           DiagramCard,
           QuestionCard,
@@ -178,9 +206,9 @@ const { Content } = await render(notebook);
         }} />
       </main>
 
-      <footer class="mt-12 pt-6 border-t border-gray-300 text-xs font-mono text-gray-500 flex justify-between">
-        <span>Brain · Personal Knowledge Library</span>
-        <span>{domain.slug}/{subject.slug}/{notebook.data.slug}</span>
+      <footer class="mt-16 pt-6 border-t border-gray-300 text-xs font-mono text-gray-500 flex justify-between">
+        <span>BRAIN Knowledge OS // {domain.slug} // {subject.slug}</span>
+        <span>Page verified canonical print edition</span>
       </footer>
     </div>
   </body>

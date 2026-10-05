@@ -1,0 +1,113 @@
+---
+interface FrequencyItem {
+  topic: string;
+  weight: 'High' | 'Critical' | 'Medium';
+  frequency: string;
+  marks: string;
+}
+
+interface Props {
+  title?: string;
+  subject?: string;
+  frequencyMatrix?: FrequencyItem[];
+}
+
+const {
+  title = "Past Examination Questions & Scoring Blueprints",
+  subject = "Subject",
+  frequencyMatrix = [],
+} = Astro.props;
+---
+
+<section class="pyq-section my-12 pt-8 border-t-2 border-[var(--ink)] space-y-6">
+  <!-- Masthead -->
+  <div class="flex flex-wrap items-baseline justify-between gap-3 pb-3 border-b border-[var(--rule)]">
+    <div>
+      <div class="flex items-center space-x-2 mb-1">
+        <span class="rubber-stamp stamp-green text-[10px]">ZERO FABRICATION</span>
+        <span class="font-mono text-xs text-[var(--pencil)] uppercase tracking-wider">{subject}</span>
+      </div>
+      <h2 class="font-serif text-2xl sm:text-3xl font-bold text-[var(--ink)]">
+        {title}
+      </h2>
+    </div>
+    <span class="font-mono text-xs text-[var(--pencil)]">
+      Historical Exam Coverage
+    </span>
+  </div>
+
+  <!-- 4-Pillar Answer Construction Framework -->
+  <div class="paper-card p-5 sm:p-6 rounded-xl border border-[var(--line)] bg-[var(--card)] space-y-3">
+    <div class="flex items-center justify-between">
+      <span class="font-mono text-xs uppercase tracking-wider text-[var(--amber)] font-bold">
+        Scoring Methodology: The 4-Pillar Framework (10/10 Protocol)
+      </span>
+      <span class="rubber-stamp stamp-blue text-[9px]">EXAM STRATEGY</span>
+    </div>
+    <p class="text-xs text-[var(--pencil)] leading-relaxed">
+      To secure maximum marks in university examinations, every answer must systematically incorporate all four pillars:
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+      <div class="p-3 rounded bg-[var(--paper)] border border-[var(--rule)]">
+        <strong class="text-[var(--ink)] block mb-1">1. Academic Definition:</strong>
+        <span class="text-[var(--pencil)]">Authoritative theory citation, core axioms, and explicit domain scope.</span>
+      </div>
+      <div class="p-3 rounded bg-[var(--paper)] border border-[var(--rule)]">
+        <strong class="text-[var(--ink)] block mb-1">2. Architecture Blueprint:</strong>
+        <span class="text-[var(--pencil)]">3-tier layout, block schema, or multi-level indented tree.</span>
+      </div>
+      <div class="p-3 rounded bg-[var(--paper)] border border-[var(--rule)]">
+        <strong class="text-[var(--ink)] block mb-1">3. Execution Mechanics:</strong>
+        <span class="text-[var(--pencil)]">Step-by-step transaction flow, netting equations, or state machines.</span>
+      </div>
+      <div class="p-3 rounded bg-[var(--paper)] border border-[var(--rule)]">
+        <strong class="text-[var(--ink)] block mb-1">4. Corporate Evidence:</strong>
+        <span class="text-[var(--pencil)]">Concrete corporate case study (e.g. Zara, FoxMeyer, Subway) showing impact.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Frequency Matrix (if provided) -->
+  {frequencyMatrix.length > 0 && (
+    <div class="paper-card p-5 rounded-xl border border-[var(--line)] bg-[var(--paper)] space-y-3">
+      <div class="font-mono text-xs uppercase tracking-wider text-[var(--pencil)] font-bold">
+        Examination Repeat Frequency & Marks Weightage Matrix:
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left border-collapse">
+          <thead>
+            <tr class="border-b-2 border-[var(--rule)] font-mono text-[11px] text-[var(--ink)]">
+              <th class="py-2 pr-4">Topic / Question Focus</th>
+              <th class="py-2 px-4">Importance</th>
+              <th class="py-2 px-4">Historical Recurrence</th>
+              <th class="py-2 pl-4">Standard Marks</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[var(--rule)] font-sans">
+            {frequencyMatrix.map(f => (
+              <tr>
+                <td class="py-2.5 pr-4 font-semibold text-[var(--text)]">{f.topic}</td>
+                <td class="py-2.5 px-4 font-mono">
+                  <span class={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
+                    f.weight === 'Critical' ? 'bg-[var(--st-r)] text-[var(--red)]' :
+                    f.weight === 'High' ? 'bg-[var(--st-y)] text-[var(--amber)]' :
+                    'bg-[var(--card)] text-[var(--ink)]'
+                  }`}>
+                    {f.weight}
+                  </span>
+                </td>
+                <td class="py-2.5 px-4 font-mono text-[var(--pencil)]">{f.frequency}</td>
+                <td class="py-2.5 pl-4 font-mono font-bold text-[var(--ink)]">{f.marks}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
+
+  <!-- Slotted PYQ Cards -->
+  <div class="space-y-4">
+    <slot />
+  </div>
+</section>

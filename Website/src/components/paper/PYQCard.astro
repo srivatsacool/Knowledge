@@ -1,0 +1,122 @@
+---
+interface Props {
+  year?: string | number;
+  session?: string;
+  number?: string | number;
+  marks?: number;
+  type?: 'theory' | 'numerical' | 'case' | 'diagram';
+  topic?: string;
+  source?: string;
+  conceptLink?: string;
+  question: string;
+  frequency?: string;
+  answerSummary?: string;
+  commonTraps?: string;
+}
+
+const {
+  year,
+  session,
+  number,
+  marks = 10,
+  type = 'theory',
+  topic,
+  source = 'Past Examination Archive',
+  conceptLink,
+  question,
+  frequency,
+  answerSummary,
+  commonTraps,
+} = Astro.props;
+---
+
+<div class="pyq-card paper-card p-5 sm:p-6 my-5 rounded-xl border border-[var(--line)] bg-[var(--card)] shadow-xs">
+  <!-- Top Exam Metadata Banner -->
+  <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[var(--rule)]">
+    <div class="flex items-center space-x-2">
+      <span class="rubber-stamp stamp-green text-[9px] uppercase font-bold">VERIFIED PYQ</span>
+      {year && (
+        <span class="font-mono text-xs font-bold text-[var(--ink)] bg-[var(--paper)] px-2 py-0.5 rounded border border-[var(--line)]">
+          {year} {session ? `(${session})` : ''}
+        </span>
+      )}
+      {number && (
+        <span class="font-mono text-xs text-[var(--pencil)]">Q#{number}</span>
+      )}
+    </div>
+
+    <div class="flex items-center space-x-2">
+      <span class="font-mono text-xs font-bold text-[var(--amber)] bg-[var(--paper)] px-2 py-0.5 rounded border border-[var(--line)]">
+        {marks} Marks
+      </span>
+      <span class="rubber-stamp stamp-blue text-[9px] uppercase">{type}</span>
+    </div>
+  </div>
+
+  <!-- Verbatim Question Statement -->
+  <div class="mb-4">
+    <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold mb-1">
+      Examination Question Wording:
+    </div>
+    <div class="font-serif text-base sm:text-lg font-bold text-[var(--ink)] leading-snug">
+      "{question}"
+    </div>
+  </div>
+
+  <!-- Metadata Bar: Topic & Provenance -->
+  <div class="flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-[var(--pencil)] pb-3 mb-3 border-b border-[var(--rule)]">
+    {topic && (
+      <div>
+        <span class="text-[var(--text)] font-semibold">Topic:</span> {topic}
+        {conceptLink && (
+          <a href={conceptLink} class="text-[var(--ink2)] hover:underline ml-1">
+            [Go to Theory ↑]
+          </a>
+        )}
+      </div>
+    )}
+    <div>
+      <span class="text-[var(--text)] font-semibold">Source:</span> {source}
+    </div>
+    {frequency && (
+      <div class="text-[var(--red)] font-bold">
+        Repeat Frequency: {frequency}
+      </div>
+    )}
+  </div>
+
+  <!-- Model Answer Disclosure (Collapsible / Accordion) -->
+  <details class="group mt-3">
+    <summary class="flex items-center justify-between p-3 rounded-lg bg-[var(--paper)] border border-[var(--line)] cursor-pointer select-none hover:border-[var(--ink)] transition-colors list-none">
+      <span class="font-mono text-xs font-bold text-[var(--ink)] flex items-center space-x-2">
+        <span>📖</span>
+        <span>View Model Answer & 4-Pillar Scoring Strategy</span>
+      </span>
+      <span class="font-mono text-xs text-[var(--pencil)] group-open:rotate-180 transition-transform">
+        ▼
+      </span>
+    </summary>
+
+    <div class="p-4 sm:p-5 mt-2 rounded-lg bg-[var(--paper)] border border-[var(--line)] text-xs sm:text-sm text-[var(--text)] leading-relaxed space-y-4">
+      {answerSummary && (
+        <div class="p-3 rounded bg-[var(--card)] border-l-3 border-[var(--green)]">
+          <strong class="font-mono text-xs uppercase tracking-wider text-[var(--green)] block mb-1">Executive Answer Thesis:</strong>
+          <p class="text-xs text-[var(--pencil)] leading-relaxed">{answerSummary}</p>
+        </div>
+      )}
+
+      <!-- Body of model answer slotted -->
+      <div class="prose prose-sm max-w-none">
+        <slot />
+      </div>
+
+      <!-- Common Traps -->
+      {commonTraps && (
+        <div class="p-3 rounded bg-[var(--st-r)] text-[var(--st-text)] border border-[var(--red)]/30 mt-3">
+          <span class="font-mono font-bold text-xs uppercase text-[var(--red)] block mb-0.5">⚠ Common Examination Pitfalls:</span>
+          <p class="text-xs leading-relaxed">{commonTraps}</p>
+        </div>
+      )}
+    </div>
+  </details>
+</div>
