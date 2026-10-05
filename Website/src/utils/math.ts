@@ -1,16 +1,27 @@
 import katex from 'katex';
 
 /**
+ * Normalizes TeX string by collapsing double backslashes before common TeX macros
+ * which frequently occur in MDX / JSX string attributes.
+ */
+export function normalizeTeX(input: string): string {
+  if (!input || typeof input !== 'string') return '';
+  return input.replace(/\\\\(frac|sqrt|times|cdot|approx|sum|int|partial|alpha|beta|gamma|delta|sigma|mu|pm|le|ge|neq|equiv|to|text|left|right|quad)/g, '\\$1');
+}
+
+/**
  * Pre-compiles any math expression or text with $...$ / $$...$$ delimiters 
  * to HTML + MathML strings on the server during Astro static build time.
  */
 export function renderMath(text: string | null | undefined): string {
   if (!text || typeof text !== 'string') return '';
 
+  const normalized = normalizeTeX(text);
+
   // 0. If text contains TeX macros without $ delimiters, pre-compile directly
-  if (!text.includes('$') && /\\(frac|sqrt|times|cdot|approx|sum|int|partial|alpha|beta|gamma|delta|sigma|mu|pm|le|ge|neq|equiv|to|text|left|right|quad)\b/.test(text)) {
+  if (!normalized.includes('$') && /\\(frac|sqrt|times|cdot|approx|sum|int|partial|alpha|beta|gamma|delta|sigma|mu|pm|le|ge|neq|equiv|to|text|left|right|quad)\b/.test(normalized)) {
     try {
-      return katex.renderToString(text.trim(), {
+      return katex.renderToString(normalized.trim(), {
         displayMode: false,
         throwOnError: false,
         strict: 'ignore',
@@ -22,7 +33,7 @@ export function renderMath(text: string | null | undefined): string {
   }
 
   // 1. Replace $$...$$ (display math)
-  let result = text.replace(/\$\$([\s\S]+?)\$\$/g, (_, eq) => {
+  let result = normalized.replace(/\$\$([\s\S]+?)\$\$/g, (_, eq) => {
     try {
       return katex.renderToString(eq.trim(), {
         displayMode: true,
@@ -57,7 +68,7 @@ export function renderMath(text: string | null | undefined): string {
  */
 export function renderDisplayFormula(formula: string | null | undefined): string {
   if (!formula || typeof formula !== 'string') return '';
-  const clean = formula.replace(/^\$\$|\$\$$/g, '').trim();
+  const clean = normalizeTeX(formula.replace(/^\$\$|\$\$$/g, '').trim());
   try {
     return katex.renderToString(clean, {
       displayMode: true,
@@ -75,7 +86,7 @@ export function renderDisplayFormula(formula: string | null | undefined): string
  */
 export function renderInlineFormula(formula: string | null | undefined): string {
   if (!formula || typeof formula !== 'string') return '';
-  const clean = formula.replace(/^\$|\$$/g, '').trim();
+  const clean = normalizeTeX(formula.replace(/^\$|\$$/g, '').trim());
   try {
     return katex.renderToString(clean, {
       displayMode: false,

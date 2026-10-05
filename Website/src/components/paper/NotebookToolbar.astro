@@ -18,7 +18,8 @@ const { title, domain, subject, slug } = Astro.props;
         <!-- Index Drawer Trigger (Mobile + Desktop Toggle) -->
         <button 
           id="toolbar-index-btn"
-          class="px-2.5 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--line)] hover:border-[var(--ink)] font-mono text-xs font-semibold text-[var(--ink)] flex items-center space-x-1.5 shadow-2xs transition-colors cursor-pointer"
+          data-testid="btn-index"
+          class="notebook-btn-index px-2.5 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--line)] hover:border-[var(--ink)] font-mono text-xs font-semibold text-[var(--ink)] flex items-center space-x-1.5 shadow-2xs transition-colors cursor-pointer"
           title="Toggle Structured 9-Section Index (Alt+I)"
           aria-label="Toggle Notebook Index"
         >
@@ -49,8 +50,9 @@ const { title, domain, subject, slug } = Astro.props;
         <!-- Search 🔍 (Command Palette Trigger) -->
         <button 
           id="toolbar-search-btn"
+          data-testid="btn-search"
           onclick="window.openSearchPalette ? window.openSearchPalette() : document.getElementById('global-search-trigger')?.click()"
-          class="px-2.5 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--line)] hover:border-[var(--ink)] text-[var(--pencil)] hover:text-[var(--ink)] font-mono text-xs flex items-center space-x-1.5 shadow-2xs transition-colors cursor-pointer"
+          class="notebook-btn-search px-2.5 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--line)] hover:border-[var(--ink)] text-[var(--pencil)] hover:text-[var(--ink)] font-mono text-xs flex items-center space-x-1.5 shadow-2xs transition-colors cursor-pointer"
           title="Search Notebook (⌘K)"
           aria-label="Search Notebook"
         >
@@ -64,7 +66,8 @@ const { title, domain, subject, slug } = Astro.props;
         <!-- Focus Mode Toggle -->
         <button 
           id="toolbar-focus-btn"
-          class="px-2.5 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--line)] hover:border-[var(--ink)] text-[var(--pencil)] hover:text-[var(--ink)] font-mono text-xs flex items-center space-x-1 shadow-2xs transition-colors cursor-pointer"
+          data-testid="btn-focus-mode"
+          class="notebook-btn-focus px-2.5 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--line)] hover:border-[var(--ink)] text-[var(--pencil)] hover:text-[var(--ink)] font-mono text-xs flex items-center space-x-1 shadow-2xs transition-colors cursor-pointer"
           title="Toggle Immersive Focus Mode (Alt+F)"
           aria-label="Toggle Focus Mode"
         >
@@ -75,7 +78,8 @@ const { title, domain, subject, slug } = Astro.props;
         <!-- Light/Dark Mode Switcher -->
         <button 
           id="toolbar-theme-btn"
-          class="px-2.5 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--line)] hover:border-[var(--ink)] text-[var(--text)] font-mono text-xs flex items-center space-x-1 shadow-2xs transition-colors cursor-pointer"
+          data-testid="btn-theme-toggle"
+          class="notebook-btn-theme px-2.5 py-1.5 rounded-lg bg-[var(--card)] border border-[var(--line)] hover:border-[var(--ink)] text-[var(--text)] font-mono text-xs flex items-center space-x-1 shadow-2xs transition-colors cursor-pointer"
           title="Switch Light (Paper) / Dark (Night Study) Mode"
           aria-label="Toggle Theme"
         >
@@ -137,11 +141,28 @@ const { title, domain, subject, slug } = Astro.props;
     }
   }
 
+  // Index Drawer / Sidebar toggle handler
+  const indexBtn = document.getElementById('toolbar-index-btn');
+  if (indexBtn) {
+    indexBtn.addEventListener('click', () => {
+      const sheet = document.getElementById('mobile-index-sheet');
+      if (sheet && window.innerWidth < 1024) {
+        sheet.classList.remove('hidden');
+      } else {
+        const sidebar = document.getElementById('notebook-sidebar-container');
+        if (sidebar) sidebar.classList.toggle('hidden');
+      }
+    });
+  }
+
   // Keyboard hotkeys: Alt+F for Focus, Alt+I for Index
   window.addEventListener('keydown', (e) => {
     if (e.altKey && e.key.toLowerCase() === 'f') {
       e.preventDefault();
       focusBtn?.click();
+    } else if (e.altKey && e.key.toLowerCase() === 'i') {
+      e.preventDefault();
+      indexBtn?.click();
     }
   });
 
