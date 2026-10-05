@@ -103,23 +103,32 @@ code, pre, .font-mono {
    PHYSICAL NOTEBOOK 2.0 SHEET WITH BINDER RINGS & MARGIN
    ========================================================== */
 .notebook-sheet {
+  --margin-pos: 24px;
+  --sheet-pl: 54px;
   position: relative;
   background-color: var(--paper);
   border-radius: 6px 14px 14px 6px;
   box-shadow: var(--shadow-sheet);
-  padding: 24px 20px 32px 36px;
+  padding: 28px 18px 36px var(--sheet-pl);
   background-image: 
-    linear-gradient(90deg, transparent 24px, var(--margin) 24px, var(--margin) 26px, transparent 26px),
+    linear-gradient(90deg, transparent var(--margin-pos), var(--margin) var(--margin-pos), var(--margin) calc(var(--margin-pos) + 2px), transparent calc(var(--margin-pos) + 2px)),
     repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh));
   background-position: 0 0, 0 58px;
 }
 
+@media (min-width: 640px) {
+  .notebook-sheet {
+    --margin-pos: 48px;
+    --sheet-pl: 88px;
+    padding: 34px 36px 44px var(--sheet-pl);
+  }
+}
+
 @media (min-width: 768px) {
   .notebook-sheet {
-    padding: 34px 56px 44px 96px;
-    background-image: 
-      linear-gradient(90deg, transparent 66px, var(--margin) 66px, var(--margin) 68px, transparent 68px),
-      repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh));
+    --margin-pos: 68px;
+    --sheet-pl: 112px;
+    padding: 38px 52px 48px var(--sheet-pl);
   }
   
   /* 3-Hole Binder Punches */
@@ -436,13 +445,13 @@ body.focus-mode .notebook-canvas-container {
 body.focus-mode .notebook-sheet {
   font-size: 1.05rem;
   line-height: 1.8;
-  padding: 2.5rem 3.5rem !important;
+  padding: 38px 52px 48px var(--sheet-pl, 112px) !important;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12) !important;
 }
 
 @media (max-width: 768px) {
   body.focus-mode .notebook-sheet {
-    padding: 1.5rem !important;
+    padding: 28px 18px 36px var(--sheet-pl, 54px) !important;
   }
 }
 
