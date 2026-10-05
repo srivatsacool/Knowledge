@@ -40,7 +40,7 @@
   /* Font Families */
   --font-hand: 'Caveat', 'Segoe Print', cursive;
   --font-hand2: 'Patrick Hand', cursive;
-  --lh: 30px;
+  --lh: 36px;
 }
 
 [data-theme="dark"] {
@@ -111,9 +111,7 @@ code, pre, .font-mono {
   box-shadow: var(--shadow-sheet);
   padding: 28px 18px 36px var(--sheet-pl);
   background-image: 
-    linear-gradient(90deg, transparent var(--margin-pos), var(--margin) var(--margin-pos), var(--margin) calc(var(--margin-pos) + 2px), transparent calc(var(--margin-pos) + 2px)),
-    repeating-linear-gradient(transparent 0 calc(var(--lh) - 1px), var(--rule) calc(var(--lh) - 1px) var(--lh));
-  background-position: 0 0, 0 58px;
+    linear-gradient(90deg, transparent var(--margin-pos), var(--margin) var(--margin-pos), var(--margin) calc(var(--margin-pos) + 2px), transparent calc(var(--margin-pos) + 2px));
 }
 
 @media (min-width: 640px) {
@@ -454,5 +452,126 @@ body.focus-mode .notebook-sheet {
     padding: 28px 18px 36px var(--sheet-pl, 54px) !important;
   }
 }
+
+/* ==========================================================
+   ACADEMIC NOTEBOOK TYPOGRAPHY & BASELINE RULING (PROOF-ALIGNED)
+   ========================================================== */
+
+/* Masthead Header */
+.notebook-header h1,
+header h1.notebook-title {
+  font-family: 'Libre Bodoni', Georgia, serif !important;
+  font-size: 2.75rem !important;
+  line-height: 1.2 !important;
+  font-weight: 800 !important;
+  color: var(--ink) !important;
+  letter-spacing: -0.02em !important;
+}
+
+@media (max-width: 640px) {
+  .notebook-header h1,
+  header h1.notebook-title {
+    font-size: 2rem !important;
+    line-height: 1.25 !important;
+  }
+}
+
+.notebook-description {
+  font-size: 1.125rem !important;
+  line-height: var(--lh) !important;
+  color: var(--pencil) !important;
+  background-image: linear-gradient(to bottom, transparent 24px, var(--rule) 24px, var(--rule) 25.5px, transparent 25.5px) !important;
+  background-size: 100% var(--lh) !important;
+  background-repeat: repeat-y !important;
+}
+
+/* Markdown Headings Hierarchy in Notebook Prose */
+.prose h1 {
+  font-family: 'Libre Bodoni', Georgia, serif !important;
+  font-size: 2.125rem !important;
+  line-height: 1.25 !important;
+  font-weight: 800 !important;
+  color: var(--ink) !important;
+  margin-top: 3.5rem !important;
+  margin-bottom: 1.5rem !important;
+  padding-bottom: 0.5rem !important;
+  border-bottom: 2px solid var(--rule) !important;
+  letter-spacing: -0.015em !important;
+}
+
+@media (max-width: 640px) {
+  .prose h1 {
+    font-size: 1.625rem !important;
+    margin-top: 2.5rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+}
+
+.prose h2 {
+  font-family: 'Libre Bodoni', Georgia, serif !important;
+  font-size: 1.625rem !important;
+  line-height: 1.35 !important;
+  font-weight: 700 !important;
+  color: var(--ink) !important;
+  margin-top: 2.5rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.prose h3 {
+  font-family: 'Libre Bodoni', Georgia, serif !important;
+  font-size: 1.35rem !important;
+  line-height: 1.4 !important;
+  font-weight: 700 !important;
+  color: var(--ink) !important;
+  margin-top: 2rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.prose h4 {
+  font-size: 1.15rem !important;
+  line-height: 1.4 !important;
+  font-weight: 600 !important;
+  color: var(--text) !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Narrative Body Prose: Ruled lines sitting directly on text baseline */
+.prose p {
+  font-size: 1.125rem !important;
+  line-height: var(--lh) !important;
+  color: var(--text) !important;
+  background-image: linear-gradient(to bottom, transparent 24px, var(--rule) 24px, var(--rule) 25.5px, transparent 25.5px) !important;
+  background-size: 100% var(--lh) !important;
+  background-repeat: repeat-y !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.prose li {
+  font-size: 1.125rem !important;
+  line-height: var(--lh) !important;
+  background-image: linear-gradient(to bottom, transparent 24px, var(--rule) 24px, var(--rule) 25.5px, transparent 25.5px) !important;
+  background-size: 100% var(--lh) !important;
+  background-repeat: repeat-y !important;
+}
+
+/* Suppress ruled lines inside cards, sticky notes, formulas, tables, diagrams */
+.sticky-note, .sticky-note p,
+.formula-box, .formula-box p,
+.paper-card, .paper-card p,
+.worked-example, .worked-example p,
+.pyq-card, .pyq-card p,
+.process-diagram, .process-diagram p,
+table, table p,
+.callout, .callout p,
+.comparison-card, .comparison-card p,
+.diagram-card, .diagram-card p,
+.question-card, .question-card p,
+.flashcard, .flashcard p,
+.quiz-box, .quiz-box p,
+.appendix-register, .appendix-register p {
+  background-image: none !important;
+}
+
 
 
