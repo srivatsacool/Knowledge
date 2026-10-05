@@ -1,0 +1,263 @@
+---
+title: Warehouse Engineering, Network Design & Global EXIM Trade
+slug: warehousing-exim
+domain: operations
+subject: logistics-supply-chain
+course: "Logistics and SCM: Value Creation, Adaptability & Sustainability"
+professor: Prof. Ajit Maurya, Prof. Praful More
+description: >
+  Engineering principles of modern warehousing (U-shaped flow, cross-docking, slotting),
+  network design (Center of Gravity modeling, Hub-and-Spoke topologies),
+  and INCOTERMS 2020 international trade rules and customs documentation.
+status: published
+version: 1.0.0
+updated: "2026-10-05"
+tags:
+  - Warehousing
+  - Cross-Docking
+  - Center-of-Gravity
+  - INCOTERMS-2020
+  - Hub-and-Spoke
+  - Global-Trade
+featured: true
+interactive:
+  available: true
+  slug: incoterms-risk-frontier
+pdf:
+  available: true
+---
+
+# 01 — Notebook Information & Scope
+
+<StickyNote color="green" title="Logistics Axiom">
+  "A warehouse is no longer a static repository for dead inventory. Modern logistics centers are high-velocity velocity hubs where sorting, sequencing, and cross-docking convert bulk freight into customized customer delivery flows."
+</StickyNote>
+
+* **Domain**: Operations & Supply Chain Systems
+* **Subject**: Logistics & Supply Chain Management
+* **Pedagogical Leads**: Prof. Ajit Maurya, Prof. Praful More
+* **Core Reference Models**: U-Shaped Warehouse Material Flow, Center of Gravity Facility Location, and ICC INCOTERMS 2020
+
+---
+
+# 02 — Learning Map
+
+```text
+[Facility Location: Center of Gravity] ──> [Network Topology: Hub-and-Spoke vs Direct]
+                                                          │
+                                                          ▼
+[Global EXIM Trade & INCOTERMS 2020] <── [Internal Flow: U-Shape vs Through & Cross-Dock]
+```
+
+---
+
+# 03 — Warehouse Engineering & Material Flow Architectures
+
+Warehouse internal layout directly dictates picking travel time, which represents 50% to 60% of total operating warehouse labor expense.
+
+### 1. The U-Shaped Warehouse Layout
+In a U-shaped facility, receiving docks and shipping docks are positioned on the **same exterior wall**:
+
+```text
+       ┌─────────── RECEIVING DOCKS ───────────┐
+       │                                       │
+       │   [Staging & Quality Inspection]      │
+       │                                       │
+       │   ┌───────────────────────────────┐   │
+       │   │ FAST-MOVERS (Golden Zone)     │   │
+       │   ├───────────────────────────────┤   │
+       │   │ MEDIUM-MOVERS (Reserve)       │   │
+       │   ├───────────────────────────────┤   │
+       │   │ SLOW-MOVERS (Deep Storage)    │   │
+       │   └───────────────────────────────┘   │
+       │                                       │
+       │   [Order Consolidation & Packing]     │
+       │                                       │
+       └──────────── SHIPPING DOCKS ───────────┘
+```
+
+* **Key Advantages**:
+  * *Resource Sharing*: Forklifts, dock levelers, and material handling staff can flexibly transition between receiving (morning peak) and shipping (afternoon peak).
+  * *Travel Minimization*: Fast-moving items (Class A SKUs) are slotted in the "Golden Zone" adjacent to both dock zones, drastically reducing forklift transit distances.
+  * *Security*: External truck movement and yard security are consolidated on one side of the building.
+
+### 2. Through-Flow (Linear) Layout
+Receiving docks are situated on one side of the facility, and shipping docks on the opposite wall. Best suited for ultra-high-volume cross-docking operations where goods move continuously from west to east without resting in reserve racks.
+
+---
+
+# 04 — Cross-Docking Operations
+
+Cross-docking is an advanced logistics technique where incoming inbound shipments are unloaded from supplier trucks, sorted, and loaded directly onto outbound customer delivery vehicles with **zero intermediate storage** and dwell time under 24 hours.
+
+<ComparisonCard
+  title="Traditional Warehousing vs. Cross-Docking Dynamics"
+  labelA="Traditional Warehousing"
+  labelB="Pure Cross-Docking"
+  featureA="Inbound goods undergo receiving, put-away into high-bay racks, storage holding for weeks, order wave picking, packing, and dispatch. High labor and holding costs."
+  featureB="Goods are scanned at the inbound dock, routed across automated conveyor sorters directly to outbound bay doors, and staged for dispatch. Eliminates put-away, storage, and picking labor."
+/>
+
+### Prerequisites for Cross-Docking:
+1. High-fidelity EDI / Advanced Shipping Notices (ASN) from suppliers.
+2. Standardized barcoding (GS1-128) and pallet dimensions.
+3. High demand velocity and predictable shipping schedules.
+
+---
+
+# 05 — Network Design: The Center of Gravity Location Model
+
+When designing a distribution network, the **Center of Gravity (CoG)** method calculates the optimal coordinates $(X^*, Y^*)$ for a central distribution center that minimizes total transportation tonne-kilometer costs:
+
+<FormulaCard
+  title="Center of Gravity Coordinate Formulas"
+  formula="X^* = \frac{\sum_{i=1}^n X_i \cdot W_i \cdot R_i}{\sum_{i=1}^n W_i \cdot R_i}, \quad Y^* = \frac{\sum_{i=1}^n Y_i \cdot W_i \cdot R_i}{\sum_{i=1}^n W_i \cdot R_i}"
+  variables={[
+    { symbol: "(X_i, Y_i)", description: "Grid coordinates of customer or supplier node i" },
+    { symbol: "W_i", description: "Tonnage / shipment volume transported to or from node i" },
+    { symbol: "R_i", description: "Freight rate per ton-kilometer for node i (often assumed equal across road routes)" },
+    { symbol: "(X^*, Y^*)", description: "Optimal geographic coordinates for locating the distribution center" }
+  ]}
+  explanation="Represents the weighted centroid of the logistics network. Locating the hub at (X*, Y*) minimizes aggregate freight-ton-mileage across the entire distribution network."
+/>
+
+### Worked Numerical Example
+A retail chain needs to locate a central warehouse to serve four regional markets:
+
+| City | Coordinate $(X_i, Y_i)$ | Annual Demand ($W_i$ tons) | $X_i \times W_i$ | $Y_i \times W_i$ |
+| :--- | :---: | :---: | :---: | :---: |
+| City A | $(10, 20)$ | 1,000 | 10,000 | 20,000 |
+| City B | $(30, 40)$ | 2,500 | 75,000 | 100,000 |
+| City C | $(50, 10)$ | 1,500 | 75,000 | 15,000 |
+| City D | $(20, 60)$ | 2,000 | 40,000 | 120,000 |
+| **Total** | — | **7,000** | **200,000** | **255,000** |
+
+`$X^* = \frac{200000}{7000} \approx 28.57, \quad Y^* = \frac{255000}{7000} \approx 36.43$`
+
+**Conclusion**: The optimal central distribution center should be sited near coordinates $(28.6, 36.4)$, closest to City B and City D.
+
+---
+
+# 06 — Global EXIM Trade & INCOTERMS 2020 Rules
+
+The International Chamber of Commerce (ICC) **INCOTERMS 2020** rules define the precise contractual boundaries where costs, operational risks, and insurance responsibilities transfer from the seller (exporter) to the buyer (importer).
+
+```text
+[Seller Factory] ──> [Export Dock] ──> [Vessel Sea Transit] ──> [Import Dock] ──> [Buyer Warehouse]
+  │                                                                                  ▲
+  ▼                                                                                  │
+ EXW                                                                                DDP
+(Min Seller Risk)                                                  (Max Seller Risk)
+```
+
+| Term | Full Name | Transport Mode | Risk Transfer Point | Freight Paid By | Import Customs Paid By |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **EXW** | Ex Works | Any Mode | At seller’s factory premises | Buyer | Buyer |
+| **FCA** | Free Carrier | Any Mode | Handed over to buyer's nominated carrier | Buyer | Buyer |
+| **FOB** | Free On Board | Sea / Inland Waterway | When goods pass over ship's rail at loading port | Buyer | Buyer |
+| **CFR** | Cost and Freight | Sea / Inland Waterway | Loaded on board ship (risk transfers at export port) | Seller pays sea freight | Buyer |
+| **CIF** | Cost, Insurance & Freight | Sea / Inland Waterway | Loaded on board ship (Seller provides marine insurance) | Seller pays sea freight + insurance | Buyer |
+| **DAP** | Delivered at Place | Any Mode | Arrived at destination ready for unloading | Seller pays transport | Buyer |
+| **DDP** | Delivered Duty Paid | Any Mode | Delivered at buyer’s destination cleared for import | Seller pays all transport + duty | Seller |
+
+<Callout type="warning" title="Critical CIF vs FOB Risk Clarification">
+  Under **CIF (Cost, Insurance & Freight)**, although the **seller pays the ocean freight and marine insurance**, the **risk of cargo loss transfers to the buyer** the moment the goods are safely loaded on board the vessel at the export port! If the ship sinks mid-ocean, the buyer files the insurance claim.
+</Callout>
+
+### Essential EXIM Documentation
+1. **Bill of Lading (B/L)**: Issued by the ocean carrier. Functions simultaneously as:
+   * A formal receipt that cargo has been received on board.
+   * Evidence of the contract of carriage.
+   * A document of title (negotiable instrument allowing transfer of cargo ownership).
+2. **Commercial Invoice**: Primary accounting document stating quantity, unit values, harmonized system (HS) codes, and total transaction amount.
+3. **Letter of Credit (L/C)**: A financial guarantee issued by the importer's bank promising payment to the exporter upon presentation of strictly compliant shipping documents.
+
+---
+
+# 07 — Past Examination Questions & Model Solutions
+
+<QuestionCard
+  question="Explain the operational mechanics of Cross-Docking. What technological prerequisites and operational conditions must exist for a supply chain to execute cross-docking successfully?"
+  marks={10}
+  type="theory"
+  modelAnswer="1. Operational Mechanics:
+   Cross-docking is the practice of unloading materials from an inbound truck or rail car and loading these materials directly into outbound trucks, trailers, or rail cars, with zero or minimal interim storage and dwelling under 24 hours. Goods move through sortation conveyor belts or staging bays without entering warehouse reserve storage racks.
+2. Technological Prerequisites:
+   - Electronic Data Interchange (EDI) / API: Real-time transmission of Advanced Shipping Notices (ASN) detailing pallet barcodes and product contents before trucks arrive.
+   - Barcode Scanning & RFID: Standardized GS1-128 labeling allowing instantaneous dock verification and automated conveyor sorting.
+   - Warehouse Management System (WMS): Sophisticated algorithms that dynamically match incoming shipments with outgoing delivery routes and assign dock doors.
+3. Operational Conditions:
+   - High velocity and predictable customer demand.
+   - Reliable carrier delivery windows and tight scheduling discipline.
+   - Supplier packaging compliance (pre-labeled, pre-sorted, retail-ready displays)."
+/>
+
+<QuestionCard
+  question="Compare EXW, FOB, CIF, and DDP under INCOTERMS 2020. Clearly identify the specific point where financial risk and shipping costs transfer from exporter to importer."
+  marks={10}
+  type="theory"
+  modelAnswer="1. EXW (Ex Works):
+   - Cost Transfer: Seller's premises.
+   - Risk Transfer: Seller's premises before loading. Importer assumes maximum responsibility (loading, export clearance, ocean transit, import customs).
+2. FOB (Free On Board):
+   - Cost Transfer: Goods loaded safely on board the vessel at port of origin.
+   - Risk Transfer: On board the vessel at origin port. Exporter clears export customs; importer pays ocean freight and import duty.
+3. CIF (Cost, Insurance & Freight):
+   - Cost Transfer: Destination port (Exporter pays ocean freight and marine cargo insurance).
+   - Risk Transfer: On board the vessel at origin port. (Crucial distinction: Risk transfers at export port, but exporter pays transport to destination port).
+4. DDP (Delivered Duty Paid):
+   - Cost Transfer: Buyer's named destination warehouse.
+   - Risk Transfer: Buyer's named destination warehouse ready for unloading. Exporter assumes maximum obligation including transport, insurance, and destination import tariffs."
+/>
+
+---
+
+# 08 — Active Recall Flashcards & Conceptual Quiz
+
+<Flashcard
+  front="Under INCOTERMS 2020 CIF, who bears the risk if the cargo is damaged during ocean transit?"
+  back="The buyer (importer). Under CIF, while the seller pays for freight and minimum marine insurance, risk transfers to the buyer once the goods are loaded on board the vessel at the export port."
+/>
+
+<Flashcard
+  front="What is the primary operational advantage of a U-shaped warehouse layout?"
+  back="Shared dock resources (material handling equipment and personnel can be shared between receiving and shipping), minimized travel distances for fast-moving items, and enhanced perimeter security."
+/>
+
+<Quiz
+  question="Which INCOTERM 2020 imposes the maximum possible financial risk, freight cost, and customs obligation on the seller (exporter)?"
+  options={[
+    "EXW (Ex Works)",
+    "FOB (Free On Board)",
+    "CIF (Cost, Insurance & Freight)",
+    "DDP (Delivered Duty Paid)"
+  ]}
+  correctIndex={3}
+  explanation="DDP (Delivered Duty Paid) places the maximum burden on the seller, who must pay all inland freight, ocean transit, destination import customs duties, and assume all risk until goods arrive at the buyer's doorstep."
+/>
+
+---
+
+# 09 — Knowledge Graph & Cross-References
+
+<RelatedKnowledge
+  domain="operations"
+  subject="logistics-supply-chain"
+  links={[
+    {
+      title: "Supply Chain Architecture & Strategic Fit",
+      slug: "scm-architecture-drivers",
+      relationship: "Foundational Drivers: Explores how facility and transportation decisions impact supply chain responsiveness."
+    },
+    {
+      title: "Deterministic Lot Sizing & Stochastic Inventory Optimization",
+      slug: "inventory-optimization",
+      relationship: "Storage Sizing: Explains how cycle and safety stock quantities determine warehouse storage capacity."
+    },
+    {
+      title: "LSCM Master Synthesis & Comprehensive Exam Blueprint",
+      slug: "lscm-master-blueprint",
+      relationship: "Exam Integration: Provides comprehensive past exam walkthroughs on cross-docking and INCOTERMS."
+    }
+  ]}
+/>

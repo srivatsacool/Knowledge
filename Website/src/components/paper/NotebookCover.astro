@@ -1,0 +1,74 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  course?: string;
+  professor?: string;
+  version?: string;
+  updated?: string;
+  stamps?: string[];
+  theme?: 'navy' | 'burgundy' | 'forest' | 'amber';
+}
+
+const {
+  title,
+  subtitle,
+  course,
+  professor,
+  version = '1.0.0',
+  updated,
+  stamps = ['CANONICAL NOTEBOOK', 'PAPER EDITION 2.0'],
+  theme = 'navy',
+} = Astro.props;
+
+const spineClass = theme === 'burgundy' 
+  ? 'binder-spine-burgundy' 
+  : 'binder-spine-navy';
+---
+
+<div class={`binder-card ${spineClass} p-6 sm:p-10 mb-10 text-white rounded-xl shadow-lg relative overflow-hidden`}>
+  <div class="ribbon-bookmark"></div>
+
+  <div class="flex flex-wrap items-center gap-2 mb-4">
+    {stamps.map((st, i) => (
+      <span class={`rubber-stamp ${i === 0 ? 'stamp-green' : 'stamp-amber'} bg-black/40 text-[10px]`}>
+        {st}
+      </span>
+    ))}
+  </div>
+
+  <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-extrabold gold-foil leading-tight tracking-tight mb-2">
+    {title}
+  </h1>
+
+  {subtitle && (
+    <p class="font-hand2 text-lg sm:text-xl text-gray-200 mt-2 mb-4">
+      {subtitle}
+    </p>
+  )}
+
+  <div class="mt-6 pt-4 border-t border-white/20 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-gray-300">
+    <div class="flex flex-wrap items-center gap-4">
+      {course && (
+        <div>
+          <span class="opacity-70">Course:</span> <strong class="text-white">{course}</strong>
+        </div>
+      )}
+      {professor && (
+        <div>
+          <span class="opacity-70">Professor:</span> <strong class="text-white">{professor}</strong>
+        </div>
+      )}
+    </div>
+
+    <div class="flex items-center space-x-3 text-[11px]">
+      <span>v{version}</span>
+      {updated && (
+        <>
+          <span>•</span>
+          <span>Updated: {updated}</span>
+        </>
+      )}
+    </div>
+  </div>
+</div>

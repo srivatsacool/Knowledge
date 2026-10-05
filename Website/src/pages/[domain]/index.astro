@@ -1,0 +1,185 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const domains = await getCollection('domains');
+  return domains.map(d => ({
+    params: { domain: d.data.slug },
+    props: { domain: d.data },
+  }));
+}
+
+const { domain } = Astro.props;
+
+const allSubjects = await getCollection('subjects');
+const domainSubjects = allSubjects.filter(s => s.data.domain === domain.slug);
+
+const allNotebooks = await getCollection('notebooks');
+const domainNotebooks = allNotebooks.filter(nb => nb.data.domain === domain.slug);
+
+// Cross-domain connections
+const allDomains = await getCollection('domains');
+const otherDomains = allDomains.filter(d => d.data.slug !== domain.slug);
+---
+
+<BaseLayout 
+  title={`${domain.title} · Brain Knowledge Library`}
+  description={domain.description}
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-12">
+
+    <!-- Breadcrumb & Archival Header -->
+    <nav class="flex items-center space-x-2 text-xs font-mono text-[var(--pencil)]">
+      <a href="/" class="hover:text-[var(--ink)] hover:underline">Brain</a>
+      <span>/</span>
+      <span class="text-[var(--ink)] font-bold">{domain.title}</span>
+    </nav>
+
+    <!-- Domain Hero & Archival Shelf Header -->
+    <header class="paper-card p-6 sm:p-10 rounded-xl border border-[var(--line)] bg-[var(--card)] relative overflow-hidden">
+      <div class="absolute -right-12 -top-12 opacity-5 pointer-events-none font-serif text-9xl font-bold">
+        {domain.title.slice(0, 3).toUpperCase()}
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[var(--rule)]">
+        <div class="flex items-center space-x-2">
+          <span class="rubber-stamp stamp-green text-[10px]">CANONICAL DOMAIN</span>
+          <span class="font-mono text-xs text-[var(--pencil)]">SHELF CLASSIFICATION // {domain.slug.toUpperCase()}</span>
+        </div>
+        <div class="flex items-center space-x-4 font-mono text-xs text-[var(--pencil)]">
+          <span>{domainSubjects.length} Subject{domainSubjects.length !== 1 ? 's' : ''}</span>
+          <span>•</span>
+          <span>{domainNotebooks.length} Notebook{domainNotebooks.length !== 1 ? 's' : ''}</span>
+        </div>
+      </div>
+
+      <div class="mt-6 max-w-4xl">
+        <h1 class="font-serif text-3xl sm:text-5xl font-bold text-[var(--ink)] tracking-tight">
+          {domain.title}
+        </h1>
+        <p class="mt-4 text-base sm:text-lg text-[var(--pencil)] font-sans leading-relaxed">
+          {domain.description}
+        </p>
+      </div>
+
+      <!-- Live Search in this Domain -->
+      <div class="mt-8 pt-6 border-t border-[var(--rule)] flex flex-wrap items-center gap-3">
+        <button 
+          onclick="document.getElementById('global-search-trigger')?.click()"
+          class="px-4 py-2 rounded-md bg-[var(--ink)] text-white hover:bg-[var(--ink2)] font-mono text-xs flex items-center space-x-2 shadow-sm transition-colors cursor-pointer"
+        >
+          <svg width="14" height="14" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <span>Search in {domain.title}...</span>
+          <kbd class="px-1.5 py-0.5 text-[10px] bg-white/20 rounded font-bold">⌘K</kbd>
+        </button>
+      </div>
+    </header>
+
+    <!-- Subjects Grid -->
+    <section class="space-y-6">
+      <div class="flex items-baseline justify-between border-b border-[var(--line)] pb-3">
+        <h2 class="font-serif text-2xl font-bold text-[var(--ink)]">
+          Curated Subject Portfolios
+        </h2>
+        <span class="font-mono text-xs text-[var(--pencil)]">
+          Showing {domainSubjects.length} Subject Collection{domainSubjects.length !== 1 ? 's' : ''}
+        </span>
+      </div>
+
+      {domainSubjects.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {domainSubjects.map(subject => {
+            const subjectNotebooks = domainNotebooks.filter(nb => nb.data.subject === subject.data.slug);
+            return (
+              <article class="paper-card p-6 sm:p-7 rounded-xl border border-[var(--line)] bg-[var(--card)] hover:border-[var(--ink)] transition-all hover:shadow-md flex flex-col justify-between group">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-3">
+                    <span class="font-mono text-[11px] uppercase tracking-wider text-[var(--pencil)]">
+                      {subject.data.courseName || subject.data.title}
+                    </span>
+                    <span class="rubber-stamp stamp-blue text-[9px]">
+                      {subjectNotebooks.length} Notebook{subjectNotebooks.length !== 1 ? 's' : ''}
+                    </span>
+                  </div>
+
+                  <h3 class="font-serif text-xl sm:text-2xl font-bold text-[var(--ink)] group-hover:text-[var(--ink2)] transition-colors">
+                    <a href={`/${domain.slug}/${subject.data.slug}/`} class="focus:outline-none">
+                      {subject.data.title}
+                    </a>
+                  </h3>
+
+                  {subject.data.professor && (
+                    <p class="mt-1 font-mono text-xs text-[var(--pencil)]">
+                      Lead: {subject.data.professor}
+                    </p>
+                  )}
+
+                  <p class="mt-3 text-xs sm:text-sm text-[var(--pencil)] leading-relaxed line-clamp-3">
+                    {subject.data.description}
+                  </p>
+
+                  <!-- Notebook List Preview -->
+                  {subjectNotebooks.length > 0 && (
+                    <div class="mt-5 pt-4 border-t border-[var(--rule)] space-y-2">
+                      <div class="font-mono text-[10px] uppercase tracking-wider text-[var(--pencil)] font-bold">
+                        Canonical Notebooks:
+                      </div>
+                      <ul class="space-y-1.5 text-xs">
+                        {subjectNotebooks.map(nb => (
+                          <li class="flex items-center justify-between text-[var(--ink)] hover:text-[var(--ink2)] font-medium">
+                            <a href={`/${domain.slug}/${subject.data.slug}/notebooks/${nb.data.slug}/`} class="truncate pr-2 hover:underline">
+                              • {nb.data.title}
+                            </a>
+                            <span class="font-mono text-[10px] text-[var(--pencil)] shrink-0">v{nb.data.version}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-[var(--rule)] flex items-center justify-between">
+                  <a 
+                    href={`/${domain.slug}/${subject.data.slug}/`} 
+                    class="font-mono text-xs font-bold text-[var(--ink)] hover:text-[var(--ink2)] flex items-center space-x-1"
+                  >
+                    <span>Open Subject Desk</span>
+                    <span>→</span>
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      ) : (
+        <div class="paper-card p-10 rounded-xl border border-[var(--line)] text-center font-mono text-sm text-[var(--pencil)]">
+          No subjects registered under this domain yet.
+        </div>
+      )}
+    </section>
+
+    <!-- Cross-Domain Connections -->
+    <section class="paper-card p-6 sm:p-8 rounded-xl border border-[var(--line)] bg-[var(--paper)]">
+      <h3 class="font-serif text-lg font-bold text-[var(--ink)] mb-2">
+        Explore Across Brain Shelves
+      </h3>
+      <p class="text-xs text-[var(--pencil)] mb-4">
+        Navigate to other knowledge domains in the library:
+      </p>
+      <div class="flex flex-wrap gap-2">
+        {otherDomains.map(d => (
+          <a 
+            href={`/${d.data.slug}/`} 
+            class="px-3 py-1.5 rounded bg-[var(--card)] border border-[var(--line)] hover:border-[var(--ink)] text-xs font-medium text-[var(--text)] hover:text-[var(--ink)] transition-colors"
+          >
+            {d.data.title} →
+          </a>
+        ))}
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>

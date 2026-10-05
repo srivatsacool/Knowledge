@@ -40,24 +40,37 @@ Every folder in `D:\Brain\05_Knowledge` has an explicit responsibility. Agents m
 
 The repository enforces a strict, immutable structural hierarchy:
 
-```
-[TIER 1: CANONICAL SOURCE OF TRUTH]
-  D:\Brain\05_Knowledge\<Subject>\*.html, *.md, *.pdf
-  D:\Brain\05_Knowledge\<notebook>.meta.json
-        │
-        ▼ (read by Website/scripts/build.js)
-[TIER 2: PUBLISHING APPLICATION]
-  D:\Brain\05_Knowledge\Website\
-        │
-        ▼ (emitted as ephemeral static output)
-[TIER 3: GENERATED BUILD ARTIFACTS]
-  D:\Brain\05_Knowledge\Website\dist\
+```text
+DOMAIN
+  ↓
+SUBJECT
+  ↓
+NOTEBOOK (Canonical MDX in domains/)
+  ↓
+CONCEPT / SECTION
 ```
 
-- **Rule 3.1**: Source notebooks live strictly outside `Website/dist/`.
-- **Rule 3.2**: `Website/dist/` is an ephemeral generated build directory. Agents must **never** manually edit files inside `Website/dist/`. Any change made there will be destroyed on the next build.
-- **Rule 3.3**: Never duplicate notebook content across source folders unnecessarily. Source notebooks remain the canonical version of truth.
-- **Rule 3.4**: When website layout or styling changes are needed, edit files in `Website/src/`, never the generated files in `Website/dist/`.
+```
+[TIER 1: CANONICAL SOURCE OF TRUTH]
+  D:\Brain\05_Knowledge\domains\<domain>\<subject>\notebooks\*.mdx
+  D:\Brain\05_Knowledge\domains\<domain>\domain.md
+  D:\Brain\05_Knowledge\domains\<domain>\<subject>\subject.md
+        │
+        ▼ (read by Astro Content Layer & Website/src/content.config.ts)
+[TIER 2: PUBLISHING APPLICATION LAYER]
+  D:\Brain\05_Knowledge\Website\
+        │
+        ▼ (emitted as static edge outputs)
+[TIER 3: GENERATED EXPERIENCES]
+  - HTML Notebook Experience (/domain/subject/notebooks/slug/)
+  - Printable / PDF Edition (/domain/subject/notebooks/slug/print/)
+  - Interactive Visual Simulator (/domain/subject/interactive/slug/)
+```
+
+- **Rule 3.1**: Canonical notebooks live strictly as Markdown/MDX inside `domains/<domain>/<subject>/notebooks/*.mdx`.
+- **Rule 3.2**: `Website/dist/` is an ephemeral generated build directory. Agents must **never** manually edit files inside `Website/dist/`.
+- **Rule 3.3**: Zero Prohibited Institutional Terms: The public-facing website and canonical knowledge files must NEVER mention: `WeSchool`, `Welingkar`, `B-school`, `business school`, `institute name`, `institutional affiliation`, or `MBA program identity`. Permitted: subject names, course names, professor names, books, authors, academic sources, cases, and personal notes.
+- **Rule 3.4**: Historical HTML files are preserved as secondary reference archives and must never be treated as the canonical source when canonical MDX exists in `domains/`.
 
 ---
 

@@ -1,0 +1,49 @@
+---
+interface Props {
+  type?: 'note' | 'warning' | 'insight' | 'tip';
+  title?: string;
+}
+
+const { type = 'note', title } = Astro.props;
+
+const typeConfig = {
+  note: {
+    border: 'border-l-[var(--ink)]',
+    badge: 'stamp-blue',
+    defaultTitle: 'Core Concept Note',
+    icon: '📌',
+  },
+  warning: {
+    border: 'border-l-[var(--red)]',
+    badge: 'stamp-red',
+    defaultTitle: 'Common Exam Trap / Misconception',
+    icon: '⚠️',
+  },
+  insight: {
+    border: 'border-l-[var(--amber)]',
+    badge: 'stamp-amber',
+    defaultTitle: 'Strategic Practice Insight',
+    icon: '💡',
+  },
+  tip: {
+    border: 'border-l-[var(--green)]',
+    badge: 'stamp-green',
+    defaultTitle: 'High-Scoring Technique',
+    icon: '✔',
+  },
+};
+
+const cfg = typeConfig[type];
+---
+
+<div class={`callout-box paper-card p-5 my-5 rounded-lg border-l-4 ${cfg.border} border-[var(--line)] bg-[var(--paper)]`}>
+  <div class="flex items-center space-x-2 mb-2">
+    <span>{cfg.icon}</span>
+    <h4 class="font-serif text-sm font-bold text-[var(--ink)] uppercase tracking-wider">
+      {title || cfg.defaultTitle}
+    </h4>
+  </div>
+  <div class="text-sm leading-relaxed text-[var(--text)]">
+    <slot />
+  </div>
+</div>

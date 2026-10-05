@@ -1,0 +1,28 @@
+---
+interface Props {
+  title: string;
+  caption?: string;
+  className?: string;
+}
+
+const { title, caption, className = '' } = Astro.props;
+---
+
+<figure class={`diagram-card paper-card p-6 my-6 rounded-lg border border-[var(--line)] ${className}`}>
+  <div class="flex items-center justify-between mb-4 pb-2 border-b border-[var(--rule)]">
+    <figcaption class="font-serif text-base font-bold text-[var(--ink)]">
+      {title}
+    </figcaption>
+    <span class="rubber-stamp stamp-amber text-[10px]">DIAGRAM</span>
+  </div>
+
+  <div class="diagram-canvas p-4 bg-[var(--paper)] rounded border border-[var(--rule)] flex items-center justify-center overflow-x-auto">
+    <slot />
+  </div>
+
+  {caption && (
+    <p class="font-hand2 text-sm text-[var(--pencil)] mt-3 text-center italic">
+      {caption}
+    </p>
+  )}
+</figure>

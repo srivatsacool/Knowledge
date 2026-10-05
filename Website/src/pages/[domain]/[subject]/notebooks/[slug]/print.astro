@@ -1,0 +1,187 @@
+---
+import { getCollection, render } from 'astro:content';
+
+import StickyNote from '../../../../../components/paper/StickyNote.astro';
+import Stamp from '../../../../../components/paper/Stamp.astro';
+import Callout from '../../../../../components/paper/Callout.astro';
+import FormulaCard from '../../../../../components/paper/FormulaCard.astro';
+import ComparisonCard from '../../../../../components/paper/ComparisonCard.astro';
+import DiagramCard from '../../../../../components/paper/DiagramCard.astro';
+import QuestionCard from '../../../../../components/paper/QuestionCard.astro';
+import Flashcard from '../../../../../components/paper/Flashcard.astro';
+import Quiz from '../../../../../components/paper/Quiz.astro';
+import RelatedKnowledge from '../../../../../components/paper/RelatedKnowledge.astro';
+import Highlighter from '../../../../../components/paper/Highlighter.astro';
+import HandwrittenAnnotation from '../../../../../components/paper/HandwrittenAnnotation.astro';
+
+export async function getStaticPaths() {
+  const notebooks = await getCollection('notebooks');
+  const allDomains = await getCollection('domains');
+  const allSubjects = await getCollection('subjects');
+
+  const paths = [];
+
+  for (const nb of notebooks) {
+    const domainObj = allDomains.find(d => d.data.slug === nb.data.domain);
+    const subjectObj = allSubjects.find(s => s.data.slug === nb.data.subject);
+
+    // Primary canonical path
+    paths.push({
+      params: { 
+        domain: nb.data.domain, 
+        subject: nb.data.subject, 
+        slug: nb.data.slug 
+      },
+      props: { 
+        notebook: nb,
+        domain: domainObj ? domainObj.data : { title: nb.data.domain, slug: nb.data.domain },
+        subject: subjectObj ? subjectObj.data : { title: nb.data.subject, slug: nb.data.subject },
+      },
+    });
+
+    // Alias paths
+    if (nb.data.subject === 'logistics-supply-chain') {
+      paths.push({
+        params: { domain: nb.data.domain, subject: 'lscm', slug: nb.data.slug },
+        props: { 
+          notebook: nb,
+          domain: domainObj ? domainObj.data : { title: nb.data.domain, slug: nb.data.domain },
+          subject: subjectObj ? subjectObj.data : { title: nb.data.subject, slug: nb.data.subject },
+        },
+      });
+    } else if (nb.data.subject === 'enterprise-resource-planning') {
+      paths.push({
+        params: { domain: nb.data.domain, subject: 'erp', slug: nb.data.slug },
+        props: { 
+          notebook: nb,
+          domain: domainObj ? domainObj.data : { title: nb.data.domain, slug: nb.data.domain },
+          subject: subjectObj ? subjectObj.data : { title: nb.data.subject, slug: nb.data.subject },
+        },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { notebook, domain, subject } = Astro.props;
+const { Content } = await render(notebook);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{notebook.data.title} · Print Edition · Brain</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --paper: #ffffff;
+        --desk: #f4eedd;
+        --ink: #111827;
+        --ink2: #1e3a8a;
+        --pencil: #4b5563;
+        --line: #e5e7eb;
+        --rule: #e5e7eb;
+        --card: #ffffff;
+      }
+      body {
+        font-family: 'Public Sans', sans-serif;
+        background-color: #f3f4f6;
+        color: #111827;
+        margin: 0;
+        padding: 20px;
+      }
+      .print-page {
+        max-width: 850px;
+        margin: 0 auto;
+        background: #ffffff;
+        padding: 60px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+      }
+      @media print {
+        body {
+          background: #ffffff;
+          padding: 0;
+        }
+        .print-page {
+          max-width: 100%;
+          border: none;
+          box-shadow: none;
+          padding: 0;
+        }
+        .no-print {
+          display: none !important;
+        }
+      }
+      h1, h2, h3, h4 {
+        font-family: 'Libre Baskerville', serif;
+        color: #111827;
+      }
+      code, pre {
+        font-family: 'JetBrains Mono', monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Print Control Bar -->
+    <div class="no-print max-w-[850px] mx-auto mb-4 p-3 bg-white border border-gray-200 rounded-lg flex items-center justify-between shadow-xs">
+      <div class="text-xs font-mono text-gray-500">
+        Printable Academic Edition · {notebook.data.title}
+      </div>
+      <div class="flex items-center space-x-2">
+        <button 
+          onclick="window.print()"
+          class="px-3 py-1.5 bg-blue-900 text-white rounded text-xs font-semibold hover:bg-blue-800 cursor-pointer shadow-xs"
+        >
+          Print / Save PDF
+        </button>
+        <button 
+          onclick="window.close()"
+          class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded text-xs font-semibold hover:bg-gray-200 cursor-pointer"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+
+    <!-- Printable Paper Sheet -->
+    <div class="print-page">
+      <header class="border-b-2 border-gray-900 pb-6 mb-8">
+        <div class="flex items-center justify-between text-xs font-mono text-gray-500 mb-2">
+          <span>BRAIN KNOWLEDGE ARCHIVE // {domain.title.toUpperCase()}</span>
+          <span>v{notebook.data.version} · {notebook.data.updated}</span>
+        </div>
+        <h1 class="text-3xl font-bold mb-2">{notebook.data.title}</h1>
+        <div class="text-sm text-gray-600 font-mono mb-4">{subject.title} {notebook.data.professor ? `· Lead: ${notebook.data.professor}` : ''}</div>
+        <p class="text-sm text-gray-700 italic">{notebook.data.description}</p>
+      </header>
+
+      <main class="prose max-w-none text-sm leading-relaxed space-y-6">
+        <Content components={{
+          StickyNote,
+          Stamp,
+          Callout,
+          FormulaCard,
+          ComparisonCard,
+          DiagramCard,
+          QuestionCard,
+          Flashcard,
+          Quiz,
+          RelatedKnowledge,
+          Highlighter,
+          HandwrittenAnnotation
+        }} />
+      </main>
+
+      <footer class="mt-12 pt-6 border-t border-gray-300 text-xs font-mono text-gray-500 flex justify-between">
+        <span>Brain · Personal Knowledge Library</span>
+        <span>{domain.slug}/{subject.slug}/{notebook.data.slug}</span>
+      </footer>
+    </div>
+  </body>
+</html>

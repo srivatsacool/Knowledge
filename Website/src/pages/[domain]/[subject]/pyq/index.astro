@@ -1,0 +1,118 @@
+---
+import ProjectLayout from '../../../../layouts/ProjectLayout.astro';
+import PyqCard from '../../../../components/PyqCard.astro';
+import { PROJECTS } from '../../../../data/projects';
+import { SOLVED_PYQS } from '../../../../data/lscmData';
+
+export function getStaticPaths() {
+  return PROJECTS.map(p => ({
+    params: { domain: p.division, subject: p.slug },
+    props: { project: p },
+  }));
+}
+
+const { project } = Astro.props;
+
+const highFreq = SOLVED_PYQS.filter(p => p.frequency === 'High');
+const medFreq = SOLVED_PYQS.filter(p => p.frequency === 'Medium');
+const lowFreq = SOLVED_PYQS.filter(p => p.frequency === 'Low');
+---
+
+<ProjectLayout project={project} activeArtifact="pyq" pageSubtitle="Solved PYQ Intelligence Bank">
+  
+  <!-- PYQ Master Banner -->
+  <div class="paper-card rounded-xl p-8 mb-10 bg-gradient-to-br from-white via-[#FAF7F0] to-[#F4EEDD] dark:from-[#1C1917] dark:via-[#171412] dark:to-[#0C0A09] border border-[#E7E5E4] dark:border-[#292524]">
+    <div class="flex items-center space-x-2 mb-3">
+      <span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold uppercase tracking-wider bg-[#BE123C] text-white dark:bg-[#FB7185] dark:text-[#0C0A09]">
+        Empirical Exam Archive
+      </span>
+      <span class="text-xs font-mono text-[#78716C] dark:text-[#A8A29E]">
+        100% Verbatim OCR Extraction (2023–2025)
+      </span>
+    </div>
+
+    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-[#1C1917] dark:text-[#F5F5F4] mb-3">
+      Past University Examination Intelligence Bank
+    </h2>
+
+    <p class="text-xs sm:text-sm text-[#57534E] dark:text-[#A8A29E] max-w-3xl leading-relaxed mb-6">
+      Every question below is extracted verbatim from the official scanned university examination papers (<code class="font-mono text-xs">LSCM_2023_2024_2025.pdf</code>). Zero fabricated questions. Step-by-step arithmetic proofs, complete variable substitutions, and high-scoring academic model answers.
+    </p>
+
+    <!-- Recurrence Frequency Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-[#E7E5E4] dark:border-[#292524]">
+      <div class="p-3 bg-white dark:bg-[#1C1917] rounded border border-[#E7E5E4] dark:border-[#292524]">
+        <div class="flex items-center justify-between text-xs font-mono">
+          <span class="text-[#BE123C] dark:text-[#FB7185] font-bold">High Recurrence</span>
+          <span class="font-bold">{highFreq.length} Solved Topics</span>
+        </div>
+        <p class="text-[11px] text-[#78716C] dark:text-[#A8A29E] mt-1">Appeared every single academic year (EOQ, Fisher Fit, Safety Stock, Warehouse layout).</p>
+      </div>
+
+      <div class="p-3 bg-white dark:bg-[#1C1917] rounded border border-[#E7E5E4] dark:border-[#292524]">
+        <div class="flex items-center justify-between text-xs font-mono">
+          <span class="text-[#B45309] dark:text-[#F59E0B] font-bold">Medium Recurrence</span>
+          <span class="font-bold">2 of 3 Years</span>
+        </div>
+        <p class="text-[11px] text-[#78716C] dark:text-[#A8A29E] mt-1">6 Drivers, SCOR, Tapering transport economics, INCOTERMS 2020, S&OP.</p>
+      </div>
+
+      <div class="p-3 bg-white dark:bg-[#1C1917] rounded border border-[#E7E5E4] dark:border-[#292524]">
+        <div class="flex items-center justify-between text-xs font-mono">
+          <span class="text-[#78716C] dark:text-[#A8A29E] font-bold">Targeted Short Notes</span>
+          <span class="font-bold">5-Mark Units</span>
+        </div>
+        <p class="text-[11px] text-[#78716C] dark:text-[#A8A29E] mt-1">3PL vs 4PL, Theory of Constraints (TOC), Reverse logistics 5 Rs.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter & Tab Navigation -->
+  <div class="flex items-center justify-between mb-8 pb-3 border-b border-[#E7E5E4] dark:border-[#292524]">
+    <h3 class="font-serif text-xl font-bold text-[#1C1917] dark:text-[#F5F5F4]">
+      Master Solved Archive ({SOLVED_PYQS.length})
+    </h3>
+    <div class="flex items-center space-x-2">
+      <button onclick="filterPyq('all')" class="pyq-filter-btn px-2.5 py-1 text-xs font-mono rounded bg-[#1E3A8A] text-white">All Years</button>
+      <button onclick="filterPyq('2023')" class="pyq-filter-btn px-2.5 py-1 text-xs font-mono rounded bg-white dark:bg-[#1C1917] border border-[#E7E5E4] dark:border-[#44403C]">2023</button>
+      <button onclick="filterPyq('2024')" class="pyq-filter-btn px-2.5 py-1 text-xs font-mono rounded bg-white dark:bg-[#1C1917] border border-[#E7E5E4] dark:border-[#44403C]">2024</button>
+      <button onclick="filterPyq('2025')" class="pyq-filter-btn px-2.5 py-1 text-xs font-mono rounded bg-white dark:bg-[#1C1917] border border-[#E7E5E4] dark:border-[#44403C]">2025</button>
+    </div>
+  </div>
+
+  <!-- Questions Stream -->
+  <div class="space-y-6" id="pyq-stream">
+    {SOLVED_PYQS.map(pyq => (
+      <div class="pyq-item" data-year={pyq.year}>
+        <PyqCard pyq={pyq} />
+      </div>
+    ))}
+  </div>
+
+</ProjectLayout>
+
+<script is:inline>
+  function filterPyq(year) {
+    const items = document.querySelectorAll('.pyq-item');
+    const buttons = document.querySelectorAll('.pyq-filter-btn');
+
+    buttons.forEach(btn => {
+      if (btn.innerText.includes(year) || (year === 'all' && btn.innerText.includes('All'))) {
+        btn.classList.add('bg-[#1E3A8A]', 'text-white');
+        btn.classList.remove('bg-white', 'dark:bg-[#1C1917]');
+      } else {
+        btn.classList.remove('bg-[#1E3A8A]', 'text-white');
+        btn.classList.add('bg-white', 'dark:bg-[#1C1917]');
+      }
+    });
+
+    items.forEach(el => {
+      const elYear = el.getAttribute('data-year');
+      if (year === 'all' || elYear === year) {
+        el.classList.remove('hidden');
+      } else {
+        el.classList.add('hidden');
+      }
+    });
+  }
+</script>

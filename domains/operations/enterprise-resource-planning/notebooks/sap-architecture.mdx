@@ -1,0 +1,283 @@
+---
+title: Core Functional Integration & SAP Modules
+slug: sap-architecture
+domain: operations
+subject: enterprise-resource-planning
+course: ERP Business Applications
+professor: Prof. Rahul Altekar
+description: >
+  Complete end-to-end integration walkthrough covering SAP Sales & Distribution (SD),
+  Materials Management (MM), Production Planning (PP), and Financials (FI/CO),
+  with Order-to-Cash (O2C) and Procure-to-Pay (P2P) transactional mechanics.
+status: published
+version: 1.0.0
+updated: "2026-10-05"
+tags:
+  - SAP
+  - SD
+  - MM
+  - PP
+  - FICO
+  - O2C
+  - P2P
+  - Three-Way-Match
+featured: true
+interactive:
+  available: false
+pdf:
+  available: true
+---
+
+# 01 — Notebook Information & Scope
+
+<StickyNote color="blue" title="Integration Axiom">
+  "In an ERP system, there are no independent department documents. A sales order, a goods issue slip, an invoice, and a ledger balance are merely different real-time views of one continuous commercial transaction."
+</StickyNote>
+
+* **Domain**: Operations & Supply Chain Systems
+* **Subject**: Enterprise Resource Planning
+* **Pedagogical Lead**: Prof. Rahul Altekar
+* **Core Reference Model**: The SAP Enterprise Integration Matrix (SD, MM, PP, QM, FI, CO) & The Document Principle
+
+---
+
+# 02 — Learning Map
+
+```text
+[Procure-to-Pay (P2P)]                               [Order-to-Cash (O2C)]
+  Purchase Requisition (MM)                             Inquiry & Quotation (SD)
+          │                                                       │
+          ▼                                                       ▼
+  Purchase Order (MM)                                   Sales Order Creation (SD)
+          │                                                       │
+          ▼                                                       ▼
+  Goods Receipt [GRN] (MM/FI)                           Availability Check (ATP) & Credit Check (FI)
+          │                                                       │
+          ▼                                                       ▼
+  Invoice Verification / 3-Way Match (MM/FI)            Delivery & Picking / Packing (MM/SD)
+          │                                                       │
+          ▼                                                       ▼
+  Vendor Payment (FI-AP)                                Goods Issue [PGI] (Inventory & COGS update)
+                                                                  │
+                                                                  ▼
+                                                        Billing & Customer Invoice (SD/FI-AR)
+                                                                  │
+                                                                  ▼
+                                                        Incoming Payment Clearing (FI)
+```
+
+---
+
+# 03 — Core Concepts: The SAP Modular Structure & The Document Principle
+
+SAP ERP organizes corporate operations into tightly coupled functional modules:
+
+| Module | Name | Core Functional Responsibility | Key Master Data |
+| :--- | :--- | :--- | :--- |
+| **SD** | Sales & Distribution | Customer pricing, quotations, sales orders, shipping, billing | Customer Master, Pricing Condition Records |
+| **MM** | Materials Management | Purchasing, vendor evaluation, inventory valuation, warehouse goods movements | Material Master, Vendor Master, Info Records |
+| **PP** | Production Planning | Master scheduling, MRP calculations, shop floor routings, work center capacity | BOM, Work Centers, Routings |
+| **FI** | Financial Accounting | External legal reporting, General Ledger (G/L), Accounts Payable (AP), Accounts Receivable (AR) | Chart of Accounts, G/L Accounts, Fiscal Calendar |
+| **CO** | Controlling (Management Accounting) | Internal cost tracking, cost center accounting, product costing, profit center reporting | Cost Centers, Internal Orders, Cost Elements |
+
+### The SAP Document Principle
+Every physical movement of material or legal financial commitment in SAP generates an immutable electronic document with a unique alphanumeric identifier. Once posted:
+* An electronic document **cannot be deleted**.
+* Errors are corrected exclusively through explicit **reversal documents** (credit memos or return delivery documents).
+* Provides complete audit trail traceability from balance sheet entry back to the original shipping pallet barcode.
+
+---
+
+# 04 — The Procure-to-Pay (P2P) Lifecycle & The 3-Way Match
+
+The Procure-to-Pay cycle governs the operational requisition, acquisition, and financial settlement of raw materials, capital equipment, and operational services.
+
+```text
+[Purchase Requisition] ──> [Purchase Order] ──> [Goods Receipt (GRN)] ──> [Invoice Verification] ──> [Payment]
+```
+
+### The 3-Way Match Control Mechanism
+Prior to releasing vendor payment, the ERP system autonomously compares three distinct documents:
+
+<ComparisonCard
+  title="The 3-Way Reconciliation Triangle in Procure-to-Pay"
+  labelA="Data Field Under Audit"
+  labelB="Matching Rule & Tolerance"
+  featureA="Quantity Ordered vs Quantity Received vs Quantity Invoiced"
+  featureB="Quantity on Vendor Invoice must match Quantity physically verified on the Goods Receipt Note (GRN) within predefined tolerance limits. Over-invoicing holds the payment automatically."
+/>
+
+### Accounting Postings during P2P:
+1. **At Goods Receipt (GRN posted in MM)**:
+   * Inventory Account (Raw Materials) $\rightarrow$ **DEBIT** (asset increases)
+   * Goods Receipt / Invoice Receipt (GR/IR) Clearing Account $\rightarrow$ **CREDIT** (temporary liability)
+2. **At Invoice Receipt (Vendor invoice processed in FI-AP)**:
+   * GR/IR Clearing Account $\rightarrow$ **DEBIT** (clears the temporary liability)
+   * Vendor Accounts Payable Subledger $\rightarrow$ **CREDIT** (formal liability to supplier)
+3. **At Vendor Payment Execution (FI Treasury)**:
+   * Vendor Accounts Payable Subledger $\rightarrow$ **DEBIT** (liability settled)
+   * Bank / Cash Clearing Account $\rightarrow$ **CREDIT** (cash outflow)
+
+<Callout type="insight" title="Why GR/IR Clearing Matters">
+  The GR/IR account prevents phantom invoices. If a vendor sends an invoice for 500 units but the warehouse dock only scanned 300 units onto the GRN, the system holds the remaining 200 units in an exception queue and blocks payment disbursement.
+</Callout>
+
+---
+
+# 05 — The Order-to-Cash (O2C) Lifecycle
+
+The Order-to-Cash cycle governs the fulfillment of customer demand from initial contact to bank receipt.
+
+### 1. Sales Order Creation & Dynamic Checks
+When an order entry specialist keys in a customer order:
+* **Available-to-Promise (ATP) Check**: The system validates uncommitted inventory in real-time, considering on-hand stock, planned shop receipts, and safety buffers.
+* **Credit Limit Verification**: The system queries the customer's open receivables in FI-AR against their approved credit ceiling. If exceeded, the order is blocked automatically.
+
+### 2. Post Goods Issue (PGI)
+The physical loading of freight onto customer trucks triggers the Post Goods Issue (PGI) transaction:
+* Inventory is decremented from the plant/storage location.
+* General Ledger posting occurs synchronously:
+  * Cost of Goods Sold (COGS) $\rightarrow$ **DEBIT** (Income statement expense)
+  * Finished Goods Inventory $\rightarrow$ **CREDIT** (Balance sheet asset reduction)
+
+### 3. Billing & Invoicing
+When the billing run executes:
+* Customer Accounts Receivable Subledger $\rightarrow$ **DEBIT** (customer obligation)
+* Revenue Account $\rightarrow$ **CREDIT** (Income statement top-line)
+
+### 4. Cash Collection
+Upon bank remittance:
+* Bank Account $\rightarrow$ **DEBIT** (cash inflow)
+* Customer Accounts Receivable Subledger $\rightarrow$ **CREDIT** (receivable cleared)
+
+---
+
+# 06 — 2-Tier ERP & Hybrid Cloud Architecture
+
+Modern multinational corporations rarely run a single, monolithic ERP instance across all subsidiaries. Instead, they deploy a **Two-Tier ERP Topology**:
+
+```text
+┌────────────────────────────────────────────────────────┐
+│  Tier 1: Corporate Global Core (SAP S/4HANA On-Prem)   │
+│  - Global Financial Consolidation                      │
+│  - Enterprise Treasury & Risk                          │
+│  - Strategic Global Procurement                        │
+└───────────────────────────┬────────────────────────────┘
+                            │ Real-Time APIs / OData
+            ┌───────────────┴───────────────┐
+            ▼                               ▼
+┌─────────────────────────┐   ┌──────────────────────────┐
+│ Tier 2: Subsidiary Plant│   │ Tier 2: Distribution Hub │
+│ (Cloud SAP S/4 Public)  │   │ (SaaS ERP / Specialized) │
+│ - Rapid Shop Execution  │   │ - Local Country Tax/Legal│
+│ - Flexible Agile Sprints│   │ - Fast Regional Onboard  │
+└─────────────────────────┘   └──────────────────────────┘
+```
+
+* **Tier 1 (Corporate Core)**: Heavyweight, deeply customized instance running at global headquarters handling corporate consolidation, legal disclosures, and enterprise capital allocation.
+* **Tier 2 (Subsidiary Layer)**: Standardized, multi-tenant SaaS ERP deployed across fast-growing international acquisitions and sales subsidiaries, delivering rapid 90-day deployments while syncing roll-up figures to Tier 1 via REST/OData APIs.
+
+---
+
+# 07 — Mini-Case: Global Logistics Automation at Titan Industrial
+
+* **Challenge**: Titan Industrial operated disparate legacy billing in Germany and manufacturing in India. Month-end financial consolidation required 18 business days because intercompany sales orders required manual matching against procurement purchase orders.
+* **Architecture Solution**: Implemented unified SAP S/4HANA with Intercompany Cross-Company Code Sales integration.
+* **Mechanics**: When the German sales office creates an SD order for an Indian-manufactured power generator, an internal purchase order and EDI delivery note are generated autonomously.
+* **Outcomes**:
+  * Month-end financial close accelerated from 18 days to 2.5 days.
+  * Zero reconciliation variance across intercompany receivables and payables.
+  * Working capital cycle improved by 22 days.
+
+---
+
+# 08 — Past Examination Questions & Model Solutions
+
+<QuestionCard
+  question="Trace the end-to-end flow of documents and accounting entries in the SAP Order-to-Cash (O2C) cycle. Highlight the specific trigger points for inventory reduction and revenue recognition."
+  marks={10}
+  type="theory"
+  modelAnswer="1. Lifecycle Sequence:
+   Inquiry -> Quotation -> Sales Order (SD) -> Delivery Document (SD/MM) -> Picking & Packing -> Post Goods Issue (MM/FI) -> Billing Document (SD/FI) -> Payment Receipt (FI).
+2. Key Operational Checks at Order Entry:
+   - ATP (Available-to-Promise): Confirms physical availability.
+   - Credit Management: Validates credit ceiling and outstanding A/R balance.
+3. Inventory Reduction Trigger:
+   - Occurs strictly at Post Goods Issue (PGI), NOT during sales order entry or picking.
+   - Financial Posting: Debit Cost of Goods Sold (COGS), Credit Finished Goods Inventory.
+4. Revenue Recognition Trigger:
+   - Occurs upon creation of the Billing Document.
+   - Financial Posting: Debit Customer Accounts Receivable (AR), Credit Sales Revenue.
+5. Settlement:
+   - Upon customer bank transfer: Debit Cash/Bank Account, Credit Customer Accounts Receivable."
+/>
+
+<QuestionCard
+  question="Explain the significance of the 3-Way Match in Procure-to-Pay (P2P). What role does the GR/IR Clearing Account perform?"
+  marks={10}
+  type="theory"
+  modelAnswer="1. 3-Way Match Control:
+   The automated reconciliation among three independent documents:
+   - Purchase Order (PO): Confirms authorization, unit prices, and negotiated delivery terms.
+   - Goods Receipt Note (GRN): Confirms quantity and physical quality received at the dock.
+   - Vendor Invoice: Confirms the billed quantity and commercial claims of the supplier.
+2. Reconciliation Rules:
+   The invoice is released for payment only if the invoiced quantity and price match the PO terms and GRN received volume within defined tolerance thresholds.
+3. Role of GR/IR Clearing Account:
+   - Acts as a suspense/interim liability account to bridge the timing discrepancy between physical goods arrival and vendor invoice receipt.
+   - At GRN: Debit Inventory, Credit GR/IR Clearing. (Recognizes physical asset before invoice arrives).
+   - At Invoice: Debit GR/IR Clearing, Credit Vendor AP. (Clears the provisional liability into an official legal payable).
+   - Prevents unearned cash disbursements and identifies missing supplier billing."
+/>
+
+---
+
+# 09 — Active Recall Flashcards & Conceptual Quiz
+
+<Flashcard
+  front="At what exact stage in the Order-to-Cash (O2C) cycle is inventory reduced in the General Ledger?"
+  back="Inventory is reduced at the 'Post Goods Issue' (PGI) step, where a Material Document is generated, debiting Cost of Goods Sold (COGS) and crediting Finished Goods Inventory."
+/>
+
+<Flashcard
+  front="Why is the GR/IR (Goods Receipt / Invoice Receipt) account credited upon Goods Receipt instead of the Vendor's Account directly?"
+  back="Because upon dock receiving, the supplier's invoice has not yet been legally verified or accepted. GR/IR acts as a temporary liability until the invoice arrives and passes the 3-way match."
+/>
+
+<Quiz
+  question="What happens if a customer exceeds their approved credit limit during Sales Order entry in SAP SD?"
+  options={[
+    "The customer record is deleted from the database",
+    "The sales order is saved with an automatic credit block, preventing delivery creation until credit management reviews it",
+    "The goods are immediately shipped via air freight",
+    "The invoice is posted automatically to bad debt expense"
+  ]}
+  correctIndex={1}
+  explanation="When credit limit checks fail during sales order processing, SAP places a credit block on the order. The order exists in the system but cannot proceed to delivery picking until credit management releases it."
+/>
+
+---
+
+# 10 — Knowledge Graph & Cross-References
+
+<RelatedKnowledge
+  domain="operations"
+  subject="enterprise-resource-planning"
+  links={[
+    {
+      title: "ERP Foundations & Strategic Architecture",
+      slug: "erp-foundations",
+      relationship: "Upstream Architecture: Establishes the 3-tier client/server framework and OLTP transactional properties."
+    },
+    {
+      title: "Material Requirements Planning & Manufacturing Execution",
+      slug: "mrp-planning",
+      relationship: "Operational Core: Explains how PP work orders and MM purchase orders are algorithmically created."
+    },
+    {
+      title: "ERP Implementation, BPR, and Change Management",
+      slug: "erp-implementation-lifecycle",
+      relationship: "Execution Strategy: Explores methodology, Big Bang vs Phased rollout, and BPR."
+    }
+  ]}
+/>

@@ -1,0 +1,27 @@
+---
+interface Props {
+  color?: 'yellow' | 'pink' | 'blue' | 'green';
+  title?: string;
+  className?: string;
+}
+
+const { color = 'yellow', title, className = '' } = Astro.props;
+
+const colorClasses = {
+  yellow: 'sticky-yellow',
+  pink: 'sticky-pink',
+  blue: 'sticky-blue',
+  green: 'sticky-green',
+};
+---
+
+<div class={`sticky-note ${colorClasses[color]} my-6 ${className}`}>
+  {title && (
+    <div class="font-hand font-bold text-xl text-[var(--ink)] mb-1 leading-snug">
+      {title}
+    </div>
+  )}
+  <div class="font-hand2 text-base text-[var(--st-text)] leading-relaxed">
+    <slot />
+  </div>
+</div>

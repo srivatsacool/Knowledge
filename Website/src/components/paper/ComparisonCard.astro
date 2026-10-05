@@ -1,0 +1,65 @@
+---
+interface Row {
+  dimension: string;
+  itemA: string;
+  itemB: string;
+}
+
+interface Props {
+  title: string;
+  labelA: string;
+  labelB: string;
+  rows?: Row[];
+  featureA?: string;
+  featureB?: string;
+}
+
+const { title, labelA, labelB, rows = [], featureA, featureB } = Astro.props;
+---
+
+<div class="comparison-card paper-card p-6 my-6 rounded-lg border border-[var(--line)]">
+  <div class="flex items-center justify-between mb-4 pb-2 border-b border-[var(--rule)]">
+    <h4 class="font-serif text-lg font-bold text-[var(--ink)]">
+      {title}
+    </h4>
+    <span class="rubber-stamp stamp-blue text-[10px]">COMPARISON</span>
+  </div>
+
+  {rows && rows.length > 0 ? (
+    <div class="overflow-x-auto">
+      <table class="w-full text-xs text-left border border-[var(--line)] rounded">
+        <thead class="bg-[var(--paper)] text-[var(--ink)] border-b border-[var(--line)] font-mono">
+          <tr>
+            <th class="p-2.5 w-1/3">Architectural Dimension</th>
+            <th class="p-2.5 w-1/3 text-[var(--ink2)] font-bold">{labelA}</th>
+            <th class="p-2.5 w-1/3 text-[var(--red)] font-bold">{labelB}</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-[var(--rule)]">
+          {rows.map(r => (
+            <tr class="hover:bg-[var(--paper)] transition-colors">
+              <td class="p-2.5 font-bold font-mono text-[var(--text)]">{r.dimension}</td>
+              <td class="p-2.5 text-[var(--pencil)]">{r.itemA}</td>
+              <td class="p-2.5 text-[var(--pencil)]">{r.itemB}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ) : (featureA || featureB) ? (
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+      <div class="p-4 rounded bg-[var(--paper)] border border-[var(--line)]">
+        <div class="font-mono font-bold text-[var(--ink2)] text-sm mb-2 pb-1 border-b border-[var(--rule)]">
+          {labelA}
+        </div>
+        <p class="text-[var(--text)] leading-relaxed">{featureA}</p>
+      </div>
+      <div class="p-4 rounded bg-[var(--paper)] border border-[var(--line)]">
+        <div class="font-mono font-bold text-[var(--red)] text-sm mb-2 pb-1 border-b border-[var(--rule)]">
+          {labelB}
+        </div>
+        <p class="text-[var(--text)] leading-relaxed">{featureB}</p>
+      </div>
+    </div>
+  ) : null}
+</div>

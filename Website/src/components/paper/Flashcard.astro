@@ -1,0 +1,29 @@
+---
+interface Props {
+  front: string;
+  back: string;
+  category?: string;
+}
+
+const { front, back, category = 'Key Concept' } = Astro.props;
+---
+
+<div class="flashcard-container paper-card p-5 my-4 rounded-lg border border-[var(--line)]">
+  <div class="flex items-center justify-between mb-3 text-xs font-mono">
+    <span class="text-[var(--pencil)]">🗂 Flashcard • {category}</span>
+    <span class="font-bold text-[var(--ink2)]">Click to Flip</span>
+  </div>
+
+  <div class="flashcard-front font-serif text-base font-bold text-[var(--ink)] mb-3">
+    {front}
+  </div>
+
+  <details class="group">
+    <summary class="font-mono text-xs font-bold text-[var(--pencil)] cursor-pointer select-none hover:text-[var(--ink)]">
+      Reveal Definition / Answer ↓
+    </summary>
+    <div class="mt-3 p-3 rounded bg-[var(--paper)] border border-[var(--rule)] text-sm text-[var(--text)] leading-relaxed">
+      {back}
+    </div>
+  </details>
+</div>

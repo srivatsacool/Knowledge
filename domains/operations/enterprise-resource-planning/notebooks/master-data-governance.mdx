@@ -1,0 +1,183 @@
+---
+title: Master Data Governance & Modern Enterprise Paradigms
+slug: master-data-governance
+domain: operations
+subject: enterprise-resource-planning
+course: ERP Business Applications
+professor: Prof. Rahul Altekar
+description: >
+  The single source of truth doctrine, master data cleansing lifecycles,
+  material and customer master governance, the Subway franchise case study,
+  on-premise vs SaaS cloud ERP, and autonomous enterprise systems.
+status: published
+version: 1.0.0
+updated: "2026-10-05"
+tags:
+  - Master-Data
+  - Governance
+  - MDM
+  - Cloud-ERP
+  - SaaS
+  - Subway-Case
+  - AI-ERP
+featured: false
+interactive:
+  available: false
+pdf:
+  available: true
+---
+
+# 01 — Notebook Information & Scope
+
+<StickyNote color="green" title="Master Data Doctrine">
+  "Master Data is the DNA of an enterprise. A transaction is merely an event that combines multiple master records (Customer + Material + Vendor + G/L Account). If the DNA is corrupt, every transaction in the enterprise yields deformed results."
+</StickyNote>
+
+* **Domain**: Operations & Supply Chain Systems
+* **Subject**: Enterprise Resource Planning
+* **Pedagogical Lead**: Prof. Rahul Altekar
+* **Core Reference Model**: The Master Data Governance (MDG) Hub, Data Cleansing Pipeline, and Cloud Migration Archetypes
+
+---
+
+# 02 — Learning Map
+
+```text
+[Legacy Fragmented Silos] ──> [Data Profiling & Cleansing] ──> [Master Data Hub (SSOT)]
+                                                                      │
+                                                                      ▼
+[Autonomous / AI-ERP] <── [Cloud SaaS Deployment] <── [Golden Record Enforced]
+```
+
+---
+
+# 03 — Core Concepts: The Anatomy of Master Data
+
+Enterprise data divides into three fundamental strata:
+
+1. **Organizational Data**:
+   Static enterprise structure defined during configuration: Client $\rightarrow$ Company Code $\rightarrow$ Plant $\rightarrow$ Storage Location $\rightarrow$ Sales Organization $\rightarrow$ Purchasing Organization.
+2. **Master Data**:
+   Long-term core business entities referenced repeatedly in daily operations:
+   * **Material Master**: Physical attributes, dimensions, MRP parameters, tax codes, valuation classes.
+   * **Customer Master (Business Partner)**: Billing addresses, credit limits, payment terms, shipping conditions.
+   * **Vendor Master**: Bank details, withholding tax data, lead times, purchasing currency.
+   * **Chart of Accounts / General Ledger Master**: Financial reporting classifications.
+3. **Transactional Data**:
+   Transient, event-driven documents created during operational execution (e.g., Sales Order #4500012, Goods Receipt #5000349, Journal Entry #100089).
+
+<Callout type="note" title="Single Source of Truth (SSOT)">
+  In a properly governed ERP, every physical entity has exactly ONE unique identifier. If a customer is both a buyer of finished goods and a supplier of raw materials, they are modeled as a unified Business Partner with dual roles, eliminating duplicate entries.
+</Callout>
+
+---
+
+# 04 — Master Data Cleansing & The Golden Record Pipeline
+
+Migrating dirty legacy records into a modern ERP requires an automated cleansing pipeline:
+
+```text
+[Extract from Legacy] ──> [Deduplication & Matching] ──> [Standardization & Enrichment] ──> [Golden Record]
+```
+
+1. **Extraction**: Pulling legacy records from dispersed spreadsheets, AS/400 databases, and CRM files.
+2. **Deduplication**: Using fuzzy-string matching algorithms (Levenshtein distance, Jaro-Winkler) to detect duplicate entries (e.g., "General Electric Corp", "GE Corporation", "G.E.").
+3. **Standardization**: Enforcing international address formats (postal validation via USPS/IndiaPost APIs), phone number standards (E.164), and standardized units of measure (ISO codes).
+4. **Enrichment**: Augmenting records with tax identification numbers (GSTIN/EIN), industry classification codes (NAICS), and credit ratings.
+5. **Golden Record Creation**: Generating an authorized, validated master record loaded into the ERP database.
+
+---
+
+# 05 — Mini-Case: Subway Franchise Master Data Synchronization
+
+* **Context**: Subway operates more than 37,000 franchised sandwich restaurants globally.
+* **The Challenge**: Each franchisee originally utilized regional point-of-sale configurations and localized vendor coding. Purchasing cooperative IPC (Independent Purchasing Cooperative) struggled to achieve consolidated purchasing power because identical items (e.g., sliced jalapeños, wheat flour, napkins) were coded under hundreds of regional vendor SKUs.
+* **Master Data Transformation**:
+  * Implemented an enterprise-wide Master Data Management (MDM) governance hub.
+  * Standardized all global recipe ingredients into uniform global SKUs.
+  * Enforced real-time POS transactional roll-up to regional replenishment hubs.
+* **Outcomes**:
+  * Leveraged multi-billion dollar volume purchasing discounts with global ingredient suppliers.
+  * Reduced ingredient stockout rates across restaurants to under 0.2%.
+  * Achieved 100% farm-to-table food safety traceability within seconds during product recalls.
+
+---
+
+# 06 — Cloud ERP: On-Premise vs. SaaS vs. Private Cloud
+
+<ComparisonCard
+  title="Enterprise Architectural Shift: On-Premise vs. Multi-Tenant Cloud ERP"
+  labelA="On-Premise ERP (Traditional)"
+  labelB="Cloud SaaS ERP (Modern)"
+  featureA="Enterprise purchases capital hardware servers, manages data center power, executes manual database tuning, and schedules major version upgrades every 5-7 years at massive capital expense."
+  featureB="Vendor manages multi-tenant cloud infrastructure (AWS/Azure/GCP). Customers consume continuous quarterly software updates with zero downtime, shifting CapEx to predictable OpEx subscriptions."
+/>
+
+### Modern Autonomous Enterprise & AI Integration
+Modern cloud ERP platforms (e.g., SAP S/4HANA Cloud, Oracle Fusion) embed machine learning models directly into transaction processing:
+* **Predictive Invoice Matching**: Neural networks automatically match complex unstructured supplier invoices against open POs and GRNs, eliminating manual AP data entry.
+* **Autonomous Demand Sensing**: Algorithmic replenishment engines dynamically ingest weather data, social trends, and macroeconomic indicators into MRP calculations.
+* **Conversational Enterprise AI**: Natural language interfaces allow plant managers to query live inventory levels and run simulated what-if supply chain disruptions in real-time.
+
+---
+
+# 07 — Past Examination Questions & Model Solutions
+
+<QuestionCard
+  question="Explain the significance of Master Data in an ERP system. Describe the catastrophic operational consequences of poor Master Data hygiene."
+  marks={10}
+  type="theory"
+  modelAnswer="1. Significance: Master data represents the static, core business entities (materials, vendors, customers, accounts) referenced repeatedly across all operational transactions. It dictates system behavior, tax calculations, shipping routings, and financial reconciliations.
+2. Operational Consequences of Poor Hygiene:
+   - Duplicate Vendor Records: Results in fragmented purchasing power, inability to negotiate volume discounts, and erroneous double-payments.
+   - Inaccurate Material Master Lead Times: Causes MRP engines to release production orders too late (leading to assembly stockouts) or too early (leading to expensive working capital buildup).
+   - Inconsistent Customer Tax / Address Data: Causes shipment misdirection, customs rejections at border control, and regulatory tax compliance fines.
+   - Skewed Executive Analytics: Corrupt master records invalidate business intelligence dashboards, producing flawed strategic decisions."
+/>
+
+---
+
+# 08 — Active Recall Flashcards & Conceptual Quiz
+
+<Flashcard
+  front="What is a 'Golden Record' in Master Data Management (MDM)?"
+  back="A single, authoritative, deduplicated, and fully validated version of a data entity that represents the single source of truth across all enterprise applications."
+/>
+
+<Quiz
+  question="Which of the following is classified as Master Data rather than Transactional Data in an ERP system?"
+  options={[
+    "Customer Purchase Order #90210",
+    "Goods Receipt Note #40012",
+    "Material Master Record for Part Steel-Plate-8mm",
+    "Vendor Remittance Bank Check #781"
+  ]}
+  correctIndex={2}
+  explanation="Material Master is long-lived master data defining physical and planning characteristics of an item. Purchase orders, goods receipts, and bank checks are short-lived event records classified as Transactional Data."
+/>
+
+---
+
+# 09 — Knowledge Graph & Cross-References
+
+<RelatedKnowledge
+  domain="operations"
+  subject="enterprise-resource-planning"
+  links={[
+    {
+      title: "ERP Foundations & Strategic Architecture",
+      slug: "erp-foundations",
+      relationship: "Core Foundation: Explores relational database ACID properties and OLTP transaction processing."
+    },
+    {
+      title: "Material Requirements Planning & Manufacturing Execution",
+      slug: "mrp-planning",
+      relationship: "Upstream Data Source: Demonstrates how Material Master and BOM master records drive planning."
+    },
+    {
+      title: "ERP Implementation, BPR, and Change Management",
+      slug: "erp-implementation-lifecycle",
+      relationship: "Deployment Execution: Details the legacy data extraction and cleansing pipeline during cutover."
+    }
+  ]}
+/>

@@ -1,0 +1,12 @@
+---
+interface Props {
+  className?: string;
+  as?: string;
+}
+
+const { className = '', as: Element = 'div' } = Astro.props;
+---
+
+<Element class={`paper-sheet bg-[var(--paper)] text-[var(--text)] border border-[var(--line)] rounded-lg shadow-sm ${className}`}>
+  <slot />
+</Element>

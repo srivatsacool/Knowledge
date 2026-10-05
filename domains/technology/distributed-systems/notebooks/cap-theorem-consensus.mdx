@@ -1,0 +1,95 @@
+---
+title: CAP Theorem, PACELC & Distributed Consensus Mechanics
+slug: cap-theorem-consensus
+domain: technology
+subject: distributed-systems
+course: Distributed Systems & Cloud Architecture
+professor: Personal Notes
+description: >
+  Theoretical foundations of distributed systems: Brewer's CAP Theorem,
+  Abadi's PACELC extension, Paxos and Raft consensus algorithms, and event-driven architectures.
+status: published
+version: 1.0.0
+updated: "2026-10-05"
+tags:
+  - Distributed-Systems
+  - CAP-Theorem
+  - PACELC
+  - Consensus
+  - Raft
+  - Event-Driven
+featured: false
+interactive:
+  available: false
+pdf:
+  available: true
+---
+
+# 01 — Notebook Information & Scope
+
+<StickyNote color="blue" title="Distributed Systems Law">
+  "A distributed system is one in which the failure of a computer you didn't even know existed can render your own computer unusable." — Leslie Lamport. Network partitions are not an anomaly; they are an inevitable physical reality of distributed infrastructure.
+</StickyNote>
+
+* **Domain**: Technology & Systems Architecture
+* **Subject**: Distributed Systems
+* **Core Reference Model**: Eric Brewer's CAP Theorem, Daniel Abadi's PACELC, and Raft Consensus
+
+---
+
+# 02 — Brewer's CAP Theorem & PACELC Extension
+
+In any asynchronous networked system, three properties cannot be simultaneously guaranteed during a network partition:
+
+1. **Consistency (C)**: Every read receives the most recent write or an error (linearizable consistency).
+2. **Availability (A)**: Every non-failing node returns a non-error response for every received request (without guarantee of containing the latest write).
+3. **Partition Tolerance (P)**: The system continues to operate despite an arbitrary number of messages being dropped or delayed by the network between nodes.
+
+<Stamp type="verified" text="PHYSICAL LAW" />
+
+> Because physical networks will inevitably partition ($P$), a distributed database must choose between **Consistency (CP)** (refusing stale reads or blocking writes) or **Availability (AP)** (returning potentially stale data).
+
+### Abadi's PACELC Extension
+Daniel Abadi recognized that CAP only describes system trade-offs **during a partition**:
+* **If Partition ($P$)**: Choose between Availability ($A$) or Consistency ($C$).
+* **Else ($E$)**: Choose between Latency ($L$) or Consistency ($C$).
+* Examples:
+  * **PC/EC** (e.g., Spanner, CockroachDB): Prefers consistency both in partition and normal operation.
+  * **PA/EL** (e.g., DynamoDB, Cassandra with weak consistency): Prefers availability during partition and low latency during normal operation.
+
+---
+
+# 03 — The Raft Consensus Algorithm
+
+Raft decomposes distributed consensus into three understandable, orthogonal sub-problems:
+
+```text
+[Follower] ──(Election Timeout)──> [Candidate] ──(Votes from Majority)──> [Leader]
+    ▲                                                                        │
+    └──────────────────────(Discovers Higher Term)───────────────────────────┘
+```
+
+1. **Leader Election**: When heartbeat timers expire, a follower transitions to candidate, increments the current term, votes for itself, and broadcasts RequestVote RPCs. A candidate winning votes from a majority of nodes becomes Leader.
+2. **Log Replication**: The leader receives client commands, appends them to its local log, and broadcasts AppendEntries RPCs. Once an entry is replicated across a majority of nodes, the leader commits it and applies it to its state machine.
+3. **Safety**: Raft guarantees that if a leader commits a log entry at a given index and term, no other server will ever apply a different log entry for that index.
+
+---
+
+# 04 — Active Recall Flashcards & Conceptual Quiz
+
+<Flashcard
+  front="Under the PACELC theorem, what trade-off must a distributed system make when there is NO network partition?"
+  back="The system must choose between Latency (L) and Consistency (C). Enforcing strong consistency requires synchronous cross-node network roundtrips, inherently increasing latency."
+/>
+
+<Quiz
+  question="Why can a Raft cluster of 5 nodes tolerate at most 2 node failures while maintaining safety and liveness?"
+  options={[
+    "Because Raft requires a strict majority of nodes (floor(N/2) + 1 = 3 out of 5) to form a quorum for leader election and log commitment. If 3 nodes fail, only 2 remain, which cannot form a majority",
+    "Because Raft only replicates to 2 nodes",
+    "Because network cables only support 3 connections",
+    "Because CPU load triples after 2 failures"
+  ]}
+  correctIndex={0}
+  explanation="Quorum consensus requires an overlapping majority between successive decisions. For N = 5, any majority quorum requires 3 nodes. If more than 2 nodes fail (leaving 2 or fewer), no quorum can be assembled, preventing split-brain."
+/>

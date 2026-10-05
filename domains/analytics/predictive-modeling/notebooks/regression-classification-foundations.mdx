@@ -1,0 +1,86 @@
+---
+title: Predictive Modeling & Supervised Machine Learning Foundations
+slug: regression-classification-foundations
+domain: analytics
+subject: predictive-modeling
+course: Business Analytics & Predictive Modeling
+professor: Personal Notes
+description: >
+  Foundations of statistical supervised learning covering ordinary least squares
+  regression, regularization (Ridge & Lasso), logistic classification, and model validation.
+status: published
+version: 1.0.0
+updated: "2026-10-05"
+tags:
+  - Analytics
+  - Machine-Learning
+  - Regression
+  - Regularization
+  - Lasso
+  - Ridge
+featured: false
+interactive:
+  available: false
+pdf:
+  available: true
+---
+
+# 01 — Notebook Information & Scope
+
+<StickyNote color="blue" title="Statistical Learning Doctrine">
+  "All models are wrong, but some are useful." — George E. P. Box. The objective of predictive modeling is not to achieve zero in-sample training error, but to minimize out-of-sample generalization error on unseen data.
+</StickyNote>
+
+* **Domain**: Analytics & Quantitative Methods
+* **Subject**: Predictive Modeling
+* **Core Reference Model**: Bias-Variance Decomposition & Elastic Net Regularization
+
+---
+
+# 02 — The Bias-Variance Trade-off
+
+The expected test Mean Squared Error (MSE) of a supervised learning model decomposes into three irreducible quantities:
+
+<FormulaCard
+  title="Bias-Variance Decomposition"
+  formula="\mathbb{E}\left[(y - \hat{f}(x))^2\right] = \mathrm{Bias}\left[\hat{f}(x)\right]^2 + \mathrm{Var}\left[\hat{f}(x)\right] + \sigma^2"
+  variables={[
+    { symbol: "\\mathrm{Bias}[\\hat{f}(x)]^2", description: "Error introduced by approximating a complicated real-world problem with a simpler model" },
+    { symbol: "\\mathrm{Var}[\\hat{f}(x)]", description: "Amount by which the model estimate would change if estimated using a different training set" },
+    { symbol: "\\sigma^2", description: "Irreducible random error inherent in the true data generating process" }
+  ]}
+  explanation="As model complexity increases, bias declines while variance increases. Regularization techniques penalize extreme model coefficients to strike the optimal bias-variance balance."
+/>
+
+---
+
+# 03 — Regularized Regression: Ridge, Lasso & Elastic Net
+
+<ComparisonCard
+  title="L1 vs L2 Regularization Dynamics"
+  labelA="Ridge Regression (L2 Penalty: lambda * sum(beta_j^2))"
+  labelB="Lasso Regression (L1 Penalty: lambda * sum(|beta_j|))"
+  featureA="Shrinks coefficients smoothly toward zero but never forces them to exact zero. Retains all predictors in the final model; well-suited when many predictors have small, non-zero effects."
+  featureB="Enforces sparsity by driving coefficients to exact zero when penalty lambda is sufficiently large. Performs automated feature selection; well-suited for high-dimensional sparse data."
+/>
+
+---
+
+# 04 — Active Recall Flashcards & Conceptual Quiz
+
+<Flashcard
+  front="Why does Lasso (L1) produce sparse models with exact zero coefficients while Ridge (L2) does not?"
+  back="The L1 constraint boundary is diamond-shaped with sharp corners on coordinate axes, making the elliptical RSS contour likely to intersect on an axis where one or more coefficients are zero."
+/>
+
+<Quiz
+  question="Which metric is preferred over raw Accuracy when evaluating binary classification on an imbalanced fraud dataset (99% legitimate, 1% fraudulent)?"
+  options={[
+    "Area Under the Precision-Recall Curve (PR-AUC) or F1-Score",
+    "Mean Absolute Percentage Error (MAPE)",
+    "R-squared",
+    "Overall Accuracy"
+  ]}
+  correctIndex={0}
+  explanation="On imbalanced datasets, a naive model predicting all negatives achieves 99% accuracy. PR-AUC and F1-score evaluate precision and recall on the rare minority positive class."
+/>

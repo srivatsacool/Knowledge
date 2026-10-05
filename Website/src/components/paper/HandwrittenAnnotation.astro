@@ -1,0 +1,17 @@
+---
+interface Props {
+  author?: string;
+  className?: string;
+}
+
+const { author, className = '' } = Astro.props;
+---
+
+<aside class={`handwritten-note my-3 p-3 bg-[var(--paper2)] border-l-3 border-[var(--ink)] font-hand2 text-lg text-[var(--ink)] leading-snug rounded-r-md ${className}`}>
+  {author && (
+    <span class="font-hand font-bold text-sm block text-[var(--pencil)] uppercase tracking-wider mb-0.5">
+      ✍ {author}:
+    </span>
+  )}
+  <slot />
+</aside>

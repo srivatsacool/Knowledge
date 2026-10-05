@@ -1,0 +1,305 @@
+---
+title: Deterministic Lot Sizing & Stochastic Inventory Optimization
+slug: inventory-optimization
+domain: operations
+subject: logistics-supply-chain
+course: "Logistics and SCM: Value Creation, Adaptability & Sustainability"
+professor: Prof. Manoj Dagaonkar
+description: >
+  Rigorous mathematical treatment of inventory systems: EOQ derivation,
+  Economic Production Quantity (EPQ), Quantity Discount tiers, Continuous (r, Q)
+  vs Periodic (s, S) review, Safety Stock sizing under uncertainty, and the Newsvendor model.
+status: published
+version: 1.0.0
+updated: "2026-10-05"
+tags:
+  - Inventory
+  - EOQ
+  - EPQ
+  - Safety-Stock
+  - Newsvendor
+  - Continuous-Review
+  - Stochastic-Demand
+featured: true
+interactive:
+  available: true
+  slug: eoq-interactive-simulator
+pdf:
+  available: true
+---
+
+# 01 — Notebook Information & Scope
+
+<StickyNote color="blue" title="Inventory Duality">
+  "Inventory is money sitting around in another form. It protects against the twin demons of demand volatility and supplier unreliability, but carries holding costs that drain working capital if left unmanaged."
+</StickyNote>
+
+* **Domain**: Operations & Supply Chain Systems
+* **Subject**: Logistics & Supply Chain Management
+* **Pedagogical Lead**: Prof. Manoj Dagaonkar
+* **Core Reference Models**: Ford W. Harris Classical EOQ, Taft EPQ Model, Silver-Meal Heuristic, and Stochastic Safety Stock Normal Theory
+
+---
+
+# 02 — Learning Map
+
+```text
+[Demand Characteristics]
+   ├── Deterministic / Constant ──> [EOQ / EPQ Lot Sizing] ──> [Quantity Discount Optimization]
+   └── Stochastic / Uncertain   ──> [Lead-Time Demand Variance] ──> [Safety Stock: Z * sigma_LTD]
+                                                                        │
+                                                                        ▼
+                                                             [Newsvendor Critical Fractile]
+```
+
+---
+
+# 03 — The Classical Economic Order Quantity (EOQ)
+
+The Ford W. Harris (1913) model identifies the optimal order quantity that minimizes the sum of annual ordering costs and annual inventory holding costs under idealized deterministic conditions:
+
+### Fundamental Assumptions
+1. Demand ($D$) is continuous, constant, and known with absolute certainty.
+2. Replenishment lead time ($L$) is constant and known.
+3. Inventory arrives in a single instantaneous lot ($Q$).
+4. Unit purchase price ($C$) is fixed; zero quantity discounts.
+5. No stockouts are permitted ($SS = 0$).
+
+### Total Annual Cost Equation
+The annual total cost function $TC(Q)$ comprises purchase cost, ordering cost, and carrying cost:
+
+<FormulaCard
+  title="Total Annual Cost Function"
+  formula="TC(Q) = D \cdot C + \frac{D}{Q} S + \frac{Q}{2} H"
+  explanation="The annual total cost function comprises purchase cost, ordering cost, and carrying cost."
+/>
+
+Where:
+* $D$ = Annual Demand (units/year)
+* $S$ = Ordering cost per order ($/order)
+* $H$ = Annual inventory holding cost per unit ($H = i \cdot C$, where $i$ is holding cost rate)
+* $Q$ = Order quantity (units)
+
+<FormulaCard
+  title="The Classical EOQ Formula"
+  formula="Q^* = \sqrt{\frac{2 D S}{H}}"
+  variables={[
+    { symbol: "Q^*", description: "Economic Order Quantity (units per order)" },
+    { symbol: "D", description: "Annual demand rate (units per year)" },
+    { symbol: "S", description: "Setup / ordering cost incurred per purchase order" },
+    { symbol: "H", description: "Annual carrying / holding cost per unit per year" }
+  ]}
+  explanation="Derived by setting the first derivative of the Total Cost equation with respect to Q equal to zero (dTC/dQ = -DS/Q^2 + H/2 = 0). At the optimal EOQ, annual ordering cost exactly equals annual holding cost."
+/>
+
+### Key EOQ Metric Relationships:
+* **Optimal Annual Orders**: `$N^* = \frac{D}{Q^*} = \sqrt{\frac{DH}{2S}}$`
+* **Optimal Cycle Time (Between Orders)**: `$T^* = \frac{Q^*}{D} = \sqrt{\frac{2S}{DH}}$`
+* **Minimum Total Annual Variable Cost**: `$TVC^* = \sqrt{2DSH}$`
+
+---
+
+# 04 — Economic Production Quantity (EPQ / EBQ)
+
+When replenishments are manufactured in-house rather than procured instantaneously from an external vendor, inventory accumulates at production rate $p$ while being depleted simultaneously by sales demand rate $d$ ($p > d$):
+
+<FormulaCard
+  title="Economic Production Quantity (EPQ) Formula"
+  formula="Q^*_{EPQ} = \sqrt{\frac{2 D S}{H \left(1 - \frac{d}{p}\right)}}"
+  variables={[
+    { symbol: "Q^*_{EPQ}", description: "Optimal production batch size (units per run)" },
+    { symbol: "p", description: "Daily or weekly internal production rate" },
+    { symbol: "d", description: "Daily or weekly demand / depletion rate" },
+    { symbol: "1 - d/p", description: "Production accumulation factor" }
+  ]}
+  explanation="Because inventory is depleted while the production run is active, maximum inventory reaches only I_max = Q * (1 - d/p) rather than Q. The effective holding cost is lower, resulting in an optimal batch size larger than standard EOQ."
+/>
+
+---
+
+# 05 — Stochastic Inventory: Safety Stock Under Demand Uncertainty
+
+In real-world commercial environments, customer demand fluctuates around a statistical mean $\mu_d$ with standard deviation $\sigma_d$.
+
+### Continuous Review System $(r, Q)$
+A continuous review system continuously monitors inventory. Whenever inventory position (On-Hand + On-Order - Backorders) falls to or below the **Reorder Point ($ROP$)**, a replenishment lot of fixed size $Q$ is dispatched.
+
+<FormulaCard
+  title="Reorder Point & Safety Stock (Stochastic Demand, Constant Lead Time L)"
+  formula="ROP = d_L + SS = \bar{d} \cdot L + Z \cdot \sigma_d \sqrt{L}"
+  variables={[
+    { symbol: "ROP", description: "Reorder Point (trigger threshold for replenishment order)" },
+    { symbol: "\\bar{d}", description: "Average daily demand rate" },
+    { symbol: "L", description: "Replenishment lead time in days" },
+    { symbol: "Z", description: "Standard normal score corresponding to the desired Cycle Service Level (CSL)" },
+    { symbol: "\\sigma_d", description: "Standard deviation of daily demand" },
+    { symbol: "SS = Z \\cdot \\sigma_d \\sqrt{L}", description: "Safety stock buffer required to cover demand variance during lead time" }
+  ]}
+  explanation="Lead-time demand follows a normal distribution N(d * L, sigma_d^2 * L). To achieve a 95% cycle service level (Z = 1.645) or 99% (Z = 2.33), safety stock scales with the square root of lead time."
+/>
+
+### Both Demand and Lead Time are Stochastic
+When supplier lead time is also uncertain (mean `$\bar{L}$`, standard deviation `$\sigma_L$`):
+
+<FormulaCard
+  title="Safety Stock Under Simultaneous Demand & Lead-Time Uncertainty"
+  formula="SS = Z \cdot \sqrt{\bar{L} \cdot \sigma_d^2 + \bar{d}^2 \cdot \sigma_L^2}"
+  variables={[
+    { symbol: "\\bar{L}", description: "Average replenishment lead time" },
+    { symbol: "\\sigma_d", description: "Standard deviation of daily demand" },
+    { symbol: "\\bar{d}", description: "Average daily demand" },
+    { symbol: "\\sigma_L", description: "Standard deviation of supplier lead time" }
+  ]}
+  explanation="Combines demand variance during average lead time with lead-time variance during average demand using the law of total variance."
+/>
+
+---
+
+# 06 — The Single-Period Newsvendor Problem
+
+For perishable goods, high-fashion apparel, and seasonal items with a single purchasing decision and zero replenishment opportunity:
+
+<FormulaCard
+  title="The Newsvendor Critical Fractile"
+  formula="P(D \le Q^*) = \frac{C_u}{C_u + C_o}"
+  variables={[
+    { symbol: "Q^*", description: "Optimal stocking quantity for the single selling period" },
+    { symbol: "C_u", description: "Cost of Underage (Lost profit per unit short = Selling Price - Cost)" },
+    { symbol: "C_o", description: "Cost of Overage (Loss per unsold unit = Cost - Salvage Value)" },
+    { symbol: "\\frac{C_u}{C_u + C_o}", description: "Critical fractile (optimal target cumulative service level probability)" }
+  ]}
+  explanation="If underage cost Cu is much higher than overage cost Co, the optimal strategy is to stock heavily into the right tail of the demand distribution. For normally distributed demand D ~ N(mu, sigma), Q* = mu + Z * sigma where Z = Phi^-1(Cu / (Cu + Co))."
+/>
+
+---
+
+# 07 — Step-by-Step Worked Numerical Problem
+
+### Problem Statement
+A manufacturing assembly plant operates 250 days per year.
+* Annual demand for raw component K-9: $D = 10,000$ units.
+* Cost per order: $S = \$50$.
+* Unit cost: $C = \$20$.
+* Annual inventory holding cost rate: $i = 20\%$ per year ($H = 0.20 \times 20 = \$4$ per unit/year).
+* Daily demand is normally distributed with mean `$\bar{d} = 40$` units/day and `$\sigma_d = 8$` units/day.
+* Replenishment lead time is constant: $L = 9$ business days.
+* Desired Cycle Service Level ($CSL$): $95\%$ ($Z = 1.645$).
+
+### Step 1: Calculate Economic Order Quantity ($EOQ$)
+`$Q^* = \sqrt{\frac{2 \times 10000 \times 50}{4}} = \sqrt{\frac{1000000}{4}} = \sqrt{250000} = 500\text{ units}$`
+
+### Step 2: Calculate Number of Orders and Cycle Time
+* Orders per year: `$N^* = \frac{10000}{500} = 20\text{ orders/year}$`
+* Cycle time: `$T^* = \frac{250\text{ days}}{20} = 12.5\text{ days}$`
+
+### Step 3: Calculate Lead-Time Demand & Safety Stock
+* Mean lead-time demand: `$d_L = \bar{d} \times L = 40 \times 9 = 360\text{ units}$`
+* Standard deviation of lead-time demand: `$\sigma_L = \sigma_d \times \sqrt{L} = 8 \times \sqrt{9} = 8 \times 3 = 24\text{ units}$`
+* Safety Stock: `$SS = Z \times \sigma_L = 1.645 \times 24 = 39.48 \approx 40\text{ units}$`
+
+### Step 4: Calculate Reorder Point ($ROP$)
+`$ROP = d_L + SS = 360 + 40 = 400\text{ units}$`
+
+### Step 5: Total Annual Inventory Holding Cost (Cycle + Safety)
+* Average Cycle Inventory: `$\frac{Q^*}{2} = \frac{500}{2} = 250\text{ units}$`
+* Total Average Inventory: `$250 + 40 = 290\text{ units}$`
+* Total Annual Inventory Cost:
+  `$Total = \left(\frac{10000}{500} \times 50\right) + (250 \times 4) + (40 \times 4) = 1000 + 1000 + 160 = \$2,160$`
+
+---
+
+# 08 — Past Examination Questions & Model Solutions
+
+<QuestionCard
+  question="Derive the classical Economic Order Quantity (EOQ) formula. State the five core underlying assumptions. Explain why holding costs and ordering costs are identical at the optimal order point."
+  marks={10}
+  type="numerical"
+  modelAnswer="1. Assumptions:
+   - Demand rate D is constant, continuous, and known.
+   - Lead time L is known and constant.
+   - Replenishment lot Q arrives instantaneously.
+   - No stockouts are permitted.
+   - Unit purchase price C is fixed (no quantity discounts).
+2. Derivation:
+   Total Annual Cost: TC(Q) = D*C + (D/Q)*S + (Q/2)*H.
+   To find the minimum, take first derivative with respect to Q and set to 0:
+   dTC/dQ = - (D*S) / Q^2 + H/2 = 0
+   (D*S) / Q^2 = H/2
+   Q^2 = (2*D*S) / H
+   Q* = sqrt( (2*D*S) / H ).
+3. Equivalence of Ordering and Holding Costs:
+   At Q*:
+   Annual Ordering Cost = (D / Q*) * S = D / sqrt(2DS/H) * S = sqrt( (D*S*H) / 2 ).
+   Annual Holding Cost = (Q* / 2) * H = (sqrt(2DS/H) / 2) * H = sqrt( (D*S*H) / 2 ).
+   Because the derivative equates the marginal decrease in ordering cost with the marginal increase in holding cost, the two cost curves intersect exactly at the minimum point of the total cost curve."
+/>
+
+<QuestionCard
+  question="A retailer sells high-end winter parkas for $400 each. The purchase cost from the manufacturer is $150 each. Unsold coats at the end of the winter season are liquidated at an outlet salvage price of $80 each. Demand is normally distributed with mean 500 units and standard deviation 80 units. Determine the optimal stocking quantity Q* using the Newsvendor framework."
+  marks={10}
+  type="numerical"
+  modelAnswer="1. Cost Parameters:
+   - Cost of Underage (Cu) = Selling Price - Purchase Cost = 400 - 150 = $250.
+   - Cost of Overage (Co) = Purchase Cost - Salvage Value = 150 - 80 = $70.
+2. Critical Fractile Calculation:
+   P(D <= Q*) = Cu / (Cu + Co) = 250 / (250 + 70) = 250 / 320 = 0.78125 (78.13%).
+3. Normal Distribution Z-Score:
+   Using standard normal table:
+   Phi(Z) = 0.78125 ==> Z = 0.776.
+4. Optimal Stocking Quantity:
+   Q* = mu + Z * sigma
+   Q* = 500 + (0.776 * 80) = 500 + 62.08 = 562.08 units.
+   Rounding to integer: The retailer should order 562 parkas."
+/>
+
+---
+
+# 09 — Active Recall Flashcards & Conceptual Quiz
+
+<Flashcard
+  front="What happens to the optimal EOQ if annual demand (D) quadruples (x4)?"
+  back="Because EOQ is proportional to the square root of demand, if demand quadruples, EOQ doubles (sqrt(4) = 2). Order frequency also doubles."
+/>
+
+<Flashcard
+  front="What does the Newsvendor Critical Fractile Cu / (Cu + Co) represent?"
+  back="The optimal cumulative probability of demand being satisfied (service level) that maximizes expected profit by balancing lost margin against clearance markdown losses."
+/>
+
+<Quiz
+  question="Why does safety stock scale with sqrt(L) rather than L when demand is independent across time periods?"
+  options={[
+    "Because holding costs are calculated on a square-root basis",
+    "Because variances are additive over independent time periods (Var_total = L * sigma^2), making the standard deviation equal to sigma * sqrt(L)",
+    "Because supplier purchase contracts demand quadratic safety buffers",
+    "Because EOQ already incorporates lead time"
+  ]}
+  correctIndex={1}
+  explanation="When independent random variables are added together, their variances sum linearly. Therefore, over L periods, total variance is L * sigma^2. The standard deviation, which determines safety stock, is the square root of variance: sigma * sqrt(L)."
+/>
+
+---
+
+# 10 — Knowledge Graph & Cross-References
+
+<RelatedKnowledge
+  domain="operations"
+  subject="logistics-supply-chain"
+  links={[
+    {
+      title: "Supply Chain Architecture & Strategic Fit",
+      slug: "scm-architecture-drivers",
+      relationship: "Upstream Strategy: Analyzes how inventory driver settings affect network responsiveness vs efficiency."
+    },
+    {
+      title: "Warehouse Engineering, Network Design & Global EXIM Trade",
+      slug: "warehousing-exim",
+      relationship: "Physical Storage: Explores warehouse layout and slotting for holding cycle and safety inventory."
+    },
+    {
+      title: "Material Requirements Planning & Manufacturing Execution",
+      slug: "mrp-planning",
+      relationship: "Deterministic Manufacturing: Compares lot-for-lot scheduling with EOQ batch rules in BOM explosions."
+    }
+  ]}
+/>

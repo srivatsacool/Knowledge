@@ -1,0 +1,20 @@
+---
+interface Props {
+  text: string;
+  color?: 'red' | 'green' | 'amber' | 'blue';
+  className?: string;
+}
+
+const { text, color = 'red', className = '' } = Astro.props;
+
+const colorMap = {
+  red: 'stamp-red',
+  green: 'stamp-green',
+  amber: 'stamp-amber',
+  blue: 'stamp-blue',
+};
+---
+
+<span class={`rubber-stamp ${colorMap[color]} ${className}`}>
+  {text}
+</span>

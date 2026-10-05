@@ -1,0 +1,28 @@
+---
+interface Props {
+  pageNumber?: number | string;
+  title?: string;
+  className?: string;
+  id?: string;
+}
+
+const { pageNumber, title, className = '', id } = Astro.props;
+---
+
+<section id={id} class={`notebook-page py-6 border-b border-[var(--rule)] last:border-none relative scroll-mt-24 ${className}`}>
+  {title && (
+    <div class="flex items-baseline justify-between mb-4 pb-2 border-b border-[var(--line)]">
+      <h2 class="font-serif text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight">
+        {title}
+      </h2>
+      {pageNumber && (
+        <span class="font-mono text-xs text-[var(--pencil)] font-bold">
+          p. {pageNumber}
+        </span>
+      )}
+    </div>
+  )}
+  <div class="prose max-w-none text-base leading-relaxed text-[var(--text)]">
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,89 @@
+---
+title: Scaled Dot-Product Attention & Transformer Architectures
+slug: attention-transformer-mechanisms
+domain: ai
+subject: deep-learning-transformers
+course: Deep Learning & Generative Architectures
+professor: Personal Notes
+description: >
+  Mathematical mechanics of Scaled Dot-Product Attention, Multi-Head Attention,
+  Positional Encodings, and Transformer encoder-decoder topologies.
+status: published
+version: 1.0.0
+updated: "2026-10-05"
+tags:
+  - AI
+  - Transformers
+  - Self-Attention
+  - Deep-Learning
+  - Multi-Head
+  - Positional-Encoding
+featured: false
+interactive:
+  available: false
+pdf:
+  available: true
+---
+
+# 01 — Notebook Information & Scope
+
+<StickyNote color="yellow" title="The Attention Revolution">
+  "Attention is All You Need" (Vaswani et al., 2017) discarded sequential recurrent state propagation (RNNs/LSTMs) in favor of parallelized matrix dot-product attention, allowing models to route representations directly between arbitrary token pairs regardless of distance.
+</StickyNote>
+
+* **Domain**: Artificial Intelligence & Machine Learning
+* **Subject**: Deep Learning & Transformers
+* **Core Reference Paper**: Vaswani et al. (2017), "Attention is All You Need"
+
+---
+
+# 02 — Scaled Dot-Product Attention
+
+Given an input matrix of Query vectors $Q$, Key vectors $K$, and Value vectors $V$ of dimension $d_k$:
+
+<FormulaCard
+  title="Scaled Dot-Product Attention Equation"
+  formula="\mathrm{Attention}(Q, K, V) = \mathrm{softmax}\left(\frac{Q K^T}{\sqrt{d_k}}\right) V"
+  variables={[
+    { symbol: "Q \\in \\mathbb{R}^{n \\times d_k}", description: "Matrix of query vectors representing tokens seeking context" },
+    { symbol: "K \\in \\mathbb{R}^{m \\times d_k}", description: "Matrix of key vectors representing tokens offering context" },
+    { symbol: "V \\in \\mathbb{R}^{m \\times d_v}", description: "Matrix of value vectors containing the token representation payloads" },
+    { symbol: "\\sqrt{d_k}", description: "Scaling factor to prevent dot products from growing excessively large for large dimensions, which would push softmax into near-zero gradient regions" }
+  ]}
+  explanation="The inner product Q K^T measures semantic affinity between token pairs. Softmax normalizes affinities into a probability distribution over keys, weighting the linear combination of values V."
+/>
+
+---
+
+# 03 — Multi-Head Attention (MHA)
+
+Rather than performing a single attention function with `$d_{model}$`-dimensional queries, keys, and values, Multi-Head Attention projects $Q, K, V$ linearly $h$ times with different learned parameter matrices:
+
+<FormulaCard
+  title="Multi-Head Attention (MHA) Formulation"
+  formula="\mathrm{MultiHead}(Q, K, V) = \mathrm{Concat}(\mathrm{head}_1, \dots, \mathrm{head}_h) W^O, \quad \text{where } \mathrm{head}_i = \mathrm{Attention}(Q W_i^Q, K W_i^K, V W_i^V)"
+  explanation="Projects queries, keys, and values h times with distinct parameter projections, enabling the model to attend to multiple representation subspaces simultaneously."
+/>
+
+* Allows the model to jointly attend to information from different representation subspaces (e.g., one head tracking syntactic subject-verb dependencies, another tracking coreference resolution).
+
+---
+
+# 04 — Active Recall Flashcards & Conceptual Quiz
+
+<Flashcard
+  front="Why is the dot-product Q * K^T divided by sqrt(d_k) in Scaled Dot-Product Attention?"
+  back="For large values of d_k, the dot products grow large in magnitude, pushing the softmax function into regions with extremely small gradients (vanishing gradient problem). Scaling by 1 / sqrt(d_k) restores unit variance."
+/>
+
+<Quiz
+  question="Why are Positional Encodings required in Transformer architectures?"
+  options={[
+    "Because dot-product self-attention is inherently permutation-invariant, meaning it has no native awareness of token order or sequence position",
+    "To normalize weights before feeding them into layer norm",
+    "To accelerate GPU matrix multiplication",
+    "To prevent overfitting on training data"
+  ]}
+  correctIndex={0}
+  explanation="Self-attention processes all tokens in parallel without sequential order. Without injecting positional encodings (sinusoidal or learned), the model would treat 'the cat ate the fish' identically to 'the fish ate the cat'."
+/>

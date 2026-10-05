@@ -1,5 +1,9 @@
 ---
-import { DIVISIONS } from '../data/divisions';
+import { getCollection } from 'astro:content';
+
+const allDomains = await getCollection('domains');
+const topDomains = allDomains.slice(0, 5);
+const moreDomains = allDomains.slice(5);
 ---
 
 <header class="border-b border-[#E7E5E4] dark:border-[#292524] bg-[#FAF7F0] dark:bg-[#0C0A09] sticky top-0 z-40 transition-colors">
@@ -17,31 +21,33 @@ import { DIVISIONS } from '../data/divisions';
           </span>
         </a>
 
-        <!-- Division Nav Dropdown / Links -->
+        <!-- Domain Nav Dropdown / Links -->
         <nav class="hidden md:flex items-center space-x-1 pl-4 border-l border-[#E7E5E4] dark:border-[#292524]">
-          {DIVISIONS.slice(0, 5).map(div => (
+          {topDomains.map(d => (
             <a 
-              href={`/${div.slug}/`} 
+              href={`/${d.data.slug}/`} 
               class="px-2.5 py-1.5 text-xs font-medium text-[#78716C] dark:text-[#A8A29E] hover:text-[#1C1917] dark:hover:text-[#F5F5F4] hover:bg-[#F4EEDD] dark:hover:bg-[#1C1917] rounded transition-colors"
             >
-              {div.title.split(' ')[0]}
+              {d.data.title.split(' ')[0]}
             </a>
           ))}
-          <div class="relative group">
-            <button class="px-2.5 py-1.5 text-xs font-medium text-[#78716C] dark:text-[#A8A29E] hover:text-[#1C1917] dark:hover:text-[#F5F5F4] rounded transition-colors">
-              More ▾
-            </button>
-            <div class="absolute left-0 mt-1 w-44 bg-white dark:bg-[#1C1917] border border-[#E7E5E4] dark:border-[#292524] rounded-md shadow-paper-md py-1 hidden group-hover:block z-50">
-              {DIVISIONS.slice(5).map(div => (
-                <a 
-                  href={`/${div.slug}/`} 
-                  class="block px-3 py-1.5 text-xs text-[#78716C] dark:text-[#A8A29E] hover:bg-[#FAF7F0] dark:hover:bg-[#292524] hover:text-[#1C1917] dark:hover:text-[#F5F5F4]"
-                >
-                  {div.title}
-                </a>
-              ))}
+          {moreDomains.length > 0 && (
+            <div class="relative group">
+              <button class="px-2.5 py-1.5 text-xs font-medium text-[#78716C] dark:text-[#A8A29E] hover:text-[#1C1917] dark:hover:text-[#F5F5F4] rounded transition-colors">
+                More ▾
+              </button>
+              <div class="absolute left-0 mt-1 w-44 bg-white dark:bg-[#1C1917] border border-[#E7E5E4] dark:border-[#292524] rounded-md shadow-paper-md py-1 hidden group-hover:block z-50">
+                {moreDomains.map(d => (
+                  <a 
+                    href={`/${d.data.slug}/`} 
+                    class="block px-3 py-1.5 text-xs text-[#78716C] dark:text-[#A8A29E] hover:bg-[#FAF7F0] dark:hover:bg-[#292524] hover:text-[#1C1917] dark:hover:text-[#F5F5F4]"
+                  >
+                    {d.data.title}
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </nav>
       </div>
 

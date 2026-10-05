@@ -1,0 +1,88 @@
+---
+interface Variable {
+  symbol: string;
+  name?: string;
+  description?: string;
+  unit?: string;
+}
+
+interface Props {
+  name?: string;
+  title?: string;
+  katex?: string;
+  formula?: string;
+  description?: string;
+  explanation?: string;
+  variables?: Variable[];
+  example?: {
+    problem: string;
+    steps: string[];
+    result: string;
+  };
+}
+
+const {
+  name,
+  title = name || 'Formula',
+  katex,
+  formula = katex || '',
+  description,
+  explanation = description || '',
+  variables = [],
+  example,
+} = Astro.props;
+---
+
+<div class="formula-card paper-card p-6 my-6 rounded-lg border border-[var(--line)]">
+  <div class="flex items-baseline justify-between mb-2">
+    <h4 class="font-serif text-lg font-bold text-[var(--ink)]">
+      {title}
+    </h4>
+    <span class="rubber-stamp stamp-green text-[10px]">FORMULA</span>
+  </div>
+
+  {explanation && (
+    <p class="text-xs text-[var(--pencil)] mb-3 leading-relaxed">
+      {explanation}
+    </p>
+  )}
+
+  <div class="formula-box p-4 my-3 text-center text-xl overflow-x-auto bg-[var(--paper)]">
+    $${formula}$$
+  </div>
+
+  {variables.length > 0 && (
+    <div class="mt-4 pt-3 border-t border-[var(--rule)]">
+      <div class="font-mono text-[11px] uppercase tracking-wider text-[var(--pencil)] font-bold mb-2">
+        Variable Definitions & Units:
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        {variables.map(v => (
+          <div class="flex items-start space-x-2">
+            <code class="font-mono font-bold text-[var(--ink)] px-1.5 py-0.5 rounded bg-[var(--card)] border border-[var(--line)] shrink-0">${v.symbol}$</code>
+            <span class="text-[var(--text)]">{v.description || v.name}</span>
+            {v.unit && <span class="text-[var(--pencil)] text-[11px]">({v.unit})</span>}
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {example && (
+    <div class="mt-4 p-4 rounded bg-[var(--paper)] border border-[var(--line)] text-xs font-mono space-y-1.5">
+      <div class="font-bold text-[var(--amber)] text-xs mb-1">
+        Worked Numerical Proof:
+      </div>
+      <div class="text-[var(--pencil)] italic mb-2">{example.problem}</div>
+      {example.steps.map(st => (
+        <div class="flex items-start space-x-2">
+          <span class="text-[var(--ink2)] font-bold">→</span>
+          <span>{st}</span>
+        </div>
+      ))}
+      <div class="pt-2 border-t border-[var(--rule)] font-bold text-[var(--green)]">
+        Result: {example.result}
+      </div>
+    </div>
+  )}
+</div>

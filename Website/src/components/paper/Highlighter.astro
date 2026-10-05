@@ -1,0 +1,16 @@
+---
+interface Props {
+  color?: 'yellow' | 'green' | 'pink' | 'blue';
+}
+
+const { color = 'yellow' } = Astro.props;
+
+const classMap = {
+  yellow: 'hy',
+  green: 'hg',
+  pink: 'hp',
+  blue: 'hb',
+};
+---
+
+<mark class={classMap[color]}><slot /></mark>

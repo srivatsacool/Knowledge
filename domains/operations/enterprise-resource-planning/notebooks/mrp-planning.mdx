@@ -1,0 +1,279 @@
+---
+title: Material Requirements Planning & Manufacturing Execution
+slug: mrp-planning
+domain: operations
+subject: enterprise-resource-planning
+course: ERP Business Applications
+professor: Prof. Rahul Altekar
+description: >
+  A deep-dive study notebook on Plossl's manufacturing planning flow,
+  Bill of Materials (BOM) explosion, deterministic MRP matrix calculations,
+  Closed-Loop MRP vs MRP II, and manufacturing master data governance.
+status: published
+version: 1.0.0
+updated: "2026-10-05"
+tags:
+  - MRP
+  - BOM
+  - MPS
+  - Closed-Loop
+  - MRP-II
+  - Lead-Time
+featured: true
+interactive:
+  available: false
+pdf:
+  available: true
+---
+
+# 01 — Notebook Information & Scope
+
+<StickyNote color="yellow" title="The Fundamental Law of Manufacturing">
+  "The objective of all manufacturing control systems is to have the right material at the right place at the right time in the right quantity, without carrying excessive inventory." — George Plossl.
+</StickyNote>
+
+* **Domain**: Operations & Supply Chain Systems
+* **Subject**: Enterprise Resource Planning
+* **Pedagogical Lead**: Prof. Rahul Altekar
+* **Core Reference Model**: Plossl’s Manufacturing Flow, Dependent vs Independent Demand, and Multi-Level BOM Explosion
+
+---
+
+# 02 — Learning Map
+
+```text
+[Independent Customer Demand] ──> [Master Production Schedule (MPS)]
+                                                  │
+                                                  ▼
+[Inventory On-Hand / On-Order] ──> [MRP Calculation Engine] <── [Bill of Materials (BOM)]
+                                                  │
+                                                  ▼
+                                   [Planned Order Releases]
+                                      │              │
+                                      ▼              ▼
+                              [Purchase Orders]   [Shop Work Orders]
+                                 (Procurement)       (Manufacturing)
+```
+
+---
+
+# 03 — Core Concepts: Dependent vs. Independent Demand
+
+The modern ERP manufacturing engine is grounded in Joseph Orlicky’s fundamental demand classification:
+
+1. **Independent Demand**:
+   * Demand for finished goods and service spare parts that originates directly from external market customers.
+   * Inherently uncertain, stochastic, and must be **forecasted** using statistical techniques (moving averages, exponential smoothing, Holt-Winters).
+2. **Dependent Demand**:
+   * Demand for sub-assemblies, fabricated components, and raw materials that directly depends on the production schedule of parent items.
+   * Perfectly deterministic once the Master Production Schedule (MPS) is committed. It must be **calculated**, never forecasted.
+
+<Callout type="warning" title="Anti-Pattern in Manufacturing Planning">
+  Forecasting raw material demand using statistical time-series models while ignoring the Bill of Materials produces catastrophic Bullwhip distortion and inventory gluts. Dependent demand must always be calculated via BOM explosion.
+</Callout>
+
+---
+
+# 04 — The Bill of Materials (BOM) & Indented Explosion
+
+A **Bill of Materials (BOM)** is an engineering master record that defines the hierarchical recipe of components, sub-assemblies, and raw materials required to produce one unit of a finished product.
+
+### Multi-Level Indented Tree Example: Industrial Pump (Model P-100)
+```text
+Level 0: Industrial Pump P-100 (1 unit)
+  ├── Level 1: Pump Housing Assembly (1 unit, Lead Time: 2 weeks)
+  │     ├── Level 2: Cast Iron Casing (1 unit, Lead Time: 4 weeks) [Purchased]
+  │     └── Level 2: Flange Bolts (8 units, Lead Time: 1 week) [Purchased]
+  ├── Level 1: Impeller Sub-Assembly (1 unit, Lead Time: 1 week)
+  │     ├── Level 2: Machined Stainless Impeller (1 unit, Lead Time: 3 weeks) [Manufactured]
+  │     └── Level 2: Drive Shaft (1 unit, Lead Time: 2 weeks) [Purchased]
+  └── Level 1: Electric Motor Drive (1 unit, Lead Time: 6 weeks) [Purchased]
+```
+
+### Low-Level Coding
+When an identical raw component (e.g., standard M8 bolts) appears at multiple different tiers of a complex BOM, MRP engines assign it the **lowest level code (LLC)** across all parent paths. The calculation engine postpones calculating requirements for that item until all higher-level parent explosions have completed, avoiding fragmented purchasing runs.
+
+---
+
+# 05 — The Master Production Schedule (MPS) Interface
+
+The **Master Production Schedule (MPS)** translates disaggregated sales forecasts and firm customer sales orders into an operational build schedule stating exactly what end items will be assembled in weekly time-buckets over a planning horizon.
+
+* **Rough-Cut Capacity Planning (RCCP)**: Verifies whether bottleneck work centers, machine hours, and labor hours can support the proposed MPS prior to running full MRP.
+* **Planning Time Fence (PTF)**:
+  * *Frozen Zone (0 to 4 weeks)*: No modifications permitted without executive authorization.
+  * *Slushy Zone (4 to 8 weeks)*: Product mix adjustments permitted; total volume fixed.
+  * *Liquid Zone (> 8 weeks)*: Open to algorithmic scheduling and demand revisions.
+
+---
+
+# 06 — Deterministic MRP Matrix Arithmetic Walkthrough
+
+The MRP matrix computes requirements per time bucket based on the fundamental replenishment formula:
+
+<FormulaCard
+  title="Net Requirements Balance Equation"
+  formula="NR_t = \max\Big(0,\; GR_t - (PA_{t-1} + SR_t) + SS\Big)"
+  variables={[
+    { symbol: "NR_t", description: "Net Requirements in time bucket t (actual deficit to fulfill)" },
+    { symbol: "GR_t", description: "Gross Requirements in time bucket t (derived from parent planned orders)" },
+    { symbol: "PA_{t-1}", description: "Projected Available inventory balance carried over from bucket t-1" },
+    { symbol: "SR_t", description: "Scheduled Receipts arriving in bucket t (firm open purchase or shop orders)" },
+    { symbol: "SS", description: "Safety Stock threshold buffer maintained across all periods" }
+  ]}
+  explanation="When Gross Demand exceeds on-hand available stock and firm incoming receipts, a Net Requirement is triggered. This immediately dictates a Planned Order Receipt, which is offset backward by lead time into a Planned Order Release."
+/>
+
+### Worked Numerical Problem
+* **Part**: Sub-Assembly B-200
+* **Lead Time ($L$)**: 2 Weeks
+* **Lot Sizing Rule**: Fixed Order Quantity ($FOQ = 100$ units)
+* **Initial On-Hand Inventory ($PA_0$)**: 40 units
+* **Safety Stock**: 0 units
+
+| Bucket (Week) | W1 | W2 | W3 | W4 | W5 | W6 | W7 | W8 |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Gross Requirements ($GR$)** | 30 | 20 | 50 | 40 | 60 | 30 | 80 | 20 |
+| **Scheduled Receipts ($SR$)** | 0 | 50 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Projected Available ($PA$)** | 10 | 40 | 90 | 50 | 90 | 60 | 80 | 60 |
+| **Net Requirements ($NR$)** | 0 | 0 | 10 | 0 | 10 | 0 | 20 | 0 |
+| **Planned Order Receipts ($PORc$)**| 0 | 0 | 100 | 0 | 100 | 0 | 100 | 0 |
+| **Planned Order Releases ($PORl$)**| 100| 0 | 100 | 0 | 100 | 0 | 0 | 0 |
+
+### Step-by-Step Computational Trace:
+1. **Week 1**: Available $40 - 30 = 10$. No deficit ($NR = 0$).
+2. **Week 2**: Available $10 + 50 (SR) - 20 = 40$. No deficit ($NR = 0$).
+3. **Week 3**: Demand is 50. Carried stock is 40. Deficit is $50 - 40 = 10$ ($NR = 10$). Under $FOQ = 100$, we trigger $PORc = 100$. Ending stock $PA_3 = 40 - 50 + 100 = 90$.
+4. **Lead Time Offset**: Because lead time is 2 weeks, the Week 3 receipt must be released in Week 1 ($PORl_1 = 100$).
+5. **Week 4**: Available $90 - 40 = 50$. No deficit ($NR = 0$).
+6. **Week 5**: Demand is 60. Carried stock is 50. Deficit is $60 - 50 = 10$ ($NR = 10$). $PORc_5 = 100$, offset back to Week 3 ($PORl_3 = 100$). Ending $PA_5 = 90$.
+
+---
+
+# 07 — Closed-Loop MRP vs. MRP II vs. ERP Evolution
+
+<ComparisonCard
+  title="The Evolutionary Shift: MRP I to Closed-Loop MRP to MRP II"
+  labelA="Closed-Loop MRP (1970s)"
+  labelB="MRP II: Manufacturing Resource Planning (1980s)"
+  featureA="Calculates material requirements, then evaluates plant capacity via Capacity Requirements Planning (CRP). If shop-floor work centers are overloaded, the master scheduler loops back to adjust the MPS manually."
+  featureB="Integrates material flows directly with financial ledgers, labor scheduling, machine maintenance, tool cribs, and business planning. Cost of goods sold (COGS) and inventory valuation update synchronously with physical movements."
+/>
+
+---
+
+# 08 — Manufacturing Master Data Governance
+
+The reliability of an ERP manufacturing run depends on the precision of four foundational master data tables:
+
+1. **Material Master**:
+   Defines unit of measure, procurement type (Make vs Buy), planning strategy (Make-to-Stock vs Make-to-Order), lead times, and lot-sizing rules.
+2. **Bill of Materials (BOM)**:
+   Defines component validity dates, scrap factors (percentage waste expected during assembly), and alternate component substitutions.
+3. **Work Center Master**:
+   Defines machine capabilities, queue time, setup time, labor headcount, and standard hourly cost rates.
+4. **Routing Master**:
+   Specifies the exact sequential operational path (e.g., Op 10: Laser Cutting $\rightarrow$ Op 20: CNC Bending $\rightarrow$ Op 30: Robotic Welding $\rightarrow$ Op 40: Powder Coating) and standard setup/run hours per batch.
+
+<Stamp type="verified" text="DATA QUALITY LAW" />
+
+> If engineering changes a component but fails to update the ERP BOM revision code, the factory floor builds obsolete revisions while procurement issues purchase orders for incorrect components. Master Data Governance is not administrative; it is operational survival.
+
+---
+
+# 09 — Mini-Case: Precision Hydraulics Assembly Overhaul
+
+* **Company**: Precision Hydraulics Ltd. (Medium-duty hydraulic cylinders)
+* **Pre-ERP Situation**: Factory planners utilized individual Excel spreadsheets for component calculations. Lead times were assumed to be a uniform 3 weeks across all 140 parts. Stockouts of critical O-ring seals ($0.50 unit cost) halted final testing of $2,400 cylinders, leading to 28 days average delivery delay and $1.2M in buffer stock.
+* **ERP Intervention**:
+  * Implemented SAP Production Planning (PP) with low-level coding.
+  * Stratified lead times: local rubber seals (2 days), forged chrome shafts (6 weeks).
+  * Tied vendor purchase order releases directly to MRP planned order releases.
+* **Results**:
+  * WIP inventory reduced by 34%.
+  * On-time cylinder shipments increased from 61% to 94.5%.
+  * Total warehouse carrying costs reduced by $380,000 annually.
+
+---
+
+# 10 — Past Examination Questions & Model Solutions
+
+<QuestionCard
+  question="Differentiate between Independent and Dependent demand. Explain how an ERP system utilizes the Bill of Materials to convert the Master Production Schedule into procurement and shop floor work orders."
+  marks={10}
+  type="theory"
+  modelAnswer="1. Demand Delineation: Independent demand originates from external market forces, exhibits stochastic behavior, applies to finished goods, and requires statistical forecasting. Dependent demand derives mathematically from parent production schedules, applies to components and raw materials, and must be calculated.
+2. BOM Mechanics: The Master Production Schedule (MPS) establishes finished product quantities across planning buckets. The MRP engine performs a top-down explosion through the multi-level BOM.
+3. Explosion & Offsetting: For each component, Gross Requirements are calculated by multiplying parent quantity by the BOM usage factor. Net Requirements are determined by subtracting existing on-hand stock and scheduled receipts. Planned Order Receipts are generated to cover the deficit, and are offset backward in time by component procurement/manufacturing lead time to establish Planned Order Releases.
+4. Execution Generation: Planned order releases for purchased components automatically create Purchase Requisitions for Procurement; releases for manufactured sub-assemblies convert into Shop Floor Work Orders for production scheduling."
+/>
+
+<QuestionCard
+  question="An end item A requires 2 units of component B and 1 unit of component C. Component B has a lead time of 2 weeks, while C has a lead time of 1 week. If 100 units of A are required in Week 6 and 50 units in Week 8, compute the planned order releases for B and C assuming zero initial stock and lot-for-lot sizing."
+  marks={10}
+  type="numerical"
+  modelAnswer="1. End Item A Schedule:
+   - Need W6: 100 units; Need W8: 50 units.
+2. Component B Requirements (Usage = 2, Lead Time = 2 weeks):
+   - Gross Requirement W6: 100 * 2 = 200 units.
+   - Planned Order Release B (offset 2 weeks): Week 4 = 200 units.
+   - Gross Requirement W8: 50 * 2 = 100 units.
+   - Planned Order Release B (offset 2 weeks): Week 6 = 100 units.
+3. Component C Requirements (Usage = 1, Lead Time = 1 week):
+   - Gross Requirement W6: 100 * 1 = 100 units.
+   - Planned Order Release C (offset 1 week): Week 5 = 100 units.
+   - Gross Requirement W8: 50 * 1 = 50 units.
+   - Planned Order Release C (offset 1 week): Week 7 = 50 units."
+/>
+
+---
+
+# 11 — Active Recall Flashcards & Conceptual Quiz
+
+<Flashcard
+  front="What is the purpose of Low-Level Coding (LLC) in an MRP explosion?"
+  back="Low-Level Coding ensures that a component appearing at multiple levels of a BOM is assigned the lowest level code across all paths. The MRP engine calculates its requirements only once, after all parent requirements have been completely exploded."
+/>
+
+<Flashcard
+  front="What is the difference between MRP I and Closed-Loop MRP?"
+  back="MRP I calculates material requirements assuming infinite capacity. Closed-Loop MRP incorporates Capacity Requirements Planning (CRP) to verify whether factory work centers have sufficient machine and labor hours, feeding feedback back into the MPS."
+/>
+
+<Quiz
+  question="When does an MRP system generate a Planned Order Release rather than a Planned Order Receipt?"
+  options={[
+    "When raw materials physically arrive at the receiving dock",
+    "At the exact moment in the past or present required to initiate production or purchasing so the goods arrive on the receipt date after accounting for lead time",
+    "When the customer submits an unconfirmed sales inquiry",
+    "Only after month-end financial ledger reconciliation"
+  ]}
+  correctIndex={1}
+  explanation="Planned Order Receipts represent when items are needed in stock. Planned Order Releases represent the point in time when the order must be dispatched, obtained by offsetting Planned Order Receipts backward by the item's replenishment lead time."
+/>
+
+---
+
+# 12 — Knowledge Graph & Cross-References
+
+<RelatedKnowledge
+  domain="operations"
+  subject="enterprise-resource-planning"
+  links={[
+    {
+      title: "ERP Foundations & Strategic Architecture",
+      slug: "erp-foundations",
+      relationship: "Upstream Foundation: Defines 3-tier architecture and transactional OLTP synchronization."
+    },
+    {
+      title: "Core Functional Integration & SAP Modules",
+      slug: "sap-architecture",
+      relationship: "Downstream Execution: Demonstrates how MRP planned orders trigger SD, MM, and PP transactions."
+    },
+    {
+      title: "Inventory Optimization & Lot Sizing Dynamics",
+      slug: "inventory-optimization",
+      relationship: "Analytical Complement: Compares deterministic MRP lot-sizing with stochastic safety stock models."
+    }
+  ]}
+/>

@@ -1,0 +1,46 @@
+---
+interface Props {
+  number?: string | number;
+  question: string;
+  marks?: number;
+  type?: string;
+  source?: string;
+  modelAnswer?: string;
+}
+
+const { number, question, marks, type = 'Conceptual', source, modelAnswer } = Astro.props;
+---
+
+<div class="question-card paper-card p-5 my-6 rounded-lg border-l-4 border-l-[var(--red)] border-[var(--line)]">
+  <div class="flex items-center justify-between gap-2 mb-2">
+    <div class="flex items-center space-x-2 text-xs font-mono">
+      {number && <span class="font-bold text-[var(--red)]">Q{number}.</span>}
+      <span class="text-[var(--pencil)]">[{type}]</span>
+      {marks && <span class="font-bold text-[var(--ink)]">({marks} Marks)</span>}
+    </div>
+    {source && (
+      <span class="font-mono text-[10px] text-[var(--pencil)] px-2 py-0.5 rounded bg-[var(--paper)] border border-[var(--line)]">
+        {source}
+      </span>
+    )}
+  </div>
+
+  <h4 class="font-serif text-base sm:text-lg font-bold text-[var(--ink)] mb-3 leading-snug">
+    {question}
+  </h4>
+
+  <details class="group mt-3 pt-3 border-t border-[var(--rule)]">
+    <summary class="font-mono text-xs font-bold text-[var(--ink2)] cursor-pointer select-none hover:underline flex items-center space-x-1">
+      <span class="group-open:rotate-90 transition-transform">▸</span>
+      <span>Reveal Model Solution & Answer Blueprint</span>
+    </summary>
+    <div class="mt-4 p-4 rounded bg-[var(--paper)] border border-[var(--line)] text-sm leading-relaxed space-y-2">
+      {modelAnswer ? (
+        <div class="whitespace-pre-line text-xs font-sans text-[var(--text)]">
+          {modelAnswer}
+        </div>
+      ) : null}
+      <slot />
+    </div>
+  </details>
+</div>

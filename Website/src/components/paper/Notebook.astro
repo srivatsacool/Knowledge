@@ -1,0 +1,17 @@
+---
+interface Props {
+  tabLabel?: string;
+  className?: string;
+}
+
+const { tabLabel = 'STUDY BLUEPRINT', className = '' } = Astro.props;
+---
+
+<div class={`notebook-sheet relative ${className}`}>
+  {tabLabel && (
+    <div class="tabflag" aria-label={tabLabel}>
+      {tabLabel}
+    </div>
+  )}
+  <slot />
+</div>

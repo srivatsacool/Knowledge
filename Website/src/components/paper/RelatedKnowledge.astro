@@ -1,0 +1,49 @@
+---
+interface RelatedLink {
+  title: string;
+  url: string;
+  domain?: string;
+  subject?: string;
+  description?: string;
+}
+
+interface Props {
+  links: RelatedLink[];
+}
+
+const { links } = Astro.props;
+---
+
+<div class="related-knowledge-section mt-12 pt-8 border-t-2 border-[var(--ink)]">
+  <div class="flex items-center space-x-2 mb-4">
+    <span class="font-mono text-xs font-bold uppercase tracking-widest text-[var(--red)]">
+      KNOWLEDGE GRAPH NETWORK
+    </span>
+    <span class="text-xs text-[var(--pencil)]">• Cross-Disciplinary Linkages</span>
+  </div>
+
+  <h3 class="font-serif text-2xl font-bold text-[var(--ink)] mb-4">
+    Related Knowledge & Next Steps
+  </h3>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    {links.map(item => (
+      <a 
+        href={item.url}
+        class="paper-card p-4 rounded-lg block border border-[var(--line)] hover:border-[var(--ink)] transition-all group"
+      >
+        <div class="text-[10px] font-mono uppercase tracking-wider text-[var(--pencil)] mb-1">
+          {item.domain} {item.subject ? `• ${item.subject}` : ''}
+        </div>
+        <h4 class="font-serif text-base font-bold text-[var(--ink)] group-hover:text-[var(--red)] transition-colors mb-1">
+          {item.title} →
+        </h4>
+        {item.description && (
+          <p class="text-xs text-[var(--pencil)] line-clamp-2 leading-relaxed">
+            {item.description}
+          </p>
+        )}
+      </a>
+    ))}
+  </div>
+</div>
