@@ -7,6 +7,7 @@ subjects:
   - enterprise-resource-planning
   - logistics-supply-chain
   - inventory-management
+  - operations-in-services
 ---
 
 # Operations & Supply Chain

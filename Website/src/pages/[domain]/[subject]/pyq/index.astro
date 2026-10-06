@@ -5,7 +5,7 @@ import { PROJECTS } from '../../../../data/projects';
 import { SOLVED_PYQS } from '../../../../data/lscmData';
 
 export function getStaticPaths() {
-  return PROJECTS.map(p => ({
+  return PROJECTS.filter(p => p.artifacts.includes('pyq')).map(p => ({
     params: { domain: p.division, subject: p.slug },
     props: { project: p },
   }));

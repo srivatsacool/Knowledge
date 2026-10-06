@@ -63,6 +63,15 @@ export async function getStaticPaths() {
           subject: subjectObj ? subjectObj.data : { title: nb.data.subject, slug: nb.data.subject },
         },
       });
+    } else if (nb.data.subject === 'operations-in-services') {
+      paths.push({
+        params: { domain: nb.data.domain, subject: 'ois', slug: nb.data.slug },
+        props: { 
+          notebook: nb,
+          domain: domainObj ? domainObj.data : { title: nb.data.domain, slug: nb.data.domain },
+          subject: subjectObj ? subjectObj.data : { title: nb.data.subject, slug: nb.data.subject },
+        },
+      });
     }
   }
 

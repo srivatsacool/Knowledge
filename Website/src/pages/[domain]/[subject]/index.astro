@@ -42,6 +42,15 @@ export async function getStaticPaths() {
           notebooks: subjectNotebooks 
         },
       });
+    } else if (s.data.slug === 'operations-in-services') {
+      paths.push({
+        params: { domain: s.data.domain, subject: 'ois' },
+        props: { 
+          subject: s.data, 
+          domain: domainObj ? domainObj.data : { title: s.data.domain, slug: s.data.domain },
+          notebooks: subjectNotebooks 
+        },
+      });
     }
   }
 

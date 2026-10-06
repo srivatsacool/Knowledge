@@ -3,7 +3,7 @@ import ProjectLayout from '../../../../layouts/ProjectLayout.astro';
 import { PROJECTS } from '../../../../data/projects';
 
 export function getStaticPaths() {
-  return PROJECTS.map(p => ({
+  return PROJECTS.filter(p => p.artifacts.includes('revision')).map(p => ({
     params: { domain: p.division, subject: p.slug },
     props: { project: p },
   }));
