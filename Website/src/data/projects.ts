@@ -34,10 +34,10 @@ export const PROJECTS: ProjectMetadata[] = [
     status: 'active',
     featured: true,
     created: '2026-10-04',
-    updated: '2026-10-05',
+    updated: '2026-10-07',
     stats: {
       topics: 15,
-      notebooks: 4,
+      notebooks: 5,
       pyqYears: 3,
       chapters: 6,
     },

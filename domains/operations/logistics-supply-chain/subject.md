@@ -11,6 +11,7 @@ notebooks:
   - inventory-optimization
   - warehousing-exim
   - lscm-master-blueprint
+  - lscm-top-pyq-exam-answer-bank
 ---
 
 # Logistics & Supply Chain Management

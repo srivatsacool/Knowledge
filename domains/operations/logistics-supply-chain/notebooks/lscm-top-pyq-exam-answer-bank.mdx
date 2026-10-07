@@ -1,0 +1,3492 @@
+---
+title: "LSCM Top PYQ Exam Answer Bank: Master Examination Solutions (2023–2025)"
+slug: lscm-top-pyq-exam-answer-bank
+domain: operations
+subject: logistics-supply-chain
+course: "Logistics and SCM: Value Creation, Adaptability & Sustainability"
+professor: "Prof. Ajit Maurya, Prof. Manoj Dagaonkar, Prof. Praful More"
+description: >
+  Exhaustive 24-question solved examination answer bank and numerical master set for LSCM.
+  Covers 5M, 6M, and 10M formats, 5 solved numericals (EOQ, EPQ, Quantity Discount, Safety Stock, Newsvendor),
+  Incoterms 2020 matrix, and last-minute exam recall.
+status: published
+version: 2.0.0
+updated: "2026-10-07"
+tags:
+  - LSCM
+  - PYQ
+  - EOQ
+  - Safety-Stock
+  - Newsvendor
+  - Incoterms-2020
+  - Kraljic
+  - Warehousing
+  - SCOR
+  - Exam-Solutions
+featured: true
+interactive:
+  available: false
+pdf:
+  available: true
+---
+
+# 01 — START: Scope, Priority Map & Exam-Writing Architecture
+
+<StickyNote color="yellow" title="The Examination Writing Imperative">
+  "In postgraduate supply chain examinations, marks are not awarded for memorized text dumps. Scoring demands structural precision: Definition -> Architectural Blueprint -> Key Analytical Dimensions -> Concrete Enterprise Application -> Managerial Conclusion. For numericals, showing Formula -> Parameter Definition -> Step-by-Step Substitution -> Arithmetic Trace -> Boxed Answer -> Operational Interpretation is mandatory." — Prof. Ajit Maurya & Prof. Manoj Dagaonkar
+</StickyNote>
+
+* **Domain**: Operations & Supply Chain Management
+* **Course Identifier**: Logistics & Supply Chain Management (LSCM)
+* **Faculty Synthesis**: Prof. Ajit Maurya · Prof. Manoj Dagaonkar · Prof. Praful More
+* **Coverage**: 24 Solved Questions (5M, 6M, 10M) + 5 Complete Numerical Calculations + Incoterms 2020 Memory Grid
+* **Academic Benchmark**: End-Term University Examination Papers (2023, 2024, 2025)
+
+---
+
+### Examination Recurrence Priority Heatmap
+
+| Recurrence Priority | Core Syllabus Topic | Verified Exam Pattern | Target Question Weightage |
+| :--- | :--- | :--- | :--- |
+| 🔴 **Very High** | **EOQ & Inventory Lot Sizing** | 2023, 2024, 2025 (Every Paper) | **10 Marks + Numerical** |
+| 🔴 **Very High** | **Safety Stock & ROP under Uncertainty** | Repeated 2023, 2024, 2025 | **10 Marks + Numerical** |
+| 🔴 **Very High** | **Primary & Secondary Transportation** | Repeated 2024, 2025 | **6 / 10 Marks** |
+| 🔴 **Very High** | **Warehouse Process & Layout Flow** | Repeated 2023, 2024, 2025 | **5 / 6 / 10 Marks** |
+| 🔴 **Very High** | **Sustainability & ESG in SCM** | Repeated 2024, 2025 | **5 / 6 / 10 Marks** |
+| 🔴 **Very High** | **Strategic Sourcing & Supplier Risk** | Repeated 2023, 2024, 2025 | **6 / 10 Marks** |
+| 🔴 **Very High** | **INCOTERMS 2020 Comparison** | Heavy 2025 syllabus emphasis | **10 Marks** |
+| 🟠 **High** | **Demand Planning & Forecasting** | 2024, 2025 | **5 / 10 Marks** |
+| 🟠 **High** | **S&OP, S&OE & CPFR Integration** | Repeated 2023, 2024 | **5 / 10 Marks** |
+| 🟠 **High** | **Logistics Network Design (Central vs Dec)** | 2024, 2025 | **6 / 10 Marks** |
+| 🟠 **High** | **Smart Warehousing & Industry 4.0** | 2025 Emerging theme | **6 / 10 Marks** |
+| 🟠 **High** | **Kraljic Purchasing Portfolio Matrix** | 2023, 2024 | **6 Marks** |
+| 🟡 **Medium** | **SCOR Framework & Performance Metrics** | 2023 + Syllabus Core | **5 / 6 Marks** |
+| 🟡 **Medium** | **3PL vs 4PL & Reverse Logistics** | Syllabus + Short Notes | **5 / 6 Marks** |
+
+---
+
+### How to Structure High-Scoring Exam Answers
+
+#### 1. The 5-Mark Question Format (Target: 1.5 – 2 Pages)
+1. **Definition & Introduction** (0.5 – 1 Mark): Clear, authoritative opening sentence establishing the core concept.
+2. **Process Diagram / Framework** (1 Mark): Clean ASCII or SVG box diagram visualizing the operational relationship.
+3. **Structured Key Points** (2 – 2.5 Marks): 4 to 5 crisp, bulleted points explaining mechanics and trade-offs.
+4. **Real-World Business Example** (0.5 Mark): Concrete corporate reference (e.g., Maruti Suzuki, Dell, Amazon, Amul).
+5. **Managerial Conclusion** (0.5 Mark): One crisp summary sentence synthesizing strategic utility.
+
+#### 2. The 6-Mark Question Format (Target: 2 – 2.5 Pages)
+1. **Introduction & Context** (1 Mark): Define both concepts and state the operational problem.
+2. **Comparative Matrix / Diagram** (1 Mark): Visual comparison or 2x2 matrix separating the elements.
+3. **Detailed Comparison / Key Dimensions** (3 Marks): Minimum 5 distinct operational dimensions analyzed.
+4. **Industry Application** (0.5 Mark): Enterprise case study illustration.
+5. **Strategic Conclusion** (0.5 Mark): Summary of executive decision criteria.
+
+#### 3. The 10-Mark Master Question Format (Target: 3.5 – 4.5 Pages)
+1. **Foundational Definition & Thesis** (1 Mark): Authoritative conceptual framing.
+2. **System Architecture / Blueprint** (2 Marks): Full multi-tier diagram or cost trade-off curve.
+3. **In-Depth Theoretical Analysis** (4 Marks): Comprehensive exploration of drivers, assumptions, and governance.
+4. **Worked Numerical / Enterprise Case Application** (2 Marks): Mathematical trace or detailed case analysis.
+5. **Managerial Implication & Conclusion** (1 Mark): Executive summary of risk and decision criteria.
+
+---
+
+# 02 — FOUNDATIONS: High-Yield 5-Mark Theoretical Core (Q1–Q6)
+
+This division addresses the fundamental short-to-medium questions frequently appearing in Part A of university examinations. Each response follows the 5-point grading blueprint.
+
+## Q1. Demand & Supply Management Balance
+
+<PYQCard
+  year="2025"
+  number="1"
+  marks={5}
+  type="theory"
+  topic="Demand & Supply Management Balance"
+  frequency="2025 Likely"
+  question="Q1. Demand & Supply Management Balance"
+  answerSummary="Demand management shapes and forecasts demand; supply management plans capacity, procurement, and logistics. Strategic alignment ensures cost-effective customer service."
+>
+
+Explain the Role of Demand Management and Supply Management in an Organisation's Supply Chain.
+
+**Likely PYQ:** 2025
+**Marks:** 5
+
+## Introduction
+
+**Demand Management** is the process of capturing, understanding and
+influencing market demand so that customer requirements are aligned with
+organisational capabilities.
+
+**Supply Management** ensures that the organisation has the required
+materials, capacity, suppliers and production resources to satisfy the
+expected demand.
+
+## Diagram
+
+``` text
+                 SUPPLY CHAIN BALANCE
+                        │
+          ┌─────────────┴─────────────┐
+          │                           │
+   DEMAND MANAGEMENT            SUPPLY MANAGEMENT
+          │                           │
+ Forecast demand              Supplier capacity
+ Customer signals             Procurement
+ Promotions                    Production planning
+ Pricing                       Inventory
+ Allocations                   Logistics capacity
+          │                           │
+          └─────────────┬─────────────┘
+                        ↓
+             CUSTOMER SERVICE + COST
+                        ↓
+                SUPPLY CHAIN FIT
+```
+
+## Key Points
+
+### Demand Management
+
+-   Captures customer demand signals.
+-   Uses historical sales, market information and forecasts.
+-   Uses pricing, promotions and allocations to shape demand.
+-   Converts market requirements into a usable demand plan.
+-   Helps avoid both overproduction and stockouts.
+
+### Supply Management
+
+-   Plans procurement of materials.
+-   Evaluates supplier capacity and lead time.
+-   Balances production capacity with demand.
+-   Controls inventory and replenishment.
+-   Coordinates transportation and delivery.
+
+### Integration
+
+The objective is not to maximise demand or supply independently. The
+objective is to create a **balanced plan** where customer demand can be
+served at an acceptable cost and service level.
+
+## Example
+
+During COVID-19, automobile manufacturers initially reduced
+semiconductor orders because they expected lower vehicle demand.
+Consumer electronics demand increased sharply, so semiconductor capacity
+shifted towards electronics. When automobile demand recovered faster
+than expected, manufacturers faced severe chip shortages and production
+disruptions.
+
+## Conclusion
+
+Demand management determines **what the market is likely to require**,
+while supply management determines **how the organisation can fulfil
+it**. Their integration is essential for cost, availability and
+resilience.
+
+</PYQCard>
+
+---
+
+## Q2. Efficient vs Responsive Supply Chains (Fisher's Framework)
+
+<PYQCard
+  year="2025"
+  number="2"
+  marks={5}
+  type="theory"
+  topic="Efficient vs Responsive Supply Chains (Fisher's Framework)"
+  frequency="Repeated Core"
+  question="Q2. Efficient vs Responsive Supply Chains (Fisher's Framework)"
+  answerSummary="Functional products require physically efficient supply chains (low cost, high turns); innovative products require market-responsive supply chains (speed, flexibility)."
+>
+
+Compare Efficient and Responsive Supply Chains using Fisher's Framework.
+
+**Marks:** 5
+
+## Introduction
+
+Marshall Fisher argues that supply chain strategy should match the
+**demand characteristics of the product**.
+
+-   **Functional products** → predictable demand → efficient supply
+    chain.
+-   **Innovative products** → uncertain demand → responsive supply
+    chain.
+
+## Diagram
+
+``` text
+                 PRODUCT DEMAND PROFILE
+                         │
+             ┌───────────┴───────────┐
+             ↓                       ↓
+       FUNCTIONAL                INNOVATIVE
+       Predictable               Uncertain
+       Low variety               High variety
+             │                       │
+             ↓                       ↓
+        EFFICIENT                RESPONSIVE
+             │                       │
+       Low cost                 High speed
+       High utilisation         Flexibility
+       Low inventory            Buffer capacity
+       Scale economies          Fast response
+```
+
+## Key Points
+
+  Dimension        Efficient SC      Responsive SC
+  --- --- ---
+  Demand           Predictable       Uncertain
+  Main objective   Low cost          Fast response
+  Inventory        Low               Strategic buffers
+  Capacity         Highly utilised   Flexible
+  Production       Stable            Flexible/changeover
+  Transport        Cost efficient    Speed oriented
+
+## Example
+
+**Walmart** selling everyday consumer staples can emphasise efficiency,
+high utilisation and low logistics cost.
+
+**Zara** operates with a responsive model because fashion demand is
+uncertain and product life cycles are short.
+
+## Conclusion
+
+The correct supply chain is not universally the cheapest or fastest. It
+is the one that is **strategically aligned with the product's demand
+profile**.
+
+</PYQCard>
+
+---
+
+## Q3. Warehouse Process Flow & Operational Types
+
+<PYQCard
+  year="2025"
+  number="3"
+  marks={5}
+  type="theory"
+  topic="Warehouse Process Flow & Operational Types"
+  frequency="Repeated Core"
+  question="Q3. Warehouse Process Flow & Operational Types"
+  answerSummary="Warehousing transforms inbound goods into outbound fulfillment via Receiving -> Putaway -> Storage -> Picking -> Packing -> Shipping."
+>
+
+Explain the Warehouse Process and Types of Warehouses.
+
+**Marks:** 5
+
+## Introduction
+
+A warehouse is a facility used to receive, store, manage and dispatch
+goods while maintaining product availability and service levels.
+
+## Diagram
+
+``` text
+RECEIVING
+    ↓
+PUT-AWAY
+    ↓
+STORAGE
+    ↓
+PICKING
+    ↓
+PACKING
+    ↓
+SHIPPING
+    ↓
+RETURNS
+```
+
+## Key Points
+
+### Warehouse Process
+
+1.  **Receiving** --- verify quantity, quality and documentation.
+2.  **Put-away** --- move goods to assigned storage locations.
+3.  **Storage** --- maintain inventory safely.
+4.  **Picking** --- retrieve goods against customer orders.
+5.  **Packing** --- consolidate and protect goods.
+6.  **Shipping** --- dispatch to customers or downstream nodes.
+7.  **Returns management** --- inspect and route returned products.
+
+### Major Warehouse Types
+
+-   **Private warehouse:** owned/operated by the company.
+-   **Public warehouse:** shared commercial storage facility.
+-   **Contract warehouse:** operated under a long-term agreement for a
+    specific customer.
+-   **Bonded warehouse:** goods are stored under customs control with
+    duties generally suspended until applicable release into the
+    domestic market.
+
+## Example
+
+An e-commerce fulfilment centre receives inventory, puts it into
+storage, picks items against online orders, packs them and dispatches
+them through delivery networks.
+
+## Conclusion
+
+Warehousing is not merely storage. It is a **service and flow-management
+system** connecting inbound supply with customer fulfilment.
+
+</PYQCard>
+
+---
+
+## Q4. Sustainability & ESG in Supply Chain Management
+
+<PYQCard
+  year="2025"
+  number="4"
+  marks={5}
+  type="theory"
+  topic="Sustainability & ESG in Supply Chain Management"
+  frequency="2024, 2025"
+  question="Q4. Sustainability & ESG in Supply Chain Management"
+  answerSummary="Environmental, Social, and Governance integration across carbon footprints, labor standards, circular flows, and ethical procurement."
+>
+
+Explain Sustainability / ESG in Supply Chain Management.
+
+**Marks:** 5
+
+## Introduction
+
+Sustainable Supply Chain Management integrates **environmental, social
+and governance considerations** into sourcing, production, logistics,
+warehousing and supplier management.
+
+## Diagram
+
+``` text
+                    ESG IN SCM
+                       │
+        ┌──────────────┼──────────────┐
+        ↓              ↓              ↓
+   ENVIRONMENTAL     SOCIAL       GOVERNANCE
+        │              │              │
+     Carbon        Worker safety     Ethics
+     Energy        Human rights      Compliance
+     Waste         Labour            Anti-corruption
+     Water         standards         Transparency
+        │              │              │
+        └──────────────┼──────────────┘
+                       ↓
+             RESPONSIBLE SUPPLY CHAIN
+```
+
+## Key Points
+
+### Environmental
+
+-   Reduce carbon emissions.
+-   Improve energy efficiency.
+-   Reduce packaging and waste.
+-   Use cleaner transportation.
+-   Increase recycling and circularity.
+
+### Social
+
+-   Worker safety.
+-   Human rights.
+-   Fair labour practices.
+-   Supplier working conditions.
+-   Community impact.
+
+### Governance
+
+-   Ethical procurement.
+-   Supplier audits.
+-   Anti-corruption.
+-   Regulatory compliance.
+-   Transparency and traceability.
+
+### Scope 1--3
+
+``` text
+Scope 1 → Direct company emissions
+Scope 2 → Indirect purchased-energy emissions
+Scope 3 → Other indirect value-chain emissions
+```
+
+## Example
+
+A manufacturer can evaluate suppliers not only on price and quality but
+also on worker safety, emissions, ethical practices and environmental
+compliance.
+
+## Conclusion
+
+ESG converts supply chain management from a narrow cost function into a
+broader **risk, responsibility and long-term value management system**.
+
+</PYQCard>
+
+---
+
+## Q5. CPFR & Bullwhip Effect Mitigation
+
+<PYQCard
+  year="2025"
+  number="5"
+  marks={5}
+  type="theory"
+  topic="CPFR & Bullwhip Effect Mitigation"
+  frequency="Repeated Core"
+  question="Q5. CPFR & Bullwhip Effect Mitigation"
+  answerSummary="Collaborative Planning, Forecasting, and Replenishment synchronizes demand visibility across trading partners to dampen demand distortion."
+>
+
+Explain CPFR and its Role in Reducing the Bullwhip Effect.
+
+**Marks:** 5
+
+## Introduction
+
+**CPFR --- Collaborative Planning, Forecasting and Replenishment** ---
+is a collaborative approach in which supply-chain partners jointly plan
+demand, forecasting and replenishment using shared information.
+
+## Diagram
+
+``` text
+        RETAILER / CUSTOMER
+                │
+          POS / SALES DATA
+                ↓
+        ┌───────────────┐
+        │      CPFR     │
+        └───────────────┘
+                ↓
+          SHARED FORECAST
+                ↓
+          ORDER FORECAST
+                ↓
+          MANUFACTURER
+                ↓
+           SUPPLIER
+```
+
+## Key Points
+
+The 9-step framework can be grouped into four stages:
+
+1.  **Strategy & Planning**
+    -   Front-end agreement.
+    -   Joint business plan.
+2.  **Demand & Supply Management**
+    -   Sales forecast.
+    -   Exception identification.
+    -   Exception resolution.
+    -   Order forecast.
+    -   Order exceptions.
+3.  **Execution**
+    -   Order generation.
+4.  **Analysis**
+    -   Order fulfilment and performance assessment.
+
+### Bullwhip Effect
+
+The bullwhip effect occurs when small changes in customer demand create
+increasingly large fluctuations as information moves upstream.
+
+CPFR reduces it through: - Shared POS information. - Collaborative
+forecasting. - Exception management. - Coordinated promotions. - Common
+replenishment plans.
+
+## Example
+
+A retailer sharing actual store-level sales data with a manufacturer
+allows the manufacturer to respond to actual consumption rather than
+exaggerated distributor orders.
+
+## Conclusion
+
+CPFR improves **information visibility, forecast alignment and
+replenishment coordination**, thereby reducing demand distortion and
+inventory instability.
+
+</PYQCard>
+
+---
+
+## Q6. 3PL vs 4PL Operational Differentiation
+
+<PYQCard
+  year="2025"
+  number="6"
+  marks={5}
+  type="theory"
+  topic="3PL vs 4PL Operational Differentiation"
+  frequency="Syllabus Core"
+  question="Q6. 3PL vs 4PL Operational Differentiation"
+  answerSummary="3PL provides customized execution of logistics activities; 4PL acts as an overarching neutral integrator managing multiple 3PLs and technology systems."
+>
+
+Distinguish between 3PL and 4PL.
+
+**Marks:** 5
+
+## Introduction
+
+3PL and 4PL are outsourced logistics models, but they differ in their
+**scope and strategic role**.
+
+## Diagram
+
+``` text
+3PL
+Company → 3PL → Transport / Warehouse / Fulfilment
+
+4PL
+Company
+   ↓
+4PL / Lead Logistics Partner
+   ↓
+ ┌───────┬───────┬───────┐
+3PL-A   3PL-B   3PL-C   Technology
+   └───────┬───────┘
+           ↓
+      CONTROL TOWER
+```
+
+## Comparison
+
+  Dimension    3PL                       4PL
+  --- --- ---
+  Role         Logistics execution       Supply-chain orchestration
+  Assets       Often asset-based         Usually non-asset-based
+  Scope        Transport / warehousing   End-to-end coordination
+  Technology   Operational WMS/TMS       Integrated control tower
+  Focus        Service execution         Network optimisation
+
+## Example
+
+A company may hire a 3PL to operate its warehouse and transport. It may
+use a 4PL to coordinate several 3PL providers, technology platforms and
+network decisions.
+
+## Conclusion
+
+**3PL executes logistics; 4PL orchestrates the logistics ecosystem.**
+
+</PYQCard>
+
+---
+
+# 03 — CORE CONCEPTS: Strategic 6-Mark Architectural Trade-offs (Q7–Q11)
+
+This division addresses the 6-mark analytical and comparative questions requiring structured matrices, cost trade-off curves, and multi-variable evaluations.
+
+## Q7. Primary vs Secondary Transportation & Cost Trade-Off
+
+<PYQCard
+  year="2024"
+  number="7"
+  marks={6}
+  type="theory"
+  topic="Primary vs Secondary Transportation & Cost Trade-Off"
+  frequency="Repeated Core"
+  question="Q7. Primary vs Secondary Transportation & Cost Trade-Off"
+  answerSummary="Primary transport moves bulk shipments from plants to regional hubs (TL, economies of scale); secondary transport delivers consolidated small lots to retail points (LTL, higher cost per unit)."
+>
+
+Explain Primary and Secondary Transportation and the Logistics Cost Trade-Off.
+
+**Marks:** 6
+
+## Introduction
+
+Transportation connects supply-chain nodes and determines the speed,
+cost and reliability with which goods reach customers.
+
+## Diagram
+
+``` text
+SUPPLIER / FACTORY
+       │
+       │ PRIMARY TRANSPORT
+       │ Long-haul / FTL / FCL
+       ↓
+ REGIONAL / NATIONAL DC
+       │
+       │ SECONDARY TRANSPORT
+       │ LTL / Milk-run / Last-mile
+       ↓
+RETAILER / CUSTOMER
+```
+
+## Key Points
+
+### Primary Transportation
+
+-   Factory to DC / regional hub.
+-   Generally long-distance.
+-   Larger loads.
+-   FTL/FCL commonly used.
+-   Focus: cost per ton-km and vehicle/container utilisation.
+-   Consolidation and backhauls improve efficiency.
+
+### Secondary Transportation
+
+-   DC to stores/customers.
+-   Smaller and fragmented shipments.
+-   LTL, milk-runs and last-mile delivery.
+-   Higher delivery frequency.
+-   Focus: cost per drop, route efficiency and service level.
+
+### Cost-Service Trade-Off
+
+``` text
+FAST / RESPONSIVE
+Air / Road
+High cost
+Short lead time
+       ↕
+EFFICIENT
+Rail / Ocean
+Low unit cost
+Longer lead time
+```
+
+## Example
+
+An FMCG company can use large truckloads from a plant to a regional DC
+and smaller milk-runs from the DC to multiple retailers.
+
+## Conclusion
+
+Primary transport optimises **line-haul efficiency**, while secondary
+transport optimises **distribution density and customer
+responsiveness**.
+
+</PYQCard>
+
+---
+
+## Q8. Logistics Network Design & Centralisation vs Decentralisation
+
+<PYQCard
+  year="2024"
+  number="8"
+  marks={6}
+  type="theory"
+  topic="Logistics Network Design & Centralisation vs Decentralisation"
+  frequency="2024, 2025"
+  question="Q8. Logistics Network Design & Centralisation vs Decentralisation"
+  answerSummary="Centralization cuts facility and safety stock costs via risk pooling but increases outbound freight; decentralization improves local delivery speed but inflates inventory."
+>
+
+Explain Logistics Network Design and the Centralisation--Decentralisation Trade-Off.
+
+**Marks:** 6
+
+## Introduction
+
+Logistics network design determines the number, location and role of
+facilities, transportation links and inventory positions required to
+serve customers at an acceptable total cost.
+
+## Diagram
+
+``` text
+                  FACTORY
+                     │
+          ┌──────────┴──────────┐
+          ↓                     ↓
+       CENTRAL DC           REGIONAL DCs
+          │                     │
+          ↓                 ┌───┴───┐
+      Customers             ↓       ↓
+                         Stores   Customers
+```
+
+## Key Points
+
+### Centralised Network
+
+**Advantages** - Lower facility cost. - Inventory pooling. - Economies
+of scale. - Easier control.
+
+**Disadvantages** - Longer customer distance. - Higher outbound
+distance. - Potentially slower response.
+
+### Decentralised Network
+
+**Advantages** - Customer proximity. - Faster delivery. - Better local
+responsiveness.
+
+**Disadvantages** - More facilities. - Higher facility cost. - Inventory
+duplication. - More complex coordination.
+
+### Core Trade-Off
+
+``` text
+More Facilities
+      ↓
+Customer distance ↓
+Service level ↑
+Facility cost ↑
+Inventory ↑
+Complexity ↑
+```
+
+## Example
+
+An e-commerce firm may centralise slow-moving inventory nationally while
+placing fast-moving SKUs in regional fulfilment centres.
+
+## Conclusion
+
+The optimum network balances **total logistics cost, service level,
+inventory risk, flexibility and future growth**.
+
+</PYQCard>
+
+---
+
+## Q9. The Kraljic Purchasing Portfolio Matrix
+
+<PYQCard
+  year="2024"
+  number="9"
+  marks={6}
+  type="theory"
+  topic="The Kraljic Purchasing Portfolio Matrix"
+  frequency="2023, 2024"
+  question="Q9. The Kraljic Purchasing Portfolio Matrix"
+  answerSummary="Categorizes procurement into Routine, Leverage, Bottleneck, and Strategic quadrants based on Profit Impact and Supply Risk."
+>
+
+Explain the Kraljic Purchasing Portfolio Matrix.
+
+**Marks:** 6
+
+## Introduction
+
+The Kraljic Matrix classifies purchased items according to **profit
+impact** and **supply risk**, allowing firms to choose appropriate
+sourcing strategies.
+
+## Diagram
+
+``` text
+                 SUPPLY RISK
+                    HIGH
+                     │
+       BOTTLENECK    │    STRATEGIC
+                     │
+                     │
+LOW PROFIT ──────────┼────────── HIGH PROFIT
+IMPACT               │              IMPACT
+                     │
+        ROUTINE      │    LEVERAGE
+                     │
+                    LOW
+```
+
+## Key Points
+
+### 1. Routine / Non-Critical
+
+-   Low profit impact.
+-   Low supply risk.
+-   Standardised items.
+-   Strategy: automate, consolidate suppliers, e-procurement.
+
+### 2. Leverage
+
+-   High profit impact.
+-   Low supply risk.
+-   Multiple suppliers.
+-   Strategy: exploit volume, negotiate aggressively, competitive
+    bidding.
+
+### 3. Bottleneck
+
+-   Low profit impact.
+-   High supply risk.
+-   Scarce/proprietary supply.
+-   Strategy: secure continuity, buffers, alternate specifications.
+
+### 4. Strategic
+
+-   High profit impact.
+-   High supply risk.
+-   Critical components.
+-   Strategy: long-term partnerships, joint development, risk sharing
+    and supplier collaboration.
+
+## Example
+
+A semiconductor critical to an automobile's ECU can be a **strategic
+item**, while standard office stationery is generally **routine**.
+
+## Conclusion
+
+Kraljic prevents a company from using the same purchasing strategy for
+every item.
+
+</PYQCard>
+
+---
+
+## Q10. Architecture and Benefits of a Smart Warehouse
+
+<PYQCard
+  year="2024"
+  number="10"
+  marks={6}
+  type="theory"
+  topic="Architecture and Benefits of a Smart Warehouse"
+  frequency="2025 Emerging"
+  question="Q10. Architecture and Benefits of a Smart Warehouse"
+  answerSummary="Industry 4.0 warehousing combines WMS/WCS software, IoT sensors, robotics (ASRS/AGV), and predictive AI into a sense-decide-act cyber-physical loop."
+>
+
+Explain the Architecture and Benefits of a Smart Warehouse.
+
+**Marks:** 6
+
+## Introduction
+
+A smart warehouse uses connected technologies, automation, data and
+analytics to improve inventory accuracy, throughput, space utilisation
+and fulfilment speed.
+
+## Diagram
+
+``` text
+             SMART WAREHOUSE
+                    │
+       ┌────────────┼────────────┐
+       ↓            ↓            ↓
+     SENSE        DECIDE        ACT
+       │            │            │
+ IoT / RFID      AI / ML      AMR / AGV
+ Sensors         Analytics     ASRS
+ Vision          Digital      Robots
+                 Twin
+       └────────────┬────────────┘
+                    ↓
+                  LEARN
+                    │
+                    └────→ Continuous Improvement
+```
+
+## Key Points
+
+### Sense
+
+-   IoT sensors.
+-   RFID.
+-   Barcode systems.
+-   Computer vision.
+
+### Decide
+
+-   AI/ML.
+-   Warehouse Management System.
+-   Dynamic slotting.
+-   Predictive analytics.
+-   Digital twins.
+
+### Act
+
+-   AMRs.
+-   AGVs.
+-   ASRS.
+-   Goods-to-person systems.
+
+### Learn
+
+Operational data is fed back into planning and optimisation.
+
+### Benefits
+
+-   Higher inventory accuracy.
+-   Faster picking.
+-   Lower manual effort.
+-   Better space utilisation.
+-   Reduced errors.
+-   Improved visibility.
+
+## Example
+
+An e-commerce warehouse can use RFID for identification, WMS for
+inventory control, AI for slotting and AMRs for internal movement.
+
+## Conclusion
+
+A smart warehouse transforms warehousing from a **storage function into
+a digitally controlled fulfilment system**.
+
+</PYQCard>
+
+---
+
+## Q11. The SCOR Framework & Supply Chain Performance Metrics
+
+<PYQCard
+  year="2024"
+  number="11"
+  marks={6}
+  type="theory"
+  topic="The SCOR Framework & Supply Chain Performance Metrics"
+  frequency="2023 + Syllabus"
+  question="Q11. The SCOR Framework & Supply Chain Performance Metrics"
+  answerSummary="Standardizes cross-industry processes into Plan, Source, Make, Deliver, Return, Enable across Reliability, Responsiveness, Agility, Cost, and Asset Management."
+>
+
+Explain the SCOR Framework and Important Supply Chain Metrics.
+
+**Marks:** 6
+
+## Introduction
+
+SCOR is a standard framework used to describe, measure and evaluate
+supply-chain processes and performance.
+
+## Diagram
+
+``` text
+          ┌────── PLAN ──────┐
+          │                  │
+          ↓                  ↓
+       SOURCE → MAKE → DELIVER
+          ↑                  │
+          └──── RETURN ←─────┘
+
+       + ORCHESTRATE / ENABLE
+```
+
+## Key Points
+
+### Major Process Areas
+
+1.  **Plan** --- balance demand and supply.
+2.  **Source** --- procure goods/services.
+3.  **Make** --- transform inputs into outputs.
+4.  **Deliver** --- fulfil and distribute orders.
+5.  **Return** --- manage reverse flows.
+6.  Modern SCOR versions also emphasise orchestration/enabling
+    capabilities.
+
+### Important Metrics
+
+-   **Inventory Turnover** = COGS / Average Inventory.
+-   **Order Fill Rate** = Fully shipped orders / Total orders × 100.
+-   **On-Time Delivery %**.
+-   **Perfect Order Rate**.
+-   **Cash-to-Cash Cycle Time** = DIO + DSO − DPO.
+-   **Forecast Accuracy / MAPE**.
+-   Warehouse capacity utilisation.
+-   Transportation cost % of sales.
+
+## Example
+
+A company can use OTIF to evaluate customer service and inventory
+turnover to evaluate working-capital efficiency.
+
+## Conclusion
+
+SCOR connects **process architecture with measurable performance**,
+making supply-chain improvement more systematic.
+
+</PYQCard>
+
+---
+
+# 04 — FRAMEWORKS & MODELS: Comprehensive 10-Mark Master Solutions (Q12–Q21)
+
+This division contains full-depth 10-mark master solutions combining theoretical rigor, mathematical modeling, multi-tier architectures, and managerial interpretation.
+
+## Q12. Classical EOQ Derivation and Working
+
+<PYQCard
+  year="2025"
+  number="12"
+  marks={10}
+  type="theory"
+  topic="Classical EOQ Derivation and Working"
+  frequency="Guaranteed 10M"
+  question="Q12. Classical EOQ Derivation and Working"
+  answerSummary="Calculates optimal purchase lot size balancing annual ordering cost and inventory holding cost under constant demand."
+>
+
+Explain EOQ in Detail and Solve a Numerical Problem.
+
+**Marks:** 10
+**PYQ priority:** ⭐⭐⭐⭐⭐
+
+## Introduction
+
+Economic Order Quantity (EOQ) determines the order quantity that
+minimises the combined **ordering cost and inventory holding cost**,
+assuming relatively stable demand and other classical EOQ assumptions.
+
+## Diagram
+
+``` text
+ANNUAL COST
+   │
+   │\        Holding Cost
+   │ \          /
+   │  \        /
+   │   \      /
+   │    \    /
+   │     \  /
+   │      \/  ← Minimum Total Cost
+   │      /
+   │     /  
+   │    /    
+   │   /      
+   └────────────────────→ ORDER QUANTITY
+             Q*
+```
+
+## Formula
+
+$$
+EOQ = Q^* = \sqrt{\frac{2DS}{H}}
+$$
+
+Where: - (D) = annual demand - (S) = ordering/setup cost per order - (H)
+= annual holding cost per unit
+
+Total relevant annual cost:
+
+$$
+TC = \frac{D}{Q}S + \frac{Q}{2}H
+$$
+
+## Key Points
+
+At EOQ: - Ordering cost decreases as order quantity increases. - Holding
+cost increases as order quantity increases. - EOQ is the point at which
+total relevant cost is minimum. - Average cycle inventory = (Q/2),
+assuming no safety stock. - At the mathematical EOQ, annual ordering
+cost approximately equals annual holding cost.
+
+### Classical Assumptions
+
+-   Demand is known and relatively constant.
+-   Lead time is known.
+-   Replenishment is instantaneous.
+-   No stockouts.
+-   No quantity discounts.
+-   Holding and ordering costs are known.
+
+## Numerical Problem
+
+**Given:** - Annual demand (D = 12,000) units - Ordering cost (S = \₹50)
+per order - Holding cost (H = \₹4) per unit/year - Lead time (L = 5)
+working days - Working days = 300/year
+
+### Step 1 --- Calculate EOQ
+
+$$
+Q^* = \sqrt{\frac{2DS}{H}}
+$$
+
+$$
+= \sqrt{\frac{2(12,000)(50)}{4}}
+$$
+
+$$
+= \sqrt{300,000}
+$$
+
+$$
+Q^* = 547.72
+$$
+
+$$
+\boxed{EOQ \approx 548\ units}
+$$
+
+### Step 2 --- Orders per Year
+
+$$
+N = \frac{D}{Q}
+$$
+
+$$
+N = \frac{12,000}{548}
+$$
+
+$$
+N \approx 21.90
+$$
+
+$$
+\boxed{N \approx 22\ orders/year}
+$$
+
+### Step 3 --- Annual Ordering Cost
+
+$$
+OC = \frac{D}{Q}S
+$$
+
+$$
+= \frac{12,000}{548}(50)
+$$
+
+$$
+\approx \₹1,094.89
+$$
+
+### Step 4 --- Annual Holding Cost
+
+$$
+HC = \frac{Q}{2}H
+$$
+
+$$
+= \frac{548}{2}(4)
+$$
+
+$$
+= \₹1,096
+$$
+
+### Step 5 --- Total Relevant Annual Cost
+
+$$
+TC = OC + HC
+$$
+
+$$
+TC = 1,094.89 + 1,096
+$$
+
+$$
+\boxed{TC \approx \₹2,190.89/year}
+$$
+
+### Step 6 --- Cycle Time
+
+$$
+T = \frac{Q}{D}\times300
+$$
+
+$$
+= \frac{548}{12,000}\times300
+$$
+
+$$
+\boxed{T \approx 13.7\ working\ days}
+$$
+
+### Step 7 --- Reorder Point
+
+Daily demand:
+
+$$
+d = \frac{12,000}{300}=40 units/day
+$$
+
+Deterministic ROP:
+
+$$
+ROP=dL
+$$
+
+$$
+=40(5)
+$$
+
+$$
+\boxed{ROP=200\ units}
+$$
+
+## Interpretation
+
+The firm should order approximately **548 units whenever inventory
+reaches 200 units**. The 200-unit ROP covers expected demand during the
+five-day lead time.
+
+## Example
+
+A spare-parts distributor with stable annual demand can use EOQ to
+balance frequent small orders against the cost of carrying larger
+inventories.
+
+## Conclusion
+
+EOQ is a fundamental inventory decision model because it converts the
+ordering-versus-holding-cost trade-off into a quantitative order policy.
+
+</PYQCard>
+
+---
+
+## Q13. Safety Stock & ROP under Joint Uncertainty
+
+<PYQCard
+  year="2025"
+  number="13"
+  marks={10}
+  type="theory"
+  topic="Safety Stock & ROP under Joint Uncertainty"
+  frequency="Guaranteed 10M"
+  question="Q13. Safety Stock & ROP under Joint Uncertainty"
+  answerSummary="Quantifies buffer stock needed to absorb demand volatility and lead-time delays using joint standard deviation convolution."
+>
+
+Explain Safety Stock and Reorder Point under Demand and Lead-Time Uncertainty.
+
+**Marks:** 10
+**PYQ priority:** ⭐⭐⭐⭐⭐
+
+## Introduction
+
+Safety stock is additional inventory maintained to protect against
+uncertainty in **demand and/or replenishment lead time**. Reorder Point
+(ROP) determines when a replenishment order should be placed.
+
+## Diagram
+
+``` text
+INVENTORY
+   │
+   │
+   │ 
+SS │  \      ← Safety Stock
+   │   
+   │    
+ROP│-----\--- Order Trigger
+   │      
+   │       
+   │        
+   │         
+   └────────────────────────→ TIME
+            ↑
+       Replenishment arrives
+```
+
+## Core Formulas
+
+### Demand variable, lead time constant
+
+$$
+SS=z\sigma_d\sqrt{L}
+$$
+
+### Lead time variable, demand constant
+
+$$
+SS=z d\sigma_L
+$$
+
+### Both demand and lead time variable
+
+$$
+SS=z\sqrt{L\sigma_d^2+d^2\sigma_L^2}
+$$
+
+### Reorder Point
+
+$$
+ROP=dL+SS
+$$
+
+Where: - (z) = service-level factor - (d) = average daily demand - (L) =
+average lead time - (\sigma_d) = standard deviation of daily
+demand - (\sigma_L) = standard deviation of lead time
+
+## Numerical Problem
+
+A distributor has: - Mean daily demand (d=120) units - Daily demand SD
+(\sigma_d=30) - Mean lead time (L=16) days - Lead-time SD
+(\sigma_L=3) days - Target service level = 95% - (z=1.645)
+
+### Step 1 --- Expected Lead-Time Demand
+
+$$
+DL=dL
+$$
+
+$$
+=120(16)
+$$
+
+$$
+\boxed{DL=1,920\ units}
+$$
+
+### Step 2 --- Combined Standard Deviation
+
+$$
+\sigma_{DL} = \sqrt{L\sigma_d^2+d^2\sigma_L^2}
+$$
+
+$$
+\sqrt{16(30^2)+120^2(3^2)}
+$$
+
+$$
+\sqrt{16(900)+14,400(9)}
+$$
+
+$$
+\sqrt{14,400+129,600}
+$$
+
+$$
+\sqrt{144,000}
+$$
+
+$$
+\boxed{\sigma_{DL}\approx379.47}
+$$
+
+### Step 3 --- Safety Stock
+
+$$
+SS=z\sigma_{DL}
+$$
+
+$$
+=1.645(379.47)
+$$
+
+$$
+=624.23
+$$
+
+$$
+\boxed{SS\approx625\ units}
+$$
+
+### Step 4 --- Reorder Point
+
+$$
+ROP=DL+SS
+$$
+
+$$
+=1,920+625
+$$
+
+$$
+\boxed{ROP=2,545\ units}
+$$
+
+## Interpretation
+
+When inventory position falls to approximately **2,545 units**, the firm
+should trigger replenishment. The 625 units above expected lead-time
+demand provide protection against uncertainty.
+
+## Example
+
+An electronics distributor facing volatile demand and supplier lead
+times can increase safety stock when the required service level
+increases.
+
+## Conclusion
+
+Safety stock converts uncertainty into a measurable inventory buffer,
+while ROP converts the buffer into an operational replenishment trigger.
+
+</PYQCard>
+
+---
+
+## Q14. Single-Period / Newsvendor Marginal Analysis
+
+<PYQCard
+  year="2025"
+  number="14"
+  marks={10}
+  type="theory"
+  topic="Single-Period / Newsvendor Marginal Analysis"
+  frequency="2024, 2025"
+  question="Q14. Single-Period / Newsvendor Marginal Analysis"
+  answerSummary="Balances cost of understocking against cost of overstocking via critical fractile ratio for perishable and seasonal products."
+>
+
+Explain the Single-Period / Newsvendor Model and Solve a Numerical.
+
+**Marks:** 10
+**PYQ priority:** ⭐⭐⭐⭐⭐
+
+## Introduction
+
+The **single-period or Newsvendor model** is used when inventory has a
+limited selling period and the decision-maker must balance the cost of
+ordering too little against ordering too much.
+
+Typical examples include: - Fashion products. - Fresh food. - Seasonal
+goods. - Newspapers. - Event merchandise.
+
+## Diagram
+
+``` text
+             SINGLE-PERIOD DECISION
+                       │
+          ┌────────────┴────────────┐
+          ↓                         ↓
+     ORDER TOO LITTLE          ORDER TOO MUCH
+          │                         │
+     UNDERSTOCK                 OVERSTOCK
+          │                         │
+   Lost contribution          Unsold inventory
+       margin                  Salvage loss
+          │                         │
+          └────────────┬────────────┘
+                       ↓
+               OPTIMAL QUANTITY
+```
+
+## Formula
+
+Understocking cost:
+
+$$
+C_u=P-C
+$$
+
+Overstocking cost:
+
+$$
+C_o=C-S
+$$
+
+Critical fractile:
+
+$$
+CR=\frac{C_u}{C_u+C_o}
+$$
+
+For normally distributed demand:
+
+$$
+Q^*=\mu+z\sigma
+$$
+
+where:
+
+$$
+\Phi(z)=CR
+$$
+
+## Numerical Problem
+
+Given: - Selling price (P=\₹400) - Purchase cost (C=\₹150) - Salvage
+value (S=\₹50) - Mean demand (\mu=1,200) - Demand SD
+(\sigma=250)
+
+### Step 1 --- Understock Cost
+
+$$
+C_u=P-C
+$$
+
+$$
+=400-150
+$$
+
+$$
+\boxed{C_u=\₹250}
+$$
+
+### Step 2 --- Overstock Cost
+
+$$
+C_o=C-S
+$$
+
+$$
+=150-50
+$$
+
+$$
+\boxed{C_o=\₹100}
+$$
+
+### Step 3 --- Critical Fractile
+
+$$
+CR=\frac{250}{250+100}
+$$
+
+$$
+=\frac{250}{350}
+$$
+
+$$
+\boxed{CR=0.7143}
+$$
+
+Thus the target service probability is **71.43%**.
+
+### Step 4 --- Find (z)
+
+From the standard normal table:
+
+$$
+\Phi(z)=0.7143
+$$
+
+$$
+z\approx0.566
+$$
+
+### Step 5 --- Calculate Optimal Quantity
+
+$$
+Q^*=\mu+z\sigma
+$$
+
+$$
+=1,200+(0.566)(250)
+$$
+
+$$
+=1,200+141.5
+$$
+
+$$
+\boxed{Q^*\approx1,342\ coats}
+$$
+
+### Step 6 --- Stockout Probability
+
+$$
+P(\text{stockout})=1-CR
+$$
+
+$$
+=1-0.7143
+$$
+
+$$
+\boxed{P(\text{stockout})=28.57\%}
+$$
+
+## Interpretation
+
+Because the profit lost from understocking is much larger than the loss
+from overstocking, the firm should stock more than the mean demand.
+
+## Example
+
+A fashion retailer selling a winter collection cannot keep the same
+inventory decision after the season because the remaining products may
+need to be heavily discounted.
+
+## Conclusion
+
+The Newsvendor model gives the **economically optimal service level and
+stocking quantity** when demand is uncertain and the selling period is
+limited.
+
+</PYQCard>
+
+---
+
+## Q15. INCOTERMS 2020 Architectural Comparison
+
+<PYQCard
+  year="2025"
+  number="15"
+  marks={10}
+  type="theory"
+  topic="INCOTERMS 2020 Architectural Comparison"
+  frequency="2025 High Emphasis"
+  question="Q15. INCOTERMS 2020 Architectural Comparison"
+  answerSummary="Defines the precise point of risk transfer, freight cost obligation, and insurance liability across 11 international commercial terms."
+>
+
+Explain INCOTERMS 2020 and Compare FOB, CIF, FCA, DAP and DDP.
+
+**Marks:** 10
+**PYQ priority:** ⭐⭐⭐⭐⭐
+
+## Introduction
+
+**Incoterms 2020**, published by the International Chamber of Commerce
+(ICC), are standardised trade terms that define important
+responsibilities for **delivery, costs and risk** between buyer and
+seller.
+
+They do **not** determine ownership/title or replace the sale contract.
+
+## Diagram
+
+``` text
+SELLER
+  │
+  │ EXW
+  ↓
+FCA → CPT → CIP
+  │
+  ├──────────────→ DAP
+  │                 ↓
+  │                DPU
+  │                 ↓
+  │                DDP
+  │
+  └── SEA / INLAND WATERWAY ──→ FAS / FOB / CFR / CIF
+```
+
+## Two Main Groups
+
+### A. Any Mode of Transport
+
+-   EXW
+-   FCA
+-   CPT
+-   CIP
+-   DAP
+-   DPU
+-   DDP
+
+### B. Sea / Inland Waterway Only
+
+-   FAS
+-   FOB
+-   CFR
+-   CIF
+
+## Key Concept: Cost ≠ Risk
+
+This is a major examination trap.
+
+Under **C rules** such as CPT, CIP, CFR and CIF, the seller may pay the
+main carriage, but **risk can transfer much earlier**.
+
+## Comparison
+
+  Term                    Main Meaning            Risk Transfer
+  --- --- ---
+  EXW                     Seller makes goods      Seller's premises
+                          available               
+
+  FCA                     Seller delivers to      Named delivery point
+                          carrier/named point     
+
+  CPT                     Seller pays carriage    When goods handed to
+                                                  carrier
+
+  CIP                     CPT + seller-arranged   When goods handed to
+                          insurance               carrier
+
+  DAP                     Delivered at            Destination before
+                          destination, ready for  unloading
+                          unloading               
+
+  DPU                     Delivered at            Destination after
+                          destination, unloaded   unloading
+
+  DDP                     Delivered with import   Destination after
+                          duties paid             import clearance
+
+  FOB                     Free on Board           When goods are on board
+                                                  vessel
+
+  CFR                     Cost and Freight        When goods are on board
+                                                  vessel
+
+  CIF                     Cost, Insurance and     When goods are on board
+                          Freight                 vessel
+
+## FOB vs CIF
+
+### FOB
+
+-   Sea/inland waterway.
+-   Seller loads goods on board.
+-   Buyer normally arranges main ocean freight and insurance.
+-   Risk transfers once goods are on board.
+
+### CIF
+
+-   Sea/inland waterway.
+-   Seller pays ocean freight to destination port.
+-   Seller arranges the required insurance.
+-   **Risk still transfers when goods are on board at origin.**
+
+Therefore:
+
+> **CIF does not mean seller bears transit risk until destination.**
+
+## FCA and Containers
+
+For containerised and multimodal shipments, **FCA is generally more
+appropriate than FOB**, depending on the contractual arrangement,
+because FOB is designed for sea/inland-waterway delivery where goods are
+loaded directly on board the vessel.
+
+## DDP
+
+DDP places the greatest overall obligation on the seller because the
+seller is responsible for delivery with import clearance and applicable
+import duties/taxes under the term.
+
+## Example
+
+An Indian exporter shipping a container through a multimodal transport
+chain may prefer FCA rather than FOB. A bulk commodity loaded directly
+onto a vessel may be appropriately contracted under FOB.
+
+## Conclusion
+
+The key to answering Incoterms questions is to distinguish:
+
+**Who pays? → Who performs? → Where does risk transfer? → What transport
+mode applies?**
+
+</PYQCard>
+
+---
+
+## Q16. Demand Planning, Forecasting & S&OP Integration
+
+<PYQCard
+  year="2025"
+  number="16"
+  marks={10}
+  type="theory"
+  topic="Demand Planning, Forecasting & S&OP Integration"
+  frequency="2024, 2025"
+  question="Q16. Demand Planning, Forecasting & S&OP Integration"
+  answerSummary="The monthly cross-functional consensus cadence synchronizing unconstrained sales demand with supply chain operational capacity."
+>
+
+Explain Demand Planning, Forecasting and S&OP.
+
+**Marks:** 10
+
+## Introduction
+
+Demand planning estimates and shapes future demand, while **Sales &
+Operations Planning (S&OP)** aligns demand with supply, capacity,
+inventory and financial objectives.
+
+## Diagram
+
+``` text
+HISTORICAL DATA
+      ↓
+STATISTICAL FORECAST
+      ↓
+SALES / MARKETING INPUT
+      ↓
+CONSENSUS DEMAND PLAN
+      ↓
+SUPPLY CAPACITY REVIEW
+      ↓
+PRE-S&OP
+      ↓
+EXECUTIVE S&OP
+      ↓
+ONE AGREED PLAN
+      ↓
+EXECUTION / S&OE
+```
+
+## Demand Planning
+
+### Major Inputs
+
+-   Historical sales.
+-   Customer orders.
+-   Market trends.
+-   Promotions.
+-   Seasonality.
+-   New product information.
+-   Sales-team input.
+-   External market signals.
+
+### Demand Management vs Forecasting
+
+**Forecasting** asks:
+
+> "What is likely to happen?"
+
+**Demand management** additionally asks:
+
+> "How can the organisation influence or shape demand?"
+
+Examples include: - Pricing. - Promotions. - Allocations. - Lead-time
+changes.
+
+## S&OP Process
+
+### 1. Data Gathering
+
+Collect: - Sales history. - Inventory. - Capacity. - Supplier
+information. - Financial data.
+
+### 2. Demand Planning
+
+Create an unconstrained demand forecast.
+
+### 3. Supply Planning
+
+Check: - Production capacity. - Labour. - Supplier capacity. - Warehouse
+capacity. - Inventory.
+
+### 4. Pre-S&OP
+
+Resolve conflicts between: - Sales. - Operations. - Procurement. -
+Finance.
+
+### 5. Executive S&OP
+
+Senior management approves **one integrated plan**.
+
+## S&OP vs S&OE
+
+  Dimension   S&OP                      S&OE
+  --- --- ---
+  Horizon     Longer                    Short
+  Frequency   Usually monthly           Weekly/daily
+  Level       Tactical/strategic        Operational
+  Focus       Aggregate balance         Execution exceptions
+  Example     Monthly production plan   Supplier delay today
+
+## Example
+
+For an air-conditioner manufacturer: - Demand planning forecasts summer
+demand. - S&OP decides pre-season inventory and production capacity. -
+S&OE manages weekly shortages, supplier delays and production changes.
+
+## Conclusion
+
+S&OP converts a demand forecast into a **cross-functional business
+plan**, while S&OE protects that plan during short-term execution
+volatility.
+
+</PYQCard>
+
+---
+
+## Q17. Strategic Sourcing, Supplier Risk & Kraljic Governance
+
+<PYQCard
+  year="2025"
+  number="17"
+  marks={10}
+  type="theory"
+  topic="Strategic Sourcing, Supplier Risk & Kraljic Governance"
+  frequency="Repeated Core"
+  question="Q17. Strategic Sourcing, Supplier Risk & Kraljic Governance"
+  answerSummary="Comprehensive sourcing lifecycle: spend analysis, supplier qualification, category strategy, contract governance, and disruption risk hedging."
+>
+
+Explain Strategic Sourcing, Supplier Risk and the Kraljic Matrix.
+
+**Marks:** 10
+
+## Introduction
+
+Strategic sourcing is the systematic process of selecting and managing
+suppliers by evaluating not only purchase price but also **quality,
+capacity, delivery, risk, resilience, technology, ESG and total cost**.
+
+## Diagram
+
+``` text
+                 SUPPLIER EVALUATION
+                        │
+     ┌──────────────────┼──────────────────┐
+     ↓                  ↓                  ↓
+   COST                RISK              CAPABILITY
+     │                  │                  │
+ Price/TCO          Financial          Quality
+ Logistics          Geopolitical       Capacity
+ Inventory           Single-source      Technology
+                     ESG                Delivery
+                        │
+                        ↓
+              SOURCING STRATEGY
+                        │
+             Kraljic Classification
+                        ↓
+     Routine / Leverage / Bottleneck / Strategic
+```
+
+## Key Supplier Selection Criteria
+
+1.  **Cost / TCO**
+2.  Quality
+3.  Delivery performance
+4.  Capacity
+5.  Financial health
+6.  Lead time
+7.  Technology capability
+8.  ESG performance
+9.  Geopolitical exposure
+10. Business continuity capability
+11. IP and confidentiality
+12. Compliance
+
+## Supplier Risk
+
+### Common Risks
+
+-   Single-source dependency.
+-   Supplier financial failure.
+-   Geopolitical disruption.
+-   Natural disasters.
+-   Quality failures.
+-   Long lead times.
+-   Regulatory changes.
+-   Cybersecurity risks.
+-   ESG violations.
+
+## Risk Mitigation
+
+### Dual / Multi-Sourcing
+
+Avoid excessive dependence on one supplier for critical items.
+
+### Nearshoring
+
+Move supply closer to the consumption or manufacturing location.
+
+### Strategic Buffers
+
+Hold additional inventory for critical/high-risk components.
+
+### Supplier Development
+
+Work with suppliers to improve quality, capacity and capability.
+
+### Visibility
+
+Use supplier data, control towers and risk monitoring.
+
+## Kraljic Matrix
+
+                           Low Supply Risk   High Supply Risk
+  --- --- ---
+  **Low Profit Impact**    Routine           Bottleneck
+  **High Profit Impact**   Leverage          Strategic
+
+### Strategic Items
+
+-   Long-term partnerships.
+-   Joint development.
+-   Risk sharing.
+-   Capacity reservation.
+
+### Leverage Items
+
+-   Competitive bidding.
+-   Volume aggregation.
+-   Negotiation.
+
+### Bottleneck Items
+
+-   Secure supply.
+-   Buffer stock.
+-   Alternative specifications.
+
+### Routine Items
+
+-   Automate purchasing.
+-   Standardise.
+-   Reduce transaction cost.
+
+## Example
+
+A vehicle manufacturer may classify a specialised semiconductor as
+strategic because a shortage can stop production even though the
+component may represent a relatively small percentage of total vehicle
+cost.
+
+## Conclusion
+
+Modern sourcing should optimise **total supply-chain value and
+resilience**, not simply purchase price.
+
+</PYQCard>
+
+---
+
+## Q18. Logistics Network Design for E-Commerce / Omnichannel
+
+<PYQCard
+  year="2025"
+  number="18"
+  marks={10}
+  type="theory"
+  topic="Logistics Network Design for E-Commerce / Omnichannel"
+  frequency="2024, 2025"
+  question="Q18. Logistics Network Design for E-Commerce / Omnichannel"
+  answerSummary="Designing multi-tier fulfillment nodes (Mega-DCs, Regional Hubs, Micro-Fulfillment Dark Stores) for same-day delivery."
+>
+
+Explain Logistics Network Design for an E-Commerce / Multi-Channel Business.
+
+**Marks:** 10
+
+## Introduction
+
+Logistics network design determines where inventory should be positioned
+and how products should flow from factories and suppliers to different
+customer channels.
+
+## Diagram
+
+``` text
+                    SUPPLIERS
+                       ↓
+                    FACTORY
+                       ↓
+                 NATIONAL DC
+                       ↓
+          ┌────────────┼────────────┐
+          ↓            ↓            ↓
+       REGIONAL      REGIONAL     CROSS-DOCK
+          DC            DC            /
+          ↓            ↓            ↓
+       STORES      DARK STORES   LAST-MILE
+          └────────────┬────────────┘
+                       ↓
+                    CUSTOMER
+```
+
+## Key Points
+
+### 1. Facility Decisions
+
+Determine: - Number of facilities. - Location. - Capacity. -
+Ownership. - Technology.
+
+### 2. Centralisation
+
+Benefits: - Inventory pooling. - Economies of scale. - Lower facility
+duplication.
+
+### 3. Decentralisation
+
+Benefits: - Faster delivery. - Customer proximity. - Better local
+responsiveness.
+
+### 4. Multi-Echelon Inventory
+
+Inventory can be positioned at: - Factory. - National DC. - Regional
+DC. - Local fulfilment centre. - Dark store.
+
+### 5. Postponement
+
+Keep products in a generic state until demand becomes clearer.
+
+### 6. Information Flow
+
+ERP, WMS and TMS improve: - Visibility. - Inventory accuracy. - Route
+planning. - Order tracking.
+
+## Square Root Law
+
+A decentralised network can require more safety stock:
+
+$$
+SS_{new}=SS_{old}\sqrt{\frac{N_{new}}{N_{old}}}
+$$
+
+where (N) represents the number of stocking locations under the
+applicable assumption.
+
+## Cost-Service Trade-Off
+
+``` text
+MORE DCs
+   ↓
+Outbound distance ↓
+Delivery speed ↑
+Facility cost ↑
+Inventory duplication ↑
+Coordination complexity ↑
+```
+
+## Example
+
+An e-commerce firm can keep slow-moving SKUs at one national facility
+while positioning high-velocity SKUs at regional fulfilment centres
+close to major markets.
+
+## Conclusion
+
+The best network is not necessarily the one with the fewest warehouses.
+It is the network that achieves the required **service level at minimum
+total cost while remaining scalable and resilient**.
+
+</PYQCard>
+
+---
+
+## Q19. Smart Warehouse Implementation & Automation Roadmap
+
+<PYQCard
+  year="2025"
+  number="19"
+  marks={10}
+  type="theory"
+  topic="Smart Warehouse Implementation & Automation Roadmap"
+  frequency="2025 Emerging"
+  question="Q19. Smart Warehouse Implementation & Automation Roadmap"
+  answerSummary="Strategic technology adoption roadmap for autonomous mobile robots, automated storage and retrieval (ASRS), and computer vision."
+>
+
+Explain Smart Warehouse Implementation and Automation.
+
+**Marks:** 10
+
+## Introduction
+
+A smart warehouse combines WMS, IoT, RFID, analytics, robotics and
+automation to improve the flow of inventory and information.
+
+## Architecture
+
+``` text
+                 ERP
+                  │
+                  ↓
+                 WMS
+                  │
+        ┌─────────┼─────────┐
+        ↓         ↓         ↓
+       IoT       AI       TMS
+        │         │
+        ↓         ↓
+ RFID / Sensors  Digital Twin
+        │         │
+        └────┬────┘
+             ↓
+       AUTOMATION LAYER
+       ┌─────┼─────┐
+       ↓     ↓     ↓
+      AMR   AGV   ASRS
+             ↓
+        MATERIAL FLOW
+```
+
+## Six-Step Implementation
+
+### 1. Assess and Baseline
+
+Measure: - Pick rate. - Pick errors. - Space utilisation. - Labour
+cost. - Inventory accuracy.
+
+### 2. Build Business Case
+
+Compare: - Capital cost. - Labour savings. - Service improvement. -
+Payback. - Risk.
+
+### 3. Pilot
+
+Start with a contained zone or high-volume SKU group.
+
+### 4. Integrate Systems
+
+Connect: - ERP. - WMS. - TMS. - PLC/control systems. - IoT platforms.
+
+### 5. Reskill Workforce
+
+Employees move towards: - Robot supervision. - Exception management. -
+Data-driven operations.
+
+### 6. Scale and Improve
+
+Expand the successful design and continuously tune the system.
+
+## Smart Warehouse Loop
+
+``` text
+SENSE → DECIDE → ACT → LEARN
+  ↑                       │
+  └───────────────────────┘
+```
+
+## Example
+
+A fulfilment centre can use RFID for real-time identification, AI for
+slotting, WMS for order orchestration and AMRs for goods movement.
+
+## Conclusion
+
+Automation should not be implemented simply because technology is
+available. The correct approach is **problem → KPI → technology → pilot
+→ integration → scale**.
+
+</PYQCard>
+
+---
+
+## Q20. Sustainability & Circular Supply Chain Integration
+
+<PYQCard
+  year="2025"
+  number="20"
+  marks={10}
+  type="theory"
+  topic="Sustainability & Circular Supply Chain Integration"
+  frequency="Repeated Core"
+  question="Q20. Sustainability & Circular Supply Chain Integration"
+  answerSummary="Integrating the 5 Rs (Reduce, Reuse, Recycle, Remanufacture, Repair) with closed-loop reverse supply chain mechanics."
+>
+
+Explain Sustainability and Circular Supply Chain Integration.
+
+**Marks:** 10
+
+## Introduction
+
+Sustainable supply chain management aims to reduce environmental and
+social impact while maintaining economic performance. Circular supply
+chains extend this concept by designing products and processes so that
+materials remain useful for longer.
+
+## Diagram
+
+### Linear Supply Chain
+
+``` text
+TAKE → MAKE → USE → DISPOSE
+```
+
+### Circular Supply Chain
+
+``` text
+TAKE → MAKE → USE
+        ↓       │
+     REPAIR ← RETURN
+        ↓
+   REMANUFACTURE
+        ↓
+      REUSE
+        ↓
+      RECYCLE
+        └────────→ MATERIALS BACK TO SYSTEM
+```
+
+## ESG Framework
+
+### Environmental
+
+-   Carbon reduction.
+-   Renewable energy.
+-   Waste reduction.
+-   Water efficiency.
+-   Green logistics.
+
+### Social
+
+-   Worker safety.
+-   Human rights.
+-   Labour standards.
+-   Supplier working conditions.
+
+### Governance
+
+-   Ethical sourcing.
+-   Compliance.
+-   Audits.
+-   Anti-corruption.
+-   Transparency.
+
+## Scope 1--3
+
+``` text
+SCOPE 1 → Direct emissions
+SCOPE 2 → Purchased energy
+SCOPE 3 → Wider value chain
+```
+
+## Supply Chain Actions
+
+### Procurement
+
+-   ESG supplier screening.
+-   Supplier audits.
+-   Responsible sourcing.
+
+### Manufacturing
+
+-   Energy efficiency.
+-   Waste reduction.
+-   Cleaner production.
+
+### Transportation
+
+-   Route optimisation.
+-   Rail where feasible.
+-   EV last-mile fleets.
+-   Alternative fuels.
+
+### Warehousing
+
+-   Energy-efficient buildings.
+-   Smart lighting.
+-   Renewable energy.
+
+### Reverse Logistics
+
+``` text
+Customer
+   ↓
+Return
+   ↓
+Inspection
+   ↓
+Grade
+   ├→ Restock
+   ├→ Resell
+   ├→ Repair
+   ├→ Remanufacture
+   └→ Recycle
+```
+
+## Example
+
+An electronics manufacturer can collect returned products, recover
+valuable components, refurbish usable units and recycle end-of-life
+materials.
+
+## Conclusion
+
+Sustainability becomes strategically valuable when ESG is integrated
+into **supplier selection, product design, logistics, technology,
+performance measurement and reverse logistics**, rather than treated as
+a separate CSR activity.
+
+</PYQCard>
+
+---
+
+## Q21. Supply Chain Resilience & Global Disruption Management
+
+<PYQCard
+  year="2025"
+  number="21"
+  marks={10}
+  type="theory"
+  topic="Supply Chain Resilience & Global Disruption Management"
+  frequency="2023, 2024, 2025"
+  question="Q21. Supply Chain Resilience & Global Disruption Management"
+  answerSummary="Building resilience across the 5 lifecycle phases: Prepare -> Absorb -> Respond -> Recover -> Learn."
+>
+
+Explain Supply Chain Resilience and the Impact of Global Disruptions.
+
+**Marks:** 10
+
+## Introduction
+
+Supply chain resilience is the ability of a supply network to **prepare
+for, absorb, respond to and recover from disruptions** while maintaining
+critical operations.
+
+## Diagram
+
+``` text
+               DISRUPTION
+                    ↓
+        ┌───────────┴───────────┐
+        ↓                       ↓
+   ABSORB IMPACT            RESPOND
+        │                       │
+ Buffer inventory          Alternate route
+ Backup capacity           Alternate supplier
+        │                       │
+        └───────────┬───────────┘
+                    ↓
+                 RECOVER
+                    ↓
+                 LEARN
+                    ↓
+             MORE RESILIENT SC
+```
+
+## Major Sources of Risk
+
+-   Geopolitical conflict.
+-   Port closures.
+-   Natural disasters.
+-   Pandemics.
+-   Supplier bankruptcy.
+-   Cyberattacks.
+-   Trade restrictions.
+-   Transportation disruptions.
+-   Single-source dependency.
+
+## Resilience Strategies
+
+### 1. Dual Sourcing
+
+Avoid excessive dependence on one supplier.
+
+### 2. Geographic Diversification
+
+Spread suppliers and facilities across locations.
+
+### 3. Strategic Inventory
+
+Hold buffers for critical/high-risk components.
+
+### 4. Flexible Capacity
+
+Maintain alternate production capability.
+
+### 5. Route Diversification
+
+Use alternate transportation corridors.
+
+### 6. Visibility
+
+Use real-time supply-chain information and control towers.
+
+### 7. Scenario Planning
+
+Simulate disruptions before they occur.
+
+### 8. Supplier Risk Monitoring
+
+Monitor financial health, geopolitical exposure, capacity, ESG and
+quality.
+
+## Example
+
+A disruption around a major maritime corridor can force vessels to take
+longer routes, increasing lead times and consuming additional capacity.
+Firms can respond through alternative routes, supplier diversification
+and targeted inventory buffers.
+
+## Conclusion
+
+Resilience does not mean eliminating every disruption. It means
+designing a supply chain that can **survive, respond and recover without
+unacceptable business impact**.
+
+</PYQCard>
+
+---
+
+# 05 — WORKED EXAMPLES: The 5-Part Numerical Master Set (12-Step Professor Standard)
+
+This division presents the five complete quantitative calculation templates required for end-term examinations, fully resolved using the 12-step master professor standard.
+
+<WorkedExample
+  problemNumber="1"
+  title="Classical Economic Order Quantity (EOQ)"
+  problem="A manufacturing facility requires annual demand D = 12,000 units. The fixed ordering cost is S = ₹50 per replenishment order, and the unit annual holding cost is H = ₹4 per unit per year. Operating calendar is 300 days/year, and supplier replenishment lead time is L = 5 days. Determine: (a) Economic Order Quantity (EOQ), (b) Optimal order frequency, (c) Annual ordering and holding costs, (d) Total annual variable inventory cost, and (e) Reorder Point (ROP)."
+  givenData={[
+    { label: "Annual Demand", symbol: "D", value: "12,000", unit: "units/year" },
+    { label: "Ordering Cost", symbol: "S", value: "₹50", unit: "per order" },
+    { label: "Holding Cost", symbol: "H", value: "₹4", unit: "per unit/year" },
+    { label: "Replenishment Lead Time", symbol: "L", value: "5", unit: "days" },
+    { label: "Operating Calendar", symbol: "WD", value: "300", unit: "days/year" }
+  ]}
+  required="Calculate EOQ (Q*), Order frequency (N*), Annual Ordering Cost, Annual Holding Cost, Total Cost (TC), and Reorder Point (ROP)."
+  formula="Q^* = \\sqrt{\\frac{2DS}{H}}; \\quad N^* = \\frac{D}{Q^*}; \\quad \\text{TC} = \\frac{D}{Q}S + \\frac{Q}{2}H; \\quad \\text{ROP} = d \\cdot L = \\left(\\frac{D}{WD}\\right) \\cdot L"
+  whyFormula="Harris EOQ balances the conflicting trade-offs of fixed batch ordering costs and continuous inventory carrying costs under deterministic stationary demand."
+  variables={[
+    { symbol: "D", meaning: "Annual Demand Rate", value: "12,000 units" },
+    { symbol: "S", meaning: "Fixed Order Cost", value: "₹50/order" },
+    { symbol: "H", meaning: "Unit Holding Cost", value: "₹4/unit/year" },
+    { symbol: "L", meaning: "Replenishment Lead Time", value: "5 days" },
+    { symbol: "d", meaning: "Daily Demand Rate (D/300)", value: "40 units/day" }
+  ]}
+  steps={[
+    {
+      stepNumber: 1,
+      action: "Calculate Optimal Order Quantity (EOQ)",
+      calculation: "Q^* = \\sqrt{\\frac{2 \\times 12{,}000 \\times 50}{4}} = \\sqrt{\\frac{1{,}200{,}000}{4}} = \\sqrt{300{,}000} \\approx 547.72 \\approx 548 \\text{ units}",
+      explanation: "Substitute annual demand, ordering cost, and holding cost into the classical Wilson-Harris lot sizing model."
+    },
+    {
+      stepNumber: 2,
+      action: "Determine Annual Order Frequency (N*)",
+      calculation: "N^* = \\frac{D}{Q^*} = \\frac{12{,}000}{547.72} \\approx 21.91 \\text{ orders / year}",
+      explanation: "The firm must issue approximately 22 replenishment purchase orders per calendar year."
+    },
+    {
+      stepNumber: 3,
+      action: "Compute Annual Ordering & Holding Costs",
+      calculation: "\\text{Ordering Cost} = 21.91 \\times 50 = ₹1{,}095.44; \\quad \\text{Holding Cost} = \\frac{547.72}{2} \\times 4 = ₹1{,}095.45",
+      explanation: "Notice that at exact EOQ, Annual Ordering Cost equals Annual Holding Cost (₹1,095.45 each)."
+    },
+    {
+      stepNumber: 4,
+      action: "Calculate Minimum Total Variable Inventory Cost (TC*)",
+      calculation: "\\text{TC}^* = 1{,}095.44 + 1{,}095.45 = ₹2{,}190.89 \\text{ / year}",
+      explanation: "Total variable inventory carrying and replenishment expenditure reaches its mathematical minimum."
+    },
+    {
+      stepNumber: 5,
+      action: "Calculate Reorder Point (ROP)",
+      calculation: "d = \\frac{12{,}000}{300} = 40 \\text{ units/day}; \\quad \\text{ROP} = d \\times L = 40 \\times 5 = 200 \\text{ units}",
+      explanation: "When inventory drops to 200 units, place a new purchase order for 548 units."
+    }
+  ]}
+  answer="Q^* = 548 \\text{ units}, \\quad \\text{ROP} = 200 \\text{ units}, \\quad \\text{TC}^* \\approx ₹2{,}191 \\text{/year}"
+  interpretation="Order 548 units every 13.7 working days (300 / 21.91). Total variable holding and procurement cost is ₹2,191/year. Ordering less increases transaction overhead; ordering more increases capital holding charges."
+  sanityCheck="At optimal lot size Q*, ordering cost equals holding cost within integer rounding."
+  commonMistake="Forgetting to convert annual demand into daily demand (D/300) when calculating lead-time demand for ROP, or confusing holding cost percentage I with absolute holding cost H."
+/>
+
+---
+
+<WorkedExample
+  problemNumber="2"
+  title="Economic Production Quantity (EPQ / Non-Instantaneous Replenishment)"
+  problem="An automotive filtration plant operates 250 days per year with annual demand D = 24,000 filters/year. The daily production rate when machine is active is p = 200 filters/day, and daily customer demand rate is d = 96 filters/day. Fixed production setup cost is S = ₹150 per run, and annual inventory carrying cost is H = ₹1.20 per filter per year. Calculate: (a) Economic Production Quantity (EPQ), (b) Maximum inventory level (I_max), (c) Length of production run (t_p), (d) Annual setup cost and holding cost, and (e) Total annual cost."
+  givenData={[
+    { label: "Annual Demand", symbol: "D", value: "24,000", unit: "filters/year" },
+    { label: "Daily Production Rate", symbol: "p", value: "200", unit: "filters/day" },
+    { label: "Daily Demand Rate", symbol: "d", value: "96", unit: "filters/day" },
+    { label: "Setup Cost", symbol: "S", value: "₹150", unit: "per run" },
+    { label: "Holding Cost", symbol: "H", value: "₹1.20", unit: "per filter/year" }
+  ]}
+  required="Compute EPQ (Q*), Maximum Inventory (I_max), Production Run Duration (t_p), Annual Setup Cost, Annual Holding Cost, and Total Variable Cost (TC*)."
+  formula="Q^* = \\sqrt{\\frac{2DS}{H\\left(1 - \\frac{d}{p}\\right)}}; \\quad I_{\\max} = Q^*\\left(1 - \\frac{d}{p}\\right); \\quad t_p = \\frac{Q^*}{p}; \\quad \\text{TC} = \\frac{D}{Q^*}S + \\frac{I_{\\max}}{2}H"
+  whyFormula="When units are produced and consumed concurrently, inventory builds at net rate (p - d) rather than instantaneously, reducing maximum inventory and permitting larger optimal batch runs."
+  variables={[
+    { symbol: "D", meaning: "Annual Demand Rate", value: "24,000 filters" },
+    { symbol: "p", meaning: "Daily Production Capacity", value: "200 filters/day" },
+    { symbol: "d", meaning: "Daily Consumption Rate", value: "96 filters/day" },
+    { symbol: "S", meaning: "Setup Cost per Production Run", value: "₹150" },
+    { symbol: "H", meaning: "Unit Annual Holding Cost", value: "₹1.20" }
+  ]}
+  steps={[
+    {
+      stepNumber: 1,
+      action: "Calculate Net Production Build Rate Factor",
+      calculation: "1 - \\frac{d}{p} = 1 - \\frac{96}{200} = 1 - 0.48 = 0.52",
+      explanation: "Only 52% of manufactured output accumulates in the warehouse during the production run; 48% is immediately shipped to customers."
+    },
+    {
+      stepNumber: 2,
+      action: "Calculate Economic Production Quantity (EPQ)",
+      calculation: "Q^* = \\sqrt{\\frac{2 \\times 24{,}000 \\times 150}{1.20 \\times 0.52}} = \\sqrt{\\frac{7{,}200{,}000}{0.624}} = \\sqrt{11{,}538{,}461.54} \\approx 3{,}396.83 \\approx 3{,}397 \\text{ filters}",
+      explanation: "Substitute given parameters into the Taft finite production rate formula."
+    },
+    {
+      stepNumber: 3,
+      action: "Determine Maximum Inventory Accumulation (I_max)",
+      calculation: "I_{\\max} = Q^* \\times \\left(1 - \\frac{d}{p}\\right) = 3{,}396.83 \\times 0.52 \\approx 1{,}766.35 \\approx 1{,}766 \\text{ filters}",
+      explanation: "Inventory reaches peak storage right at the moment the production run finishes."
+    },
+    {
+      stepNumber: 4,
+      action: "Calculate Duration of Production Run (t_p)",
+      calculation: "t_p = \\frac{Q^*}{p} = \\frac{3{,}396.83}{200} \\approx 16.98 \\approx 17 \\text{ operating days}",
+      explanation: "The production line runs actively for 17 days, followed by 18.4 days of machine downtime while accumulated stock depletes."
+    },
+    {
+      stepNumber: 5,
+      action: "Compute Total Annual Setup & Holding Costs",
+      calculation: "\\text{Setup} = \\frac{24{,}000}{3{,}397} \\times 150 \\approx ₹1{,}059.76; \\quad \\text{Holding} = \\frac{1{,}766.35}{2} \\times 1.20 \\approx ₹1{,}059.81; \\quad \\text{TC}^* \\approx ₹2{,}119.62",
+      explanation: "At optimality, annual setup expense exactly equals annual inventory holding expenditure."
+    }
+  ]}
+  answer="Q^* \\approx 3{,}397 \\text{ filters}, \\quad I_{\\max} \\approx 1{,}766 \\text{ filters}, \\quad t_p \\approx 17 \\text{ days}, \\quad \\text{TC}^* \\approx ₹2{,}119.62 \\text{/year}"
+  interpretation="Produce in batches of 3,397 filters over 17 operating days. Peak warehouse storage required is only 1,766 units (52% of batch size), saving storage space and holding cost compared to full batch delivery."
+  sanityCheck="Because (1 - d/p) = 0.52 < 1, EPQ (3,397) is strictly larger than classical EOQ (sqrt(2*24000*150/1.2) = 2,449 units), reflecting gradual replenishment."
+  commonMistake="Calculating annual holding cost as (Q/2)*H instead of (I_max / 2)*H = [Q*(1 - d/p)/2]*H."
+/>
+
+---
+
+<WorkedExample
+  problemNumber="3"
+  title="Quantity Discount Schedule Evaluation (All-Units Model)"
+  problem="A medical supply distributor stocks diagnostic kits with annual demand D = 5,000 boxes/year. Fixed ordering cost is S = ₹40 per order. Annual inventory holding cost is I = 20% of unit purchase price. The supplier quotes the following price schedule: Tier 1 (1–999 boxes): C1 = ₹10.00; Tier 2 (1,000–1,999 boxes): C2 = ₹9.50; Tier 3 (2,000+ boxes): C3 = ₹9.00. Determine the profit-maximizing order quantity Q*."
+  givenData={[
+    { label: "Annual Demand", symbol: "D", value: "5,000", unit: "boxes/year" },
+    { label: "Ordering Cost", symbol: "S", value: "₹40", unit: "per order" },
+    { label: "Carrying Cost Rate", symbol: "I", value: "20%", unit: "per year" },
+    { label: "Tier 1 (1–999)", symbol: "C_1", value: "₹10.00", unit: "per box" },
+    { label: "Tier 2 (1,000–1,999)", symbol: "C_2", value: "₹9.50", unit: "per box" },
+    { label: "Tier 3 (2,000+)", symbol: "C_3", value: "₹9.00", unit: "per box" }
+  ]}
+  required="Determine optimal batch size Q* and verify whether volume purchasing discounts outweigh inflated inventory carrying costs."
+  formula="\\text{TC}(Q) = D \\cdot C + \\frac{D}{Q}S + \\frac{Q}{2}(I \\cdot C); \\quad Q_k = \\sqrt{\\frac{2DS}{I \\cdot C_k}}"
+  whyFormula="With all-units discounts, purchase acquisition cost dominates total cost. The algorithm tests feasibility from lowest price upward and evaluates cost at feasible points and price-break thresholds."
+  variables={[
+    { symbol: "D", meaning: "Annual Demand Rate", value: "5,000 boxes" },
+    { symbol: "S", meaning: "Order Processing Fee", value: "₹40" },
+    { symbol: "I", meaning: "Inventory Holding Fraction", value: "0.20 (20%)" },
+    { symbol: "C_1, C_2, C_3", meaning: "Tier Unit Prices", value: "₹10.00, ₹9.50, ₹9.00" }
+  ]}
+  steps={[
+    {
+      stepNumber: 1,
+      action: "Evaluate Tier 3 (Price C3 = ₹9.00, H3 = 0.20 * 9 = ₹1.80)",
+      calculation: "EOQ_3 = \\sqrt{\\frac{2 \\times 5{,}000 \\times 40}{1.80}} = \\sqrt{222{,}222.22} \\approx 471.40 \\text{ boxes}",
+      explanation: "Since 471 is below the Tier 3 qualifying threshold of 2,000 units, EOQ3 is INFEASIBLE. Must evaluate total cost at the lower price-break boundary Q = 2,000."
+    },
+    {
+      stepNumber: 2,
+      action: "Evaluate Tier 2 (Price C2 = ₹9.50, H2 = 0.20 * 9.50 = ₹1.90)",
+      calculation: "EOQ_2 = \\sqrt{\\frac{2 \\times 5{,}000 \\times 40}{1.90}} = \\sqrt{210{,}526.32} \\approx 458.83 \\text{ boxes}",
+      explanation: "Since 458 is below the Tier 2 qualifying threshold of 1,000 units, EOQ2 is INFEASIBLE. Must evaluate total cost at the price-break boundary Q = 1,000."
+    },
+    {
+      stepNumber: 3,
+      action: "Evaluate Tier 1 (Price C1 = ₹10.00, H1 = 0.20 * 10 = ₹2.00)",
+      calculation: "EOQ_1 = \\sqrt{\\frac{2 \\times 5{,}000 \\times 40}{2.00}} = \\sqrt{200{,}000} \\approx 447.21 \\approx 447 \\text{ boxes}",
+      explanation: "Since 447 falls within [1, 999], EOQ1 = 447 is FEASIBLE."
+    },
+    {
+      stepNumber: 4,
+      action: "Compare Total Annual Costs Across Candidate Quantities",
+      calculation: "\\text{TC}(447) = 5{,}000(10) + \\frac{5000}{447}(40) + \\frac{447}{2}(2) = 50{,}000 + 447.43 + 447 = ₹50{,}894.43",
+      explanation: "Baseline cost at standard optimal order quantity without volume discounts."
+    },
+    {
+      stepNumber: 5,
+      action: "Compute Total Annual Cost at Tier 2 Break (Q = 1,000)",
+      calculation: "\\text{TC}(1{,}000) = 5{,}000(9.50) + \\frac{5000}{1000}(40) + \\frac{1000}{2}(1.90) = 47{,}500 + 200 + 950 = ₹48{,}650.00",
+      explanation: "Tier 2 achieves ₹2,244.43 annual savings compared to Tier 1."
+    },
+    {
+      stepNumber: 6,
+      action: "Compute Total Annual Cost at Tier 3 Break (Q = 2,000)",
+      calculation: "\\text{TC}(2{,}000) = 5{,}000(9.00) + \\frac{5000}{2000}(40) + \\frac{2000}{2}(1.80) = 45{,}000 + 100 + 1{,}800 = ₹46{,}900.00",
+      explanation: "Tier 3 delivers the absolute lowest total annual cost, saving ₹3,994.43 vs baseline."
+    }
+  ]}
+  answer="Q^* = 2{,}000 \\text{ boxes}, \\quad \\text{TC}^* = ₹46{,}900.00 \\text{/year} \\quad (\\text{Annual Savings} = ₹3{,}994.43)"
+  interpretation="Order 2,000 boxes per lot. Although annual holding cost rises from ₹447 to ₹1,800, material acquisition savings (₹5,000 savings on purchase cost) overwhelmingly offset carrying penalties, delivering ₹3,994/year in net profit improvement."
+  sanityCheck="Tier 3 saves ₹2,500 on purchase price relative to Tier 2, while holding cost increases by only ₹850, confirming Tier 3 is mathematically superior."
+  commonMistake="Stopping at feasible EOQ1 = 447 without evaluating Total Cost at the discount thresholds Q = 1,000 and Q = 2,000."
+/>
+
+---
+
+<WorkedExample
+  problemNumber="4"
+  title="Safety Stock & Reorder Point under Joint Demand and Lead-Time Uncertainty"
+  problem="A consumer durables manufacturer experiences stochastic customer demand with mean daily demand d = 120 units and standard deviation sigma_d = 30 units/day. Supplier replenishment lead time is also uncertain with mean L = 16 days and standard deviation sigma_L = 3 days. Demand and lead time are statistically independent. Target cycle service level is 95% (z = 1.645). Calculate: (a) Expected demand during lead time (DL), (b) Combined standard deviation of lead-time demand (sigma_DL), (c) Required safety stock buffer (SS), and (d) Reorder point (ROP)."
+  givenData={[
+    { label: "Daily Demand Rate", symbol: "d", value: "120", unit: "units/day" },
+    { label: "Demand Std Dev", symbol: "\\sigma_d", value: "30", unit: "units/day" },
+    { label: "Mean Lead Time", symbol: "L", value: "16", unit: "days" },
+    { label: "Lead Time Std Dev", symbol: "\\sigma_L", value: "3", unit: "days" },
+    { label: "Service Level (95%)", symbol: "z", value: "1.645", unit: "dimensionless" }
+  ]}
+  required="Calculate Expected Lead-Time Demand (DL), Combined Standard Deviation (sigma_DL), Safety Stock (SS), and Reorder Point (ROP)."
+  formula="\\text{DL} = d \\cdot L; \\quad \\sigma_{DL} = \\sqrt{L \\cdot \\sigma_d^2 + d^2 \\cdot \\sigma_L^2}; \\quad \\text{SS} = z \\cdot \\sigma_{DL}; \\quad \\text{ROP} = \\text{DL} + \\text{SS}"
+  whyFormula="When both demand and lead time vary, lead-time variance is amplified by squared average demand (d^2), which typically dominates demand volatility."
+  variables={[
+    { symbol: "d", meaning: "Mean Daily Demand", value: "120 units/day" },
+    { symbol: "\\sigma_d", meaning: "Standard Deviation of Daily Demand", value: "30 units/day" },
+    { symbol: "L", meaning: "Mean Replenishment Lead Time", value: "16 days" },
+    { symbol: "\\sigma_L", meaning: "Standard Deviation of Lead Time", value: "3 days" },
+    { symbol: "z", meaning: "Standard Normal Factor for 95% CSL", value: "1.645" }
+  ]}
+  steps={[
+    {
+      stepNumber: 1,
+      action: "Calculate Expected Demand During Lead Time (DL)",
+      calculation: "\\text{DL} = d \\times L = 120 \\times 16 = 1{,}920 \\text{ units}",
+      explanation: "Expected consumption during the average supplier fulfillment window of 16 days."
+    },
+    {
+      stepNumber: 2,
+      action: "Calculate Combined Lead-Time Demand Variance",
+      calculation: "\\text{Var}(DL) = L \\sigma_d^2 + d^2 \\sigma_L^2 = 16(30^2) + 120^2(3^2) = 16(900) + 14{,}400(9) = 14{,}400 + 129{,}600 = 144{,}000",
+      explanation: "Notice that lead-time uncertainty (129,600) contributes 90% of total variance, while demand volatility (14,400) contributes only 10%."
+    },
+    {
+      stepNumber: 3,
+      action: "Calculate Combined Standard Deviation (sigma_DL)",
+      calculation: "\\sigma_{DL} = \\sqrt{144{,}000} \\approx 379.47 \\text{ units}",
+      explanation: "Convolved standard deviation accounting for both demand spikes and delayed supplier deliveries."
+    },
+    {
+      stepNumber: 4,
+      action: "Calculate Required Safety Stock Buffer (SS)",
+      calculation: "\\text{SS} = z \\times \\sigma_{DL} = 1.645 \\times 379.47 \\approx 624.23 \\approx 625 \\text{ units}",
+      explanation: "Buffer required to ensure 95% probability of zero stockouts across any replenishment cycle."
+    },
+    {
+      stepNumber: 5,
+      action: "Calculate Reorder Point (ROP)",
+      calculation: "\\text{ROP} = \\text{DL} + \\text{SS} = 1{,}920 + 625 = 2{,}545 \\text{ units}",
+      explanation: "Place replenishment purchase order as soon as inventory position falls to 2,545 units."
+    }
+  ]}
+  answer="\\text{DL} = 1{,}920 \\text{ units}, \\quad \\sigma_{DL} \\approx 379.47, \\quad \\text{SS} \\approx 625 \\text{ units}, \\quad \\text{ROP} = 2{,}545 \\text{ units}"
+  interpretation="Place a replenishment order when inventory reaches 2,545 units. The 625-unit buffer guarantees 95% cycle service level. Note that lead-time variance contributes 90% of total uncertainty, demonstrating that stabilizing supplier delivery reliability is 9x more potent than demand forecasting."
+  sanityCheck="If lead time were deterministic (sigma_L = 0), SS would only be 1.645 * sqrt(16 * 900) = 197 units. Lead time uncertainty triples required safety stock from 197 to 625 units."
+  commonMistake="Adding standard deviations directly (sigma_DL != sqrt(L)*sigma_d + d*sigma_L) or forgetting the squared demand factor (d^2) multiplying lead-time variance."
+/>
+
+---
+
+<WorkedExample
+  problemNumber="5"
+  title="Single-Period Newsvendor Model & Critical Fractile Sizing"
+  problem="A high-fashion apparel retailer is ordering seasonal parkas for the winter retail season. Wholesale purchase cost is C = ₹150 per unit, retail selling price is P = ₹400 per unit, and unsold garments are liquidated through off-price channels at salvage value S = ₹50 per unit. Seasonal demand is normally distributed with mean mu = 1,200 units and standard deviation sigma = 250 units. Determine: (a) Cost of Understocking (C_u), (b) Cost of Overstocking (C_o), (c) Optimal Critical Fractile (CR), (d) Standard normal z-score, (e) Optimal order quantity (Q*), and (f) Expected stockout probability."
+  givenData={[
+    { label: "Retail Selling Price", symbol: "P", value: "₹400", unit: "per parka" },
+    { label: "Wholesale Cost", symbol: "C", value: "₹150", unit: "per parka" },
+    { label: "Salvage Value", symbol: "S", value: "₹50", unit: "per parka" },
+    { label: "Mean Seasonal Demand", symbol: "\\mu", value: "1,200", unit: "parkas" },
+    { label: "Demand Std Dev", symbol: "\\sigma", value: "250", unit: "parkas" }
+  ]}
+  required="Compute Underage Cost (C_u), Overage Cost (C_o), Critical Ratio (CR), Optimal Order Quantity (Q*), Safety Stock Buffer, and Stockout Probability."
+  formula="C_u = P - C; \\quad C_o = C - S; \\quad \\text{CR} = \\frac{C_u}{C_u + C_o}; \\quad Q^* = \\mu + z \\cdot \\sigma; \\quad P(\\text{Stockout}) = 1 - \\text{CR}"
+  whyFormula="Marginal economic analysis balances the marginal profit of selling one additional unit against the marginal loss of holding an unsold unit liquidated below cost."
+  variables={[
+    { symbol: "P", meaning: "Retail Selling Price", value: "₹400" },
+    { symbol: "C", meaning: "Wholesale Purchase Cost", value: "₹150" },
+    { symbol: "S", meaning: "Salvage Clearance Price", value: "₹50" },
+    { symbol: "C_u", meaning: "Cost of Underage (Lost Profit)", value: "₹250" },
+    { symbol: "C_o", meaning: "Cost of Overage (Disposal Loss)", value: "₹100" },
+    { symbol: "CR", meaning: "Critical Fractile Service Ratio", value: "0.7143" }
+  ]}
+  steps={[
+    {
+      stepNumber: 1,
+      action: "Calculate Cost of Understocking (Underage Cost C_u)",
+      calculation: "C_u = P - C = ₹400 - ₹150 = ₹250 \\text{ / unit}",
+      explanation: "Opportunity margin forfeited when demand exceeds stocking quantity by one unit."
+    },
+    {
+      stepNumber: 2,
+      action: "Calculate Cost of Overstocking (Overage Cost C_o)",
+      calculation: "C_o = C - S = ₹150 - ₹50 = ₹100 \\text{ / unit}",
+      explanation: "Capital loss sustained when an unsold garment is salvaged below acquisition cost."
+    },
+    {
+      stepNumber: 3,
+      action: "Determine Optimal Critical Fractile Ratio (CR)",
+      calculation: "\\text{CR} = \\frac{C_u}{C_u + C_o} = \\frac{250}{250 + 100} = \\frac{250}{350} = \\frac{5}{7} \\approx 0.7143 \\text{ (71.43%)}",
+      explanation: "The optimal cycle service level balancing expected marginal gain with marginal loss."
+    },
+    {
+      stepNumber: 4,
+      action: "Determine Standard Normal z-Score",
+      calculation: "\\Phi(z) = 0.7143 \\implies z \\approx 0.566",
+      explanation: "Standard normal lookup for cumulative probability 0.7143."
+    },
+    {
+      stepNumber: 5,
+      action: "Calculate Profit-Maximizing Order Quantity (Q*)",
+      calculation: "Q^* = \\mu + z \\times \\sigma = 1{,}200 + 0.566(250) = 1{,}200 + 141.5 \\approx 1{,}341.5 \\approx 1{,}342 \\text{ parkas}",
+      explanation: "Order 1,342 parkas, including a safety stock buffer of 142 units above mean demand."
+    },
+    {
+      stepNumber: 6,
+      action: "Compute Expected Stockout Probability",
+      calculation: "P(\\text{Stockout}) = 1 - \\text{CR} = 1 - 0.7143 = 0.2857 \\text{ (28.57%)}",
+      explanation: "The company accepts a 28.57% risk of selling out early to protect against holding unsold dead stock."
+    }
+  ]}
+  answer="Q^* \\approx 1{,}342 \\text{ units}, \\quad \\text{Safety Buffer} = 142 \\text{ units}, \\quad P(\\text{Stockout}) = 28.57\\%"
+  interpretation="Order 1,342 parkas. Because unit profit margin (₹250) is 2.5 times larger than overstock disposal penalty (₹100), the firm strategically over-orders beyond expected demand (1,200) by 142 units to maximize expected net operating profit."
+  sanityCheck="Since C_u > C_o, CR = 0.7143 > 0.50, which logically dictates ordering strictly above the mean demand (1,200). If margin equaled salvage loss, CR would be 0.50 and Q* would equal 1,200."
+  commonMistake="Defining salvage value S as negative cost or subtracting salvage from retail price instead of wholesale purchase cost: C_o is C - S, not P - S."
+/>
+
+---
+
+# 06 — CASES & APPLICATIONS: Enterprise Case Study Analysis & Strategic Problem-Solving
+
+<StickyNote color="blue" title="Case Study Scoring Methodology">
+  "When tackling a 10-mark or 15-mark case study in LSCM, examiners look for the 4-step consulting framework: 1. Core Operational Problem Identification; 2. Diagnostic Root-Cause Analysis using Course Frameworks (Fisher, SCOR, Kraljic); 3. Strategic Decision Options & Trade-Off Evaluation; 4. Phased Implementation Roadmap with Risk Mitigation." — Prof. Praful More
+</StickyNote>
+
+CASE STUDY ANSWER FRAMEWORK
+
+## Universal 10-Mark Case Structure
+
+When the paper gives a supply-chain case, use this structure.
+
+### 1. Define the Problem
+
+State the core issue in one sentence.
+
+> "The central problem is not merely high logistics cost; it is the
+> trade-off between service level, cost and network structure."
+
+### 2. Identify Root Causes
+
+``` text
+SYMPTOM
+   ↓
+CAUSE
+   ↓
+ROOT CAUSE
+```
+
+### 3. Identify Constraints
+
+Examples: - Budget. - Capacity. - Lead time. - Supplier dependency. -
+Customer service target. - Regulatory constraints.
+
+### 4. Quantify
+
+Calculate wherever possible: - EOQ. - Safety stock. - ROP. - Total
+logistics cost. - Inventory turnover. - Service level. - Landed cost.
+
+### 5. Generate Alternatives
+
+  Option   Cost     Service   Risk
+  -------- -------- --------- --------
+  A        Low      Low       High
+  B        Medium   Medium    Medium
+  C        High     High      Low
+
+### 6. Recommend
+
+Use a clear statement:
+
+> **"I recommend Option B because it provides the best
+> cost-service-resilience balance."**
+
+### 7. Implementation
+
+``` text
+Pilot
+ ↓
+Measure KPI
+ ↓
+Correct
+ ↓
+Scale
+ ↓
+Monitor
+```
+
+### 8. KPIs
+
+Use relevant metrics: - OTIF. - Fill rate. - Inventory turnover. - Cost
+per shipment. - Forecast accuracy. - Warehouse utilisation. - Order
+cycle time.
+
+### 9. Risks
+
+Mention at least two.
+
+### 10. Conclusion
+
+End with the managerial implication.
+
+
+---
+
+# 07 — PYQs: Additional High-Yield Questions (Q22–Q24) & Exam Recurrence Matrix
+
+This division addresses targeted high-probability short-answer topics and specific conceptual definitions from recent examination papers.
+
+## Q22. Reverse Logistics & Closed-Loop Supply Systems
+
+<PYQCard
+  year="2024"
+  number="22"
+  marks={5}
+  type="theory"
+  topic="Reverse Logistics & Closed-Loop Supply Systems"
+  frequency="Repeated Core"
+  question="Q22. Reverse Logistics & Closed-Loop Supply Systems"
+  answerSummary="Manages the backward flow of products, materials, and packaging from consumer to point of origin for value reclamation or proper disposal."
+>
+
+Explain Reverse Logistics.
+
+**Marks:** 5
+
+## Introduction
+
+Reverse logistics manages the movement of goods from the customer or
+downstream point back toward the producer or another recovery point.
+
+## Diagram
+
+``` text
+CUSTOMER
+   ↓
+RETURN
+   ↓
+COLLECTION
+   ↓
+INSPECTION / GRADING
+   ↓
+┌────┬──────────┬─────────┬─────────┐
+↓    ↓          ↓         ↓
+RESTOCK REPAIR  RESELL  RECYCLE
+```
+
+## Key Points
+
+-   Handles product returns.
+-   Supports repair and refurbishment.
+-   Recovers value from returned goods.
+-   Reduces waste.
+-   Supports circular supply chains.
+-   Improves customer service.
+
+### 5R Logic
+
+**Return → Repair → Remanufacture → Resell → Recycle**
+
+## Example
+
+An electronics retailer accepts a returned device, tests it, refurbishes
+usable units and sends defective components for recycling.
+
+## Conclusion
+
+Reverse logistics converts the **backward flow of products into an
+opportunity for value recovery and sustainability**.
+
+</PYQCard>
+
+---
+
+## Q23. The Total Logistics Cost Concept & Trade-Off Balance
+
+<PYQCard
+  year="2024"
+  number="23"
+  marks={6}
+  type="theory"
+  topic="The Total Logistics Cost Concept & Trade-Off Balance"
+  frequency="Repeated Core"
+  question="Q23. The Total Logistics Cost Concept & Trade-Off Balance"
+  answerSummary="Optimizing logistics requires minimizing the sum of Transport + Warehousing + Inventory Carrying + Order Processing + Lost Sales costs simultaneously."
+>
+
+Explain the Total Logistics Cost Concept.
+
+**Marks:** 5
+
+## Introduction
+
+Total logistics cost is the combined cost of all activities required to
+move and hold products through the supply chain.
+
+## Diagram
+
+``` text
+             TOTAL LOGISTICS COST
+                     │
+ ┌────────┬──────────┼──────────┬─────────┐
+ ↓        ↓          ↓          ↓         ↓
+Transport Warehousing Inventory Order   Packaging
+                                Processing
+```
+
+## Components
+
+-   Transportation.
+-   Warehousing.
+-   Inventory carrying cost.
+-   Order processing.
+-   Packaging.
+-   Loss/damage.
+-   Related handling costs.
+
+### Formula
+
+$$
+TLC=Transport+Warehousing+Inventory+Order Processing+Packaging+\cdots
+$$
+
+### Logistics Cost % of Sales
+
+$$
+=\frac{Total\ Logistics\ Cost}{Gross\ Revenue}\times100
+$$
+
+## Example
+
+A firm should not select a transport option only because its freight
+charge is low if it creates higher inventory, warehousing or stockout
+costs.
+
+## Conclusion
+
+Logistics decisions should minimise **total system cost**, not an
+isolated cost component.
+
+</PYQCard>
+
+---
+
+## Q24. SCOR / Supply Chain Drivers & Strategic Fit
+
+<PYQCard
+  year="2024"
+  number="24"
+  marks={6}
+  type="theory"
+  topic="SCOR / Supply Chain Drivers & Strategic Fit"
+  frequency="2023, 2024"
+  question="Q24. SCOR / Supply Chain Drivers & Strategic Fit"
+  answerSummary="Achieving strategic fit requires aligning the 6 core supply chain drivers (Facilities, Inventory, Transportation, Information, Sourcing, Pricing) with corporate competitive strategy."
+>
+
+Explain SCOR / Supply Chain Drivers and Strategic Fit.
+
+**Marks:** 6
+
+## Introduction
+
+A supply chain's performance depends on how its structural and
+operational drivers are configured to support the firm's competitive
+strategy.
+
+## Six Drivers
+
+``` text
+             SUPPLY CHAIN DRIVERS
+                    │
+ ┌──────┬───────┬───────┬───────┬───────┬───────┐
+ ↓      ↓       ↓       ↓       ↓       ↓
+Facilities Inventory Transport Information Sourcing Pricing
+```
+
+## Key Points
+
+### Facilities
+
+Location, capacity and centralisation.
+
+### Inventory
+
+Cycle stock, safety stock and working capital.
+
+### Transportation
+
+Mode, route, speed and consolidation.
+
+### Information
+
+Visibility, forecasting and coordination.
+
+### Sourcing
+
+Supplier selection, outsourcing and partnerships.
+
+### Pricing
+
+Pricing decisions influence demand patterns and order behaviour.
+
+## Strategic Fit
+
+``` text
+Low uncertainty + predictable demand
+             ↓
+        EFFICIENCY
+
+High uncertainty + innovative products
+             ↓
+        RESPONSIVENESS
+```
+
+## Example
+
+A commodity FMCG product can prioritise scale and low logistics cost,
+while a short-life fashion product may prioritise flexibility and speed.
+
+## Conclusion
+
+Supply-chain drivers should be configured as an integrated system rather
+than optimised independently.
+
+</PYQCard>
+
+---
+
+# 08 — QUIZ & REVISION: Incoterms Memory Matrix, Master Formula Sheet & Rapid Recall
+
+### Part G: Last-Minute Quantitative Formula Sheet
+
+LAST-MINUTE FORMULA SHEET
+
+## Inventory
+
+### EOQ
+
+$$
+\boxed{Q^*=\sqrt{\frac{2DS}{H}}}
+$$
+
+### Total Relevant Cost
+
+$$
+\boxed{TC=\frac{D}{Q}S+\frac Q2H}
+$$
+
+### EPQ
+
+$$
+\boxed{
+EPQ=
+\sqrt{
+\frac{2DS}
+{H(1-d/p)}
+}
+}
+$$
+
+### Deterministic ROP
+
+$$
+\boxed{ROP=dL}
+$$
+
+### Safety Stock --- Demand Uncertainty
+
+$$
+\boxed{SS=z\sigma_d\sqrt L}
+$$
+
+### Safety Stock --- Lead-Time Uncertainty
+
+$$
+\boxed{SS=zd\sigma_L}
+$$
+
+### Safety Stock --- Both Variable
+
+$$
+\boxed{
+SS=z\sqrt{L\sigma_d^2+d^2\sigma_L^2}
+}
+$$
+
+### Stochastic ROP
+
+$$
+\boxed{ROP=dL+SS}
+$$
+
+### Newsvendor
+
+$$
+\boxed{C_u=P-C}
+$$
+
+$$
+\boxed{C_o=C-S}
+$$
+
+$$
+\boxed{CR=\frac{C_u}{C_u+C_o}}
+$$
+
+$$
+\boxed{Q^*=\mu+z\sigma}
+$$
+
+where:
+
+$$
+\Phi(z)=CR
+$$
+
+
+---
+
+### Part H: Transportation & Network Design Formulation
+
+TRANSPORT / NETWORK FORMULAS
+
+### Logistics Cost % of Sales
+
+$$
+\boxed{
+\frac{Total\ Logistics\ Cost}{Gross\ Revenue}\times100
+}
+$$
+
+### Cash-to-Cash Cycle Time
+
+$$
+\boxed{C2C=DIO+DSO-DPO}
+$$
+
+### Inventory Turnover
+
+$$
+\boxed{
+ITR=\frac{COGS}{Average\ Inventory}
+}
+$$
+
+### Square Root Law
+
+$$
+\boxed{
+SS_{new}=SS_{old}\sqrt{\frac{N_{new}}{N_{old}}}
+}
+$$
+
+### Centre of Gravity
+
+$$
+\boxed{
+X^*=
+\frac{\sum X_iW_iR_i}
+{\sum W_iR_i}
+}
+$$
+
+$$
+\boxed{
+Y^*=
+\frac{\sum Y_iW_iR_i}
+{\sum W_iR_i}
+}
+$$
+
+
+---
+
+### Part I: INCOTERMS 2020 Complete Examination Memory Table
+
+INCOTERMS EXAM MEMORY TABLE
+
+  Group                       Terms
+  --- ---
+  **Any Mode**                EXW, FCA, CPT, CIP, DAP, DPU, DDP
+  **Sea / Inland Waterway**   FAS, FOB, CFR, CIF
+
+## Risk Memory
+
+``` text
+EXW → SELLER'S PREMISES
+
+FCA → NAMED DELIVERY POINT
+
+CPT/CIP → FIRST CARRIER
+
+DAP → DESTINATION, READY FOR UNLOADING
+
+DPU → DESTINATION, UNLOADED
+
+DDP → DESTINATION, IMPORT CLEARED
+
+FOB/CFR/CIF → ON BOARD VESSEL
+```
+
+## Critical Exam Traps
+
+### Trap 1
+
+**CIF ≠ seller bears risk until destination.**
+
+Risk transfers when goods are on board at origin, although seller pays
+freight and arranges insurance.
+
+### Trap 2
+
+**FOB/CIF are not general multimodal terms.**
+
+They are for sea/inland waterway transport.
+
+### Trap 3
+
+**Incoterms do not determine ownership/title.**
+
+### Trap 4
+
+**Cost responsibility and risk responsibility are different.**
+
+
+---
+
+### Part J: Top 12 Questions to Memorise Before Entering the Exam Hall
+
+TOP 12 QUESTIONS TO MEMORISE BEFORE THE EXAM
+
+## 🔴 Tier 1 --- Must Know
+
+1.  **EOQ numerical + interpretation**
+2.  **Safety Stock + ROP numerical**
+3.  **Single-period / Newsvendor numerical**
+4.  **Incoterms 2020**
+5.  **Transportation trade-offs**
+6.  **Warehouse process + warehouse types**
+7.  **Sustainability / ESG**
+8.  **Strategic sourcing + supplier risk**
+
+## 🟠 Tier 2 --- High Probability
+
+9.  **Demand Planning + Forecasting**
+10. **S&OP + S&OE**
+11. **Logistics Network Design**
+12. **Smart Warehouse**
+
+## 🟡 Tier 3 --- Short-Note / Backup
+
+13. CPFR
+14. SCOR
+15. 3PL vs 4PL
+16. Reverse Logistics
+17. Kraljic Matrix
+18. Logistics Costing
+19. Responsive vs Efficient Supply Chain
+20. Supply Chain Resilience
+
+
+---
+
+### Part K: 30-Second Exam Recall Memory Hooks
+
+30-SECOND EXAM RECALL
+
+``` text
+SCM
+│
+├── STRATEGY
+│   ├── Efficient vs Responsive
+│   ├── 6 Drivers
+│   └── SCOR
+│
+├── DEMAND
+│   ├── Forecasting
+│   ├── Demand Management
+│   ├── S&OP
+│   └── S&OE
+│
+├── INVENTORY
+│   ├── EOQ
+│   ├── EPQ
+│   ├── Safety Stock
+│   ├── ROP
+│   └── Newsvendor
+│
+├── LOGISTICS
+│   ├── Network Design
+│   ├── Primary Transport
+│   ├── Secondary Transport
+│   ├── Costing
+│   └── Reverse Logistics
+│
+├── WAREHOUSING
+│   ├── Receiving
+│   ├── Put-away
+│   ├── Storage
+│   ├── Picking
+│   ├── Packing
+│   └── Dispatch
+│
+├── SOURCING
+│   ├── Kraljic
+│   ├── Supplier Risk
+│   ├── Global Sourcing
+│   └── Resilience
+│
+├── GLOBAL TRADE
+│   ├── Incoterms
+│   ├── LC
+│   ├── Customs
+│   ├── Tariffs
+│   └── Landed Cost
+│
+└── FUTURE SCM
+    ├── Smart Warehouse
+    ├── CPFR
+    ├── Digital Twin
+    ├── ESG
+    └── Circular Supply Chain
+```
+
+
+---
+
+# 09 — APPENDIX: Faculty Provenance, Cross-Topic Nomenclature & Final Exam Strategy
+
+### Final Examination Hall Strategy & Scoring Blueprint
+
+## For a 5-Mark Question
+
+**Definition → Diagram → 4 key points → Example → Conclusion**
+
+## For a 6-Mark Question
+
+**Definition → Diagram/Matrix → Detailed comparison → Example →
+Conclusion**
+
+## For a 10-Mark Question
+
+**Definition → Large diagram → Detailed framework →
+Formula/application/case → Managerial interpretation → Conclusion**
+
+## For a Numerical
+
+Always write:
+
+``` text
+GIVEN
+  ↓
+FORMULA
+  ↓
+SUBSTITUTION
+  ↓
+CALCULATION
+  ↓
+FINAL ANSWER
+  ↓
+INTERPRETATION
+```
+
+### Golden Rule
+
+> **Do not stop at the numerical answer. Explain what the number means
+> operationally.**
+
+For example:
+
+> "Therefore, the EOQ is 548 units. The firm should order approximately
+> 548 units per cycle; when inventory position reaches the ROP of 200
+> units, replenishment should be triggered."
+
+That final sentence converts a **calculation into a management answer**.
+
+## One-Line Memory Hooks
+
+-   **EOQ:** Balance ordering cost and holding cost.
+-   **ROP:** When to order.
+-   **Safety Stock:** Protection against uncertainty.
+-   **Newsvendor:** How much to stock for one selling period.
+-   **S&OP:** One agreed demand-supply plan.
+-   **S&OE:** Short-term execution control.
+-   **CPFR:** Collaborate using shared information.
+-   **Kraljic:** Match sourcing strategy to profit impact and supply
+    risk.
+-   **SCOR:** Plan → Source → Make → Deliver → Return.
+-   **Incoterms:** Know mode + cost + risk transfer.
+-   **Smart Warehouse:** Sense → Decide → Act → Learn.
+-   **Network Design:** Balance cost, service, inventory and resilience.
+-   **ESG:** Environmental + Social + Governance.
+-   **Reverse Logistics:** Move products/value backward.
+-   **Resilience:** Prepare → Absorb → Respond → Recover → Learn.
+
+
+---
+
+### Canonical References & Faculty Provenance
+
+1. **Chopra, S., and Meindl, P.** (2016). *Supply Chain Management: Strategy, Planning, and Operation* (6th Edition). Pearson.
+2. **Bowersox, D. J., Closs, D. J., and Cooper, M. B.** (2013). *Supply Chain Logistics Management* (4th Edition). McGraw-Hill Education.
+3. **Fisher, M. L.** (1997). 'What Is the Right Supply Chain for Your Product?' *Harvard Business Review*, 75(2), pp. 105–116.
+4. **Kraljic, P.** (1983). 'Purchasing Must Become Supply Management.' *Harvard Business Review*, 61(5), pp. 109–117.
+5. **Lee, H. L., Padmanabhan, V., and Whang, S.** (1997). 'The Bullwhip Effect in Supply Chains.' *Sloan Management Review*, 38(3), pp. 93–102.
+6. **International Chamber of Commerce (ICC)**. (2020). *Incoterms 2020: ICC Rules for the Use of Domestic and International Trade Terms*. ICC Services.
+7. **Supply Chain Operations Reference (SCOR)** Model, Version 12.0. Association for Supply Chain Management (ASCM / APICS).
+8. **WeSchool LSCM Course Architecture**: Prof. Ajit Maurya, Prof. Manoj Dagaonkar, Prof. Praful More (Trimester IV Examination Papers 2023, 2024, 2025).
