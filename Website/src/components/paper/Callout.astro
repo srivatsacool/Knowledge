@@ -33,7 +33,7 @@ const typeConfig = {
   },
 };
 
-const cfg = typeConfig[type];
+const cfg = typeConfig[type] || typeConfig.note;
 ---
 
 <div class={`callout-box paper-card p-5 my-5 rounded-lg border-l-4 ${cfg.border} border-[var(--line)] bg-[var(--paper)]`}>

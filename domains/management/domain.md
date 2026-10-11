@@ -5,6 +5,7 @@ slug: management
 description: Frameworks for organizational structure, leadership dynamics, team behavior, change management, and corporate governance.
 subjects:
   - organizational-design
+  - gm410-strategy-analytics
 ---
 
 # Management & Organizational Behavior
