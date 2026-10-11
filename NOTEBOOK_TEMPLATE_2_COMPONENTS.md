@@ -1051,3 +1051,66 @@ flowchart TD
 | Compares 2+ vendors, platforms, or deployment methodologies | `.nb-comparison-table` | `.nb-concept` |
 | Defines a specific industry term or acronym | `.nb-definition` | `.nb-concept` (with simple explainer) |
 | Concludes an academic topic or module | `.nb-managerial-matrix` | `.nb-quiz` |
+
+---
+
+## 10. GM 410 Strategy & Analytics Specialized Component Catalog
+
+To support the demanding pedagogical requirements of GM 410 (Integrative Manager for Analytics), Notebook Template 2.0 introduces 14 specialized, zero-dependency visual and exam components:
+
+### 10.1 Blue Ocean Strategy Canvas (`.nb-strategy-canvas`)
+- **Semantic Structure**: SVG line-and-point graph contrasting the industry standard benchmark value curve against the innovative value curve across 6–10 strategic factors of competition.
+- **Key Classes**: `.nb-canvas-wrap`, `.nb-curve-incumbent`, `.nb-curve-innovator`, `.nb-factor-axis`.
+
+### 10.2 ERRC Action Grid (`.nb-errc-grid`)
+- **Semantic Structure**: 2x2 grid representing Eliminate, Reduce, Raise, and Create actions. Each quadrant features colored badge tags, concrete case actions, and managerial rationale.
+- **Key Classes**: `.nb-errc`, `.nb-errc__eliminate`, `.nb-errc__reduce`, `.nb-errc__raise`, `.nb-errc__create`.
+
+### 10.3 BCG Growth-Share 4-Quadrant Matrix (`.nb-bcg-matrix`)
+- **Semantic Structure**: Two-axis coordinate layout (Market Growth Rate % vs Relative Market Share x). Highlights Cash Cows (Harvest/Milk), Stars (Invest/Build), Question Marks (Select/Analyze), and Dogs (Divest/Reposition) with cash flow vector arrows.
+- **Key Classes**: `.nb-bcg`, `.nb-bcg__quadrant`, `.nb-bcg__star`, `.nb-bcg__cow`, `.nb-bcg__question`, `.nb-bcg__dog`.
+
+### 10.4 GE-McKinsey 9-Box Matrix (`.nb-ge-matrix`)
+- **Semantic Structure**: 3x3 matrix mapping Industry Attractiveness (High, Medium, Low) against Business Unit Competitive Strength (Strong, Average, Weak). Color-coded into Grow/Invest (Emerald), Hold/Selective (Amber), and Harvest/Divest (Crimson).
+- **Key Classes**: `.nb-ge-grid`, `.nb-ge-cell`, `.nb-ge-cell--grow`, `.nb-ge-cell--hold`, `.nb-ge-cell--harvest`.
+
+### 10.5 VRIO Capability Assessment Table (`.nb-vrio-table`)
+- **Semantic Structure**: Structured tabular assessment evaluating resources across Value, Rarity, Inimitability, and Organizational Exploitation, concluding with Competitive Implication and Financial Performance impact.
+- **Key Classes**: `.nb-vrio`, `.nb-vrio__badge--yes`, `.nb-vrio__badge--no`, `.nb-vrio__outcome`.
+
+### 10.6 TOWS Strategic Formulation Matrix (`.nb-tows-matrix`)
+- **Semantic Structure**: 3x3 grid pairing Internal Strengths (S) and Weaknesses (W) with External Opportunities (O) and Threats (T) to generate actionable SO (Maxi-Maxi), WO (Mini-Maxi), ST (Maxi-Mini), and WT (Mini-Mini) strategies.
+- **Key Classes**: `.nb-tows`, `.nb-tows__quadrant`, `.nb-tows__so`, `.nb-tows__wo`, `.nb-tows__st`, `.nb-tows__wt`.
+
+### 10.7 McKinsey 7S Organizational Alignment Web (`.nb-mckinsey-7s`)
+- **Semantic Structure**: Central Shared Values node interconnected to Hard Ss (Strategy, Structure, Systems) and Soft Ss (Style, Staff, Skills) with bidirectional alignment indicator lines.
+- **Key Classes**: `.nb-7s-wrap`, `.nb-7s-core`, `.nb-7s-node--hard`, `.nb-7s-node--soft`.
+
+### 10.8 Analytics Maturity Staircase (`.nb-analytics-staircase`)
+- **Semantic Structure**: 4-step progressive staircase mapping Descriptive (What happened? MIS) → Diagnostic (Why did it happen?) → Predictive (What will happen? ML) → Prescriptive (What should we do? Optimization/AI), detailing value vs complexity.
+- **Key Classes**: `.nb-staircase`, `.nb-staircase__step`, `.nb-staircase__step--active`.
+
+### 10.9 Machine Learning Pipeline Flow (`.nb-ml-pipeline`)
+- **Semantic Structure**: 8-stage linear workflow: Ingestion → Data Wrangling → Feature Engineering → Model Training → Validation → Hyperparameter Tuning → Deployment → Drift Monitoring.
+- **Key Classes**: `.nb-pipeline`, `.nb-pipeline__stage`, `.nb-pipeline__arrow`.
+
+### 10.10 Carroll's CSR Pyramid (`.nb-csr-pyramid`)
+- **Semantic Structure**: Layered stepped pyramid stacking Economic Responsibilities (Base, Required) → Legal (Required) → Ethical (Expected) → Philanthropic (Desired/Discretionary), with corporate examples.
+- **Key Classes**: `.nb-pyramid`, `.nb-pyramid__tier--economic`, `.nb-pyramid__tier--legal`, `.nb-pyramid__tier--ethical`, `.nb-pyramid__tier--philanthropic`.
+
+### 10.11 Triple Bottom Line Trifecta (`.nb-tbl-card`)
+- **Semantic Structure**: 3-pillar card or intersecting Venn diagram integrating Profit (Economic Prosperity), People (Social Equity), and Planet (Environmental Regeneration).
+- **Key Classes**: `.nb-tbl`, `.nb-tbl__pillar--profit`, `.nb-tbl__pillar--people`, `.nb-tbl__pillar--planet`.
+
+### 10.12 Dunphy 3-Wave 6-Step Phase Matrix (`.nb-dunphy-model`)
+- **Semantic Structure**: Stage-gate matrix tracing Wave 1 (Rejection, Non-responsiveness) → Wave 2 (Compliance, Efficiency, Strategic Proactivity) → Wave 3 (The Sustaining Corporation).
+- **Key Classes**: `.nb-dunphy`, `.nb-dunphy__wave`, `.nb-dunphy__stage`.
+
+### 10.13 Polling Question Analysis Card (`.nb-poll-card`)
+- **Semantic Structure**: Interactive card for INSEAD teaching note poll questions displaying question text, multiple choice options, correct answer badge, pedagogical reasoning, distractor critique, and exam reformulation.
+- **Key Classes**: `.nb-poll`, `.nb-poll__header`, `.nb-poll__option`, `.nb-poll__option--correct`, `.nb-poll__rationale`, `.nb-poll__distractor-analysis`.
+
+### 10.14 Model Exam Answer Block (`.nb-exam-scaffold`)
+- **Semantic Structure**: Exam-ready answer card featuring Exam Year & Question ID, Mark Allocation Pill, Compulsory/Optional Tag, Recommended Answer Scaffold (Definition → Framework → Evidence → Evaluation → Decision), Word Count Target, and Grading Checklist.
+- **Key Classes**: `.nb-exam-card`, `.nb-exam-card__header`, `.nb-exam-card__pill`, `.nb-exam-scaffold__step`, `.nb-exam-scaffold__rubric`.
+

@@ -328,6 +328,41 @@ code, pre, .mono-data {
 }
 ```
 
+### 4.3 Refined Academic Library Aesthetic & Single-Line Ruled Paper Architecture
+
+To achieve the authoritative yet warm academic library aesthetic required for master MBA study without falling into skeuomorphic visual noise or corporate dashboard sterility, Notebook Template 2.0 implements a strict two-layer presentation architecture:
+
+```
++-------------------------------------------------------------------------------------------------+
+| LAYER 1: NOTEBOOK CANVAS                                                                        |
+| - Warm off-white / cream paper surface (--paper: #fcf8ee, dark: #18202e)                        |
+| - Left margin line (--margin: #e28b8b, 56px/64px) & subtle binding hole punches               |
+| - Mathematically aligned single-line horizontal ruling:                                          |
+|     line-height: var(--line-height, 32px);                                                     |
+|     background-image: repeating-linear-gradient(to bottom, transparent 0 calc(var(--line-height) - 1px), var(--rule) calc(var(--line-height) - 1px) var(--line-height)); |
+|     background-size: 100% var(--line-height);                                                   |
+| - Content-bound termination: ends precisely at the last element; no infinite empty rules       |
++-------------------------------------------------------------------------------------------------+
+                                      |
+                                      v
++-------------------------------------------------------------------------------------------------+
+| LAYER 2: KNOWLEDGE COMPONENTS (OPAQUE ELEVATION)                                               |
+| - Framework diagrams, tables, formulas, case dossiers, model answers, quizzes, and callouts    |
+| - Solid background fill (--paper2: #fffdf7, dark: #1d2636) with crisp structural border         |
+| - COMPLETE IMMUNITY from background ruling: lines NEVER cut across diagrams, slice text,        |
+|   clip descenders, double-up, or collide with tabular columns                                   |
+| - Semantic color accents: Oxford Navy (#1d3c8c), Forest Green (#1d7a45), Burgundy (#8b1e2f)     |
++-------------------------------------------------------------------------------------------------+
+```
+
+#### Mandatory Implementation Rules for the Ruling Effect:
+1. **Single-Line Only**: No overlapping multi-gradient textures or secondary interference fringes. Exactly one horizontal line beneath each text row baseline.
+2. **Strict Metric Alignment**: Body text uses `font-size: 17px; line-height: 32px;`. The background rule is positioned at `background-position: 0 calc(32px - 1px)` with `background-size: 100% 32px;` so baseline alignment remains mathematically locked across viewport resizes.
+3. **Descender Preservation**: Line height provides ample 15px clearance below font baseline to guarantee that `g`, `j`, `p`, `q`, `y` descenders are never clipped or intersected by the rule.
+4. **Content Bounding**: The ruling pattern is applied to the active `.sheet` content wrapper, terminating cleanly with the content flow, avoiding phantom lines in empty margins.
+5. **Component Shielding**: Every Knowledge Component (`.nb-card`, `.tblwrap`, `.nb-fbox`, `.nb-case-card`, `.pyq-card`, `.quiz-card`) applies an opaque surface background (`var(--paper2)` or semantic token) and border box, establishing clean visual isolation from the canvas ruling.
+6. **Accessibility & User Control**: A ruling toggle (`data-ruling="off"` or `.no-ruling`) allows students to disable the decorative paper lines at any time with zero impact on content legibility, contrast, or page hierarchy.
+
 ---
 
 ## 5. Visual Learning Engine & Infographic Heuristics

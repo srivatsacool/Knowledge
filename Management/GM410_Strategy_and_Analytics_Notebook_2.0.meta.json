@@ -1,0 +1,40 @@
+{
+  "title": "GM 410: Integrative Manager for Analytics · Master MBA Strategy & Analytics Compendium (Edition 2.0)",
+  "slug": "gm410-strategy-and-analytics-notebook-2",
+  "subject": "Management",
+  "category": "Strategic Management & Analytics",
+  "description": "Definitive postgraduate MBA study guide and interactive examination blueprint for GM 410 (Integrative Manager for Analytics) at Welingkar Institute (WeSchool). Covers strategic intent, Graham Kenny 3-step goal architecture, Porter's Five Forces and generic strategies, VRIO, TOWS, McKinsey 7S, BCG and GE-McKinsey portfolio matrices, Blue Ocean Strategy Canvas & ERRC, Big Data 5 Vs, Analytics Staircase, ML pipelines, Nimbus Bank capital allocation, Carroll's CSR Pyramid, Triple Bottom Line, Dunphy sustainability phases, Altman Z and Beneish M forensics, complete case dossiers for NVIDIA (including all 15 INSEAD teaching note poll keys), Microsoft, Amazon, and Coca-Cola, with 100% authentic model answers and marking rubrics for 2023, 2024, and 2025 university examinations.",
+  "file": "GM410_Strategy_and_Analytics_Notebook_2.0.html",
+  "tags": [
+    "Strategy",
+    "Analytics",
+    "MBA",
+    "GM410",
+    "WeSchool",
+    "Welingkar",
+    "Blue Ocean",
+    "NVIDIA",
+    "Big Data",
+    "CSR",
+    "PYQ",
+    "Revision"
+  ],
+  "status": "published",
+  "source": "curriculum/weschool-term5-gm410",
+  "version": "2.0.0",
+  "templateVersion": "notebook-2.0-academic",
+  "updated": "2026-10-11",
+  "featured": true,
+  "readTimeMinutes": 120,
+  "questionsCount": 23,
+  "courseContext": {
+    "course": "GM 410: Integrative Manager for Analytics (Core PGDM R&BA)",
+    "institution": "Prin. L. N. Welingkar Institute of Management Development and Research (WeSchool)",
+    "faculty": [
+      "Dr. Sonal Daulatkar",
+      "Dr. Sangeetha Rajesh"
+    ],
+    "program": "PGDM Research & Business Analytics",
+    "academicYear": "2023-2026"
+  }
+}
